@@ -1,14 +1,12 @@
 import AxeBuilder from '@axe-core/playwright';
 import { test, expect } from '@playwright/test';
 
-test.beforeEach(async ({ page }) => {
-  await page.goto('https://demo.playwright.dev/todomvc');
-});
-
 test.describe('homepage', () => {
-  test('has title', async ({ page }) => {
+  test.beforeEach(async ({ page }) => {
     await page.goto('/');
+  });
   
+  test('has title', async ({ page }) => {
     await expect(page).toHaveTitle(/Namesake/);
   });
 
