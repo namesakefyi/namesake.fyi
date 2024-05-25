@@ -33,11 +33,4 @@
   --letter-spacing-condensed: -0.005em;
   --letter-spacing-normal: 0;
   --letter-spacing-loose: 0.01em;
-
-  /* Radii */
-  --radius-xs: var(--space-2xs);
-  --radius-s: var(--space-xs);
-  --radius-m: var(--space-s);
-  --radius-l: var(--space-m);
-  --radius-full: 9999px;
 }
