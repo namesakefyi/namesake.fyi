@@ -1,0 +1,46 @@
+---
+import "../styles/reset.css";
+import "../styles/theme.css";
+import "../styles/base.css";
+
+import { ViewTransitions } from "astro:transitions";
+
+export interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  ogAlt?: string;
+}
+
+const { title, description, ogImage, ogAlt } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Namesake`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Namesake" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <title>{pageTitle}</title>
+    <ViewTransitions />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

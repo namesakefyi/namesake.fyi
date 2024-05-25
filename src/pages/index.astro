@@ -1,18 +1,22 @@
 ---
-
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Namesake</title>
-  </head>
-  <body>
-    <main>
-      <h1>Namesake</h1>
-    </main>
-  </body>
-</html>
+<BaseLayout
+  title="Namesake"
+  description="Namesake streamlines the legal name and gender marker change process for trans, nonbinary, and gender expansive folks."
+>
+  <main>
+    <h1>Namesake</h1>
+  </main>
+</BaseLayout>
+
+<style>
+  main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    width: 100%;
+  }
+</style>
