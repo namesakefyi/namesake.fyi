@@ -1,5 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+const year = new Date().getFullYear();
 ---
 
 <BaseLayout
@@ -7,13 +9,23 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   description="Namesake streamlines the legal name and gender marker change process for trans, nonbinary, and gender expansive folks."
 >
   <main>
-    <h1>Namesake</h1>
+    <h1>Be seen for who you are.</h1>
+    <p>
+      Namesake streamlines the legal name and gender marker change process for
+      trans, non-binary, and gender expansive folks. Rigid systems weren't made
+      for us... but we'll figure them out together.
+    </p>
+    <p>Launching in Massachusetts this year.</p>
   </main>
+  <footer>
+    &copy; 2022&hairsp;&ndash;&hairsp;{year} Namesake
+  </footer>
 </BaseLayout>
 
 <style>
   main {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     flex: 1;
