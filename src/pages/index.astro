@@ -14,14 +14,26 @@ import Footer from "../components/Footer.astro";
   <Header />
   <main>
     <Image
+      class="desktop-illustration"
       src={image}
-      alt="A blurred photo of a beach"
+      alt="Some snails and flowers on top of a court order document"
       width={600}
       densities={[1, 2]}
     />
     <div class="content">
-      <h1>Be seen for <span class="who-you-are">who you are.</span></h1>
+      <h1>
+        <span>Be seen for</span><br /><span class="who-you-are"
+          >who you are.</span
+        >
+      </h1>
       <div class="subhead">
+        <Image
+          class="mobile-illustration"
+          src={image}
+          alt="Some snails and flowers on top of a court order document"
+          width={400}
+          densities={[1, 2]}
+        />
         <p>
           <strong>Legally changing name and gender is a challenge.</strong> You have
           to navigate the courts, fill out dense paperwork, and tackle steps in a
@@ -93,14 +105,24 @@ import Footer from "../components/Footer.astro";
     width: 100%;
     max-width: 1200px;
     margin-inline: auto;
-    // overflow: hidden;
 
-    @media (width < 900px) {
+    .mobile-illustration {
+      display: none;
+    }
+
+    @media (width < 800px) {
       display: block;
 
-      img {
+      .desktop-illustration {
+        display: none;
+      }
+
+      .mobile-illustration {
+        display: block;
         float: right;
         max-width: 50%;
+        margin-left: var(--space-m);
+        margin-bottom: var(--space-m);
       }
     }
   }
@@ -114,10 +136,13 @@ import Footer from "../components/Footer.astro";
 
   h1 {
     margin-block-end: var(--space-xl);
+
+    span {
+      white-space: nowrap;
+    }
   }
 
   .who-you-are {
-    white-space: nowrap;
     color: var(--pink-7);
   }
 
