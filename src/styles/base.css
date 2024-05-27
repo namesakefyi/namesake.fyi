@@ -14,9 +14,10 @@ body {
   font-size: var(--step-0);
   line-height: var(--line-height-body);
   font-synthesis: none;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "trade-gothic-next", sans-serif;
   font-weight: 400;
   font-style: normal;
+  letter-spacing: var(--letter-spacing-condensed);
 }
 
 ::selection {
@@ -31,7 +32,7 @@ h1, h2, h3 {
 }
 
 h1 {
-  font-size: var(--step-6);
+  font-size: var(--step-5);
   line-height: var(--line-height-single);
   letter-spacing: var(--letter-spacing-condensed);
 }

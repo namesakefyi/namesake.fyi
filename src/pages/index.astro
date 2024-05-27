@@ -20,12 +20,11 @@ const year = new Date().getFullYear();
     <a href="/" aria-label="Namesake homepage"><Logo /></a>
     <div class="hero">
       <div class="contents">
-        <h1>Be seen for who you are.</h1>
+        <h1>Be seen for who you&nbsp;are.</h1>
         <p class="subhead">
           Namesake streamlines the legal name and gender marker change process
-          for trans, non-binary, and gender expansive folks. <strong
-            >(Re)launching in Massachusetts this Summer.</strong
-          >
+          for trans, non-binary, and gender expansive folks. Launching in
+          Massachusetts this Summer.
         </p>
         <form>
           <input type="email" placeholder="Your email" required />
@@ -35,7 +34,7 @@ const year = new Date().getFullYear();
       <Image
         src={idImage}
         alt="A snail on top of a Massachusetts ID card"
-        width={300}
+        width={400}
         densities={[1, 2]}
       />
     </div>
@@ -62,7 +61,7 @@ const year = new Date().getFullYear();
 <style lang="scss">
   main,
   footer {
-    padding: var(--space-2xl);
+    padding: var(--space-xl);
     width: 100%;
     margin-inline: auto;
   }
@@ -81,13 +80,11 @@ const year = new Date().getFullYear();
     align-items: flex-start;
     justify-content: center;
     gap: var(--space-2xl);
-    padding-block-end: var(--space-2xl);
-    flex: 1;
+    padding-block: var(--space-3xl);
 
     img {
       mix-blend-mode: multiply;
       height: auto;
-      order: -1;
       max-width: 100%;
       margin-left: -20px;
     }
@@ -95,8 +92,7 @@ const year = new Date().getFullYear();
 
   h1 {
     text-wrap: balance;
-    margin-block-start: calc(var(--space-s) * -1);
-    margin-block-end: var(--space-xl);
+    margin-block-end: var(--space-l);
     line-height: 0.9;
   }
 
