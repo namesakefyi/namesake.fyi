@@ -7,14 +7,14 @@ body {
   color: var(--gray-12);
   background-color: var(--pink-7);
   display: flex;
-  min-height: 100%;
+  min-height: 100dvh;
   position: relative;
   flex-direction: column;
   align-items: flex-start;
   font-size: var(--step-0);
   line-height: var(--line-height-body);
   font-synthesis: none;
-  font-family: "trade-gothic-next", sans-serif;
+  font-family: var(--font-sans);
   font-weight: 400;
   font-style: normal;
   letter-spacing: var(--letter-spacing-condensed);
@@ -26,7 +26,7 @@ body {
 }
 
 h1, h2, h3 {
-  font-family: "rocky-condensed", serif;
+  font-family: var(--font-serif);
   font-weight: 500;
   font-style: normal;
 }

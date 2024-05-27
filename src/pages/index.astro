@@ -1,128 +1,91 @@
 ---
 import { Image } from "astro:assets";
-import Logo from "../components/Logo.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import {
-  RiArrowRightLine,
-  RiInstagramLine,
-  RiLinkedinLine,
-} from "react-icons/ri";
+import { RiArrowRightLine } from "react-icons/ri";
 import idImage from "../images/id.png";
-
-const year = new Date().getFullYear();
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <BaseLayout
   title="Namesake"
   description="Namesake streamlines the legal name and gender marker change process for trans, nonbinary, and gender expansive folks."
 >
+  <Header />
   <main>
-    <a href="/" aria-label="Namesake homepage"><Logo /></a>
-    <div class="hero">
-      <div class="contents">
-        <h1>Be seen for who you&nbsp;are.</h1>
-        <p class="subhead">
-          Namesake streamlines the legal name and gender marker change process
-          for trans, non-binary, and gender expansive folks. Launching in
-          Massachusetts this Summer.
-        </p>
-        <form>
-          <input type="email" placeholder="Your email" required />
-          <button type="submit">Subscribe <RiArrowRightLine /></button>
-        </form>
+    <h1>Be seen for who you&nbsp;are.</h1>
+    <div class="subhead">
+      <p>
+        <strong>Legally changing name and gender is a challenge.</strong> You have
+        to navigate the courts, fill out dense paperwork, and tackle steps in a specific
+        and poorly-communicated order. For some, the process can take years to complete.
+        And you have to do it all while navigating big emotions around what it means
+        to embrace a new identity.
+      </p>
+      <p>
+        We’ve been through this process ourselves, and <strong
+          >we think it can be better</strong
+        >. We built Namesake to help you navigate the process, step by step,
+        with community support along the way.
+      </p>
+      <p>
+        We’re finishing up the app right now and we plan to launch this Summer,
+        starting in Massachusetts.
+      </p>
+      <p>
+        Rigid systems weren’t built for us, but we’ll figure them out together.
+      </p>
+    </div>
+    <form>
+      <p>Get notified when we launch:</p>
+      <div class="input-group">
+        <input type="email" name="email" placeholder="Your email" required />
+        <button type="submit">Subscribe <RiArrowRightLine /></button>
       </div>
-      <Image
-        src={idImage}
-        alt="A snail on top of a Massachusetts ID card"
-        width={400}
-        densities={[1, 2]}
-      />
-    </div>
+    </form>
   </main>
-  <footer>
-    <span class="copyright"
-      >&copy; 2022&hairsp;&ndash;&hairsp;{year} Namesake</span
-    >
-    <div class="social">
-      <a
-        href="https://www.instagram.com/joinnamesake/"
-        aria-label="View Namesake on Instagram"
-        title="View Namesake on Instagram"><RiInstagramLine size="24px" /></a
-      >
-      <a
-        href="https://www.linkedin.com/company/namesake-collaborative/"
-        aria-label="View Namesake on LinkedIn"
-        title="View Namesake on LinkedIn"><RiLinkedinLine size="24px" /></a
-      >
-    </div>
-  </footer>
+  <Footer />
 </BaseLayout>
 
 <style lang="scss">
-  main,
-  footer {
-    padding: var(--space-xl);
-    width: 100%;
-    margin-inline: auto;
-  }
-
   main {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding-block-end: 0;
-  }
-
-  .hero {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    gap: var(--space-2xl);
-    padding-block: var(--space-3xl);
-
-    img {
-      mix-blend-mode: multiply;
-      height: auto;
-      max-width: 100%;
-      margin-left: -20px;
-    }
+    padding: var(--space-2xl) var(--space-l);
+    width: 100%;
+    margin-inline: auto;
   }
 
   h1 {
     text-wrap: balance;
-    margin-block-end: var(--space-l);
+    margin-block-end: var(--space-xl);
     line-height: 0.9;
   }
 
-  footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-block-start: 0;
-  }
+  .subhead p {
+    max-width: 54ch;
 
-  .copyright {
-    font-size: var(--step--1);
-  }
-
-  .social {
-    display: flex;
-    gap: var(--space-s);
-  }
-
-  .subhead {
-    font-size: var(--step-1);
-    max-width: 60ch;
-    text-wrap: balance;
+    & + p {
+      margin-top: var(--space-m);
+    }
   }
 
   form {
-    // display: flex;
-    display: none; // Until fully implemented
+    margin-block-start: var(--space-xl);
+    border: 1px solid var(--gray-12);
+    padding: var(--space-m);
+
+    @media (width < 540px) {
+      width: 100%;
+    }
+  }
+
+  .input-group {
+    display: flex;
     gap: var(--space-xs);
-    margin-block-start: var(--space-l);
+    margin-block-start: var(--space-s);
   }
 
   input {
@@ -130,6 +93,8 @@ const year = new Date().getFullYear();
     border-bottom: 2px solid var(--gray-12);
     background: transparent;
     padding: 0;
+    flex: 1;
+    border-radius: 0;
 
     &::placeholder {
       color: var(--gray-a9);
@@ -152,6 +117,11 @@ const year = new Date().getFullYear();
         background: var(--gray-12);
         color: var(--pink-6);
       }
+    }
+
+    &:focus-visible {
+      background: var(--gray-12);
+      color: var(--pink-6);
     }
   }
 </style>

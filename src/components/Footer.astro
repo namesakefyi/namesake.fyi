@@ -1,0 +1,43 @@
+---
+import { RiInstagramLine, RiLinkedinLine } from "react-icons/ri";
+
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <span class="copyright"
+    >&copy; 2022&hairsp;&ndash;&hairsp;{year} Namesake</span
+  >
+  <div class="social">
+    <a
+      href="https://www.instagram.com/joinnamesake/"
+      aria-label="View Namesake on Instagram"
+      title="View Namesake on Instagram"><RiInstagramLine size="24px" /></a
+    >
+    <a
+      href="https://www.linkedin.com/company/namesake-collaborative/"
+      aria-label="View Namesake on LinkedIn"
+      title="View Namesake on LinkedIn"><RiLinkedinLine size="24px" /></a
+    >
+  </div>
+</footer>
+
+<style>
+  footer {
+    display: flex;
+    gap: var(--space-m);
+    align-items: center;
+    padding: var(--space-s) var(--space-l);
+    border-top: 1px solid var(--gray-12);
+    width: 100%;
+  }
+
+  .copyright {
+    font-size: var(--step--1);
+  }
+
+  .social {
+    display: flex;
+    gap: var(--space-s);
+  }
+</style>

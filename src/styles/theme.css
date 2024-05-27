@@ -34,4 +34,8 @@
 
   /* Radii */
   --radius-sm: 2px;
+
+  /* Fonts */
+  --font-serif: "rocky-condensed", serif;
+  --font-sans: Arial, sans-serif;
 }
