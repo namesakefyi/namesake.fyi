@@ -3,8 +3,6 @@ import "../styles/reset.css";
 import "../styles/theme.css";
 import "../styles/base.css";
 
-import { ViewTransitions } from "astro:transitions";
-
 export interface Props {
   title: string;
   description: string;
@@ -42,7 +40,6 @@ const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Namesake`;
     <link rel="manifest" href="/manifest.json" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <title>{pageTitle}</title>
-    <ViewTransitions />
   </head>
   <body>
     <slot />

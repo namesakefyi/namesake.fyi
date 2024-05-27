@@ -20,7 +20,7 @@ import Footer from "../components/Footer.astro";
       densities={[1, 2]}
     />
     <div class="content">
-      <h1>Be seen for who you&nbsp;are.</h1>
+      <h1>Be seen for <span class="who-you-are">who you are.</span></h1>
       <div class="subhead">
         <p>
           <strong>Legally changing name and gender is a challenge.</strong> You have
@@ -40,8 +40,9 @@ import Footer from "../components/Footer.astro";
           Summer, starting in Massachusetts.
         </p>
         <p>
-          Rigid systems weren’t built for us, but we’ll figure them out
-          together.
+          Rigid systems weren’t built for us, but <span class="figure-it-out"
+            >we’ll figure them out together.</span
+          >
         </p>
       </div>
       <form>
@@ -55,6 +56,31 @@ import Footer from "../components/Footer.astro";
   </main>
   <Footer />
 </BaseLayout>
+
+<script>
+  import { annotate } from "rough-notation";
+
+  const whoYouAre: HTMLElement | null = document.querySelector(".who-you-are");
+  if (whoYouAre) {
+    const highlight = annotate(whoYouAre, {
+      type: "highlight",
+    });
+    highlight.show();
+  }
+
+  const figureItOut: HTMLElement | null =
+    document.querySelector(".figure-it-out");
+  if (figureItOut) {
+    const underline = annotate(figureItOut, {
+      type: "underline",
+      multiline: true,
+      iterations: 3,
+      padding: 1,
+      animate: false,
+    });
+    underline.show();
+  }
+</script>
 
 <style lang="scss">
   main {
@@ -87,9 +113,12 @@ import Footer from "../components/Footer.astro";
   }
 
   h1 {
-    text-wrap: balance;
     margin-block-end: var(--space-xl);
-    line-height: 0.9;
+  }
+
+  .who-you-are {
+    white-space: nowrap;
+    color: var(--pink-7);
   }
 
   .subhead p {
