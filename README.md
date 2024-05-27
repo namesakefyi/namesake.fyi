@@ -1,5 +1,7 @@
 # namesake.fyi
 
+[![Playwright Tests](https://github.com/namesakefyi/namesake.fyi/actions/workflows/playwright.yml/badge.svg)](https://github.com/namesakefyi/namesake.fyi/actions/workflows/playwright.yml)
+
 The source code for [namesake.fyi]([namesake.fyi](https://namesake.fyi)), built with [Astro](https://astro.build).
 
 ## 🧞 Commands
