@@ -1,0 +1,17 @@
+---
+import Logo from "./Logo.astro";
+---
+
+<header>
+  <a href="/" aria-label="Namesake homepage"><Logo /></a>
+</header>
+
+<style>
+  header {
+    display: flex;
+    justify-content: flex-start;
+    padding: var(--space-m) var(--space-l);
+    width: 100%;
+    border-bottom: 1px solid var(--gray-12);
+  }
+</style>
