@@ -27,8 +27,8 @@ dependencies:
     specifier: ^18.3.0
     version: 18.3.0
   astro:
-    specifier: ^4.8.6
-    version: 4.8.6(@types/node@20.12.12)(sass@1.77.2)(typescript@5.4.5)
+    specifier: ^4.9.1
+    version: 4.9.1(@types/node@20.12.12)(sass@1.77.2)(typescript@5.4.5)
   react:
     specifier: ^18.3.1
     version: 18.3.1
@@ -323,11 +323,6 @@ packages:
       '@babel/helper-validator-identifier': 7.24.5
     dev: false
 
-  /@babel/helper-plugin-utils@7.24.5:
-    resolution: {integrity: sha512-xjNLDopRzW2o6ba0gKbkZq5YWEBaK3PCyTOY1K2P/O07LGMhMqlMXPxwN4S5/RhWuCobT8z0jrlKGlYmeR1OhQ==}
-    engines: {node: '>=6.9.0'}
-    dev: false
-
   /@babel/helper-plugin-utils@7.24.6:
     resolution: {integrity: sha512-MZG/JcWfxybKwsA9N9PmtF2lOSFSEMVCpIRrbxccZFLJPrJciJdG/UhSh5W96GEteJI2ARqm5UAHxISwRDLSNg==}
     engines: {node: '>=6.9.0'}
@@ -398,7 +393,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.24.5
-      '@babel/helper-plugin-utils': 7.24.5
+      '@babel/helper-plugin-utils': 7.24.6
     dev: false
 
   /@babel/plugin-transform-react-jsx-self@7.24.6(@babel/core@7.24.5):
@@ -430,7 +425,7 @@ packages:
       '@babel/core': 7.24.5
       '@babel/helper-annotate-as-pure': 7.22.5
       '@babel/helper-module-imports': 7.24.3
-      '@babel/helper-plugin-utils': 7.24.5
+      '@babel/helper-plugin-utils': 7.24.6
       '@babel/plugin-syntax-jsx': 7.24.1(@babel/core@7.24.5)
       '@babel/types': 7.24.5
     dev: false
@@ -1806,8 +1801,8 @@ packages:
       - typescript
     dev: true
 
-  /astro@4.8.6(@types/node@20.12.12)(sass@1.77.2)(typescript@5.4.5):
-    resolution: {integrity: sha512-psHIfK+e+bMPhRwghV9yCGH/uc1jvY4DHmDZdoEepax9yA7kzYH0wt3dpkqlcrO2zxl5jzSC3DmqZfkD6wnW9A==}
+  /astro@4.9.1(@types/node@20.12.12)(sass@1.77.2)(typescript@5.4.5):
+    resolution: {integrity: sha512-9TsoAu0WBPiqyAIj9H0JW7R+tIjPjFsPKo70Nja6WL3imTTuUJQmnCre4ZVmoNV3oicTTlb+N4zjRYANW0Ty9A==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
     dependencies:
