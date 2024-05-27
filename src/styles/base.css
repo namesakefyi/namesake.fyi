@@ -6,6 +6,10 @@ html {
 body {
   color: var(--gray-12);
   background-color: var(--pink-7);
+  background-image: url("/images/speckles.png");
+  background-position: left center;
+  background-repeat: repeat;
+  background-size: 500px;
   display: flex;
   min-height: 100%;
   position: relative;
@@ -15,6 +19,9 @@ body {
   line-height: var(--line-height-body);
   text-rendering: optimizelegibility;
   font-synthesis: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 ::selection {
@@ -22,31 +29,37 @@ body {
   color: var(--pink-7);
 }
 
+h1, h2, h3 {
+  font-family: "rocky-condensed", serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
 h1 {
-  font-size: var(--step-5);
-  line-height: var(--line-height-display);
+  font-size: var(--step-6);
+  line-height: var(--line-height-single);
   letter-spacing: var(--letter-spacing-condensed);
 }
 
 h2 {
   font-size: var(--step-3);
-  line-height: var(--line-height-tight);
+  line-height: var(--line-height-display);
   letter-spacing: var(--letter-spacing-condensed);
 }
 
 h3 {
   font-size: var(--step-2);
-  line-height: var(--line-height-tight);
+  line-height: var(--line-height-body);
 }
 
 h4 {
   font-size: var(--step-1);
-  line-height: var(--line-height-tight);
+  line-height: var(--line-height-body);
 }
 
 h5 {
   font-size: var(--step-0);
-  line-height: var(--line-height-tight);
+  line-height: var(--line-height-body);
 }
 
 small {
@@ -56,7 +69,7 @@ small {
 
 a {
   text-decoration: underline;
-  text-decoration-color: var(--gray-8);
+  text-decoration-color: var(--gray-a11);
   text-underline-offset: max(0.1em, 2.5px);
   transition:
     text-decoration-color 0.2s ease-in-out,
@@ -66,11 +79,15 @@ a {
 @media (hover: hover) {
   a:hover,
   a:focus {
-    text-decoration-color: var(--gray-11);
-    font-weight: var(--font-weight-bold);
+    text-decoration-color: var(--gray-12);
   }
 }
 
 .nowrap {
   white-space: nowrap;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gray-12);
+  outline-offset: 2px;
 }

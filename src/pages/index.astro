@@ -1,5 +1,13 @@
 ---
+import { Image } from "astro:assets";
+import Logo from "../components/Logo.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  RiArrowRightLine,
+  RiInstagramLine,
+  RiLinkedinLine,
+} from "react-icons/ri";
+import idImage from "./id.png";
 
 const year = new Date().getFullYear();
 ---
@@ -9,26 +17,143 @@ const year = new Date().getFullYear();
   description="Namesake streamlines the legal name and gender marker change process for trans, nonbinary, and gender expansive folks."
 >
   <main>
-    <h1>Be seen for who you are.</h1>
-    <p>
-      Namesake streamlines the legal name and gender marker change process for
-      trans, non-binary, and gender expansive folks. Rigid systems weren't made
-      for us... but we'll figure them out together.
-    </p>
-    <p>Launching in Massachusetts this year.</p>
+    <a href="/"><Logo /></a>
+    <div class="hero">
+      <div class="contents">
+        <h1>Be seen for who you are.</h1>
+        <p class="subhead">
+          Namesake streamlines the legal name and gender marker change process
+          for trans, non-binary, and gender expansive folks. <strong
+            >(Re)launching in Massachusetts this Summer.</strong
+          >
+        </p>
+        <form>
+          <input type="email" placeholder="Your email" required />
+          <button type="submit">Subscribe <RiArrowRightLine /></button>
+        </form>
+      </div>
+      <Image
+        src={idImage}
+        alt="A snail on top of a Massachusetts ID card"
+        width={300}
+        densities={[1, 2]}
+      />
+    </div>
   </main>
   <footer>
-    &copy; 2022&hairsp;&ndash;&hairsp;{year} Namesake
+    <span class="copyright"
+      >&copy; 2022&hairsp;&ndash;&hairsp;{year} Namesake</span
+    >
+    <div class="social">
+      <a
+        href="https://www.instagram.com/joinnamesake/"
+        title="View Namesake on Instagram"><RiInstagramLine size="24px" /></a
+      >
+      <a
+        href="https://www.linkedin.com/company/namesake-collaborative/"
+        title="View Namesake on LinkedIn"><RiLinkedinLine size="24px" /></a
+      >
+    </div>
   </footer>
 </BaseLayout>
 
-<style>
+<style lang="scss">
+  main,
+  footer {
+    padding: var(--space-2xl);
+    width: 100%;
+    margin-inline: auto;
+  }
+
   main {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    padding-block-end: 0;
+  }
+
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: center;
+    gap: var(--space-2xl);
+    padding-block-end: var(--space-2xl);
     flex: 1;
-    width: 100%;
+
+    img {
+      mix-blend-mode: multiply;
+      height: auto;
+      order: -1;
+      max-width: 100%;
+      margin-left: -20px;
+    }
+  }
+
+  h1 {
+    text-wrap: balance;
+    margin-block-start: calc(var(--space-s) * -1);
+    margin-block-end: var(--space-xl);
+    line-height: 0.9;
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block-start: 0;
+  }
+
+  .copyright {
+    font-size: var(--step--1);
+  }
+
+  .social {
+    display: flex;
+    gap: var(--space-s);
+  }
+
+  .subhead {
+    font-size: var(--step-1);
+    max-width: 60ch;
+    text-wrap: balance;
+  }
+
+  form {
+    // display: flex;
+    display: none; // Until fully implemented
+    gap: var(--space-xs);
+    margin-block-start: var(--space-l);
+  }
+
+  input {
+    border: none;
+    border-bottom: 2px solid var(--gray-12);
+    background: transparent;
+    padding: 0;
+
+    &::placeholder {
+      color: var(--gray-a9);
+    }
+  }
+
+  button {
+    background: transparent;
+    border: 2px solid var(--gray-12);
+    color: var(--gray-12);
+    font-weight: 600;
+    cursor: pointer;
+    padding: var(--space-2xs) var(--space-m);
+    display: inline-flex;
+    gap: var(--space-2xs);
+    align-items: center;
+
+    @media (hover: hover) {
+      &:hover {
+        background: var(--gray-12);
+        color: var(--pink-6);
+      }
+    }
   }
 </style>
