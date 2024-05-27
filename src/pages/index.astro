@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { RiArrowRightLine } from "react-icons/ri";
-import idImage from "../images/id.png";
+import image from "./namesake-form.png";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 ---
@@ -13,36 +13,45 @@ import Footer from "../components/Footer.astro";
 >
   <Header />
   <main>
-    <h1>Be seen for who you&nbsp;are.</h1>
-    <div class="subhead">
-      <p>
-        <strong>Legally changing name and gender is a challenge.</strong> You have
-        to navigate the courts, fill out dense paperwork, and tackle steps in a specific
-        and poorly-communicated order. For some, the process can take years to complete.
-        And you have to do it all while navigating big emotions around what it means
-        to embrace a new identity.
-      </p>
-      <p>
-        We’ve been through this process ourselves, and <strong
-          >we think it can be better</strong
-        >. We built Namesake to help you navigate the process, step by step,
-        with community support along the way.
-      </p>
-      <p>
-        We’re finishing up the app right now and we plan to launch this Summer,
-        starting in Massachusetts.
-      </p>
-      <p>
-        Rigid systems weren’t built for us, but we’ll figure them out together.
-      </p>
-    </div>
-    <form>
-      <p>Get notified when we launch:</p>
-      <div class="input-group">
-        <input type="email" name="email" placeholder="Your email" required />
-        <button type="submit">Subscribe <RiArrowRightLine /></button>
+    <Image
+      src={image}
+      alt="A blurred photo of a beach"
+      width={600}
+      densities={[1, 2]}
+    />
+    <div class="content">
+      <h1>Be seen for who you&nbsp;are.</h1>
+      <div class="subhead">
+        <p>
+          <strong>Legally changing name and gender is a challenge.</strong> You have
+          to navigate the courts, fill out dense paperwork, and tackle steps in a
+          specific and poorly-communicated order. For some, the process can take
+          years to complete. And you have to do it all while navigating big emotions
+          around what it means to embrace a new identity.
+        </p>
+        <p>
+          We’ve been through this process ourselves, and <strong
+            >we think it can be better</strong
+          >. We built Namesake to help you navigate the process, step by step,
+          with community support along the way.
+        </p>
+        <p>
+          We’re finishing up the app right now and we plan to launch this
+          Summer, starting in Massachusetts.
+        </p>
+        <p>
+          Rigid systems weren’t built for us, but we’ll figure them out
+          together.
+        </p>
       </div>
-    </form>
+      <form>
+        <p>Get notified when we launch:</p>
+        <div class="input-group">
+          <input type="email" name="email" placeholder="Your email" required />
+          <button type="submit">Subscribe <RiArrowRightLine /></button>
+        </div>
+      </form>
+    </div>
   </main>
   <Footer />
 </BaseLayout>
@@ -50,12 +59,31 @@ import Footer from "../components/Footer.astro";
 <style lang="scss">
   main {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2xl);
     padding: var(--space-2xl) var(--space-l);
+    min-width: 0;
     width: 100%;
+    max-width: 1200px;
     margin-inline: auto;
+    // overflow: hidden;
+
+    @media (width < 900px) {
+      display: block;
+
+      img {
+        float: right;
+        max-width: 50%;
+      }
+    }
+  }
+
+  img {
+    mix-blend-mode: multiply;
+    width: 600px;
+    max-width: 100%;
+    order: 1;
   }
 
   h1 {

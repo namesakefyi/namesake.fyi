@@ -26,10 +26,12 @@ const year = new Date().getFullYear();
   footer {
     display: flex;
     gap: var(--space-m);
+    justify-content: space-between;
     align-items: center;
-    padding: var(--space-s) var(--space-l);
-    border-top: 1px solid var(--gray-12);
+    padding: var(--space-l);
     width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
   }
 
   .copyright {
