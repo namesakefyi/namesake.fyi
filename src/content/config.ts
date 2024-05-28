@@ -16,11 +16,11 @@ export const collections = {
   }),
 
   authors: defineCollection({
-    type: "data",
+    type: "content",
     schema: z.object({
       name: z.string(),
       title: z.string().optional(),
-      image: z.string().optional(),
+      avatar: z.string().optional(),
     }),
   }),
 };

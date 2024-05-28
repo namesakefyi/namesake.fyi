@@ -3,13 +3,15 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
 import { getCollection } from "astro:content";
 
-const posts = await getCollection("posts");
+const publishedPosts = await getCollection("posts", ({ data }) => {
+  return data.isDraft !== true;
+});
 ---
 
 <BaseLayout title="Blog" description="Updates and news from Namesake.">
   <ul>
     {
-      posts.map((post) => (
+      publishedPosts.map((post) => (
         <li>
           <a href={`/blog/${post.slug}`}>{post.data.title}</a>
           <time datetime={post.data.publishDate.toISOString()}>
