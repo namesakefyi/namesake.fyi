@@ -22,7 +22,7 @@ const year = new Date().getFullYear();
   </div>
 </footer>
 
-<style>
+<style lang="scss">
   footer {
     display: flex;
     gap: var(--space-m);
@@ -41,5 +41,9 @@ const year = new Date().getFullYear();
   .social {
     display: flex;
     gap: var(--space-s);
+
+    a {
+      border-radius: var(--radius-xs);
+    }
   }
 </style>

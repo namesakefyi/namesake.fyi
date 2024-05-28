@@ -6,6 +6,8 @@ html {
 body {
   color: var(--gray-12);
   background-color: var(--background);
+  background-image: url('/speckles-black.svg');
+  background-position: center;
   display: flex;
   min-height: 100dvh;
   position: relative;
@@ -17,6 +19,16 @@ body {
   font-family: var(--font-sans);
   font-weight: 400;
   font-style: normal;
+}
+
+body::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/speckles-purple.svg');
+  background-position: center;
+  pointer-events: none;
+  z-index: 10;
 }
 
 ::selection {
@@ -82,6 +94,6 @@ a {
 }
 
 :focus-visible {
-  outline: 2px solid var(--gray-12);
+  outline: 2px solid var(--white-a12);
   outline-offset: 2px;
 }
