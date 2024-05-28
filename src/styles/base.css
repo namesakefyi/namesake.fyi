@@ -5,7 +5,7 @@ html {
 
 body {
   color: var(--gray-12);
-  background-color: var(--pink-7);
+  background-color: var(--background);
   display: flex;
   min-height: 100dvh;
   position: relative;
@@ -21,7 +21,7 @@ body {
 
 ::selection {
   background: var(--gray-12);
-  color: var(--pink-7);
+  color: var(--background);
 }
 
 h1, h2, h3 {

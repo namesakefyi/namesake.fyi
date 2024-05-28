@@ -1,6 +1,6 @@
 @import "@radix-ui/colors/gray.css";
 @import "@radix-ui/colors/gray-alpha.css";
-@import "@radix-ui/colors/pink.css";
+@import "@radix-ui/colors/violet.css";
 
 :root {
   /* @link https://utopia.fyi/type/calculator?c=320,18,1.2,1240,22,1.25,6,1,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
@@ -27,7 +27,7 @@
   /* Line heights */
   --line-height-single: 1;
   --line-height-display: 1.1;
-  --line-height-body: 1.2;
+  --line-height-body: 1.25;
 
   /* Letter spacing */
   --letter-spacing-condensed: -0.005em;
@@ -40,5 +40,5 @@
   --radius-l: var(--space-l);
 
   /* Background */
-  --background: var(--pink-7);
+  --background: var(--violet-7);
 }
