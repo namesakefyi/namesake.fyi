@@ -35,5 +35,10 @@
   --letter-spacing-loose: 0.01em;
 
   /* Radii */
-  --radius-sm: 2px;
+  --radius-s: var(--space-s);
+  --radius-m: var(--space-m);
+  --radius-l: var(--space-l);
+
+  /* Background */
+  --background: var(--pink-7);
 }

@@ -14,7 +14,7 @@ import Footer from "../components/Footer.astro";
   <Header />
   <main>
     <Image
-      class="desktop-illustration"
+      class="illustration"
       src={image}
       alt="Some snails and flowers on top of a court order document"
       width={600}
@@ -27,13 +27,6 @@ import Footer from "../components/Footer.astro";
         >
       </h1>
       <div class="subhead">
-        <Image
-          class="mobile-illustration"
-          src={image}
-          alt="Some snails and flowers on top of a court order document"
-          width={400}
-          densities={[1, 2]}
-        />
         <p>
           <strong>Legally changing name and gender is a challenge.</strong> You have
           to navigate the courts, fill out dense paperwork, and tackle steps in a
@@ -57,7 +50,7 @@ import Footer from "../components/Footer.astro";
         </p>
       </div>
       <form>
-        <p>Get notified when we launch:</p>
+        <strong>Get notified when we launch:</strong>
         <div class="input-group">
           <input type="email" name="email" placeholder="Your email" required />
           <button type="submit">Subscribe <RiArrowRightLine /></button>
@@ -93,14 +86,15 @@ import Footer from "../components/Footer.astro";
     underline.show();
   }
 
-  const form = document.querySelector("form");
+  const form: HTMLElement | null = document.querySelector("form");
   if (form) {
-    const box = annotate(form, {
-      type: "box",
+    const highlight = annotate(form, {
+      type: "highlight",
+      iterations: 1,
+      padding: 20,
       animate: false,
-      iterations: 3,
     });
-    box.show();
+    highlight.show();
   }
 </script>
 
@@ -116,25 +110,11 @@ import Footer from "../components/Footer.astro";
     max-width: 1200px;
     margin-inline: auto;
 
-    .mobile-illustration {
-      display: none;
-    }
-
     @media (width < 800px) {
       display: block;
-      overflow: hidden;
 
-      .desktop-illustration {
+      .illustration {
         display: none;
-      }
-
-      .mobile-illustration {
-        display: block;
-        float: right;
-        max-width: 60%;
-        margin-left: var(--space-m);
-        margin-bottom: var(--space-m);
-        margin-right: -20%;
       }
     }
   }
@@ -157,7 +137,7 @@ import Footer from "../components/Footer.astro";
   }
 
   .who-you-are {
-    color: var(--pink-7);
+    color: var(--background);
   }
 
   .subhead p + p {
@@ -165,8 +145,10 @@ import Footer from "../components/Footer.astro";
   }
 
   form {
+    color: var(--background);
+
     margin-block-start: var(--space-xl);
-    padding: var(--space-m);
+    padding: var(--space-l) var(--space-m);
 
     @media (width < 540px) {
       width: 100%;
@@ -179,13 +161,21 @@ import Footer from "../components/Footer.astro";
     margin-block-start: var(--space-s);
   }
 
-  input {
+  input,
+  button {
     border: none;
-    border-bottom: 2px solid var(--gray-12);
-    background: transparent;
-    padding: 0;
+    background: var(--background);
+    border-radius: var(--radius-s);
+    color: var(--gray-12);
+    padding: var(--space-xs) var(--space-s);
+
+    &:focus-visible {
+      outline-color: var(--background);
+    }
+  }
+
+  input {
     flex: 1;
-    border-radius: 0;
 
     &::placeholder {
       color: var(--gray-a9);
@@ -193,26 +183,11 @@ import Footer from "../components/Footer.astro";
   }
 
   button {
-    background: transparent;
-    border: 2px solid var(--gray-12);
-    color: var(--gray-12);
     font-weight: 600;
     cursor: pointer;
-    padding: var(--space-2xs) var(--space-m);
     display: inline-flex;
     gap: var(--space-2xs);
     align-items: center;
-
-    @media (hover: hover) {
-      &:hover {
-        background: var(--gray-12);
-        color: var(--pink-6);
-      }
-    }
-
-    &:focus-visible {
-      background: var(--gray-12);
-      color: var(--pink-6);
-    }
+    padding-inline: var(--space-m);
   }
 </style>
