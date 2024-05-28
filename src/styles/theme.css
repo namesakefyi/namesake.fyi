@@ -2,15 +2,6 @@
 @import "@radix-ui/colors/gray-alpha.css";
 @import "@radix-ui/colors/pink.css";
 
-@font-face {
-  font-family: 'Inconsolata';
-  src: url('/fonts/Inconsolata-VariableFont_wdth,wght.woff2') format('woff2');
-  font-weight: 200 900;
-  font-stretch: 50% 200%;
-  font-style: normal;
-  font-display: swap;
-}
-
 :root {
   /* @link https://utopia.fyi/type/calculator?c=320,18,1.2,1240,22,1.25,6,1,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
   --step--1: clamp(0.9375rem, 0.881rem + 0.2826vi, 1.1rem);
@@ -45,9 +36,4 @@
 
   /* Radii */
   --radius-sm: 2px;
-
-  /* Fonts */
-  --font-serif: "rocky-condensed", serif;
-  --font-sans: Arial, sans-serif;
-  --font-mono: "Inconsolata", monospace;
 }
