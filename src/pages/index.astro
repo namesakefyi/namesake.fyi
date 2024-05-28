@@ -42,10 +42,9 @@ import Footer from "../components/Footer.astro";
           around what it means to embrace a new identity.
         </p>
         <p>
-          We’ve been through this process ourselves, and <strong
-            >we think it can be better</strong
-          >. We built Namesake to help you navigate the process, step by step,
-          with community support along the way.
+          We’ve been through this process ourselves, and we think it can be
+          better. We built Namesake to help you navigate the process, step by
+          step, with community support along the way.
         </p>
         <p>
           We’re finishing up the app right now and we plan to launch this
@@ -76,6 +75,7 @@ import Footer from "../components/Footer.astro";
   if (whoYouAre) {
     const highlight = annotate(whoYouAre, {
       type: "highlight",
+      iterations: 1,
     });
     highlight.show();
   }
@@ -86,11 +86,21 @@ import Footer from "../components/Footer.astro";
     const underline = annotate(figureItOut, {
       type: "underline",
       multiline: true,
-      iterations: 3,
+      iterations: 1,
       padding: 1,
       animate: false,
     });
     underline.show();
+  }
+
+  const form = document.querySelector("form");
+  if (form) {
+    const box = annotate(form, {
+      type: "box",
+      animate: false,
+      iterations: 3,
+    });
+    box.show();
   }
 </script>
 
@@ -112,6 +122,7 @@ import Footer from "../components/Footer.astro";
 
     @media (width < 800px) {
       display: block;
+      overflow: hidden;
 
       .desktop-illustration {
         display: none;
@@ -120,9 +131,10 @@ import Footer from "../components/Footer.astro";
       .mobile-illustration {
         display: block;
         float: right;
-        max-width: 50%;
+        max-width: 60%;
         margin-left: var(--space-m);
         margin-bottom: var(--space-m);
+        margin-right: -20%;
       }
     }
   }
@@ -132,10 +144,12 @@ import Footer from "../components/Footer.astro";
     width: 600px;
     max-width: 100%;
     order: 1;
+    user-select: none;
   }
 
   h1 {
     margin-block-end: var(--space-xl);
+    margin-inline-start: -0.03em;
 
     span {
       white-space: nowrap;
@@ -150,13 +164,12 @@ import Footer from "../components/Footer.astro";
     max-width: 54ch;
 
     & + p {
-      margin-top: var(--space-m);
+      margin-top: var(--space-l);
     }
   }
 
   form {
     margin-block-start: var(--space-xl);
-    border: 1px solid var(--gray-12);
     padding: var(--space-m);
 
     @media (width < 540px) {
