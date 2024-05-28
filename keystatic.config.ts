@@ -5,7 +5,10 @@ export default config({
     brand: { name: "Namesake" },
   },
   storage: {
-    kind: "local",
+    kind: "cloud",
+  },
+  cloud: {
+    project: "namesake/namesake",
   },
   collections: {
     authors: collection({
