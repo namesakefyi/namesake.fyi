@@ -51,7 +51,7 @@ export default config({
           }),
           {
             label: "Authors",
-            itemLabel: (props) => props.value,
+            itemLabel: (props) => props.value as string,
           }
         ),
         content: fields.markdoc({ label: "Content" }),
