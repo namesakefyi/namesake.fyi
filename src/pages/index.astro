@@ -168,10 +168,6 @@ import Footer from "../components/Footer.astro";
     border-radius: var(--radius-s);
     color: var(--gray-12);
     padding: var(--space-xs) var(--space-s);
-
-    &:focus-visible {
-      outline-color: var(--background);
-    }
   }
 
   input {
@@ -179,6 +175,10 @@ import Footer from "../components/Footer.astro";
 
     &::placeholder {
       color: var(--gray-a9);
+    }
+
+    &:focus {
+      background-color: var(--white-a12);
     }
   }
 
@@ -189,5 +189,15 @@ import Footer from "../components/Footer.astro";
     gap: var(--space-2xs);
     align-items: center;
     padding-inline: var(--space-m);
+
+    @media (hover: hover) {
+      &:hover {
+        background: var(--white-a12);
+      }
+    }
+
+    &:focus-visible {
+      background: var(--white-a12);
+    }
   }
 </style>
