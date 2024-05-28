@@ -4,16 +4,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { RiArrowRightLine } from "react-icons/ri";
 import illustration from "./namesake-form.png";
 import formIllustration from "./form-snail.png";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 ---
 
 <BaseLayout
   title="Namesake"
   description="Namesake streamlines the legal name and gender marker change process for trans, nonbinary, and gender expansive folks."
 >
-  <Header />
-  <main>
+  <div class="home">
     <Image
       class="illustration"
       src={illustration}
@@ -65,8 +62,7 @@ import Footer from "../components/Footer.astro";
         </div>
       </form>
     </div>
-  </main>
-  <Footer />
+  </div>
 </BaseLayout>
 
 <script>
@@ -96,16 +92,10 @@ import Footer from "../components/Footer.astro";
 </script>
 
 <style lang="scss">
-  main {
-    flex: 1;
+  .home {
     display: grid;
     grid-template-columns: minmax(460px, 1fr) minmax(0, 1fr);
     gap: var(--space-2xl);
-    padding: var(--space-2xl) var(--space-l);
-    min-width: 0;
-    width: 100%;
-    max-width: 1200px;
-    margin-inline: auto;
 
     @media (width < 800px) {
       display: block;
