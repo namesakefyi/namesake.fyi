@@ -126,7 +126,7 @@ import Footer from "../components/Footer.astro";
   }
 
   .who-you-are {
-    color: var(--background);
+    color: var(--bg-purple);
   }
 
   .subhead {
@@ -138,8 +138,8 @@ import Footer from "../components/Footer.astro";
   }
 
   form {
-    color: var(--background);
-    background-color: var(--gray-12);
+    color: var(--bg-purple);
+    background-color: var(--text);
     margin-block-start: var(--space-xl);
     padding: var(--space-l) var(--space-m);
 
@@ -158,9 +158,9 @@ import Footer from "../components/Footer.astro";
   input,
   button {
     border: none;
-    background: var(--background);
+    background: var(--bg-purple);
     border-radius: var(--radius-s);
-    color: var(--gray-12);
+    color: var(--text);
     padding: var(--space-s) var(--space-s);
   }
 
@@ -168,11 +168,11 @@ import Footer from "../components/Footer.astro";
     flex: 1;
 
     &::placeholder {
-      color: var(--gray-a9);
+      color: var(--text-placeholder);
     }
 
     &:focus {
-      background-color: var(--white-a12);
+      background-color: var(--white);
     }
   }
 
@@ -187,12 +187,12 @@ import Footer from "../components/Footer.astro";
 
     @media (hover: hover) {
       &:hover {
-        background: var(--white-a12);
+        background: var(--white);
       }
     }
 
     &:focus-visible {
-      background: var(--white-a12);
+      background: var(--white);
     }
   }
 </style>
