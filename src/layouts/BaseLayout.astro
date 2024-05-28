@@ -2,6 +2,8 @@
 import "../styles/reset.css";
 import "../styles/theme.css";
 import "../styles/base.css";
+import { AstroFont } from "astro-font";
+import { join } from "node:path";
 
 export interface Props {
   title: string;
@@ -28,7 +30,6 @@ const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Namesake`;
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="canonical" href={canonicalURL} />
-    <link rel="stylesheet" href="https://use.typekit.net/lqk1ctm.css" />
     <meta name="description" content={description} />
     <meta property="og:title" content={title} />
     <meta property="og:type" content="website" />
@@ -40,6 +41,40 @@ const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Namesake`;
     <link rel="manifest" href="/manifest.json" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <title>{pageTitle}</title>
+    <AstroFont
+      config={[
+        {
+          name: "Alte Haas Grotesk",
+          src: [
+            {
+              style: "normal",
+              weight: "400",
+              path: join(
+                process.cwd(),
+                "public",
+                "fonts",
+                "AlteHaasGroteskRegular.woff2"
+              ),
+            },
+            {
+              style: "bold",
+              weight: "600",
+              path: join(
+                process.cwd(),
+                "public",
+                "fonts",
+                "AlteHaasGroteskBold.woff2"
+              ),
+            },
+          ],
+          preload: false,
+          display: "swap",
+          selector: "body",
+          fallback: "sans-serif",
+          cssVariable: "font-sans",
+        },
+      ]}
+    />
   </head>
   <body>
     <slot />

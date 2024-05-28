@@ -160,12 +160,8 @@ import Footer from "../components/Footer.astro";
     color: var(--pink-7);
   }
 
-  .subhead p {
-    max-width: 54ch;
-
-    & + p {
-      margin-top: var(--space-l);
-    }
+  .subhead p + p {
+    margin-top: var(--space-l);
   }
 
   form {
