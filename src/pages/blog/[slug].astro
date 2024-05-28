@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+import { getCollection, type CollectionEntry } from "astro:content";
+
+export interface Props {
+  post: CollectionEntry<"posts">;
+}
+
+export async function getStaticPaths() {
+  const publishedPosts = await getCollection("posts", ({ data }) => {
+    return data.isDraft !== true;
+  });
+
+  return publishedPosts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const { data } = post;
+const { title, authors, publishDate } = data;
+---
+
+<BaseLayout title={title} description="Updates and news from Namesake.">
+  <article>
+    <header>
+      <h1>{title}</h1>
+      <p>By {authors.join(", ")} on {publishDate}</p>
+    </header>
+    <Content />
+  </article>
+</BaseLayout>

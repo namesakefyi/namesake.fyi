@@ -4,6 +4,8 @@ import "../styles/theme.css";
 import "../styles/base.css";
 import { AstroFont } from "astro-font";
 import { join } from "node:path";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
 
 export interface Props {
   title: string;
@@ -77,6 +79,19 @@ const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Namesake`;
     />
   </head>
   <body>
-    <slot />
-  </body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body><style>
+    main {
+      flex: 1;
+      padding: var(--space-2xl) var(--space-l);
+      min-width: 0;
+      width: 100%;
+      max-width: 1200px;
+      margin-inline: auto;
+    }
+  </style>
 </html>
