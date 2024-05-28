@@ -42,7 +42,7 @@ h1, h2, h3 {
 }
 
 h1 {
-  font-size: var(--step-5);
+  font-size: var(--step-6);
   line-height: var(--line-height-single);
   letter-spacing: var(--letter-spacing-condensed);
 }

@@ -85,17 +85,6 @@ import Footer from "../components/Footer.astro";
     });
     underline.show();
   }
-
-  const form: HTMLElement | null = document.querySelector("form");
-  if (form) {
-    const highlight = annotate(form, {
-      type: "highlight",
-      iterations: 1,
-      padding: 20,
-      animate: false,
-    });
-    highlight.show();
-  }
 </script>
 
 <style lang="scss">
@@ -140,13 +129,17 @@ import Footer from "../components/Footer.astro";
     color: var(--background);
   }
 
-  .subhead p + p {
-    margin-top: var(--space-l);
+  .subhead {
+    font-size: var(--step-1);
+
+    p + p {
+      margin-top: var(--space-l);
+    }
   }
 
   form {
     color: var(--background);
-
+    background-color: var(--gray-12);
     margin-block-start: var(--space-xl);
     padding: var(--space-l) var(--space-m);
 
@@ -159,6 +152,7 @@ import Footer from "../components/Footer.astro";
     display: flex;
     gap: var(--space-xs);
     margin-block-start: var(--space-s);
+    flex: 1;
   }
 
   input,
@@ -167,7 +161,7 @@ import Footer from "../components/Footer.astro";
     background: var(--background);
     border-radius: var(--radius-s);
     color: var(--gray-12);
-    padding: var(--space-xs) var(--space-s);
+    padding: var(--space-s) var(--space-s);
   }
 
   input {
@@ -184,6 +178,7 @@ import Footer from "../components/Footer.astro";
 
   button {
     font-weight: 600;
+    flex-shrink: 0;
     cursor: pointer;
     display: inline-flex;
     gap: var(--space-2xs);
