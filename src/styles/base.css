@@ -4,10 +4,10 @@ html {
 }
 
 body {
-  color: var(--gray-12);
-  background-color: var(--background);
+  color: var(--text);
+  background-color: var(--bg-purple);
   background-image: url('/speckles-black.svg');
-  background-position: center;
+  background-position: center top;
   display: flex;
   min-height: 100dvh;
   position: relative;
@@ -26,14 +26,14 @@ body::after {
   position: absolute;
   inset: 0;
   background-image: url('/speckles-purple.svg');
-  background-position: center;
+  background-position: center top;
   pointer-events: none;
   z-index: 10;
 }
 
 ::selection {
-  background: var(--gray-12);
-  color: var(--background);
+  background: var(--text);
+  color: var(--bg-purple);
 }
 
 h1, h2, h3 {
@@ -75,7 +75,7 @@ small {
 
 a {
   text-decoration: underline;
-  text-decoration-color: var(--gray-a11);
+  text-decoration-color: var(--text);
   text-underline-offset: max(0.1em, 2.5px);
   transition:
     text-decoration-color 0.2s ease-in-out,
@@ -85,7 +85,7 @@ a {
 @media (hover: hover) {
   a:hover,
   a:focus {
-    text-decoration-color: var(--gray-12);
+    text-decoration-color: var(--text);
   }
 }
 
@@ -94,6 +94,6 @@ a {
 }
 
 :focus-visible {
-  outline: 2px solid var(--white-a12);
+  outline: 2px solid var(--white);
   outline-offset: 2px;
 }

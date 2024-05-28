@@ -20,9 +20,6 @@ dependencies:
   '@axe-core/playwright':
     specifier: ^4.9.1
     version: 4.9.1(playwright-core@1.44.0)
-  '@radix-ui/colors':
-    specifier: ^3.0.0
-    version: 3.0.0
   '@types/react':
     specifier: ^18.3.3
     version: 18.3.3
@@ -1761,10 +1758,6 @@ packages:
     dependencies:
       playwright: 1.44.0
     dev: true
-
-  /@radix-ui/colors@3.0.0:
-    resolution: {integrity: sha512-FUOsGBkHrYJwCSEtWRCIfQbZG7q1e6DgxCIOe1SUQzDe/7rXXeA47s8yCn6fuTNQAj1Zq4oTFi9Yjp3wzElcxg==}
-    dev: false
 
   /@rollup/rollup-android-arm-eabi@4.17.2:
     resolution: {integrity: sha512-NM0jFxY8bB8QLkoKxIQeObCaDlJKewVlIEkuyYKm5An1tdVZ966w2+MPQ2l8LBZLjR+SgyV+nRkTIunzOYBMLQ==}

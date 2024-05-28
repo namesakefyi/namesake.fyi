@@ -2,7 +2,8 @@
 import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { RiArrowRightLine } from "react-icons/ri";
-import image from "./namesake-form.png";
+import illustration from "./namesake-form.png";
+import formIllustration from "./form-snail.png";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 ---
@@ -15,7 +16,7 @@ import Footer from "../components/Footer.astro";
   <main>
     <Image
       class="illustration"
-      src={image}
+      src={illustration}
       alt="Some snails and flowers on top of a court order document"
       width={600}
       densities={[1, 2]}
@@ -50,6 +51,13 @@ import Footer from "../components/Footer.astro";
         </p>
       </div>
       <form>
+        <Image
+          class="form-illustration"
+          src={formIllustration}
+          alt="A snail moving to the left"
+          width={240}
+          densities={[1, 2]}
+        />
         <strong>Get notified when we launch:</strong>
         <div class="input-group">
           <input type="email" name="email" placeholder="Your email" required />
@@ -91,7 +99,7 @@ import Footer from "../components/Footer.astro";
   main {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(460px, 1fr) minmax(0, 1fr);
     gap: var(--space-2xl);
     padding: var(--space-2xl) var(--space-l);
     min-width: 0;
@@ -126,7 +134,7 @@ import Footer from "../components/Footer.astro";
   }
 
   .who-you-are {
-    color: var(--background);
+    color: var(--bg-purple);
   }
 
   .subhead {
@@ -138,13 +146,21 @@ import Footer from "../components/Footer.astro";
   }
 
   form {
-    color: var(--background);
-    background-color: var(--gray-12);
-    margin-block-start: var(--space-xl);
+    color: var(--bg-purple);
+    background-color: var(--text);
+    margin-block-start: var(--space-3xl);
     padding: var(--space-l) var(--space-m);
+    position: relative;
 
     @media (width < 540px) {
       width: 100%;
+    }
+
+    .form-illustration {
+      width: 120px;
+      position: absolute;
+      bottom: calc(100% - 4px);
+      right: 20px;
     }
   }
 
@@ -158,9 +174,9 @@ import Footer from "../components/Footer.astro";
   input,
   button {
     border: none;
-    background: var(--background);
+    background: var(--bg-purple);
     border-radius: var(--radius-s);
-    color: var(--gray-12);
+    color: var(--text);
     padding: var(--space-s) var(--space-s);
   }
 
@@ -168,11 +184,11 @@ import Footer from "../components/Footer.astro";
     flex: 1;
 
     &::placeholder {
-      color: var(--gray-a9);
+      color: var(--text-placeholder);
     }
 
     &:focus {
-      background-color: var(--white-a12);
+      background-color: var(--white);
     }
   }
 
@@ -187,12 +203,12 @@ import Footer from "../components/Footer.astro";
 
     @media (hover: hover) {
       &:hover {
-        background: var(--white-a12);
+        background: var(--white);
       }
     }
 
     &:focus-visible {
-      background: var(--white-a12);
+      background: var(--white);
     }
   }
 </style>
