@@ -1,0 +1,37 @@
+---
+import { Image } from "astro:assets";
+import emptyShell from "./_images/empty-shell.png";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="We couldn’t find that page"
+  description="Looks like nobody’s home. Maybe try a different page?"
+>
+  <div class="error">
+    <Image src={emptyShell} alt="Namesake empty shell" width={240} />
+    <h1>There’s nothing here</h1>
+    <p>
+      We couldn’t find that page. Check the spelling of the URL or <a href="/"
+        >go home</a
+      >.
+    </p>
+  </div>
+</BaseLayout>
+
+<style lang="scss">
+  .error {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: var(--space-l);
+  }
+
+  p {
+    font-size: var(--step-3);
+    text-wrap: balance;
+  }
+</style>
