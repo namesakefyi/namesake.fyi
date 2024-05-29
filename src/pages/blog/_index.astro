@@ -9,16 +9,53 @@ const publishedPosts = await getCollection("posts", ({ data }) => {
 ---
 
 <BaseLayout title="Blog" description="Updates and news from Namesake.">
-  <ul>
+  <div class="page-head">
+    <h1>Blog</h1>
+    <p class="subhead">Updates and news from Namesake.</p>
+  </div>
+  <ul class="posts">
     {
       publishedPosts.map((post) => (
-        <li>
-          <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+        <li class="post">
           <time datetime={post.data.publishDate.toISOString()}>
             {post.data.publishDate.toDateString()}
           </time>
+          <a href={`/blog/${post.slug}`}>{post.data.title}</a>
         </li>
       ))
     }
   </ul>
 </BaseLayout>
+
+<style lang="scss">
+  .page-head {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-m);
+    padding-block-end: var(--space-3xl);
+  }
+
+  .subhead {
+    font-size: var(--step-3);
+    line-height: var(--line-height-display);
+  }
+
+  .posts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post {
+    display: flex;
+    flex-direction: column;
+
+    a {
+      font-size: var(--step-2);
+      font-weight: 600;
+    }
+  }
+</style>
