@@ -1,6 +1,16 @@
-import { z, defineCollection } from "astro:content";
+import { z, defineCollection, reference } from "astro:content";
 
 export const collections = {
+  authors: defineCollection({
+    type: "content",
+    schema: ({ image }) =>
+      z.object({
+        name: z.string(),
+        title: z.string().optional(),
+        avatar: image().optional(),
+      }),
+  }),
+
   posts: defineCollection({
     type: "content",
     schema: z.object({
@@ -10,17 +20,8 @@ export const collections = {
         .string()
         .or(z.date())
         .transform((v) => new Date(v)),
-      authors: z.array(z.string()),
+      authors: z.array(reference("authors")),
       image: z.string().optional(),
-    }),
-  }),
-
-  authors: defineCollection({
-    type: "content",
-    schema: z.object({
-      name: z.string(),
-      title: z.string().optional(),
-      avatar: z.string().optional(),
     }),
   }),
 };
