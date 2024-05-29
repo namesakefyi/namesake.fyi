@@ -5,16 +5,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout
-  title="We couldn’t find that page"
+  title="Page Not Found"
   description="Looks like nobody’s home. Maybe try a different page?"
 >
   <div class="error">
-    <Image src={emptyShell} alt="Namesake empty shell" width={240} />
-    <h1>There’s nothing here</h1>
+    <Image src={emptyShell} alt="Namesake empty shell" width={180} />
+    <h1>No one’s home</h1>
     <p>
-      We couldn’t find that page. Check the spelling of the URL or <a href="/"
-        >go home</a
-      >.
+      We couldn’t find that page. <a href="/">Go home?</a>
     </p>
   </div>
 </BaseLayout>
@@ -31,7 +29,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   }
 
   p {
-    font-size: var(--step-3);
+    font-size: var(--step-2);
     text-wrap: balance;
   }
 </style>
