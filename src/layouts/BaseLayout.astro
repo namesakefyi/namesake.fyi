@@ -84,14 +84,17 @@ const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Namesake`;
       <slot />
     </main>
     <Footer />
-  </body><style>
-    main {
-      flex: 1;
-      padding: var(--space-2xl) var(--space-l);
-      min-width: 0;
-      width: 100%;
-      max-width: 1200px;
-      margin-inline: auto;
-    }
-  </style>
+    <style>
+      main {
+        flex: 1;
+        padding: var(--space-2xl) var(--space-l);
+        min-width: 0;
+        width: 100%;
+        max-width: 1200px;
+        margin-inline: auto;
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+  </body>
 </html>

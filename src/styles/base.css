@@ -89,6 +89,12 @@ a {
   }
 }
 
+img {
+  mix-blend-mode: multiply;
+  max-width: 100%;
+  user-select: none;
+}
+
 .nowrap {
   white-space: nowrap;
 }
