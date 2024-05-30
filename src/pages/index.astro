@@ -115,6 +115,16 @@ const partners = await getCollection("partners");
     });
     underline.show();
   }
+
+  const partners: HTMLElement | null = document.querySelector(".partners ul");
+  if (partners) {
+    const brackets = annotate(partners, {
+      type: "bracket",
+      brackets: ["left", "right"],
+      animate: false,
+    });
+    brackets.show();
+  }
 </script>
 
 <style lang="scss">
@@ -155,9 +165,8 @@ const partners = await getCollection("partners");
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding-block-start: var(--space-l);
-    margin-inline: calc(var(--space-l) * -1);
-    min-width: 0;
+    margin-inline: auto;
+    gap: var(--space-l);
 
     h2 {
       font-size: var(--step-1);
@@ -168,15 +177,15 @@ const partners = await getCollection("partners");
       margin: 0;
       padding: 0;
       display: flex;
-      overflow-x: scroll;
-      max-width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
       align-items: center;
       padding: var(--space-l);
-      gap: var(--space-xl) var(--space-2xl);
+      gap: var(--space-l) var(--space-2xl);
     }
 
     img {
-      max-width: 300px;
+      max-width: min(240px, 40vw);
     }
   }
 
