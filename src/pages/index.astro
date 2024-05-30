@@ -4,6 +4,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { RiArrowRightLine } from "react-icons/ri";
 import illustration from "./_images/namesake-form.png";
 import formIllustration from "./_images/form-snail.png";
+import { getCollection } from "astro:content";
+
+const partners = await getCollection("partners");
 ---
 
 <BaseLayout
@@ -62,6 +65,29 @@ import formIllustration from "./_images/form-snail.png";
         </div>
       </form>
     </div>
+    <div class="partners">
+      <h2>In partnership with</h2>
+      <ul>
+        {
+          partners.map((partner) => (
+            <li>
+              <a
+                href={partner.data.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Visit ${partner.data.name}`}
+              >
+                <Image
+                  src={partner.data.logo}
+                  alt={partner.data.name}
+                  height={partner.data.height}
+                />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
   </div>
 </BaseLayout>
 
@@ -73,6 +99,7 @@ import formIllustration from "./_images/form-snail.png";
     const highlight = annotate(whoYouAre, {
       type: "highlight",
       iterations: 1,
+      animate: false,
     });
     highlight.show();
   }
@@ -89,16 +116,33 @@ import formIllustration from "./_images/form-snail.png";
     });
     underline.show();
   }
+
+  const partners: HTMLElement | null = document.querySelector(".partners h2");
+  if (partners) {
+    const brackets = annotate(partners, {
+      type: "bracket",
+      brackets: ["left", "right"],
+      animate: false,
+    });
+    brackets.show();
+  }
 </script>
 
 <style lang="scss">
   .home {
     display: grid;
     grid-template-columns: minmax(460px, 1fr) minmax(0, 1fr);
+    grid-template-rows: 1fr auto;
+    grid-template-areas:
+      "content illustration"
+      "partners partners";
     gap: var(--space-2xl);
 
     @media (width < 800px) {
-      display: block;
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "content"
+        "partners";
 
       .illustration {
         display: none;
@@ -106,10 +150,44 @@ import formIllustration from "./_images/form-snail.png";
     }
   }
 
-  img {
+  .illustration {
+    grid-area: illustration;
     width: 600px;
     max-width: 100%;
     order: 1;
+  }
+
+  .content {
+    grid-area: content;
+  }
+
+  .partners {
+    grid-area: partners;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-inline: auto;
+    gap: var(--space-2xl);
+    padding-block: var(--space-2xl);
+
+    h2 {
+      font-size: var(--step-1);
+    }
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-l) var(--space-2xl);
+    }
+
+    img {
+      max-width: min(240px, 40vw);
+    }
   }
 
   h1 {

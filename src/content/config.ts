@@ -24,4 +24,15 @@ export const collections = {
       image: z.string().optional(),
     }),
   }),
+
+  partners: defineCollection({
+    type: "data",
+    schema: ({ image }) =>
+      z.object({
+        name: z.string(),
+        logo: image(),
+        url: z.string(),
+        height: z.number(),
+      }),
+  }),
 };
