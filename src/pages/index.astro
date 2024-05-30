@@ -99,6 +99,7 @@ const partners = await getCollection("partners");
     const highlight = annotate(whoYouAre, {
       type: "highlight",
       iterations: 1,
+      animate: false,
     });
     highlight.show();
   }
