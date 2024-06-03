@@ -37,7 +37,7 @@ dependencies:
     version: 18.3.0
   astro:
     specifier: ^4.9.2
-    version: 4.9.2(@types/node@20.12.12)(sass@1.77.2)(typescript@5.4.5)
+    version: 4.9.2(@types/node@20.12.12)(sass@1.77.4)(typescript@5.4.5)
   astro-font:
     specifier: ^0.0.81
     version: 0.0.81
@@ -77,8 +77,8 @@ devDependencies:
     specifier: ^6.8.0
     version: 6.8.0(eslint@8.57.0)
   sass:
-    specifier: ^1.77.2
-    version: 1.77.2
+    specifier: ^1.77.4
+    version: 1.77.4
   sharp:
     specifier: ^0.33.4
     version: 0.33.4
@@ -129,7 +129,7 @@ packages:
       '@astrojs/internal-helpers': 0.3.0
       '@astrojs/underscore-redirects': 0.3.3
       '@cloudflare/workers-types': 4.20240524.0
-      astro: 4.9.2(@types/node@20.12.12)(sass@1.77.2)(typescript@5.4.5)
+      astro: 4.9.2(@types/node@20.12.12)(sass@1.77.4)(typescript@5.4.5)
       esbuild: 0.19.12
       estree-walker: 3.0.3
       magic-string: 0.30.10
@@ -195,7 +195,7 @@ packages:
       '@astrojs/markdown-remark': 5.1.0
       '@astrojs/prism': 3.1.0
       '@markdoc/markdoc': 0.4.0(@types/react@18.3.3)(react@18.3.1)
-      astro: 4.9.2(@types/node@20.12.12)(sass@1.77.2)(typescript@5.4.5)
+      astro: 4.9.2(@types/node@20.12.12)(sass@1.77.4)(typescript@5.4.5)
       esbuild: 0.20.2
       github-slugger: 2.0.0
       gray-matter: 4.0.3
@@ -2064,7 +2064,7 @@ packages:
       '@babel/runtime': 7.24.5
       '@keystatic/core': 0.5.17(react-dom@18.3.1)(react@18.3.1)
       '@types/react': 18.3.3
-      astro: 4.9.2(@types/node@20.12.12)(sass@1.77.2)(typescript@5.4.5)
+      astro: 4.9.2(@types/node@20.12.12)(sass@1.77.4)(typescript@5.4.5)
       cookie: 0.5.0
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -3927,7 +3927,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.24.6(@babel/core@7.24.5)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 5.2.11(@types/node@20.12.12)(sass@1.77.2)
+      vite: 5.2.11(@types/node@20.12.12)(sass@1.77.4)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -4204,7 +4204,7 @@ packages:
     resolution: {integrity: sha512-VmK4kqzNpOAt2LASVbw2cbbe9sD6K30E7jOjqzHxHieHMTWInkdOljtzHmNGvKr3P0MeF4Wy+Z7j6CdETFecDA==}
     dev: false
 
-  /astro@4.9.2(@types/node@20.12.12)(sass@1.77.2)(typescript@5.4.5):
+  /astro@4.9.2(@types/node@20.12.12)(sass@1.77.4)(typescript@5.4.5):
     resolution: {integrity: sha512-apzpRoISk6L8g99m3zKIW5SYxw2GhOju/1Gq0Ccf3SH+X2UcFXF+MTdxPOFl5yJUQg7X0qsVQDOIVf8zHRRKFg==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
@@ -4266,7 +4266,7 @@ packages:
       tsconfck: 3.0.3(typescript@5.4.5)
       unist-util-visit: 5.0.0
       vfile: 6.0.1
-      vite: 5.2.11(@types/node@20.12.12)(sass@1.77.2)
+      vite: 5.2.11(@types/node@20.12.12)(sass@1.77.4)
       vitefu: 0.2.5(vite@5.2.11)
       which-pm: 2.2.0
       yargs-parser: 21.1.1
@@ -7724,8 +7724,8 @@ packages:
       is-regex: 1.1.4
     dev: true
 
-  /sass@1.77.2:
-    resolution: {integrity: sha512-eb4GZt1C3avsX3heBNlrc7I09nyT00IUuo4eFhAbeXWU2fvA7oXI53SxODVAA+zgZCk9aunAZgO+losjR3fAwA==}
+  /sass@1.77.4:
+    resolution: {integrity: sha512-vcF3Ckow6g939GMA4PeU7b2K/9FALXk2KF9J87txdHzXbUF9XRQRwSxcAs/fGaTnJeBFd7UoV22j3lzMLdM0Pw==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -8479,7 +8479,7 @@ packages:
       vfile-message: 4.0.2
     dev: false
 
-  /vite@5.2.11(@types/node@20.12.12)(sass@1.77.2):
+  /vite@5.2.11(@types/node@20.12.12)(sass@1.77.4):
     resolution: {integrity: sha512-HndV31LWW05i1BLPMUCE1B9E9GFbOu1MbenhS58FuK6owSO5qHm7GiCotrNY1YE5rMeQSFBGmT5ZaLEjFizgiQ==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -8511,7 +8511,7 @@ packages:
       esbuild: 0.20.2
       postcss: 8.4.38
       rollup: 4.17.2
-      sass: 1.77.2
+      sass: 1.77.4
     optionalDependencies:
       fsevents: 2.3.3
     dev: false
@@ -8524,7 +8524,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 5.2.11(@types/node@20.12.12)(sass@1.77.2)
+      vite: 5.2.11(@types/node@20.12.12)(sass@1.77.4)
     dev: false
 
   /volar-service-css@0.0.45(@volar/language-service@2.2.4):
