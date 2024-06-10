@@ -25,10 +25,10 @@ dependencies:
     version: 4.9.1(playwright-core@1.44.0)
   '@keystatic/astro':
     specifier: ^5.0.0
-    version: 5.0.0(@keystatic/core@0.5.17)(astro@4.9.2)(react-dom@18.3.1)(react@18.3.1)
+    version: 5.0.0(@keystatic/core@0.5.19)(astro@4.9.2)(react-dom@18.3.1)(react@18.3.1)
   '@keystatic/core':
-    specifier: ^0.5.17
-    version: 0.5.17(react-dom@18.3.1)(react@18.3.1)
+    specifier: ^0.5.19
+    version: 0.5.19(react-dom@18.3.1)(react@18.3.1)
   '@types/react':
     specifier: ^18.3.3
     version: 18.3.3
@@ -1956,8 +1956,8 @@ packages:
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
     dev: false
 
-  /@keystar/ui@0.7.3(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-h14FMbiIgVlZXS5rt4COzss1uAuChY+IZhA3+FSOSSQ43gz0zeENED8gGGtahaiB6vpvHLDDwVWvBNuecLJ6Vg==}
+  /@keystar/ui@0.7.4(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-U9oHOPP6JrsK7Ky1BJ+pe3T05kBz8V5ryAN+jD4i0i4fegJ1aE06yFwVHcL5iK+Ksj9qoT9pNRBfWOOFs9QMrg==}
     peerDependencies:
       next: '>=14'
       react: ^18.2.0
@@ -2053,7 +2053,7 @@ packages:
       react-dom: 18.3.1(react@18.3.1)
     dev: false
 
-  /@keystatic/astro@5.0.0(@keystatic/core@0.5.17)(astro@4.9.2)(react-dom@18.3.1)(react@18.3.1):
+  /@keystatic/astro@5.0.0(@keystatic/core@0.5.19)(astro@4.9.2)(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-ahPtok9c1IEwjXwL7Ud6ooRPA7CpVGTQV/uHk560zznNX913E2QX9MlmO10qQtgvUwl2mPK7U68ucpwLp3fWfw==}
     peerDependencies:
       '@keystatic/core': '*'
@@ -2062,7 +2062,7 @@ packages:
       react-dom: ^18.2.0
     dependencies:
       '@babel/runtime': 7.24.5
-      '@keystatic/core': 0.5.17(react-dom@18.3.1)(react@18.3.1)
+      '@keystatic/core': 0.5.19(react-dom@18.3.1)(react@18.3.1)
       '@types/react': 18.3.3
       astro: 4.9.2(@types/node@20.12.12)(sass@1.77.2)(typescript@5.4.5)
       cookie: 0.5.0
@@ -2071,8 +2071,8 @@ packages:
       set-cookie-parser: 2.6.0
     dev: false
 
-  /@keystatic/core@0.5.17(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-3IYDDcvXOsbCtxCMBNms9JZ9LdZg5CtJHfGFUpDcB70dGaZaP+t/LQmYpnUhtCOf1iFjldPrYUgONDK+f0OJkw==}
+  /@keystatic/core@0.5.19(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-y/0PFHLKARQWgFvsu6Kp3/ZoNkLyseNEyrez7tPmfXX08hPMNVlXlwpojCLiXOKAMFYI3XgLgwKHOf5gIsJa3g==}
     peerDependencies:
       react: ^18.2.0
       react-dom: ^18.2.0
@@ -2083,7 +2083,7 @@ packages:
       '@emotion/weak-memoize': 0.3.1
       '@floating-ui/react': 0.24.8(react-dom@18.3.1)(react@18.3.1)
       '@internationalized/string': 3.2.3
-      '@keystar/ui': 0.7.3(react-dom@18.3.1)(react@18.3.1)
+      '@keystar/ui': 0.7.4(react-dom@18.3.1)(react@18.3.1)
       '@markdoc/markdoc': 0.4.0(@types/react@18.3.3)(react@18.3.1)
       '@react-aria/focus': 3.17.1(react@18.3.1)
       '@react-aria/i18n': 3.11.1(react@18.3.1)
