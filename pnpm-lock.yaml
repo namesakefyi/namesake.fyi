@@ -15,8 +15,8 @@ dependencies:
     specifier: ^0.11.0
     version: 0.11.0(@types/react@18.3.3)(astro@4.9.2)(react@18.3.1)
   '@astrojs/react':
-    specifier: ^3.4.0
-    version: 3.4.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)(vite@5.2.11)
+    specifier: ^3.5.0
+    version: 3.5.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)(vite@5.2.11)
   '@astrojs/sitemap':
     specifier: ^3.1.5
     version: 3.1.5
@@ -240,8 +240,8 @@ packages:
       prismjs: 1.29.0
     dev: false
 
-  /@astrojs/react@3.4.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)(vite@5.2.11):
-    resolution: {integrity: sha512-5MpU+1WVqirEIoEmF1r6HkxqjOWEMjni/qCzPX/oaSyumOZNdCGfDN9GoGJhgSxiZOVfob+MNy46H4d3AgrYpQ==}
+  /@astrojs/react@3.5.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)(vite@5.2.11):
+    resolution: {integrity: sha512-+xXL2kAvURlCOnWBem4CnoUuy1XW1u284esEHN+i7ds3zcs7lLquDQNRvPu2fSW/auUMcLdllAZC631seXwI8g==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0}
     peerDependencies:
       '@types/react': ^17.0.50 || ^18.0.21
