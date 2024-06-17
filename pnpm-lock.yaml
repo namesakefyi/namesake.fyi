@@ -9,8 +9,8 @@ dependencies:
     specifier: ^0.7.0
     version: 0.7.0(typescript@5.4.5)
   '@astrojs/cloudflare':
-    specifier: ^10.2.6
-    version: 10.2.6(astro@4.10.2)
+    specifier: ^10.4.1
+    version: 10.4.1(astro@4.10.2)
   '@astrojs/markdoc':
     specifier: ^0.11.0
     version: 0.11.0(@types/react@18.3.3)(astro@4.10.2)(react@18.3.1)
@@ -121,8 +121,8 @@ packages:
       - prettier-plugin-astro
     dev: false
 
-  /@astrojs/cloudflare@10.2.6(astro@4.10.2):
-    resolution: {integrity: sha512-pgAT9+D866T/ER/L1+t2HvTtJzWhnZF7h7g2ur2ssv3AriJsXrS+Pny6ZTLYY11tuCx7GNxjY4H0jz1AOxuLig==}
+  /@astrojs/cloudflare@10.4.1(astro@4.10.2):
+    resolution: {integrity: sha512-kwAUsFtBO8fOiklQpUHBS3AD1CdZ4n6qz7vIjWz3Ecrvhlvx6FiXTl4rYtLoz6XTrZsVXPlntOyNOfqPbBeuLw==}
     peerDependencies:
       astro: ^4.2.0
     dependencies:
