@@ -34,7 +34,7 @@
     "@types/node": "^20.14.2",
     "@typescript-eslint/parser": "^7.13.0",
     "eslint": "^8.57.0",
-    "eslint-plugin-astro": "^1.2.0",
+    "eslint-plugin-astro": "^1.2.2",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "sass": "^1.77.5",
     "sharp": "^0.33.4"
