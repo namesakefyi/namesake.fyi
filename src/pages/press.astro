@@ -19,7 +19,7 @@ const pressArticles = await getCollection("press");
             {article.data.date.toDateString()}
           </time>
           <strong class="outlet">{article.data.outlet}</strong>
-          <a href={article.data.url} class="title">
+          <a href={article.data.url} class="title" target="_blank">
             {article.data.title}
           </a>
           {article.data.image && (
