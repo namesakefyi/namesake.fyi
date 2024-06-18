@@ -35,4 +35,18 @@ export const collections = {
         height: z.number(),
       }),
   }),
+
+  press: defineCollection({
+    type: "data",
+    schema: ({ image }) => z.object({
+      title: z.string(),
+      date: z.date(),
+      url: z.string(),
+      outlet: z.string(),
+      image: z.object({
+        src: image(),
+        alt: z.string(),
+      }).optional(),
+    }),
+  })
 };

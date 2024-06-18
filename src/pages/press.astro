@@ -1,0 +1,74 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+import { getCollection } from "astro:content";
+
+const pressArticles = await getCollection("press");
+---
+
+<BaseLayout title="Blog" description="Updates and news from Namesake.">
+  <div class="page-head">
+    <h1>Press</h1>
+  </div>
+  <ul class="articles">
+    {
+      pressArticles.map((article) => (
+        <li class="article">
+          <time datetime={article.data.date.toISOString()}>
+            {article.data.date.toDateString()}
+          </time>
+          <strong class="outlet">{article.data.outlet}</strong>
+          <a href={article.data.url} class="title">
+            {article.data.title}
+          </a>
+          {article.data.image && (
+            <Image
+              src={article.data.image.src}
+              alt={article.data.image.alt}
+              width="800"
+              class="image"
+            />
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>
+
+<style lang="scss">
+  .page-head {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-m);
+    padding-block-end: var(--space-3xl);
+  }
+
+  .articles {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: var(--space-xl);
+  }
+
+  .article {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+
+    .title {
+      font-size: var(--step-3);
+      font-weight: 600;
+      text-wrap: balance;
+    }
+  }
+
+  .image {
+    filter: grayscale(100%);
+    align-self: flex-end;
+    margin-block-start: var(--space-l);
+  }
+</style>
