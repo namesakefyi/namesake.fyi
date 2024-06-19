@@ -90,8 +90,10 @@ a {
 }
 
 img {
-  filter: grayscale(100%);
+  filter: grayscale(100%) contrast(180%) brightness(140%);
+  opacity: 0.9;
   mix-blend-mode: multiply;
+  border-radius: 2px;
   max-width: 100%;
   user-select: none;
 }
@@ -101,6 +103,6 @@ img {
 }
 
 :focus-visible {
-  outline: 2px solid var(--white);
+  outline: 2px solid var(--bg-purple);
   outline-offset: 2px;
 }
