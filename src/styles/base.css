@@ -90,6 +90,7 @@ a {
 }
 
 img {
+  filter: grayscale(100%);
   mix-blend-mode: multiply;
   max-width: 100%;
   user-select: none;

@@ -7,7 +7,10 @@ import { getCollection } from "astro:content";
 const pressArticles = await getCollection("press");
 ---
 
-<BaseLayout title="Blog" description="Updates and news from Namesake.">
+<BaseLayout
+  title="Press"
+  description="Namesake media coverage and brand assets."
+>
   <div class="page-head">
     <h1>Press</h1>
   </div>
@@ -67,7 +70,6 @@ const pressArticles = await getCollection("press");
   }
 
   .image {
-    filter: grayscale(100%);
     align-self: flex-end;
     margin-block-start: var(--space-l);
   }
