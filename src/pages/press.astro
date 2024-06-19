@@ -5,6 +5,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
 const pressArticles = await getCollection("press");
+pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
 <BaseLayout
@@ -23,7 +24,7 @@ const pressArticles = await getCollection("press");
           </time>
           <strong class="outlet">{article.data.outlet}</strong>
           <a href={article.data.url} class="title" target="_blank">
-            {article.data.title}
+            <span>{article.data.title}</span>
           </a>
           {article.data.image && (
             <Image
@@ -54,7 +55,8 @@ const pressArticles = await getCollection("press");
     margin: 0;
     display: flex;
     flex-direction: column;
-    padding-bottom: var(--space-xl);
+    gap: var(--space-3xl);
+    padding-bottom: var(--space-3xl);
   }
 
   .article {
@@ -66,11 +68,17 @@ const pressArticles = await getCollection("press");
       font-size: var(--step-3);
       font-weight: 600;
       text-wrap: balance;
+
+      span {
+        background: var(--bg-purple-overlay);
+        box-decoration-break: clone;
+      }
     }
   }
 
   .image {
     align-self: flex-end;
-    margin-block-start: var(--space-l);
+    margin-block-start: calc(-1 * var(--space-2xl));
+    z-index: -1;
   }
 </style>
