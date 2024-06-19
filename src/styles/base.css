@@ -90,8 +90,10 @@ a {
 }
 
 img {
-  filter: grayscale(100%);
+  filter: grayscale(100%) contrast(180%) brightness(140%);
+  opacity: 0.9;
   mix-blend-mode: multiply;
+  border-radius: 2px;
   max-width: 100%;
   user-select: none;
 }

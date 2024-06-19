@@ -68,18 +68,20 @@ pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
     .title {
       font-size: var(--step-3);
       font-weight: 600;
-      text-wrap: balance;
+      max-width: 36ch;
 
       span {
-        background: var(--bg-purple-overlay);
-        box-decoration-break: clone;
+        background: var(--bg-purple);
+        border-radius: 2px;
+        box-shadow: 0.2em 0.2em 0 var(--bg-purple);
       }
     }
   }
 
   .image {
     align-self: flex-end;
-    margin-block-start: calc(-1 * var(--space-2xl));
+    padding-inline-start: var(--space-xl);
+    margin-block-start: -1.25em;
     z-index: -1;
   }
 </style>
