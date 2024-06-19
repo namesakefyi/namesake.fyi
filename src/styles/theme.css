@@ -37,6 +37,7 @@
 
   /* Colors */
   --bg-purple: #CDA5EF;
+  --bg-purple-overlay: rgb(205 165 239 / 0.8);
   --text: #111111;
   --text-placeholder: rgba(0, 0, 0, 0.5);
   --white: #FFFFFF;
