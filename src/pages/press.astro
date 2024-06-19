@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import dayjs from "dayjs";
 
 import { getCollection } from "astro:content";
 
@@ -20,7 +21,7 @@ pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
       pressArticles.map((article) => (
         <li class="article">
           <time datetime={article.data.date.toISOString()}>
-            {article.data.date.toDateString()}
+            {dayjs(article.data.date).format("MMMM YYYY")}
           </time>
           <strong class="outlet">{article.data.outlet}</strong>
           <a href={article.data.url} class="title" target="_blank">
