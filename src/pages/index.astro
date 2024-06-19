@@ -100,7 +100,6 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
     const highlight = annotate(whoYouAre, {
       type: "highlight",
       iterations: 1,
-      animate: false,
     });
     highlight.show();
   }
@@ -121,8 +120,7 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
   const partners: HTMLElement | null = document.querySelector(".partners h2");
   if (partners) {
     const brackets = annotate(partners, {
-      type: "bracket",
-      brackets: ["left", "right"],
+      type: "underline",
       animate: false,
     });
     brackets.show();
@@ -265,10 +263,6 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
     &::placeholder {
       color: var(--text-placeholder);
     }
-
-    &:focus {
-      background-color: var(--white);
-    }
   }
 
   button {
@@ -279,15 +273,5 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
     gap: var(--space-2xs);
     align-items: center;
     padding-inline: var(--space-m);
-
-    @media (hover: hover) {
-      &:hover {
-        background: var(--white);
-      }
-    }
-
-    &:focus-visible {
-      background: var(--white);
-    }
   }
 </style>

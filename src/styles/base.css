@@ -103,6 +103,6 @@ img {
 }
 
 :focus-visible {
-  outline: 2px solid var(--white);
+  outline: 2px solid var(--bg-purple);
   outline-offset: 2px;
 }

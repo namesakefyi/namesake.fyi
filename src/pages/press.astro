@@ -25,7 +25,7 @@ pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
           </time>
           <strong class="outlet">{article.data.outlet}</strong>
           <a href={article.data.url} class="title" target="_blank">
-            <span>{article.data.title}</span>
+            <span class="title-text">{article.data.title}</span>
           </a>
           {article.data.image && (
             <Image
@@ -41,13 +41,43 @@ pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
   </ul>
 </BaseLayout>
 
+<script>
+  import { annotate } from "rough-notation";
+
+  const header: HTMLElement | null = document.querySelector(".page-head h1");
+
+  if (header) {
+    const highlight = annotate(header, {
+      type: "circle",
+      iterations: 2,
+    });
+    highlight.show();
+  }
+
+  const titles: NodeListOf<HTMLElement> =
+    document.querySelectorAll(".title-text");
+
+  if (titles) {
+    titles.forEach((title) => {
+      const highlight = annotate(title, {
+        type: "highlight",
+        color: "var(--bg-purple)",
+        multiline: true,
+        iterations: 1,
+        animate: false,
+      });
+      highlight.show();
+    });
+  }
+</script>
+
 <style lang="scss">
   .page-head {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: var(--space-m);
     padding-block-end: var(--space-3xl);
+
+    h1 {
+      display: inline;
+    }
   }
 
   .articles {
@@ -64,18 +94,17 @@ pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
     display: flex;
     flex-direction: column;
     gap: var(--space-2xs);
+  }
 
-    .title {
-      font-size: var(--step-3);
-      font-weight: 600;
-      max-width: 36ch;
+  .title {
+    font-size: var(--step-3);
+    font-weight: 600;
+    max-width: 36ch;
+  }
 
-      span {
-        background: var(--bg-purple);
-        border-radius: 2px;
-        box-shadow: 0.2em 0.2em 0 var(--bg-purple);
-      }
-    }
+  .title-text {
+    padding-inline-end: var(--space-s);
+    padding-block-end: var(--space-s);
   }
 
   .image {
