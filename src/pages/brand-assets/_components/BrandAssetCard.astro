@@ -1,0 +1,89 @@
+---
+import { RiDownloadLine } from "react-icons/ri";
+
+export type Props = {
+  name: string;
+  instructions: string;
+  assetName: string;
+  inverted?: boolean;
+};
+
+const { assetName, name, instructions, inverted } = Astro.props;
+---
+
+<div class="logo-card">
+  <div class:list={["preview", { inverted }]}>
+    <img src={`/brand-assets/${assetName}.svg`} />
+  </div>
+  <div class="info">
+    <h3>{name}</h3>
+    <p>{instructions}</p>
+    <div class="buttons">
+      <a class="button" href={`/brand-assets/${assetName}.svg`} download
+        ><RiDownloadLine />SVG</a
+      >
+      <a class="button" href={`/brand-assets/${assetName}.png`} download
+        ><RiDownloadLine />PNG</a
+      >
+    </div>
+  </div>
+</div>
+
+<style lang="scss">
+  .logo-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    padding-block-end: var(--space-m);
+  }
+
+  h3 {
+    font-size: var(--step-1);
+    margin-block-end: var(--space-2xs);
+  }
+
+  p {
+    font-size: var(--step--1);
+    margin-block-end: var(--space-s);
+  }
+
+  .preview {
+    aspect-ratio: 5 / 3;
+    border: 3px solid var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.inverted {
+      background-color: var(--text);
+    }
+  }
+
+  .buttons {
+    margin-top: auto;
+  }
+
+  .button {
+    display: inline-flex;
+    font-size: var(--step--1);
+    gap: var(--space-2xs);
+
+    border: 3px solid var(--text);
+
+    padding: var(--space-2xs) var(--space-xs);
+    text-decoration: none;
+    font-weight: 600;
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: var(--text);
+        color: var(--bg-purple);
+      }
+    }
+
+    &:focus-visible {
+      outline: 3px solid var(--text);
+      outline-offset: 2px;
+    }
+  }
+</style>
