@@ -6,7 +6,6 @@ html {
 body {
   color: var(--text);
   background-color: var(--bg-purple);
-  background-image: url('/speckles-black.svg');
   background-position: center top;
   display: flex;
   min-height: 100dvh;
@@ -21,14 +20,21 @@ body {
   font-style: normal;
 }
 
-body::after {
+body::before, body::after {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/speckles-purple.svg');
   background-position: center top;
   pointer-events: none;
   z-index: 10;
+}
+
+body::after {
+  background-image: url('/speckles-purple.svg');
+}
+
+body::before {
+  background-image: url('/speckles-black.svg');
 }
 
 ::selection {
@@ -68,6 +74,10 @@ h5 {
   line-height: var(--line-height-body);
 }
 
+p {
+  max-width: 65ch;
+}
+
 small {
   font-size: var(--step--1);
   line-height: var(--line-height-body);
@@ -90,12 +100,7 @@ a {
 }
 
 img {
-  filter: grayscale(100%) contrast(180%) brightness(140%);
-  opacity: 0.9;
-  mix-blend-mode: multiply;
-  border-radius: 2px;
   max-width: 100%;
-  user-select: none;
 }
 
 .nowrap {
@@ -103,6 +108,6 @@ img {
 }
 
 :focus-visible {
-  outline: 2px solid var(--bg-purple);
+  outline: 3px solid var(--text);
   outline-offset: 2px;
 }

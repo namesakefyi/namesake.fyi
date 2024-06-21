@@ -11,7 +11,7 @@ pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 <BaseLayout
   title="Press"
-  description="Namesake media coverage and brand assets."
+  description="Media coverage about Namesake and press releases."
 >
   <div class="page-head">
     <h1>Press</h1>
@@ -20,7 +20,7 @@ pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
     {
       pressArticles.map((article) => (
         <li class="article">
-          <time datetime={article.data.date.toISOString()}>
+          <time class="date" datetime={article.data.date.toISOString()}>
             {dayjs(article.data.date).format("MMMM YYYY")}
           </time>
           <strong class="outlet">{article.data.outlet}</strong>
@@ -53,22 +53,6 @@ pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
     });
     highlight.show();
   }
-
-  const titles: NodeListOf<HTMLElement> =
-    document.querySelectorAll(".title-text");
-
-  if (titles) {
-    titles.forEach((title) => {
-      const highlight = annotate(title, {
-        type: "highlight",
-        color: "var(--bg-purple)",
-        multiline: true,
-        iterations: 1,
-        animate: false,
-      });
-      highlight.show();
-    });
-  }
 </script>
 
 <style lang="scss">
@@ -92,8 +76,8 @@ pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
   .article {
     display: flex;
+    align-items: flex-start;
     flex-direction: column;
-    gap: var(--space-2xs);
   }
 
   .title {
@@ -102,15 +86,30 @@ pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
     max-width: 36ch;
   }
 
-  .title-text {
-    padding-inline-end: var(--space-s);
-    padding-block-end: var(--space-s);
+  .title-text,
+  .date,
+  .outlet {
+    background: var(--bg-purple);
+    padding-inline-end: var(--space-xs);
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .date,
+  .outlet {
+    padding-block: var(--space-xs);
+    margin-block: calc(var(--space-2xs) * -1);
   }
 
   .image {
+    order: -1;
     align-self: flex-end;
     padding-inline-start: var(--space-xl);
-    margin-block-start: -1.25em;
+    margin-block-end: -5em;
     z-index: -1;
+    filter: grayscale(100%) contrast(180%) brightness(140%);
+    opacity: 0.9;
+    mix-blend-mode: multiply;
+    border-radius: 2px;
   }
 </style>

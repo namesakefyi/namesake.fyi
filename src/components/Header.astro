@@ -3,8 +3,17 @@ import Logo from "./Logo.astro";
 ---
 
 <header>
-  <a href="/" aria-label="Namesake homepage"><Logo /></a>
+  <a href="/" aria-label="Namesake homepage" id="logo"><Logo /></a>
 </header>
+
+<script>
+  const logo = document.querySelector("#logo");
+
+  logo?.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+    window.location.href = "/brand-assets";
+  });
+</script>
 
 <style>
   header {

@@ -1,0 +1,236 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BrandAssetCard from "./_components/BrandAssetCard.astro";
+import { RiDownloadLine } from "react-icons/ri";
+
+const palette = [
+  {
+    name: "Namesake Purple",
+    hex: "#CDA5EF",
+  },
+  {
+    name: "Namesake Pink",
+    hex: "#ECADD4",
+  },
+  {
+    name: "Namesake Green",
+    hex: "#97CF9C",
+  },
+  {
+    name: "Namesake Yellow",
+    hex: "#ECDD85",
+  },
+  {
+    name: "Namesake Blue",
+    hex: "#96C7F2",
+  },
+  {
+    name: "Namesake Brown",
+    hex: "#DDB896",
+  },
+];
+---
+
+<BaseLayout
+  title="Brand Assets"
+  description="Download Namesake's logo, color palette, and illustrations."
+>
+  <div class="page-head">
+    <h1>Brand Assets</h1>
+    <p class="subhead">
+      The Namesake brand is inspired by photocopied documents and queer zines.
+      It communicates information authentically, clearly, and without BS or
+      jargon.
+    </p>
+  </div>
+  <section>
+    <h2>Logo</h2>
+    <p>
+      The Namesake logo can be used as a standalone wordmark, or together with
+      the snail glyph. Please do not edit, recolor, or restyle the logo.
+    </p>
+    <div class="logo-grid">
+      <BrandAssetCard
+        name="Vertical logo"
+        assetName="namesake-vertical"
+        instructions="This is the default logo. Use it on light backgrounds."
+      />
+      <BrandAssetCard
+        name="Horizontal logo"
+        assetName="namesake-horizontal"
+        instructions="When height is scarce, this alternative logo can be used."
+      />
+      <BrandAssetCard
+        name="Wordmark"
+        assetName="namesake-wordmark"
+        instructions="When minimalism is key, the wordmark can be used alone."
+      />
+      <BrandAssetCard
+        name="Glyph"
+        assetName="namesake-glyph"
+        instructions="Use this glyph for avatars and other square spaces."
+      />
+      <BrandAssetCard
+        name="Vertical dark"
+        assetName="namesake-vertical-inverted"
+        instructions="Use this version over media or dark backgrounds."
+        inverted
+      />
+      <BrandAssetCard
+        name="Horizontal dark"
+        assetName="namesake-horizontal-inverted"
+        instructions="Use this version over media or dark backgrounds."
+        inverted
+      />
+      <BrandAssetCard
+        name="Wordmark dark"
+        assetName="namesake-wordmark-inverted"
+        instructions="Use this version over media or dark backgrounds."
+        inverted
+      />
+      <BrandAssetCard
+        name="Glyph dark"
+        assetName="namesake-glyph-inverted"
+        instructions="Use this glyph over media or dark backgrounds."
+        inverted
+      />
+    </div>
+    <a class="button" href="/brand-assets/namesake-logos.zip" download
+      ><RiDownloadLine />Download All</a
+    >
+  </section>
+  <section>
+    <h2>Typography</h2>
+    <p>
+      The text you’re reading now is set in <strong>Alte Haas Grotesk</strong>,
+      a rounded version of Neue Haas Grotesk—better known today as Helvetica.
+      Alte Haas Grotesk was created by <a href="https://www.yannlecoroller.com/"
+        >Yann Le Coroller</a
+      > and is freely distributed. It emulates the look of printed text.
+    </p>
+    <a class="button" href="/brand-assets/alte-haas-grotesk.zip" download
+      ><RiDownloadLine />Download Alte Haas Grotesk</a
+    >
+  </section>
+  <section>
+    <h2>Color</h2>
+    <p>
+      Namesake brand colors are inspired by the colored printer paper commonly
+      used for zines. Namesake’s primary purple is produced by evenly blending
+      together every stripe on the trans flag.
+    </p>
+    <ul class="swatches">
+      {
+        palette.map((color) => (
+          <li class="swatch" style={{ backgroundColor: color.hex }}>
+            <div class="swatch-hex">{color.hex}</div>
+            <strong class="swatch-name">{color.name}</strong>
+          </li>
+        ))
+      }
+    </ul>
+    <p>
+      Text is always set in <strong>Photocopy Black (#111111)</strong>. Most
+      pages should use a single background color and black text with no other
+      colors. Text on top of a full-page image may use <strong
+        >Photocopy White (#F1F1F1)</strong
+      >.
+    </p>
+  </section>
+</BaseLayout>
+
+<script>
+  import { annotate } from "rough-notation";
+
+  const header: HTMLElement | null = document.querySelector(".page-head h1");
+
+  if (header) {
+    const highlight = annotate(header, {
+      type: "circle",
+      iterations: 2,
+      padding: 10,
+    });
+    highlight.show();
+  }
+</script>
+
+<style lang="scss">
+  .page-head {
+    padding-block-end: var(--space-3xl);
+
+    h1 {
+      display: inline;
+    }
+
+    .subhead {
+      margin-block-start: var(--space-l);
+      font-size: var(--step-1);
+    }
+  }
+
+  h2 {
+    margin-bottom: var(--space-s);
+  }
+
+  section + section {
+    padding-top: var(--space-3xl);
+  }
+
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-l);
+    list-style: none;
+    padding-inline-start: 0;
+    margin-block: var(--space-xl);
+
+    @media (width < 680px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .logo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-l);
+    list-style: none;
+    padding-inline-start: 0;
+    margin-block: var(--space-xl);
+
+    @media (width < 1000px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (width < 540px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .swatch {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: var(--space-m);
+    aspect-ratio: 4 / 3;
+    border: 3px solid var(--text);
+  }
+
+  .button {
+    display: inline-flex;
+    gap: var(--space-s);
+    font-weight: 600;
+    background-color: var(--text);
+    border: 3px solid var(--text);
+    color: var(--bg-purple);
+    text-decoration: none;
+    padding: var(--space-s) var(--space-m);
+    margin-top: var(--space-m);
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: var(--bg-purple);
+        color: var(--text);
+      }
+    }
+  }
+</style>
