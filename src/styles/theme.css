@@ -30,6 +30,7 @@
   --letter-spacing-loose: 0.01em;
 
   /* Radii */
+  --radius-2xs: var(--space-2xs);
   --radius-xs: var(--space-xs);
   --radius-s: var(--space-s);
   --radius-m: var(--space-m);

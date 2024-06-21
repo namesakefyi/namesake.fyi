@@ -154,7 +154,11 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
     width: 600px;
     max-width: 100%;
     order: 1;
+  }
+
+  img {
     mix-blend-mode: multiply;
+    user-select: none;
   }
 
   .content {
@@ -253,7 +257,7 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
   button {
     border: none;
     background: var(--bg-purple);
-    border-radius: var(--radius-s);
+    border-radius: var(--radius-2xs);
     color: var(--text);
     padding: var(--space-s) var(--space-s);
   }
