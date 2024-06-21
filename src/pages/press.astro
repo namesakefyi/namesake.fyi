@@ -84,6 +84,7 @@ pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
     font-size: var(--step-3);
     font-weight: 600;
     max-width: 36ch;
+    hyphens: auto;
   }
 
   .title-text,
@@ -105,7 +106,7 @@ pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
     order: -1;
     align-self: flex-end;
     padding-inline-start: var(--space-xl);
-    margin-block-end: -5em;
+    margin-block-end: -4.25em;
     z-index: -1;
     filter: grayscale(100%) contrast(180%) brightness(140%);
     opacity: 0.9;
