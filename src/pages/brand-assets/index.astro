@@ -10,23 +10,23 @@ const palette = [
     hex: "#CDA5EF",
   },
   {
-    name: "Namesake Pink",
+    name: "Pastel Pink",
     hex: "#ECADD4",
   },
   {
-    name: "Namesake Green",
+    name: "Pastel Green",
     hex: "#97CF9C",
   },
   {
-    name: "Namesake Yellow",
+    name: "Pastel Yellow",
     hex: "#ECDD85",
   },
   {
-    name: "Namesake Blue",
+    name: "Pastel Blue",
     hex: "#96C7F2",
   },
   {
-    name: "Namesake Brown",
+    name: "Pastel Brown",
     hex: "#DDB896",
   },
 ];
@@ -48,16 +48,6 @@ const palette = [
     </p>
     <div class="logo-grid">
       <BrandAssetCard
-        name="Vertical logo"
-        assetName="namesake-vertical"
-        instructions="This is the default logo. Use it on light backgrounds."
-      />
-      <BrandAssetCard
-        name="Horizontal logo"
-        assetName="namesake-horizontal"
-        instructions="When height is scarce, this alternative logo can be used."
-      />
-      <BrandAssetCard
         name="Wordmark"
         assetName="namesake-wordmark"
         instructions="When minimalism is key, the wordmark can be used alone."
@@ -66,18 +56,6 @@ const palette = [
         name="Glyph"
         assetName="namesake-glyph"
         instructions="Use this glyph for avatars and other square spaces."
-      />
-      <BrandAssetCard
-        name="Vertical dark"
-        assetName="namesake-vertical-inverted"
-        instructions="Use this version over media or dark backgrounds."
-        inverted
-      />
-      <BrandAssetCard
-        name="Horizontal dark"
-        assetName="namesake-horizontal-inverted"
-        instructions="Use this version over media or dark backgrounds."
-        inverted
       />
       <BrandAssetCard
         name="Wordmark dark"
@@ -145,19 +123,6 @@ const palette = [
     padding-top: var(--space-3xl);
   }
 
-  .swatches {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-l);
-    list-style: none;
-    padding-inline-start: 0;
-    margin-block: var(--space-xl);
-
-    @media (width < 680px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
   .logo-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -175,12 +140,29 @@ const palette = [
     }
   }
 
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-l);
+    list-style: none;
+    padding-inline-start: 0;
+    margin-block: var(--space-xl);
+
+    @media (width < 680px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (width < 500px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
   .swatch {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     padding: var(--space-m);
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 5 / 3;
     border: 3px solid var(--text);
   }
 
