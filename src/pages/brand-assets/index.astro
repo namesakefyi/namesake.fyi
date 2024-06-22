@@ -34,7 +34,7 @@ const palette = [
 
 <BaseLayout
   title="Brand Assets"
-  description="Download Namesake's logo, color palette, and illustrations."
+  description="Download Namesake logos, fonts, and colors."
 >
   <PageHeader
     title="Brand Assets"
@@ -50,7 +50,7 @@ const palette = [
       <BrandAssetCard
         name="Wordmark"
         assetName="namesake-wordmark"
-        instructions="When minimalism is key, the wordmark can be used alone."
+        instructions="The Namesake wordmark. Use this in most contexts."
       />
       <BrandAssetCard
         name="Glyph"
@@ -58,13 +58,13 @@ const palette = [
         instructions="Use this glyph for avatars and other square spaces."
       />
       <BrandAssetCard
-        name="Wordmark dark"
+        name="Wordmark on dark"
         assetName="namesake-wordmark-inverted"
         instructions="Use this version over media or dark backgrounds."
         inverted
       />
       <BrandAssetCard
-        name="Glyph dark"
+        name="Glyph on dark"
         assetName="namesake-glyph-inverted"
         instructions="Use this glyph over media or dark backgrounds."
         inverted
@@ -125,17 +125,13 @@ const palette = [
 
   .logo-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--space-l);
     list-style: none;
     padding-inline-start: 0;
     margin-block: var(--space-xl);
 
-    @media (width < 1000px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media (width < 540px) {
+    @media (width < 620px) {
       grid-template-columns: 1fr;
     }
   }
