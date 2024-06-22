@@ -69,7 +69,7 @@ const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Namesake`;
               ),
             },
           ],
-          preload: false,
+          preload: true,
           display: "swap",
           selector: "body",
           fallback: "sans-serif",
@@ -77,6 +77,10 @@ const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Namesake`;
         },
       ]}
     />
+    <script>
+      import * as Fathom from "fathom-client";
+      Fathom.load("GQAJEJLZ");
+    </script>
   </head>
   <body>
     <Header />
