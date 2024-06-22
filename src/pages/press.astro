@@ -4,6 +4,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import dayjs from "dayjs";
 
 import { getCollection } from "astro:content";
+import PageHeader from "../components/PageHeader.astro";
 
 const pressArticles = await getCollection("press");
 pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
@@ -13,9 +14,7 @@ pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
   title="Press"
   description="Media coverage about Namesake and press releases."
 >
-  <div class="page-head">
-    <h1>Press</h1>
-  </div>
+  <PageHeader title="Press" />
   <ul class="articles">
     {
       pressArticles.map((article) => (
@@ -41,29 +40,7 @@ pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
   </ul>
 </BaseLayout>
 
-<script>
-  import { annotate } from "rough-notation";
-
-  const header: HTMLElement | null = document.querySelector(".page-head h1");
-
-  if (header) {
-    const highlight = annotate(header, {
-      type: "circle",
-      iterations: 2,
-    });
-    highlight.show();
-  }
-</script>
-
 <style lang="scss">
-  .page-head {
-    padding-block-end: var(--space-3xl);
-
-    h1 {
-      display: inline;
-    }
-  }
-
   .articles {
     list-style: none;
     padding: 0;

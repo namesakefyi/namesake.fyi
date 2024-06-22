@@ -1,0 +1,36 @@
+---
+// import "../styles/prose.css";
+
+import type { RoughAnnotationType } from "rough-notation/lib/model";
+import PageHeader from "../components/PageHeader.astro";
+import { smartquotes } from "../helpers/helpers";
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  ogAlt?: string;
+  annotation?: RoughAnnotationType;
+}
+
+const { title, description, ogImage, ogAlt, annotation } = Astro.props;
+---
+
+<BaseLayout
+  title={title}
+  description={description && smartquotes(description)}
+  ogImage={ogImage}
+  ogAlt={ogAlt}
+>
+  <article itemscope itemtype="https://schema.org/BlogPosting">
+    <PageHeader
+      title={title}
+      description={description && smartquotes(description)}
+      annotation={annotation}
+    />
+    <section itemprop="articleBody" class="prose">
+      <slot />
+    </section>
+  </article>
+</BaseLayout>

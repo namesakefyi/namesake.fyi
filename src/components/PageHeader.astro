@@ -1,0 +1,49 @@
+---
+import type { RoughAnnotationType } from "rough-notation/lib/model";
+
+interface Props {
+  title: string;
+  description?: string;
+  annotation?: RoughAnnotationType;
+}
+
+const { title, description, annotation = "circle" } = Astro.props;
+---
+
+<div class="page-head">
+  <h1 data-annotation={annotation}>{title}</h1>
+  {description && <p class="subhead">{description}</p>}
+</div>
+
+<script>
+  import { annotate } from "rough-notation";
+  import type { RoughAnnotationType } from "rough-notation/lib/model";
+
+  const header: HTMLElement | null = document.querySelector(".page-head h1");
+
+  if (header) {
+    const annotation = header.dataset.annotation as RoughAnnotationType;
+
+    const highlight = annotate(header, {
+      type: annotation,
+      iterations: 2,
+      padding: 10,
+    });
+    highlight.show();
+  }
+</script>
+
+<style>
+  .page-head {
+    padding-block-end: var(--space-3xl);
+
+    h1 {
+      display: inline;
+    }
+
+    .subhead {
+      margin-block-start: var(--space-l);
+      font-size: var(--step-1);
+    }
+  }
+</style>
