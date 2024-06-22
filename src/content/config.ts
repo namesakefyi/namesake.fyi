@@ -1,4 +1,5 @@
 import { z, defineCollection, reference } from "astro:content";
+import type { RoughAnnotationType } from "rough-notation/lib/model";
 
 export const collections = {
   authors: defineCollection({
@@ -8,6 +9,20 @@ export const collections = {
         name: z.string(),
         title: z.string().optional(),
         avatar: image().optional(),
+      }),
+  }),
+
+  pages: defineCollection({
+    type: "content",
+    schema: ({ image }) =>
+      z.object({
+        title: z.string(),
+        description: z.string().optional(),
+        ogImage: z.object({
+          image: image(),
+          alt: z.string()
+        }).optional(),
+        annotation: z.custom<RoughAnnotationType>().optional(),
       }),
   }),
 

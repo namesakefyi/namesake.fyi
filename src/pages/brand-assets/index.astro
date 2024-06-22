@@ -1,4 +1,5 @@
 ---
+import PageHeader from "../../components/PageHeader.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import BrandAssetCard from "./_components/BrandAssetCard.astro";
 import { RiDownloadLine } from "react-icons/ri";
@@ -35,14 +36,10 @@ const palette = [
   title="Brand Assets"
   description="Download Namesake's logo, color palette, and illustrations."
 >
-  <div class="page-head">
-    <h1>Brand Assets</h1>
-    <p class="subhead">
-      The Namesake brand is inspired by photocopied documents and queer zines.
-      It communicates information authentically, clearly, and without BS or
-      jargon.
-    </p>
-  </div>
+  <PageHeader
+    title="Brand Assets"
+    description="The Namesake brand is inspired by photocopied documents and queer zines. It communicates information authentically, clearly, and without BS or jargon."
+  />
   <section>
     <h2>Logo</h2>
     <p>
@@ -139,35 +136,7 @@ const palette = [
   </section>
 </BaseLayout>
 
-<script>
-  import { annotate } from "rough-notation";
-
-  const header: HTMLElement | null = document.querySelector(".page-head h1");
-
-  if (header) {
-    const highlight = annotate(header, {
-      type: "circle",
-      iterations: 2,
-      padding: 10,
-    });
-    highlight.show();
-  }
-</script>
-
 <style lang="scss">
-  .page-head {
-    padding-block-end: var(--space-3xl);
-
-    h1 {
-      display: inline;
-    }
-
-    .subhead {
-      margin-block-start: var(--space-l);
-      font-size: var(--step-1);
-    }
-  }
-
   h2 {
     margin-bottom: var(--space-s);
   }
