@@ -1,4 +1,5 @@
 ---
+title: Be seen for who you are
 ---
 
 **It's tough to change your legal name and gender.** There's loads of paperwork. You have to dig up your birth certificate, find a notary, show up at a courthouse, and pay filing fees… and that's just the first step. Then comes updating your ID, social security, banks, schools, and a hundred other things.
