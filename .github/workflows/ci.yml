@@ -1,0 +1,60 @@
+name: CI
+on:
+  push:
+    branches: main
+    paths:
+      [
+        "src/**/*.ts",
+        "src/**/*.astro",
+        "astro.config.mjs",
+        "playwright.config.mjs",
+        "package.json",
+      ]
+  pull_request:
+    branches: main
+    paths:
+      [
+        "src/**/*.ts",
+        "src/**/*.astro",
+        "astro.config.mjs",
+        "playwright.config.mjs",
+        "package.json",
+      ]
+
+jobs:
+  test:
+    name: Playwright
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.4.0
+        with:
+          version: 8
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm i
+
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install chromium
+
+      - name: Run Playwright tests
+        run: pnpm test
+
+      - name: Upload Playwright results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
