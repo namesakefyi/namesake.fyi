@@ -3,38 +3,13 @@ import PageHeader from "../../components/PageHeader.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import BrandAssetCard from "./_components/BrandAssetCard.astro";
 import { RiDownloadLine } from "react-icons/ri";
-
-const palette = [
-  {
-    name: "Namesake Purple",
-    hex: "#CDA5EF",
-  },
-  {
-    name: "Pastel Pink",
-    hex: "#ECADD4",
-  },
-  {
-    name: "Pastel Green",
-    hex: "#97CF9C",
-  },
-  {
-    name: "Pastel Yellow",
-    hex: "#ECDD85",
-  },
-  {
-    name: "Pastel Blue",
-    hex: "#96C7F2",
-  },
-  {
-    name: "Pastel Brown",
-    hex: "#DDB896",
-  },
-];
+import Swatches from "./_components/Swatches.astro";
 ---
 
 <BaseLayout
   title="Brand Assets"
   description="Download Namesake logos, fonts, and colors for use on other sites."
+  color="white"
 >
   <PageHeader
     title="Brand Assets"
@@ -94,22 +69,11 @@ const palette = [
       used for zines. Namesake’s primary purple is produced by evenly blending
       together every stripe on the trans flag.
     </p>
-    <ul class="swatches">
-      {
-        palette.map((color) => (
-          <li class="swatch" style={{ backgroundColor: color.hex }}>
-            <div class="swatch-hex">{color.hex}</div>
-            <strong class="swatch-name">{color.name}</strong>
-          </li>
-        ))
-      }
-    </ul>
+    <Swatches />
     <p>
       Text is always set in <strong>Photocopy Black (#111111)</strong>. Most
-      pages should use a single background color and black text with no other
-      colors. Text on top of a full-page image may use <strong
-        >Photocopy White (#F1F1F1)</strong
-      >.
+      pages should use a single background color beneath black text. Text on top
+      of a full-page image may use <strong>Photocopy White (#F1F1F1)</strong>.
     </p>
   </section>
 </BaseLayout>
@@ -136,33 +100,6 @@ const palette = [
     }
   }
 
-  .swatches {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-l);
-    list-style: none;
-    padding-inline-start: 0;
-    margin-block: var(--space-xl);
-
-    @media (width < 680px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media (width < 500px) {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .swatch {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: var(--space-m);
-    aspect-ratio: 5 / 3;
-    border: 3px solid var(--text);
-    border-radius: 2px;
-  }
-
   .button {
     display: inline-flex;
     gap: var(--space-s);
@@ -170,14 +107,15 @@ const palette = [
     background-color: var(--text);
     border: 3px solid var(--text);
     border-radius: 2px;
-    color: var(--bg-purple);
+    color: var(--bg);
     text-decoration: none;
     padding: var(--space-s) var(--space-m);
     margin-top: var(--space-m);
+    cursor: pointer;
 
     @media (hover: hover) {
       &:hover {
-        background-color: var(--bg-purple);
+        background-color: var(--bg);
         color: var(--text);
       }
     }

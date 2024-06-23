@@ -1,5 +1,6 @@
 import { z, defineCollection, reference } from "astro:content";
 import type { RoughAnnotationType } from "rough-notation/lib/model";
+import type { NamesakeColor } from "../data/colors";
 
 export const collections = {
   authors: defineCollection({
@@ -18,11 +19,14 @@ export const collections = {
       z.object({
         title: z.string(),
         description: z.string().optional(),
-        ogImage: z.object({
-          image: image(),
-          alt: z.string()
-        }).optional(),
+        ogImage: z
+          .object({
+            image: image(),
+            alt: z.string(),
+          })
+          .optional(),
         annotation: z.custom<RoughAnnotationType>().optional(),
+        color: z.custom<NamesakeColor>().optional(),
       }),
   }),
 
@@ -53,15 +57,18 @@ export const collections = {
 
   press: defineCollection({
     type: "data",
-    schema: ({ image }) => z.object({
-      title: z.string(),
-      date: z.date(),
-      url: z.string(),
-      outlet: z.string(),
-      image: z.object({
-        src: image(),
-        alt: z.string(),
-      }).optional(),
-    }),
-  })
+    schema: ({ image }) =>
+      z.object({
+        title: z.string(),
+        date: z.date(),
+        url: z.string(),
+        outlet: z.string(),
+        image: z
+          .object({
+            src: image(),
+            alt: z.string(),
+          })
+          .optional(),
+      }),
+  }),
 };

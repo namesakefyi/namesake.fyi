@@ -1,0 +1,127 @@
+---
+import { RiClipboardLine, RiPaletteLine } from "react-icons/ri";
+import { colors } from "../../../data/colors";
+---
+
+<ul class="swatches">
+  {
+    Object.values(colors)
+      .filter((color) => !color.forText)
+      .map((color) => (
+        <li
+          class="swatch"
+          style={{ backgroundColor: color.hex, "--bg": color.hex }}
+        >
+          <strong class="swatch-name">{color.name}</strong>
+          <div class="swatch-hex">{color.hex}</div>
+          <div class="buttons">
+            <button
+              class="button swatch-toggle"
+              data-color={color.hex}
+              title={`Use ${color.name} for site background`}
+            >
+              <RiPaletteLine /> Set bg
+            </button>
+            <button
+              class="button copy-hex"
+              data-clipboard-text={color.hex}
+              title={`Copy ${color.name} hex code`}
+            >
+              Copy hex
+            </button>
+          </div>
+        </li>
+      ))
+  }
+</ul>
+
+<script>
+  const swatchToggles: NodeListOf<HTMLButtonElement> =
+    document.querySelectorAll(".swatch-toggle");
+
+  swatchToggles.forEach((toggle) => {
+    toggle.addEventListener("click", () => {
+      const hex = toggle.dataset.color;
+      if (hex) document.body.style.setProperty("--bg", hex);
+    });
+  });
+
+  const copyButtons: NodeListOf<HTMLButtonElement> =
+    document.querySelectorAll(".copy-hex");
+
+  copyButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const text = button.dataset.clipboardText;
+      if (text) {
+        navigator.clipboard.writeText(text).then(() => {
+          button.textContent = "Copied!";
+          setTimeout(() => {
+            button.textContent = "Copy hex";
+          }, 3000);
+        });
+      }
+    });
+  });
+</script>
+
+<style lang="scss">
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-l);
+    list-style: none;
+    padding-inline-start: 0;
+    margin-block: var(--space-xl);
+
+    @media (width < 760px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (width < 500px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .swatch {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-m);
+    aspect-ratio: 4 / 3;
+    border: 3px solid var(--text);
+    border-radius: 2px;
+    position: relative;
+  }
+
+  .buttons {
+    margin-top: auto;
+    display: flex;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+  }
+
+  .button {
+    background-color: transparent;
+    display: inline-flex;
+    align-items: center;
+    font-size: var(--step--1);
+    gap: var(--space-2xs);
+    border: 3px solid var(--text);
+    padding: var(--space-2xs) var(--space-xs);
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 2px;
+    cursor: pointer;
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: var(--text);
+        color: var(--bg);
+      }
+    }
+
+    &:focus-visible {
+      outline: 3px solid var(--text);
+      outline-offset: 2px;
+    }
+  }
+</style>

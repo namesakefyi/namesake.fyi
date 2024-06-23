@@ -13,6 +13,7 @@ pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 <BaseLayout
   title="Press"
   description="Browse recent media coverage and press releases about Namesake."
+  color="green"
 >
   <PageHeader title="Press" />
   <ul class="articles">
@@ -67,7 +68,7 @@ pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
   .title-text,
   .date,
   .outlet {
-    background: var(--bg-purple);
+    background: var(--bg);
     padding-inline-end: var(--space-xs);
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;

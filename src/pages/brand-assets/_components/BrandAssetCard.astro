@@ -67,6 +67,7 @@ const { assetName, name, instructions, inverted } = Astro.props;
   .button {
     display: inline-flex;
     font-size: var(--step--1);
+    align-items: center;
     gap: var(--space-2xs);
     border: 3px solid var(--text);
     padding: var(--space-2xs) var(--space-xs);
@@ -77,7 +78,7 @@ const { assetName, name, instructions, inverted } = Astro.props;
     @media (hover: hover) {
       &:hover {
         background-color: var(--text);
-        color: var(--bg-purple);
+        color: var(--bg);
       }
     }
 

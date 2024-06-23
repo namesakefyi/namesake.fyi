@@ -5,7 +5,7 @@ html {
 
 body {
   color: var(--text);
-  background-color: var(--bg-purple);
+  background-color: var(--bg);
   background-position: center top;
   display: flex;
   min-height: 100dvh;
@@ -20,29 +20,49 @@ body {
   font-style: normal;
 }
 
-body::before, body::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-position: center top;
-  pointer-events: none;
-  z-index: 10;
-}
+@supports (mask-image: url()) or (-webkit-mask-image: url()) {
+  body::before,
+  body::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-position: center top;
+    pointer-events: none;
+    z-index: 10;
+  }
 
-body::after {
-  background-image: url('/speckles-purple.svg');
-}
+  body::after {
+    background: var(--bg);
+    -webkit-mask-image: url("/assets/speckles-1.svg");
+    mask-image: url("/assets/speckles-1.svg");
+  }
 
-body::before {
-  background-image: url('/speckles-black.svg');
+  body::before {
+    background: var(--text);
+    -webkit-mask-image: url("/assets/speckles-2.svg");
+    mask-image: url("/assets/speckles-2.svg");
+  }
 }
 
 ::selection {
   background: var(--text);
-  color: var(--bg-purple);
+  color: var(--bg);
 }
 
-h1, h2, h3 {
+main {
+  flex: 1;
+  padding: var(--space-2xl) var(--space-l);
+  min-width: 0;
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+h1,
+h2,
+h3 {
   font-weight: 600;
   font-style: normal;
 }
@@ -87,8 +107,7 @@ a {
   text-decoration: underline;
   text-decoration-color: var(--text);
   text-underline-offset: max(0.1em, 2.5px);
-  transition:
-    text-decoration-color 0.2s ease-in-out,
+  transition: text-decoration-color 0.2s ease-in-out,
     font-weight 0.2s ease-in-out;
 }
 
@@ -105,6 +124,16 @@ img {
 
 .nowrap {
   white-space: nowrap;
+}
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
 
 :focus-visible {
