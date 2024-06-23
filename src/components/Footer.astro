@@ -84,9 +84,12 @@ const linkGroups: LinkGroup[] = [
     color: var(--footerText);
     line-height: 1.5;
     width: 100%;
-    padding-block: var(--space-xl);
     margin-block-start: var(--space-2xl);
     position: relative;
+    // box-shadow: 0 100px 0 var(--footerBg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-l);
 
     :focus-visible {
       outline-color: var(--footerText);
@@ -95,14 +98,20 @@ const linkGroups: LinkGroup[] = [
 
   .content {
     padding-inline: var(--space-l);
+    flex: 1;
+    width: 100%;
     max-width: 1200px;
     margin-inline: auto;
     display: flex;
     justify-content: space-between;
     gap: var(--space-l);
 
-    + .content {
-      margin-block-start: var(--space-l);
+    &:first-of-type {
+      padding-block-start: var(--space-xl);
+    }
+
+    &:last-of-type {
+      padding-block-end: var(--space-xl);
     }
 
     &.end {
