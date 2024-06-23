@@ -1,9 +1,13 @@
 ---
 import Logo from "./Logo.astro";
+import siteInfo from "../data/site-info";
+
+const { socialLinks } = siteInfo;
 ---
 
 <header>
   <a href="/" aria-label="Namesake homepage" id="logo"><Logo /></a>
+  <a href={socialLinks.discord.href} class="button">Join us on Discord</a>
 </header>
 
 <script>
@@ -19,6 +23,7 @@ import Logo from "./Logo.astro";
   header {
     top: 0;
     display: flex;
+    align-items: center;
     justify-content: flex-start;
     padding: var(--space-l);
     width: 100%;
@@ -27,8 +32,23 @@ import Logo from "./Logo.astro";
   }
 
   a {
-    padding: var(--space-xs);
+    padding: var(--space-xs) var(--space-s);
     margin: calc(var(--space-xs) * -1);
-    border-radius: var(--radius-xs);
+  }
+
+  .button {
+    font-size: var(--step--1);
+    font-weight: 600;
+    border: 3px solid var(--text);
+    text-decoration: none;
+    margin-inline-start: auto;
+    border-radius: 2px;
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: var(--text);
+        color: var(--bg-purple);
+      }
+    }
   }
 </style>
