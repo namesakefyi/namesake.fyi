@@ -3,6 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
@@ -18,8 +19,6 @@
     "@astrojs/react": "^3.6.0",
     "@astrojs/sitemap": "^3.1.6",
     "@axe-core/playwright": "^4.9.1",
-    "@keystatic/astro": "^5.0.0",
-    "@keystatic/core": "^0.5.22",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "astro": "^4.11.0",
@@ -39,7 +38,25 @@
     "eslint": "^8.57.0",
     "eslint-plugin-astro": "^1.2.2",
     "eslint-plugin-jsx-a11y": "^6.9.0",
+    "prettier": "^3.3.2",
+    "prettier-plugin-astro": "^0.14.0",
+    "prettier-plugin-astro-organize-imports": "^0.4.8",
     "sass": "^1.77.6",
     "sharp": "^0.33.4"
+  },
+  "homepage": "https://namesake.fyi",
+  "bugs": {
+    "url": "https://github.com/namesakefyi/namesake.fyi/issues"
+  },
+  "contributors": [
+    {
+      "name": "Eva Decker",
+      "email": "eva@namesake.fyi",
+      "url": "https://eva.town/"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/namesakefyi/namesake.fyi/"
   }
 }

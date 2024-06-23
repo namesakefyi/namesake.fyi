@@ -13,16 +13,16 @@ const { assetName, name, instructions, inverted } = Astro.props;
 
 <div class="logo-card">
   <div class:list={["preview", { inverted }]}>
-    <img src={`/brand-assets/${assetName}.svg`} />
+    <img src={`/assets/brand-assets/${assetName}.svg`} />
   </div>
   <div class="info">
     <h3>{name}</h3>
     <p>{instructions}</p>
     <div class="buttons">
-      <a class="button" href={`/brand-assets/${assetName}.svg`} download
+      <a class="button" href={`/assets/brand-assets/${assetName}.svg`} download
         ><RiDownloadLine />SVG</a
       >
-      <a class="button" href={`/brand-assets/${assetName}.png`} download
+      <a class="button" href={`/assets/brand-assets/${assetName}.png`} download
         ><RiDownloadLine />PNG</a
       >
     </div>

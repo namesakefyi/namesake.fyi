@@ -1,7 +1,7 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 
-import ProseLayout from "../layouts/ProseLayout.astro";
+import ProseLayout from "~/layouts/ProseLayout.astro";
 
 export interface Props {
   page: CollectionEntry<"pages">;

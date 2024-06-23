@@ -1,6 +1,6 @@
 import { z, defineCollection, reference } from "astro:content";
 import type { RoughAnnotationType } from "rough-notation/lib/model";
-import type { NamesakeColor } from "../data/colors";
+import type { NamesakeColor } from "~/data/colors";
 
 export const collections = {
   authors: defineCollection({
