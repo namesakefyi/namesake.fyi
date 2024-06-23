@@ -21,7 +21,7 @@ const siteInfo: SiteInfo = {
   name: "Namesake",
   title: "Be seen for who you are",
   description:
-    "Namesake helps navigate the legal name and gender marker change process in the US.",
+    "Streamlining the legal name and gender marker change process in the US.",
   image: {
     src: "/og/social.png",
     alt: "Be seen for who you are",
