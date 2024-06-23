@@ -9,6 +9,8 @@ import siteInfo from "../data/site-info";
 
 const partners = await getCollection("partners");
 const shuffledPartners = partners.sort(() => 0.5 - Math.random());
+
+import { Content } from "../content/pages/index.md";
 ---
 
 <BaseLayout title={siteInfo.name} description={siteInfo.description}>
@@ -27,31 +29,7 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
         >
       </h1>
       <div class="subhead">
-        <p>
-          <strong>It’s tough to change your legal name and gender.</strong> There’s
-          loads of paperwork. You have to dig up your birth certificate, find a notary,
-          show up at a courthouse, and pay filing fees… and that’s just the first
-          step. Then comes updating your ID, social security, banks, schools, and
-          a hundred other places.
-        </p>
-        <p>
-          <strong>We think it can be easier.</strong> We’re a trans-led team with
-          years of experience running name change clinics. We’re building a digital
-          platform for clear, step-by-step name change guidance and community support,
-          for free.
-        </p>
-        <p>
-          <strong
-            >The new Namesake app will launch in Massachusetts later this
-            summer, with other states to follow.</strong
-          >
-          <a href={siteInfo.socialLinks.discord.href}>Join us on Discord</a> to get
-          early access.
-        </p>
-        <p>
-          Rigid systems weren’t built for us, but we’ll figure them out
-          together.
-        </p>
+        <Content />
       </div>
       <form>
         <Image
@@ -212,7 +190,7 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
   .subhead {
     font-size: var(--step-1);
 
-    p + p {
+    :global(p) + :global(p) {
       margin-top: var(--space-l);
     }
   }
