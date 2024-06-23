@@ -5,15 +5,15 @@ import { RiArrowRightLine } from "react-icons/ri";
 import illustration from "./_images/namesake-form.png";
 import formIllustration from "./_images/form-snail.png";
 import { getCollection } from "astro:content";
+import siteInfo from "../data/site-info";
 
 const partners = await getCollection("partners");
 const shuffledPartners = partners.sort(() => 0.5 - Math.random());
+
+import { Content } from "../content/pages/index.md";
 ---
 
-<BaseLayout
-  title="Namesake"
-  description="Namesake streamlines the legal name and gender marker change process for trans, nonbinary, and gender expansive folks."
->
+<BaseLayout title={siteInfo.name} description={siteInfo.description}>
   <div class="home">
     <Image
       class="illustration"
@@ -29,27 +29,7 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
         >
       </h1>
       <div class="subhead">
-        <p>
-          <strong>Legally changing name and gender is a challenge.</strong> You have
-          to navigate the courts, fill out dense paperwork, and tackle steps in a
-          specific and poorly-communicated order. For some, the process can take
-          years to complete. And you have to do it all while navigating big emotions
-          around what it means to embrace a new identity.
-        </p>
-        <p>
-          We’ve been through this process ourselves, and we think it can be
-          better. We built Namesake to help you navigate the process, step by
-          step, with community support along the way.
-        </p>
-        <p>
-          We’re finishing up the app right now and we plan to launch this
-          Summer, starting in Massachusetts.
-        </p>
-        <p>
-          Rigid systems weren’t built for us, but <span class="figure-it-out"
-            >we’ll figure them out together.</span
-          >
-        </p>
+        <Content />
       </div>
       <form>
         <Image
@@ -104,19 +84,6 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
     highlight.show();
   }
 
-  const figureItOut: HTMLElement | null =
-    document.querySelector(".figure-it-out");
-  if (figureItOut) {
-    const underline = annotate(figureItOut, {
-      type: "underline",
-      multiline: true,
-      iterations: 1,
-      padding: 1,
-      animate: false,
-    });
-    underline.show();
-  }
-
   const partners: HTMLElement | null = document.querySelector(".partners h2");
   if (partners) {
     const brackets = annotate(partners, {
@@ -163,6 +130,7 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
 
   .content {
     grid-area: content;
+    min-width: 0;
   }
 
   .partners {
@@ -222,7 +190,7 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
   .subhead {
     font-size: var(--step-1);
 
-    p + p {
+    :global(p) + :global(p) {
       margin-top: var(--space-l);
     }
   }
@@ -233,6 +201,7 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
     margin-block-start: var(--space-3xl);
     padding: var(--space-l) var(--space-m);
     position: relative;
+    border-radius: 2px;
 
     @media (width < 540px) {
       width: 100%;
@@ -247,10 +216,10 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
   }
 
   .input-group {
+    max-width: 100%;
     display: flex;
     gap: var(--space-xs);
     margin-block-start: var(--space-s);
-    flex: 1;
   }
 
   input,
@@ -264,6 +233,7 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
 
   input {
     flex: 1;
+    min-width: 0;
 
     &::placeholder {
       color: var(--text-placeholder);

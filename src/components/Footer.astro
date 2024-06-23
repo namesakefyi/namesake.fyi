@@ -1,40 +1,70 @@
 ---
 import Glyph from "./Glyph.astro";
+import siteInfo from "../data/site-info";
 
+const { socialLinks } = siteInfo;
 const year = new Date().getFullYear();
+
+type Link = {
+  href: string;
+  label: string;
+  title?: string;
+};
+
+type LinkGroup = {
+  title: string;
+  links: Link[];
+};
+
+const linkGroups: LinkGroup[] = [
+  {
+    title: "About",
+    links: [
+      { href: "/blog", label: "Blog" },
+      { href: "/press", label: "Press" },
+      { href: "/brand-assets", label: "Brand" },
+    ],
+  },
+  {
+    title: "Social",
+    links: Object.values(socialLinks).map(({ href, name, text }) => ({
+      href,
+      title: text,
+      label: name,
+    })),
+  },
+  {
+    title: "Legal",
+    links: [
+      { href: "/terms", label: "Terms" },
+      { href: "/privacy", label: "Privacy" },
+    ],
+  },
+];
 ---
 
 <footer>
   <div class="links">
-    <strong>Namesake</strong>
-    <a href="/press">Press</a>
-    <a href="/brand-assets">Brand Assets</a>
-    <span class="copyright">&copy; 2022&hairsp;&ndash;&hairsp;{year}</span>
+    {
+      linkGroups.map(({ title, links }) => (
+        <div class="linkGroup">
+          <strong>{title}</strong>
+          {links.map(({ href, label, title }) => (
+            <a {href} {title}>
+              {label}
+            </a>
+          ))}
+        </div>
+      ))
+    }
   </div>
-  <div class="links">
-    <strong>Social</strong>
-    <a href="https://discord.gg/8Vy2bbQ5C2">Discord</a>
-    <a href="https://github.com/namesakefyi">GitHub</a>
-    <a href="https://www.instagram.com/joinnamesake/">Instagram</a>
-    <a href="https://www.linkedin.com/company/namesake-collaborative/"
-      >LinkedIn</a
-    >
-  </div>
-  <div class="links">
-    <strong>Legal</strong>
-    <a href="/terms">Terms</a>
-    <a href="/privacy">Privacy</a>
-  </div>
-  <div class="glyph">
-    <Glyph />
+  <div class="copyright">
+    <div>{siteInfo.name} &copy; 2022&hairsp;&ndash;&hairsp;{year}</div>
   </div>
 </footer>
 
 <style lang="scss">
   footer {
-    display: flex;
-    gap: var(--space-2xl);
-    align-items: stretch;
     padding: var(--space-l);
     line-height: 1.5;
     width: 100%;
@@ -44,12 +74,19 @@ const year = new Date().getFullYear();
 
   .links {
     display: flex;
+    gap: var(--space-m);
+    align-items: stretch;
+  }
+
+  .linkGroup {
+    display: flex;
     flex-direction: column;
-    font-size: var(--step--1);
+    width: 12ch;
   }
 
   .copyright {
-    margin-block-start: auto;
+    font-size: var(--step--1);
+    margin-block-start: var(--space-m);
   }
 
   .social {

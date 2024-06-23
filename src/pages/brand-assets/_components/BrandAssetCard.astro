@@ -53,6 +53,7 @@ const { assetName, name, instructions, inverted } = Astro.props;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 2px;
 
     &.inverted {
       background-color: var(--text);
@@ -67,12 +68,11 @@ const { assetName, name, instructions, inverted } = Astro.props;
     display: inline-flex;
     font-size: var(--step--1);
     gap: var(--space-2xs);
-
     border: 3px solid var(--text);
-
     padding: var(--space-2xs) var(--space-xs);
     text-decoration: none;
     font-weight: 600;
+    border-radius: 2px;
 
     @media (hover: hover) {
       &:hover {
