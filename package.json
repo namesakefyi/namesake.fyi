@@ -8,7 +8,8 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test": "playwright test --reporter=html"
+    "test": "playwright test --reporter=html",
+    "check-links": "lychee --config .lychee.toml ."
   },
   "dependencies": {
     "@astrojs/check": "^0.7.0",
