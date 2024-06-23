@@ -1,10 +1,9 @@
 ---
-// import "../styles/prose.css";
-
 import type { RoughAnnotationType } from "rough-notation/lib/model";
 import PageHeader from "../components/PageHeader.astro";
 import { smartquotes } from "../helpers/helpers";
 import BaseLayout from "./BaseLayout.astro";
+import type { NamesakeColor } from "../data/colors";
 
 interface Props {
   title: string;
@@ -12,9 +11,10 @@ interface Props {
   ogImage?: string;
   ogAlt?: string;
   annotation?: RoughAnnotationType;
+  color?: NamesakeColor;
 }
 
-const { title, description, ogImage, ogAlt, annotation } = Astro.props;
+const { title, description, ogImage, ogAlt, annotation, color } = Astro.props;
 ---
 
 <BaseLayout
@@ -22,6 +22,7 @@ const { title, description, ogImage, ogAlt, annotation } = Astro.props;
   description={description && smartquotes(description)}
   ogImage={ogImage}
   ogAlt={ogAlt}
+  color={color}
 >
   <article itemscope itemtype="https://schema.org/BlogPosting">
     <PageHeader

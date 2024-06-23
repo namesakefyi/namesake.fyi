@@ -7,12 +7,15 @@ import { join } from "node:path";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import siteInfo from "../data/site-info";
+import { colors } from "../data/colors";
+import type { NamesakeColor } from "../data/colors";
 
 export interface Props {
   title: string;
   description?: string;
   ogImage?: string;
   ogAlt?: string;
+  color?: NamesakeColor;
 }
 
 const {
@@ -20,6 +23,7 @@ const {
   description = siteInfo.description,
   ogImage = siteInfo.image.src,
   ogAlt = siteInfo.image.alt,
+  color = "purple",
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -33,7 +37,7 @@ const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Namesake`;
     <meta name="generator" content={Astro.generator} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light" />
-    <meta name="theme-color" content="#CDA5EF" />
+    <meta name="theme-color" content={colors[color]?.hex} />
     <link rel="icon" href="/favicon.ico?v3" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg?v3" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -91,23 +95,11 @@ const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Namesake`;
       Fathom.load("GQAJEJLZ");
     </script>
   </head>
-  <body>
+  <body style={`--bg: ${colors[color].hex}`}>
     <Header />
     <main>
       <slot />
     </main>
     <Footer />
-    <style>
-      main {
-        flex: 1;
-        padding: var(--space-2xl) var(--space-l);
-        min-width: 0;
-        width: 100%;
-        max-width: 1200px;
-        margin-inline: auto;
-        display: flex;
-        flex-direction: column;
-      }
-    </style>
   </body>
 </html>
