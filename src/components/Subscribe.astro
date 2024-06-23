@@ -1,0 +1,59 @@
+---
+import { RiArrowRightLine } from "react-icons/ri";
+---
+
+<form>
+  <strong>Get notified when we launch:</strong>
+  <div class="input-group">
+    <input type="email" name="email" placeholder="Your email" required />
+    <button type="submit">Subscribe <RiArrowRightLine /></button>
+  </div>
+</form>
+
+<style lang="scss">
+  form {
+    position: relative;
+    border-radius: 3px;
+    width: 100%;
+    max-width: 520px;
+
+    :focus-visible {
+      outline-color: var(--footerText);
+    }
+  }
+
+  .input-group {
+    max-width: 100%;
+    display: flex;
+    gap: var(--space-xs);
+    margin-block-start: var(--space-s);
+  }
+
+  input,
+  button {
+    border: none;
+    background: var(--bg);
+    border-radius: 3px;
+    color: var(--text);
+    padding: var(--space-xs) var(--space-s);
+  }
+
+  input {
+    flex: 1;
+    min-width: 0;
+
+    &::placeholder {
+      color: var(--text-placeholder);
+    }
+  }
+
+  button {
+    font-weight: 600;
+    flex-shrink: 0;
+    cursor: pointer;
+    display: inline-flex;
+    gap: var(--space-2xs);
+    align-items: center;
+    padding-inline: var(--space-m);
+  }
+</style>
