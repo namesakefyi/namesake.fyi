@@ -107,8 +107,6 @@ a {
   text-decoration: underline;
   text-decoration-color: var(--text);
   text-underline-offset: max(0.1em, 2.5px);
-  transition: text-decoration-color 0.2s ease-in-out,
-    font-weight 0.2s ease-in-out;
 }
 
 @media (hover: hover) {
@@ -136,7 +134,8 @@ img {
   width: 1px;
 }
 
-:focus-visible {
+a:focus-visible,
+button:focus-visible {
   outline: 3px solid var(--text);
   outline-offset: 2px;
 }

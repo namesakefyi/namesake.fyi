@@ -20,7 +20,7 @@ import { colors } from "../../../data/colors";
               data-color={color.hex}
               title={`Use ${color.name} for site background`}
             >
-              <RiPaletteLine /> Set bg
+              Set bg
             </button>
             <button
               class="button copy-hex"
@@ -57,7 +57,7 @@ import { colors } from "../../../data/colors";
           button.textContent = "Copied!";
           setTimeout(() => {
             button.textContent = "Copy hex";
-          }, 3000);
+          }, 2000);
         });
       }
     });
@@ -88,7 +88,7 @@ import { colors } from "../../../data/colors";
     padding: var(--space-m);
     aspect-ratio: 4 / 3;
     border: 3px solid var(--text);
-    border-radius: 2px;
+    border-radius: 3px;
     position: relative;
   }
 
@@ -103,13 +103,14 @@ import { colors } from "../../../data/colors";
     background-color: transparent;
     display: inline-flex;
     align-items: center;
+    color: var(--text);
     font-size: var(--step--1);
-    gap: var(--space-2xs);
+    gap: var(--space-xs);
     border: 3px solid var(--text);
-    padding: var(--space-2xs) var(--space-xs);
+    padding: var(--space-2xs) var(--space-s);
     text-decoration: none;
     font-weight: 600;
-    border-radius: 2px;
+    border-radius: 3px;
     cursor: pointer;
 
     @media (hover: hover) {

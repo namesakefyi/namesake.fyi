@@ -1,6 +1,6 @@
 ---
-import Glyph from "./Glyph.astro";
 import siteInfo from "../data/site-info";
+import Subscribe from "./Subscribe.astro";
 
 const { socialLinks } = siteInfo;
 const year = new Date().getFullYear();
@@ -22,16 +22,8 @@ const linkGroups: LinkGroup[] = [
     links: [
       { href: "/blog", label: "Blog" },
       { href: "/press", label: "Press" },
-      { href: "/brand-assets", label: "Brand" },
+      { href: "/brand-assets", label: "Brand Assets" },
     ],
-  },
-  {
-    title: "Social",
-    links: Object.values(socialLinks).map(({ href, name, text }) => ({
-      href,
-      title: text,
-      label: name,
-    })),
   },
   {
     title: "Legal",
@@ -44,59 +36,124 @@ const linkGroups: LinkGroup[] = [
 ---
 
 <footer>
-  <div class="links">
-    {
-      linkGroups.map(({ title, links }) => (
-        <div class="linkGroup">
-          <strong>{title}</strong>
-          {links.map(({ href, label, title }) => (
-            <a {href} {title}>
-              {label}
-            </a>
-          ))}
-        </div>
-      ))
-    }
+  <img
+    class="footer-illustration"
+    src="/assets/form-snail.png"
+    alt="A snail moving to the left"
+    width="240"
+  />
+  <div class="content">
+    <Subscribe />
+    <div class="links">
+      {
+        linkGroups.map(({ title, links }) => (
+          <div class="linkGroup">
+            <strong>{title}</strong>
+            {links.map(({ href, label, title }) => (
+              <a {href} {title}>
+                {label}
+              </a>
+            ))}
+          </div>
+        ))
+      }
+    </div>
   </div>
-  <div class="copyright">
-    <div>{siteInfo.name} &copy; 2022&hairsp;&ndash;&hairsp;{year}</div>
+  <div class="content end">
+    <div class="copyright">
+      <div>{siteInfo.fullName} &copy; 2022&hairsp;&ndash;&hairsp;{year}</div>
+    </div>
+    <div class="social">
+      {
+        Object.values(socialLinks).map(({ href, Icon, text }) => (
+          <a {href} title={text}>
+            <Icon />
+          </a>
+        ))
+      }
+    </div>
   </div>
 </footer>
 
 <style lang="scss">
   footer {
-    padding: var(--space-l);
+    --footerBg: var(--text);
+    --footerText: var(--bg);
+
+    background: var(--footerBg);
+    color: var(--footerText);
     line-height: 1.5;
     width: 100%;
+    padding-block: var(--space-xl);
+    margin-block-start: var(--space-3xl);
+    position: relative;
+
+    :focus-visible {
+      outline-color: var(--footerText);
+    }
+  }
+
+  .content {
+    padding-inline: var(--space-l);
     max-width: 1200px;
     margin-inline: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-l);
+
+    + .content {
+      margin-block-start: var(--space-l);
+    }
+
+    &.end {
+      align-items: center;
+    }
+
+    @media (width < 760px) {
+      flex-direction: column;
+      gap: var(--space-l);
+
+      .copyright {
+        order: 1;
+      }
+    }
+  }
+
+  .footer-illustration {
+    width: 120px;
+    position: absolute;
+    bottom: calc(100% - 4px);
+    right: 20px;
+    mix-blend-mode: multiply;
+    user-select: none;
   }
 
   .links {
     display: flex;
     gap: var(--space-m);
     align-items: stretch;
+    font-size: var(--step--1);
+
+    @media (hover: hover) {
+      a:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   .linkGroup {
     display: flex;
     flex-direction: column;
-    width: 12ch;
+    width: 15ch;
   }
 
   .copyright {
     font-size: var(--step--1);
-    margin-block-start: var(--space-m);
   }
 
   .social {
     display: flex;
-    gap: var(--space-s);
-  }
-
-  .glyph {
-    align-self: flex-end;
-    margin-inline-start: auto;
-    width: 80px;
+    gap: var(--space-m);
+    font-size: var(--step-2);
   }
 </style>

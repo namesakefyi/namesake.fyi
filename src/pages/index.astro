@@ -1,9 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { RiArrowRightLine } from "react-icons/ri";
-import illustration from "./_images/namesake-form.png";
-import formIllustration from "./_images/form-snail.png";
+
 import { getCollection } from "astro:content";
 import siteInfo from "../data/site-info";
 
@@ -15,12 +13,11 @@ import { Content } from "../content/pages/index.md";
 
 <BaseLayout title={siteInfo.name} description={siteInfo.description}>
   <div class="home">
-    <Image
+    <img
       class="illustration"
-      src={illustration}
+      src="/assets/namesake-form.png"
       alt="Some snails and flowers on top of a court order document"
       width={600}
-      densities={[1, 2]}
     />
     <div class="content">
       <h1>
@@ -31,20 +28,6 @@ import { Content } from "../content/pages/index.md";
       <div class="subhead">
         <Content />
       </div>
-      <form>
-        <Image
-          class="form-illustration"
-          src={formIllustration}
-          alt="A snail moving to the left"
-          width={240}
-          densities={[1, 2]}
-        />
-        <strong>Get notified when we launch:</strong>
-        <div class="input-group">
-          <input type="email" name="email" placeholder="Your email" required />
-          <button type="submit">Subscribe <RiArrowRightLine /></button>
-        </div>
-      </form>
     </div>
     <div class="partners">
       <h2>In partnership with</h2>
@@ -193,60 +176,5 @@ import { Content } from "../content/pages/index.md";
     :global(p) + :global(p) {
       margin-top: var(--space-l);
     }
-  }
-
-  form {
-    color: var(--bg);
-    background-color: var(--text);
-    margin-block-start: var(--space-3xl);
-    padding: var(--space-l) var(--space-m);
-    position: relative;
-    border-radius: 2px;
-
-    @media (width < 540px) {
-      width: 100%;
-    }
-
-    .form-illustration {
-      width: 120px;
-      position: absolute;
-      bottom: calc(100% - 4px);
-      right: 20px;
-    }
-  }
-
-  .input-group {
-    max-width: 100%;
-    display: flex;
-    gap: var(--space-xs);
-    margin-block-start: var(--space-s);
-  }
-
-  input,
-  button {
-    border: none;
-    background: var(--bg);
-    border-radius: var(--radius-2xs);
-    color: var(--text);
-    padding: var(--space-s) var(--space-s);
-  }
-
-  input {
-    flex: 1;
-    min-width: 0;
-
-    &::placeholder {
-      color: var(--text-placeholder);
-    }
-  }
-
-  button {
-    font-weight: 600;
-    flex-shrink: 0;
-    cursor: pointer;
-    display: inline-flex;
-    gap: var(--space-2xs);
-    align-items: center;
-    padding-inline: var(--space-m);
   }
 </style>
