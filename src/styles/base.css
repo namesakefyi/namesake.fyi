@@ -134,8 +134,7 @@ img {
   width: 1px;
 }
 
-a:focus-visible,
-button:focus-visible {
+:focus-visible {
   outline: 3px solid var(--text);
   outline-offset: 2px;
 }

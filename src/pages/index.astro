@@ -1,24 +1,15 @@
 ---
-import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { getCollection } from "astro:content";
 import siteInfo from "../data/site-info";
 
-const partners = await getCollection("partners");
-const shuffledPartners = partners.sort(() => 0.5 - Math.random());
-
 import { Content } from "../content/pages/index.md";
+import Partners from "../components/Partners.astro";
 ---
 
 <BaseLayout title={siteInfo.name} description={siteInfo.description}>
   <div class="home">
-    <img
-      class="illustration"
-      src="/assets/namesake-form.png"
-      alt="Some snails and flowers on top of a court order document"
-      width={600}
-    />
     <div class="content">
       <h1>
         <span>Be seen for</span><br /><span class="who-you-are"
@@ -29,30 +20,14 @@ import { Content } from "../content/pages/index.md";
         <Content />
       </div>
     </div>
-    <div class="partners">
-      <h2>In partnership with</h2>
-      <ul>
-        {
-          shuffledPartners.map((partner) => (
-            <li>
-              <a
-                href={partner.data.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Visit ${partner.data.name}`}
-              >
-                <Image
-                  src={partner.data.logo}
-                  alt={partner.data.name}
-                  height={partner.data.height}
-                />
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
+    <img
+      class="illustration"
+      src="/assets/namesake-form.png"
+      alt="Some snails and flowers on top of a court order document"
+      width={600}
+    />
   </div>
+  <Partners />
 </BaseLayout>
 
 <script>
@@ -66,33 +41,18 @@ import { Content } from "../content/pages/index.md";
     });
     highlight.show();
   }
-
-  const partners: HTMLElement | null = document.querySelector(".partners h2");
-  if (partners) {
-    const brackets = annotate(partners, {
-      type: "underline",
-      animate: false,
-    });
-    brackets.show();
-  }
 </script>
 
 <style lang="scss">
   .home {
     display: grid;
     grid-template-columns: minmax(460px, 1fr) minmax(0, 1fr);
-    grid-template-rows: 1fr auto;
-    grid-template-areas:
-      "content illustration"
-      "partners partners";
+    grid-template-areas: "content illustration";
     gap: var(--space-2xl);
 
     @media (width < 800px) {
       grid-template-columns: 1fr;
-      grid-template-areas:
-        "content"
-        "partners";
-
+      grid-template-areas: "content";
       .illustration {
         display: none;
       }
@@ -106,55 +66,14 @@ import { Content } from "../content/pages/index.md";
     order: 1;
   }
 
-  img {
-    mix-blend-mode: multiply;
-    user-select: none;
-  }
-
   .content {
     grid-area: content;
     min-width: 0;
   }
 
-  .partners {
-    grid-area: partners;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin-inline: auto;
-    width: 100%;
-    overflow: hidden;
-    gap: var(--space-2xl);
-    padding-block: var(--space-2xl);
-
-    h2 {
-      font-size: var(--step-1);
-    }
-
-    ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      max-width: 100%;
-      display: grid;
-      justify-items: center;
-      align-items: center;
-      grid-template-columns: repeat(3, 240px);
-      grid-auto-rows: 80px;
-      gap: var(--space-l) var(--space-2xl);
-
-      @media (width < 900px) {
-        grid-template-columns: repeat(2, minmax(240px, 1fr));
-      }
-
-      @media (width < 600px) {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      img {
-        max-width: min(240px, 40vw);
-      }
-    }
+  img {
+    mix-blend-mode: multiply;
+    user-select: none;
   }
 
   h1 {
