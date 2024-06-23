@@ -1,8 +1,8 @@
 ---
+import Partners from "~/components/Partners.astro";
+import { Content } from "~/content/pages/index.md";
 import siteInfo from "~/data/site-info";
-import Partners from "../components/Partners.astro";
-import { Content } from "../content/pages/index.md";
-import BaseLayout from "../layouts/BaseLayout.astro";
+import BaseLayout from "~/layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title={siteInfo.name} description={siteInfo.description}>
