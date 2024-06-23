@@ -1,11 +1,8 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-
-import { getCollection } from "astro:content";
-import siteInfo from "../data/site-info";
-
-import { Content } from "../content/pages/index.md";
+import siteInfo from "~/data/site-info";
 import Partners from "../components/Partners.astro";
+import { Content } from "../content/pages/index.md";
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title={siteInfo.name} description={siteInfo.description}>
@@ -22,7 +19,7 @@ import Partners from "../components/Partners.astro";
     </div>
     <img
       class="illustration"
-      src="/assets/namesake-form.png"
+      src="/assets/index/namesake-form.png"
       alt="Some snails and flowers on top of a court order document"
       width={600}
     />

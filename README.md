@@ -1,18 +1,23 @@
 # namesake.fyi
 
-[![CI Tests](https://github.com/namesakefyi/namesake.fyi/actions/workflows/ci.yml/badge.svg)](https://github.com/namesakefyi/namesake.fyi/actions/workflows/ci.yml)
+This repository contains the source code for the [namesake.fyi](https://namesake.fyi) website and blog, built with [Astro](https://astro.build).
 
-The source code for [namesake.fyi](https://namesake.fyi), built with [Astro](https://astro.build).
+If you need help with your legal name change or gender marker change, come join us in [Discord](https://namesake.fyi)!
 
-## 🧞 Commands
+## Directory Structure
 
-All commands are run from the root of the project, from a terminal:
+| Location         | Description                                                             |
+| :--------------- | :---------------------------------------------------------------------- |
+| `public`         | Images, fonts, favicons, and app icons.                                 |
+| `src/components` | All of the .astro components that are used and reused across the site.  |
+| `src/content`    | Content collections for blog posts, partners, press, and other content. |
+| `src/data`       | Shared data for site info and colors.                                   |
+| `src/helpers`    | Helper functions and other utilities.                                   |
+| `src/layouts`    | Shared layout files for wrapping pages.                                 |
+| `src/pages`      | Page-based routing for everything on the site.                          |
+| `src/styles`     | Global site styles.                                                     |
+| `tests`          | End-to-end tests written using Playwright.                              |
 
-| Command          | Action                                           |
-| :--------------- | :----------------------------------------------- |
-| `pnpm i`         | Installs dependencies                            |
-| `pnpm dev`       | Starts local dev server at `localhost:4321`      |
-| `pnpm build`     | Build your production site to `./dist/`          |
-| `pnpm preview`   | Preview your build locally, before deploying     |
-| `pnpm astro ...` | Run CLI commands like `astro add`, `astro check` |
-| `pnpm test`      | Run end-to-end tests using Playwright            |
+## Broken Links
+
+A weekly [GitHub workflow](/actions/workflows/links.yml) scans the site for broken links and will open an [issue](/issues) if one is found.

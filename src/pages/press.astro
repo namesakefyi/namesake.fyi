@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
-import BaseLayout from "../layouts/BaseLayout.astro";
 import dayjs from "dayjs";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { getCollection } from "astro:content";
 import PageHeader from "../components/PageHeader.astro";
@@ -65,6 +65,12 @@ pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
     hyphens: auto;
   }
 
+  .title,
+  .date,
+  .outlet {
+    z-index: 1;
+  }
+
   .title-text,
   .date,
   .outlet {
@@ -85,7 +91,6 @@ pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
     align-self: flex-end;
     padding-inline-start: var(--space-xl);
     margin-block-end: -4.25em;
-    z-index: -1;
     filter: grayscale(100%) contrast(180%) brightness(140%);
     opacity: 0.9;
     mix-blend-mode: multiply;
