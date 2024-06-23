@@ -20,4 +20,4 @@ If you need help with your legal name change or gender marker change, come join 
 
 ## Broken Links
 
-A weekly [GitHub workflow](/actions/workflows/links.yml) scans the site for broken links and will open an [issue](/issues) if one is found.
+A weekly [GitHub workflow](https://github.com/namesakefyi/namesake.fyi/actions/workflows/links.yml) scans the site for broken links and will open an [issue](https://github.com/namesakefyi/namesake.fyi/issues) if one is found.
