@@ -1,0 +1,54 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+
+import { getCollection } from "astro:content";
+import ArticleLink from "~/components/ArticleLink.astro";
+import PageHeader from "~/components/PageHeader.astro";
+
+const publishedPosts = await getCollection("posts", ({ data }) => {
+  return data.isDraft !== true;
+});
+---
+
+<BaseLayout
+  title="Blog"
+  description="Get all the latest news from Namesake."
+  color="blue"
+>
+  <PageHeader
+    title="Blog"
+    description="Get all the latest news from Namesake."
+  />
+  <div class="posts">
+    {
+      publishedPosts.length ? (
+        publishedPosts.map((post) => (
+          <ArticleLink
+            title={post.data.title}
+            date={post.data.publishDate}
+            url={`/blog/${post.slug}`}
+            image={
+              post.data.image
+                ? {
+                    src: post.data.image.src.src,
+                    alt: post.data.image.alt,
+                  }
+                : undefined
+            }
+          />
+        ))
+      ) : (
+        <p>No posts found.</p>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style lang="scss">
+  .posts {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xl);
+    padding-bottom: var(--space-3xl);
+  }
+</style>

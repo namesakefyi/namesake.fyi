@@ -32,16 +32,22 @@ export const collections = {
 
   posts: defineCollection({
     type: "content",
-    schema: z.object({
-      isDraft: z.boolean(),
-      title: z.string(),
-      publishDate: z
-        .string()
-        .or(z.date())
-        .transform((v) => new Date(v)),
-      authors: z.array(reference("authors")),
-      image: z.string().optional(),
-    }),
+    schema: ({ image }) =>
+      z.object({
+        isDraft: z.boolean(),
+        title: z.string(),
+        publishDate: z
+          .string()
+          .or(z.date())
+          .transform((v) => new Date(v)),
+        authors: z.array(reference("authors")),
+        image: z
+          .object({
+            src: image(),
+            alt: z.string(),
+          })
+          .optional(),
+      }),
   }),
 
   partners: defineCollection({

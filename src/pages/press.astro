@@ -1,9 +1,8 @@
 ---
-import { Image } from "astro:assets";
-import dayjs from "dayjs";
 import BaseLayout from "~/layouts/BaseLayout.astro";
 
 import { getCollection } from "astro:content";
+import ArticleLink from "~/components/ArticleLink.astro";
 import PageHeader from "~/components/PageHeader.astro";
 
 const pressArticles = await getCollection("press");
@@ -16,84 +15,33 @@ pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
   color="green"
 >
   <PageHeader title="Press" />
-  <ul class="articles">
+  <div class="articles">
     {
-      pressArticles.map((article) => (
-        <li class="article">
-          <time class="date" datetime={article.data.date.toISOString()}>
-            {dayjs(article.data.date).format("MMMM YYYY")}
-          </time>
-          <strong class="outlet">{article.data.outlet}</strong>
-          <a href={article.data.url} class="title" target="_blank">
-            <span class="title-text">{article.data.title}</span>
-          </a>
-          {article.data.image && (
-            <Image
-              src={article.data.image.src}
-              alt={article.data.image.alt}
-              width="800"
-              class="image"
-            />
-          )}
-        </li>
+      pressArticles.map(({ data }) => (
+        <ArticleLink
+          title={data.title}
+          date={data.date}
+          url={data.url}
+          subhead={data.outlet}
+          image={
+            data.image
+              ? {
+                  src: data.image.src.src,
+                  alt: data.image.alt,
+                }
+              : undefined
+          }
+        />
       ))
     }
-  </ul>
+  </div>
 </BaseLayout>
 
 <style lang="scss">
   .articles {
-    list-style: none;
-    padding: 0;
-    margin: 0;
     display: flex;
     flex-direction: column;
     gap: var(--space-3xl);
     padding-bottom: var(--space-3xl);
-  }
-
-  .article {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .title {
-    font-size: var(--step-3);
-    font-weight: 600;
-    max-width: 36ch;
-    hyphens: auto;
-  }
-
-  .title,
-  .date,
-  .outlet {
-    z-index: 1;
-  }
-
-  .title-text,
-  .date,
-  .outlet {
-    background: var(--bg);
-    padding-inline-end: var(--space-xs);
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
-  }
-
-  .date,
-  .outlet {
-    padding-block: var(--space-xs);
-    margin-block: calc(var(--space-2xs) * -1);
-  }
-
-  .image {
-    order: -1;
-    align-self: flex-end;
-    padding-inline-start: var(--space-xl);
-    margin-block-end: -4.25em;
-    filter: grayscale(100%) contrast(180%) brightness(140%);
-    opacity: 0.9;
-    mix-blend-mode: multiply;
-    border-radius: 3px;
   }
 </style>
