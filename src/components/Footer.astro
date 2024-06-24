@@ -1,4 +1,5 @@
 ---
+import { RiHeart3Line } from "react-icons/ri";
 import siteInfo from "~/data/site-info";
 import Subscribe from "./Subscribe.astro";
 
@@ -61,7 +62,8 @@ const linkGroups: LinkGroup[] = [
   </div>
   <div class="content end">
     <div class="copyright">
-      <div>{siteInfo.fullName} &copy; 2022&hairsp;&ndash;&hairsp;{year}</div>
+      {siteInfo.fullName} &copy; 2021&hairsp;&ndash;&hairsp;{year}
+      <RiHeart3Line /> T4T always
     </div>
     <div class="social">
       {
@@ -120,6 +122,10 @@ const linkGroups: LinkGroup[] = [
         flex: 1;
       }
 
+      .social {
+        gap: var(--space-l);
+      }
+
       .copyright {
         order: 1;
       }
@@ -164,6 +170,9 @@ const linkGroups: LinkGroup[] = [
 
   .copyright {
     font-size: var(--step--1);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
   }
 
   .social {
