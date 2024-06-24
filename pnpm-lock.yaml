@@ -31,7 +31,7 @@ dependencies:
     version: 18.3.0
   astro:
     specifier: ^4.11.0
-    version: 4.11.0(@types/node@20.14.7)(sass@1.77.6)(typescript@5.5.2)
+    version: 4.11.0(@types/node@20.14.8)(sass@1.77.6)(typescript@5.5.2)
   astro-font:
     specifier: ^0.0.81
     version: 0.0.81
@@ -62,8 +62,8 @@ devDependencies:
     specifier: ^1.44.1
     version: 1.44.1
   '@types/node':
-    specifier: ^20.14.7
-    version: 20.14.7
+    specifier: ^20.14.8
+    version: 20.14.8
   '@typescript-eslint/parser':
     specifier: ^7.13.1
     version: 7.13.1(eslint@8.57.0)(typescript@5.5.2)
@@ -127,7 +127,7 @@ packages:
       '@astrojs/internal-helpers': 0.3.0
       '@astrojs/underscore-redirects': 0.3.3
       '@cloudflare/workers-types': 4.20240620.0
-      astro: 4.11.0(@types/node@20.14.7)(sass@1.77.6)(typescript@5.5.2)
+      astro: 4.11.0(@types/node@20.14.8)(sass@1.77.6)(typescript@5.5.2)
       esbuild: 0.19.12
       estree-walker: 3.0.3
       magic-string: 0.30.10
@@ -198,7 +198,7 @@ packages:
       '@astrojs/markdown-remark': 5.1.0
       '@astrojs/prism': 3.1.0
       '@markdoc/markdoc': 0.4.0(@types/react@18.3.3)(react@18.3.1)
-      astro: 4.11.0(@types/node@20.14.7)(sass@1.77.6)(typescript@5.5.2)
+      astro: 4.11.0(@types/node@20.14.8)(sass@1.77.6)(typescript@5.5.2)
       esbuild: 0.20.2
       github-slugger: 2.0.0
       gray-matter: 4.0.3
@@ -2048,15 +2048,15 @@ packages:
   /@types/node-forge@1.3.11:
     resolution: {integrity: sha512-FQx220y22OKNTqaByeBGqHWYz4cl94tpcxeFdvBo3wjG6XPBuZ0BNgNZRV5J5TFmmcsJ4IzsLkmGRiQbnYsBEQ==}
     dependencies:
-      '@types/node': 20.14.7
+      '@types/node': 20.14.8
     dev: false
 
   /@types/node@17.0.45:
     resolution: {integrity: sha512-w+tIMs3rq2afQdsPJlODhoUEKzFP1ayaoyl1CcnwtIlsVe7K7bA1NGm4s3PraqTLlXnbIN84zuBlxBWo1u9BLw==}
     dev: false
 
-  /@types/node@20.14.7:
-    resolution: {integrity: sha512-uTr2m2IbJJucF3KUxgnGOZvYbN0QgkGyWxG6973HCpMYFy2KfcgYuIwkJQMQkt1VbBMlvWRbpshFTLxnxCZjKQ==}
+  /@types/node@20.14.8:
+    resolution: {integrity: sha512-DO+2/jZinXfROG7j7WKFn/3C6nFwxy2lLpgLjEXJz+0XKphZlTLJ14mo8Vfg8X5BWN6XjyESXq+LcYdT7tR3bA==}
     dependencies:
       undici-types: 5.26.5
 
@@ -2080,7 +2080,7 @@ packages:
   /@types/sax@1.2.7:
     resolution: {integrity: sha512-rO73L89PJxeYM3s3pPPjiPgVVcymqU490g0YO5n5By0k2Erzj6tay/4lr1CHAAU4JyOWd1rpQ8bCf6cZfHU96A==}
     dependencies:
-      '@types/node': 20.14.7
+      '@types/node': 20.14.8
     dev: false
 
   /@types/unist@2.0.10:
@@ -2169,7 +2169,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.24.7(@babel/core@7.24.7)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 5.3.1(@types/node@20.14.7)(sass@1.77.6)
+      vite: 5.3.1(@types/node@20.14.8)(sass@1.77.6)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -2449,7 +2449,7 @@ packages:
     resolution: {integrity: sha512-VmK4kqzNpOAt2LASVbw2cbbe9sD6K30E7jOjqzHxHieHMTWInkdOljtzHmNGvKr3P0MeF4Wy+Z7j6CdETFecDA==}
     dev: false
 
-  /astro@4.11.0(@types/node@20.14.7)(sass@1.77.6)(typescript@5.5.2):
+  /astro@4.11.0(@types/node@20.14.8)(sass@1.77.6)(typescript@5.5.2):
     resolution: {integrity: sha512-3VWxz/08sChQIX68tuE7Y769DUdjsT3Zq2/y4SkrDRlwN9IZ/aebwcRWr5a2yMSdO2vpFxtEdobq0mKnMlLErg==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
@@ -2511,7 +2511,7 @@ packages:
       tsconfck: 3.1.0(typescript@5.5.2)
       unist-util-visit: 5.0.0
       vfile: 6.0.1
-      vite: 5.3.1(@types/node@20.14.7)(sass@1.77.6)
+      vite: 5.3.1(@types/node@20.14.8)(sass@1.77.6)
       vitefu: 0.2.5(vite@5.3.1)
       which-pm: 2.2.0
       yargs-parser: 21.1.1
@@ -6311,7 +6311,7 @@ packages:
       vfile-message: 4.0.2
     dev: false
 
-  /vite@5.3.1(@types/node@20.14.7)(sass@1.77.6):
+  /vite@5.3.1(@types/node@20.14.8)(sass@1.77.6):
     resolution: {integrity: sha512-XBmSKRLXLxiaPYamLv3/hnP/KXDai1NDexN0FpkTaZXTfycHvkRHoenpgl/fvuK/kPbB6xAgoyiryAhQNxYmAQ==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -6339,7 +6339,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.14.7
+      '@types/node': 20.14.8
       esbuild: 0.21.5
       postcss: 8.4.38
       rollup: 4.18.0
@@ -6356,7 +6356,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 5.3.1(@types/node@20.14.7)(sass@1.77.6)
+      vite: 5.3.1(@types/node@20.14.8)(sass@1.77.6)
     dev: false
 
   /volar-service-css@0.0.45(@volar/language-service@2.2.5):
