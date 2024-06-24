@@ -4,9 +4,10 @@ import {
   RiGithubFill,
   RiInstagramFill,
   RiLinkedinBoxFill,
+  RiMailSendFill,
 } from "react-icons/ri";
 
-type SocialPlatform = "discord" | "github" | "instagram" | "linkedin";
+type SocialPlatform = "discord" | "github" | "instagram" | "linkedin" | "email";
 
 export type SocialLink = {
   name: string;
@@ -61,6 +62,12 @@ const siteInfo: SiteInfo = {
       text: "Connect with Namesake on LinkedIn",
       href: "https://www.linkedin.com/company/namesake-collaborative/",
       Icon: RiLinkedinBoxFill,
+    },
+    email: {
+      name: "Email",
+      text: "Email Namesake",
+      href: "mailto:hey@namesake.fyi",
+      Icon: RiMailSendFill,
     },
   },
 };
