@@ -1,9 +1,9 @@
 import AxeBuilder from "@axe-core/playwright";
 import { test, expect } from "@playwright/test";
 
-test.describe("homepage", () => {
+test.describe("404", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/404");
   });
 
   test("should not have any automatically detectable accessibility issues", async ({

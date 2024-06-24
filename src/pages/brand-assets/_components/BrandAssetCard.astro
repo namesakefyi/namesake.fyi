@@ -13,7 +13,7 @@ const { assetName, name, instructions, inverted } = Astro.props;
 
 <div class="logo-card">
   <div class:list={["preview", { inverted }]}>
-    <img src={`/assets/brand-assets/${assetName}.svg`} />
+    <img src={`/assets/brand-assets/${assetName}.svg`} alt={name} />
   </div>
   <div class="info">
     <h3>{name}</h3>
