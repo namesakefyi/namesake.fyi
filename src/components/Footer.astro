@@ -61,7 +61,10 @@ const linkGroups: LinkGroup[] = [
   </div>
   <div class="content end">
     <div class="copyright">
-      <div>{siteInfo.fullName} &copy; 2022&hairsp;&ndash;&hairsp;{year}</div>
+      <div>
+        {siteInfo.fullName} &copy; 2021&hairsp;&ndash;&hairsp;{year}. T4T always
+        &hearts;
+      </div>
     </div>
     <div class="social">
       {
@@ -118,6 +121,10 @@ const linkGroups: LinkGroup[] = [
       .linkGroup {
         width: unset;
         flex: 1;
+      }
+
+      .social {
+        gap: var(--space-l);
       }
 
       .copyright {
