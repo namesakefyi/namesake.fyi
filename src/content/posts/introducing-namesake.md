@@ -1,7 +1,7 @@
 ---
-title: Introducing Namesake
+title: (Re)introducing Namesake
 isDraft: true
-publishDate: 2024-05-28
+publishDate: 2024-06-28
 authors:
   - luke-lennon
 ---

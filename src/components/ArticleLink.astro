@@ -1,0 +1,74 @@
+---
+import dayjs from "dayjs";
+
+interface Props {
+  title: string;
+  date: Date;
+  url: string;
+  subhead?: string;
+  image?: {
+    src: string;
+    alt: string;
+  };
+}
+
+const { title, date, url, subhead, image } = Astro.props;
+---
+
+<div class="article">
+  <time class="date" datetime={date.toISOString()}>
+    {dayjs(date).format("MMMM DD, YYYY")}
+  </time>
+  <strong class="subhead">{subhead}</strong>
+  <a href={url} class="title">
+    <span class="title-text">{title}</span>
+  </a>
+  {image && <img src={image.src} alt={image.alt} width="800" class="image" />}
+</div>
+
+<style lang="scss">
+  .article {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .title {
+    font-size: var(--step-3);
+    font-weight: 600;
+    max-width: 36ch;
+    hyphens: auto;
+  }
+
+  .title,
+  .date,
+  .subhead {
+    z-index: 1;
+  }
+
+  .title-text,
+  .date,
+  .subhead {
+    background: var(--bg);
+    padding-inline-end: var(--space-xs);
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .date,
+  .subhead {
+    padding-block: var(--space-xs);
+    margin-block: calc(var(--space-2xs) * -1);
+  }
+
+  .image {
+    order: -1;
+    align-self: flex-end;
+    padding-inline-start: var(--space-xl);
+    margin-block-end: -4.25em;
+    filter: grayscale(100%) contrast(180%) brightness(140%);
+    opacity: 0.9;
+    mix-blend-mode: multiply;
+    border-radius: 3px;
+  }
+</style>
