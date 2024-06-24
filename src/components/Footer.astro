@@ -28,8 +28,8 @@ const linkGroups: LinkGroup[] = [
   {
     title: "Legal",
     links: [
-      { href: "/terms", label: "Terms" },
-      { href: "/privacy", label: "Privacy" },
+      { href: "/terms", label: "Terms of Service" },
+      { href: "/privacy", label: "Privacy Policy" },
     ],
   },
 ];
@@ -84,7 +84,7 @@ const linkGroups: LinkGroup[] = [
     color: var(--footerText);
     line-height: 1.5;
     width: 100%;
-    padding-block: var(--space-xl);
+    padding-block: var(--space-xl) var(--space-l);
     margin-block-start: var(--space-2xl);
     position: relative;
 
@@ -101,7 +101,7 @@ const linkGroups: LinkGroup[] = [
     margin-inline: auto;
     display: flex;
     justify-content: space-between;
-    gap: var(--space-l);
+    gap: var(--space-xl);
 
     + .content {
       margin-block-start: var(--space-l);
@@ -114,6 +114,11 @@ const linkGroups: LinkGroup[] = [
     @media (width < 760px) {
       flex-direction: column;
       gap: var(--space-l);
+
+      .linkGroup {
+        width: unset;
+        flex: 1;
+      }
 
       .copyright {
         order: 1;
@@ -134,7 +139,10 @@ const linkGroups: LinkGroup[] = [
     display: flex;
     gap: var(--space-m);
     align-items: stretch;
-    font-size: var(--step--1);
+
+    a {
+      font-size: var(--step--1);
+    }
 
     @media (hover: hover) {
       a:hover {
@@ -146,7 +154,12 @@ const linkGroups: LinkGroup[] = [
   .linkGroup {
     display: flex;
     flex-direction: column;
-    width: 15ch;
+    align-items: flex-start;
+    width: 13ch;
+
+    > * {
+      padding-block: var(--space-2xs);
+    }
   }
 
   .copyright {
