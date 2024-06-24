@@ -1,4 +1,4 @@
-name: CI
+name: Accessibility
 on:
   push:
     branches: main

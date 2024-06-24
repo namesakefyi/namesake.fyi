@@ -1,10 +1,3 @@
 import eslintPluginAstro from "eslint-plugin-astro";
 
-export default [
-  ...eslintPluginAstro.configs.recommended,
-  {
-    rules: {
-      "eol-last": "always",
-    },
-  },
-];
+export default [...eslintPluginAstro.configs["jsx-a11y-recommended"]];

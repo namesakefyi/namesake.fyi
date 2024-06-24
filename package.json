@@ -9,6 +9,7 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "lint": "eslint .",
     "test": "playwright test --reporter=html",
     "check-links": "lychee --config .lychee.toml ."
   },
@@ -34,8 +35,8 @@
   "devDependencies": {
     "@playwright/test": "^1.44.1",
     "@types/node": "^20.14.7",
-    "@typescript-eslint/parser": "^7.13.1",
-    "eslint": "^8.57.0",
+    "@typescript-eslint/parser": "^7.14.1",
+    "eslint": "^9.5.0",
     "eslint-plugin-astro": "^1.2.2",
     "eslint-plugin-jsx-a11y": "^6.9.0",
     "prettier": "^3.3.2",
