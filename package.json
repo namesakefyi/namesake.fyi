@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.7.0",
-    "@astrojs/cloudflare": "^10.4.2",
+    "@astrojs/cloudflare": "^11.0.0",
     "@astrojs/markdoc": "^0.11.0",
     "@astrojs/react": "^3.6.0",
     "@astrojs/sitemap": "^3.1.6",
@@ -35,7 +35,7 @@
     "@playwright/test": "^1.44.1",
     "@types/node": "^20.14.7",
     "@typescript-eslint/parser": "^7.13.1",
-    "eslint": "^8.57.0",
+    "eslint": "^9.5.0",
     "eslint-plugin-astro": "^1.2.2",
     "eslint-plugin-jsx-a11y": "^6.9.0",
     "prettier": "^3.3.2",
