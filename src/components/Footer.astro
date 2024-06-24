@@ -62,8 +62,8 @@ const linkGroups: LinkGroup[] = [
   </div>
   <div class="content end">
     <div class="copyright">
-      {siteInfo.fullName} &copy; 2021&hairsp;&ndash;&hairsp;{year}
-      <RiHeart3Line /> T4T always
+      <span>{siteInfo.fullName} &copy; {year}</span>
+      <span class="t4t"><RiHeart3Line /> T4T always</span>
     </div>
     <div class="social">
       {
@@ -170,6 +170,14 @@ const linkGroups: LinkGroup[] = [
 
   .copyright {
     font-size: var(--step--1);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+  }
+
+  .t4t {
     display: inline-flex;
     align-items: center;
     gap: var(--space-xs);
