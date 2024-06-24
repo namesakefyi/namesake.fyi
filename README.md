@@ -18,6 +18,14 @@ If you need help with your legal name change or gender marker change, come join 
 | `src/styles`     | Global site styles.                                                     |
 | `tests`          | End-to-end tests written using Playwright.                              |
 
-## Broken Links
+## Accessibility
+
+[![CI](https://github.com/namesakefyi/namesake.fyi/actions/workflows/ci.yml/badge.svg)](https://github.com/namesakefyi/namesake.fyi/actions/workflows/ci.yml)
+
+Namesake aims to conform to the Level AA accessibility standards outlined in the [WCAG 2.2 specification](https://www.w3.org/TR/WCAG22/). If you experience an issue with accessing any part of this site, please [file an issue](https://github.com/namesakefyi/namesake.fyi/issues) and we will correct it.
+
+## Link Checking
+
+[![Links](https://github.com/namesakefyi/namesake.fyi/actions/workflows/links.yml/badge.svg)](https://github.com/namesakefyi/namesake.fyi/actions/workflows/links.yml)
 
 A weekly [GitHub workflow](https://github.com/namesakefyi/namesake.fyi/actions/workflows/links.yml) scans the site for broken links and will open an [issue](https://github.com/namesakefyi/namesake.fyi/issues) if one is found.
