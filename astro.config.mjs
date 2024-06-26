@@ -9,6 +9,7 @@ export default defineConfig({
   adapter: cloudflare(),
   site: "https://namesake.fyi",
   integrations: [sitemap(), react(), markdoc()],
+  prefetch: true,
   vite: {
     ssr: {
       external: ["buffer", "path", "fs", "os", "crypto", "async_hooks"].map(
