@@ -2,7 +2,7 @@
 
 This repository contains the source code for the [namesake.fyi](https://namesake.fyi) website and blog, built with [Astro](https://astro.build).
 
-If you need help with your legal name change or gender marker change, come join us in [Discord](https://namesake.fyi)!
+If you need help with your legal name change or gender marker change, come join us in [Discord](https://namesake.fyi/chat)!
 
 ## Directory Structure
 
