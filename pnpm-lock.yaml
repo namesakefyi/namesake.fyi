@@ -12,10 +12,10 @@ importers:
         specifier: ^0.7.0
         version: 0.7.0(prettier-plugin-astro@0.14.0)(prettier@3.3.2)(typescript@5.5.2)
       '@astrojs/cloudflare':
-        specifier: ^10.4.2
-        version: 10.4.2(astro@4.11.3(@types/node@20.14.9)(sass@1.77.6)(typescript@5.5.2))
+        specifier: ^11.0.1
+        version: 11.0.1(astro@4.11.3(@types/node@20.14.9)(sass@1.77.6)(typescript@5.5.2))
       '@astrojs/markdoc':
-        specifier: ^0.11.1
+        specifier: ^0.11.0
         version: 0.11.1(@types/react@18.3.3)(astro@4.11.3(@types/node@20.14.9)(sass@1.77.6)(typescript@5.5.2))(react@18.3.1)
       '@astrojs/react':
         specifier: ^3.6.0
@@ -106,10 +106,10 @@ packages:
     peerDependencies:
       typescript: ^5.0.0
 
-  '@astrojs/cloudflare@10.4.2':
-    resolution: {integrity: sha512-v6nRHlELAEAyqC9MI7a4yw0h/g5rqcIeVV9ezSuQNxdtvoG7n8sGH6QYgXIpwrEAEIuM+cM2a509Hi1CIpfzCA==}
+  '@astrojs/cloudflare@11.0.1':
+    resolution: {integrity: sha512-VuUSFS2ZhxWIfo7RgHvAvaMff3iqeWFVCgh+0WHywjWvJle2J5jlpdUK5seR3NkTWr9yYOPSSr1tP34C8E/w0w==}
     peerDependencies:
-      astro: ^4.2.0
+      astro: ^4.10.3
 
   '@astrojs/compiler@1.8.2':
     resolution: {integrity: sha512-o/ObKgtMzl8SlpIdzaxFnt7SATKPxu4oIP/1NL+HDJRzxfJcAkOTAb/ZKMRyULbz4q+1t2/DAebs2Z1QairkZw==}
@@ -3410,7 +3410,7 @@ snapshots:
       - prettier
       - prettier-plugin-astro
 
-  '@astrojs/cloudflare@10.4.2(astro@4.11.3(@types/node@20.14.9)(sass@1.77.6)(typescript@5.5.2))':
+  '@astrojs/cloudflare@11.0.1(astro@4.11.3(@types/node@20.14.9)(sass@1.77.6)(typescript@5.5.2))':
     dependencies:
       '@astrojs/internal-helpers': 0.3.0
       '@astrojs/underscore-redirects': 0.3.3
