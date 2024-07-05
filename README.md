@@ -1,3 +1,5 @@
+# namesake.fyi
+
 <div align="center">
 
 [![Chat](https://img.shields.io/discord/1250552190402035835?color=5865F2&logo=discord&logoColor=white)](https://namesake.fyi/chat)
@@ -9,8 +11,6 @@
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](CODE_OF_CONDUCT.md)
 
 </div>
-
-# namesake.fyi
 
 This repository contains the source code for the [namesake.fyi](https://namesake.fyi) website and blog, built with [Astro](https://astro.build).
 
