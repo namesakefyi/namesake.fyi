@@ -2,13 +2,7 @@
 
 <div align="center">
 
-[![Chat](https://img.shields.io/discord/1250552190402035835?color=5865F2&logo=discord&logoColor=white)](https://namesake.fyi/chat)
-
-[![Accessibility](https://github.com/namesakefyi/namesake.fyi/actions/workflows/accessibility.yml/badge.svg)](https://github.com/namesakefyi/namesake.fyi/actions/workflows/accessibility.yml)
-
-[![Valid Links](https://github.com/namesakefyi/namesake.fyi/actions/workflows/links.yml/badge.svg)](https://github.com/namesakefyi/namesake.fyi/actions/workflows/links.yml)
-
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](CODE_OF_CONDUCT.md)
+[![Chat](https://img.shields.io/discord/1250552190402035835?color=5865F2&logo=discord&logoColor=white)](https://namesake.fyi/chat) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](CODE_OF_CONDUCT.md) [![Accessibility](https://github.com/namesakefyi/namesake.fyi/actions/workflows/accessibility.yml/badge.svg)](https://github.com/namesakefyi/namesake.fyi/actions/workflows/accessibility.yml) [![Valid Links](https://github.com/namesakefyi/namesake.fyi/actions/workflows/links.yml/badge.svg)](https://github.com/namesakefyi/namesake.fyi/actions/workflows/links.yml)
 
 </div>
 
