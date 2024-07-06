@@ -8,10 +8,10 @@ import { RiArrowRightLine } from "react-icons/ri";
 >
   <strong>Get notified when we launch:</strong>
   <div class="input-group">
-    <input type="email" name="email" placeholder="Your email" />
+    <input type="email" name="email" placeholder="Your email" required />
     <button type="submit">Subscribe <RiArrowRightLine /></button>
   </div>
-  <div class="special" hidden>
+  <div hidden>
     <label for="special">
       If you are a human, do not fill in this field.
     </label>
@@ -29,11 +29,6 @@ import { RiArrowRightLine } from "react-icons/ri";
     :focus-visible {
       outline-color: var(--footerText);
     }
-  }
-
-  // Honeypot field to prevent spam
-  .special {
-    display: none;
   }
 
   .input-group {
