@@ -26,13 +26,6 @@ const linkGroups: LinkGroup[] = [
       { href: "/brand-assets", label: "Brand Assets" },
     ],
   },
-  {
-    title: "Legal",
-    links: [
-      { href: "/terms", label: "Terms of Service" },
-      { href: "/privacy", label: "Privacy Policy" },
-    ],
-  },
 ];
 ---
 
@@ -63,7 +56,10 @@ const linkGroups: LinkGroup[] = [
   <div class="content end">
     <div class="copyright">
       <span>{siteInfo.fullName} &copy; {year}</span>
-      <span class="t4t"><RiHeart3Line /> T4T always</span>
+      <span class="disclaimer"
+        ><RiHeart3Line />
+        <a href="https://notlegaladvice.law/">We’re not lawyers.</a></span
+      >
     </div>
     <div class="social">
       {
@@ -92,6 +88,12 @@ const linkGroups: LinkGroup[] = [
 
     :focus-visible {
       outline-color: var(--footerText);
+    }
+
+    @media (hover: hover) {
+      a:hover {
+        text-decoration: underline;
+      }
     }
   }
 
@@ -149,12 +151,6 @@ const linkGroups: LinkGroup[] = [
     a {
       font-size: var(--step--1);
     }
-
-    @media (hover: hover) {
-      a:hover {
-        text-decoration: underline;
-      }
-    }
   }
 
   .linkGroup {
@@ -177,7 +173,7 @@ const linkGroups: LinkGroup[] = [
     flex-wrap: wrap;
   }
 
-  .t4t {
+  .disclaimer {
     display: inline-flex;
     align-items: center;
     gap: var(--space-xs);
