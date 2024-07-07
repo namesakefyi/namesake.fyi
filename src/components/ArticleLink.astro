@@ -23,7 +23,13 @@ const { title, date, url, subhead, image } = Astro.props;
   <a href={url} class="title">
     <span class="title-text">{title}</span>
   </a>
-  {image && <img src={image.src} alt={image.alt} width="800" class="image" />}
+  {
+    image && (
+      <div class="image">
+        <img src={image.src} alt={image.alt} />
+      </div>
+    )
+  }
 </div>
 
 <style lang="scss">
@@ -69,6 +75,13 @@ const { title, date, url, subhead, image } = Astro.props;
     filter: grayscale(100%) contrast(180%) brightness(140%);
     opacity: 0.9;
     mix-blend-mode: multiply;
-    border-radius: 3px;
+
+    img {
+      background-color: var(--text);
+      width: 800px;
+      border-radius: 3px;
+      object-fit: cover;
+      aspect-ratio: 5 / 3;
+    }
   }
 </style>
