@@ -22,6 +22,7 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
               src={partner.data.logo}
               alt={partner.data.name}
               height={partner.data.height}
+              densities={[1, 2]}
             />
           </a>
         </li>
@@ -70,6 +71,7 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
       grid-template-columns: repeat(3, 240px);
       grid-auto-rows: 80px;
       gap: var(--space-l) var(--space-xl);
+      user-select: none;
 
       @media (width < 900px) {
         grid-template-columns: repeat(2, minmax(240px, 1fr));
