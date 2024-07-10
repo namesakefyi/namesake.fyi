@@ -6,7 +6,9 @@ import markdoc from "@astrojs/markdoc";
 
 export default defineConfig({
   output: "hybrid",
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    imageService: "compile",
+  }),
   site: "https://namesake.fyi",
   integrations: [sitemap(), react(), markdoc()],
   prefetch: true,
