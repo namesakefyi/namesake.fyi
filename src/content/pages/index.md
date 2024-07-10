@@ -2,7 +2,7 @@
 title: Be seen for who you are
 ---
 
-**Changing your legal name and gender is tough.** From court paperwork to ID cards, social security, bank accounts, and dozens of other places—it’s a lot to manage.
+**Changing your legal name and gender marker is tough.** From court paperwork to ID cards, social security, bank accounts, and dozens of other places—it’s a lot to manage.
 
 We've been through this process and want it to be easier. We’re building Namesake to help you fill out forms, track your progress, access financial resources, and receive and share community support. You don’t have to do this alone.
 
