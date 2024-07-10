@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import heroIllustration from "~/assets/hero-form.png";
 import Partners from "~/components/Partners.astro";
 import { Content } from "~/content/pages/index.md";
 import siteInfo from "~/data/site-info";
@@ -6,23 +8,23 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title={siteInfo.name} description={siteInfo.description}>
-  <div class="home">
-    <div class="content">
-      <h1>
-        <span>Be seen for</span><br /><span class="who-you-are"
-          >who you are.</span
-        >
-      </h1>
-      <div class="subhead">
+  <div class="intro">
+    <h1>
+      <span>Be seen for</span><br /><span class="who-you-are">who you are.</span
+      >
+    </h1>
+    <div class="subhead">
+      <Image
+        src={heroIllustration}
+        alt="Some snails and flowers on top of a court order document"
+        class="illustration"
+        width={900}
+        densities={[1, 2]}
+      />
+      <div class="content">
         <Content />
       </div>
     </div>
-    <img
-      class="illustration"
-      src="/assets/index/namesake-form.png"
-      alt="Some snails and flowers on top of a court order document"
-      width={600}
-    />
   </div>
   <Partners />
 </BaseLayout>
@@ -41,41 +43,30 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 </script>
 
 <style lang="scss">
-  .home {
-    display: grid;
-    grid-template-columns: minmax(460px, 1fr) minmax(0, 1fr);
-    grid-template-areas: "content illustration";
+  .intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: var(--space-2xl);
-
-    @media (width < 800px) {
-      grid-template-columns: 1fr;
-      grid-template-areas: "content";
-      .illustration {
-        display: none;
-      }
-    }
   }
 
   .illustration {
-    grid-area: illustration;
-    width: 600px;
     max-width: 100%;
-    order: 1;
-  }
-
-  .content {
-    grid-area: content;
-    min-width: 0;
-  }
-
-  img {
-    mix-blend-mode: multiply;
+    margin-bottom: -40%;
     user-select: none;
+    pointer-events: none;
+    z-index: -1;
+    mix-blend-mode: multiply;
   }
 
   h1 {
-    margin-block-end: var(--space-xl);
     margin-inline-start: -0.03em;
+    text-align: center;
+    font-size: var(--step-7);
+
+    @media (width < 420px) {
+      font-size: var(--step-6);
+    }
 
     span {
       white-space: nowrap;
@@ -87,10 +78,23 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
   }
 
   .subhead {
+    max-width: 820px;
     font-size: var(--step-1);
 
     :global(p) + :global(p) {
       margin-top: var(--space-l);
+    }
+
+    @media (width < 600px) {
+      margin-inline: calc(-1 * var(--space-m));
+    }
+  }
+
+  .content {
+    padding-inline: var(--space-3xl);
+
+    @media (width < 600px) {
+      padding-inline: var(--space-2xl);
     }
   }
 </style>
