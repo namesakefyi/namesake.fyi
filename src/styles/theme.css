@@ -8,6 +8,7 @@
   --step-4: clamp(2.3328rem, 1.9766rem + 1.7811vi, 3.3569rem);
   --step-5: clamp(2.7994rem, 2.3135rem + 2.4292vi, 4.1962rem);
   --step-6: clamp(3.3592rem, 2.7032rem + 3.28vi, 5.2452rem);
+  --step-7: clamp(4.0311rem, 3.1527rem + 4.3921vi, 6.5565rem);
 
   /* @link https://utopia.fyi/space/calculator?c=320,8,1.2,1240,12,1.333,6,2,&s=0.75|0.5,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
   --space-2xs: clamp(0.25rem, 0.2065rem + 0.2174vw, 0.375rem);

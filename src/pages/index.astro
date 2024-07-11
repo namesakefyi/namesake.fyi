@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import heroIllustration from "~/assets/index/hero-form.png";
 import Partners from "~/components/Partners.astro";
 import { Content } from "~/content/pages/index.md";
 import siteInfo from "~/data/site-info";
@@ -7,22 +9,22 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 
 <BaseLayout title={siteInfo.name} description={siteInfo.description}>
   <div class="home">
-    <div class="content">
-      <h1>
-        <span>Be seen for</span><br /><span class="who-you-are"
-          >who you are.</span
-        >
-      </h1>
-      <div class="subhead">
-        <Content />
-      </div>
+    <h1>
+      <span>Be seen for</span><br /><span class="who-you-are">who you are.</span
+      >
+    </h1>
+    <div class="hero">
+      <Image
+        src={heroIllustration}
+        alt="Some snails and flowers on top of a court order document"
+        class="illustration"
+        width={800}
+        densities={[1, 2]}
+      />
     </div>
-    <img
-      class="illustration"
-      src="/assets/index/namesake-form.png"
-      alt="Some snails and flowers on top of a court order document"
-      width={600}
-    />
+    <div class="content">
+      <Content />
+    </div>
   </div>
   <Partners />
 </BaseLayout>
@@ -38,44 +40,49 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
     });
     highlight.show();
   }
+
+  const hero: HTMLElement | null = document.querySelector(".hero");
+  if (hero) {
+    const highlight = annotate(hero, {
+      type: "underline",
+      iterations: 1,
+      padding: 0,
+      strokeWidth: 2.5,
+      animate: false,
+    });
+    highlight.show();
+  }
 </script>
 
 <style lang="scss">
   .home {
-    display: grid;
-    grid-template-columns: minmax(460px, 1fr) minmax(0, 1fr);
-    grid-template-areas: "content illustration";
-    gap: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-    @media (width < 800px) {
-      grid-template-columns: 1fr;
-      grid-template-areas: "content";
-      .illustration {
-        display: none;
-      }
-    }
+  .hero {
+    --divider-width: 2.5px;
+    padding-inline: var(--space-2xs);
+    padding-block-start: var(--space-2xl);
+    margin-inline: calc(-1 * var(--space-l));
+    position: relative;
   }
 
   .illustration {
-    grid-area: illustration;
-    width: 600px;
     max-width: 100%;
-    order: 1;
-  }
-
-  .content {
-    grid-area: content;
-    min-width: 0;
-  }
-
-  img {
-    mix-blend-mode: multiply;
     user-select: none;
+    pointer-events: none;
+    mix-blend-mode: multiply;
   }
 
   h1 {
-    margin-block-end: var(--space-xl);
-    margin-inline-start: -0.03em;
+    text-align: center;
+    font-size: var(--step-7);
+
+    @media (width < 420px) {
+      font-size: var(--step-6);
+    }
 
     span {
       white-space: nowrap;
@@ -86,11 +93,17 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
     color: var(--bg);
   }
 
-  .subhead {
+  .content {
+    padding-block-start: var(--space-xl);
+    max-width: 760px;
     font-size: var(--step-1);
 
     :global(p) + :global(p) {
       margin-top: var(--space-l);
+    }
+
+    @media (width < 540px) {
+      font-size: var(--step-0);
     }
   }
 </style>
