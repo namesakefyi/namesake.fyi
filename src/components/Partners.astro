@@ -37,7 +37,8 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
   const partners: HTMLElement | null = document.querySelector(".partners h2");
   if (partners) {
     const underline = annotate(partners, {
-      type: "underline",
+      type: "circle",
+      padding: 16,
       animate: false,
     });
     underline.show();

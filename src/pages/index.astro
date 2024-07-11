@@ -8,22 +8,22 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title={siteInfo.name} description={siteInfo.description}>
-  <div class="intro">
+  <div class="home">
     <h1>
       <span>Be seen for</span><br /><span class="who-you-are">who you are.</span
       >
     </h1>
-    <div class="subhead">
+    <div class="hero">
       <Image
         src={heroIllustration}
         alt="Some snails and flowers on top of a court order document"
         class="illustration"
-        width={900}
+        width={800}
         densities={[1, 2]}
       />
-      <div class="content">
-        <Content />
-      </div>
+    </div>
+    <div class="content">
+      <Content />
     </div>
   </div>
   <Partners />
@@ -40,27 +40,43 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
     });
     highlight.show();
   }
+
+  const hero: HTMLElement | null = document.querySelector(".hero");
+  if (hero) {
+    const highlight = annotate(hero, {
+      type: "underline",
+      iterations: 1,
+      padding: 0,
+      strokeWidth: 2.5,
+      animate: false,
+    });
+    highlight.show();
+  }
 </script>
 
 <style lang="scss">
-  .intro {
+  .home {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-2xl);
+  }
+
+  .hero {
+    --divider-width: 2.5px;
+    padding-inline: var(--space-2xs);
+    padding-block-start: var(--space-2xl);
+    margin-inline: calc(-1 * var(--space-l));
+    position: relative;
   }
 
   .illustration {
     max-width: 100%;
-    margin-bottom: -40%;
     user-select: none;
     pointer-events: none;
-    z-index: -1;
     mix-blend-mode: multiply;
   }
 
   h1 {
-    margin-inline-start: -0.03em;
     text-align: center;
     font-size: var(--step-7);
 
@@ -77,33 +93,17 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
     color: var(--bg);
   }
 
-  .subhead {
-    max-width: 890px;
+  .content {
+    padding-block-start: var(--space-xl);
+    max-width: 760px;
     font-size: var(--step-1);
 
     :global(p) + :global(p) {
       margin-top: var(--space-l);
     }
 
-    @media (width < 800px) {
-      margin-inline: calc(-1 * var(--space-m));
-    }
-
     @media (width < 540px) {
-      margin-inline: calc(-1 * var(--space-l));
       font-size: var(--step-0);
-    }
-  }
-
-  .content {
-    padding-inline: var(--space-3xl);
-
-    @media (width < 600px) {
-      padding-inline: var(--space-2xl);
-    }
-
-    @media (width < 480px) {
-      padding-inline: var(--space-xl);
     }
   }
 </style>
