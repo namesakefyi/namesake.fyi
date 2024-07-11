@@ -11,8 +11,10 @@ import { colors } from "~/data/colors";
           class="swatch"
           style={{ backgroundColor: color.hex, "--bg": color.hex }}
         >
-          <strong class="swatch-name">{color.name}</strong>
-          <div class="swatch-hex">{color.hex}</div>
+          <div class="swatch-title">
+            <strong class="swatch-name">{color.name}</strong>
+            <div class="swatch-hex">{color.hex}</div>
+          </div>
           <div class="buttons">
             <button
               class="button swatch-toggle"
@@ -67,7 +69,7 @@ import { colors } from "~/data/colors";
   .swatches {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-l);
+    gap: var(--space-s);
     list-style: none;
     padding-inline-start: 0;
     margin-block: var(--space-xl);
@@ -83,19 +85,29 @@ import { colors } from "~/data/colors";
 
   .swatch {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     padding: var(--space-m);
-    aspect-ratio: 4 / 3;
+    align-items: center;
     border: 3px solid var(--text);
     border-radius: 3px;
     position: relative;
+
+    @media (width >= 500px) {
+      flex-direction: column;
+      aspect-ratio: 5 / 3;
+      align-items: flex-start;
+    }
+
+    @media (width < 400px) {
+      gap: var(--space-l);
+      align-items: flex-start;
+      flex-direction: column;
+    }
   }
 
   .buttons {
-    margin-top: auto;
     display: flex;
     gap: var(--space-xs);
-    flex-wrap: wrap;
   }
 
   .button {
