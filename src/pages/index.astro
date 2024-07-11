@@ -85,8 +85,13 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
       margin-top: var(--space-l);
     }
 
-    @media (width < 600px) {
+    @media (width < 800px) {
       margin-inline: calc(-1 * var(--space-m));
+    }
+
+    @media (width < 540px) {
+      margin-inline: calc(-1 * var(--space-l));
+      font-size: var(--step-0);
     }
   }
 
@@ -95,6 +100,10 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 
     @media (width < 600px) {
       padding-inline: var(--space-2xl);
+    }
+
+    @media (width < 480px) {
+      padding-inline: var(--space-xl);
     }
   }
 </style>
