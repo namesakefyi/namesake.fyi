@@ -18,7 +18,7 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
         src={heroIllustration}
         alt="Some snails and flowers on top of a court order document"
         class="illustration"
-        width={800}
+        width={900}
         densities={[1, 2]}
       />
     </div>
@@ -40,18 +40,6 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
     });
     highlight.show();
   }
-
-  const hero: HTMLElement | null = document.querySelector(".hero");
-  if (hero) {
-    const highlight = annotate(hero, {
-      type: "underline",
-      iterations: 1,
-      padding: 0,
-      strokeWidth: 2.5,
-      animate: false,
-    });
-    highlight.show();
-  }
 </script>
 
 <style lang="scss">
@@ -62,10 +50,9 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
   }
 
   .hero {
-    --divider-width: 2.5px;
     padding-inline: var(--space-2xs);
     padding-block-start: var(--space-2xl);
-    margin-inline: calc(-1 * var(--space-l));
+    margin-inline: calc(-1 * var(--space-m));
     position: relative;
   }
 
