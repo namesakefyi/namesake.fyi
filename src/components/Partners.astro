@@ -7,7 +7,7 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
 ---
 
 <div class="partners">
-  <h2>In partnership with</h2>
+  <h2 class="visually-hidden">Partners</h2>
   <ul>
     {
       shuffledPartners.map((partner) => (
@@ -31,19 +31,6 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
   </ul>
 </div>
 
-<script>
-  import { annotate } from "rough-notation";
-
-  const partners: HTMLElement | null = document.querySelector(".partners h2");
-  if (partners) {
-    const underline = annotate(partners, {
-      type: "underline",
-      animate: false,
-    });
-    underline.show();
-  }
-</script>
-
 <style lang="scss">
   .partners {
     display: flex;
@@ -55,10 +42,6 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
     gap: var(--space-3xl);
     padding-block: var(--space-xl);
     margin-block-start: var(--space-3xl);
-
-    h2 {
-      font-size: var(--step-1);
-    }
 
     ul {
       list-style-type: none;
