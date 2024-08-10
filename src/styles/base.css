@@ -99,10 +99,6 @@ h5 {
   line-height: var(--line-height-body);
 }
 
-p {
-  max-width: 65ch;
-}
-
 small {
   font-size: var(--step--1);
   line-height: var(--line-height-body);

@@ -1,5 +1,6 @@
 ---
 name: Luke Lennon
-title: Cofounder
-avatar: ./_images/luke-lennon/avatar.jpeg
+role: Co-Founder, Namesake
+avatar: ./_images/luke-lennon.jpg
+bio: Luke Lennon (any/all) is the founder of Namesake and lorem ipsum dolor sit amet. Donec id quam sed urna placerat tempor. Integer hendrerit, est eget porta porttitor, purus lacus consectetur lectus, sed tincidunt ligula arcu vitae justo. 
 ---

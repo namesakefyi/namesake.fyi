@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import BaseLayout from "~/layouts/BaseLayout.astro";
+import ProseLayout from "~/layouts/ProseLayout.astro";
 
 import { getCollection, getEntries, type CollectionEntry } from "astro:content";
 
@@ -9,11 +9,9 @@ export interface Props {
 }
 
 export async function getStaticPaths() {
-  const publishedPosts = await getCollection("posts", ({ data }) => {
-    return data.isDraft !== true;
-  });
+  const posts = await getCollection("posts");
 
-  return publishedPosts.map((post) => ({
+  return posts.map((post) => ({
     params: { slug: post.slug },
     props: { post },
   }));
@@ -27,68 +25,140 @@ const { Content } = await render();
 const authors = await getEntries(data.authors);
 ---
 
-<BaseLayout title={data.title} description="Updates and news from Namesake.">
-  <header class="post-header">
-    <h1>{data.title}</h1>
-    <div class="authors">
-      <span>By</span>
-      {
-        authors.map((author) => (
-          <span class="author">
-            {author.data.avatar && (
-              <Image
-                class="avatar"
-                src={author.data.avatar}
-                alt={`${author.data.name} photo`}
-                width={40}
-              />
-            )}
-            {author.data.name}
-          </span>
-        ))
-      }
-      <time datetime={post.data.publishDate.toISOString()}
-        >{data.publishDate.toDateString()}</time
-      >
-    </div>
-  </header>
+<ProseLayout
+  title={data.title}
+  date={data.publishDate}
+  description={data.description}
+  color="blue"
+  annotation="highlight"
+>
+  <div class="authors">
+    {
+      authors.map((author) => (
+        <span class="author">
+          {author.data.avatar && (
+            <Image
+              class="avatar"
+              src={author.data.avatar}
+              alt={`${author.data.name} photo`}
+              width={32}
+              densities={[1, 2]}
+            />
+          )}
+          <strong>{author.data.name}</strong> <span>{author.data.role}</span>
+        </span>
+      ))
+    }
+  </div>
   <div class="prose">
     <Content />
   </div>
-</BaseLayout>
+  <hr class="divider" />
+  <div class="bios">
+    {
+      authors.map(({ data: { avatar, name, bio, socialLinks } }) => (
+        <div class="bio">
+          <div class="bio-avatar">
+            <Image
+              class="avatar"
+              src={avatar}
+              alt={`${name} photo`}
+              width={80}
+              height={80}
+              densities={[1, 2]}
+            />
+          </div>
+          <div class="content">
+            <strong>{name}</strong>
+            <p>{bio}</p>
+            {socialLinks && socialLinks.length && (
+              <ul class="social">
+                {socialLinks.map((socialLink, i) => (
+                  <li>
+                    <a href={socialLink.url} target="_blank">
+                      {socialLink.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</ProseLayout>
+
+<script>
+  import { annotate } from "rough-notation";
+
+  const divider: HTMLElement | null = document.querySelector(".divider");
+  if (divider) {
+    const highlight = annotate(divider, {
+      type: "underline",
+      iterations: 1,
+      animate: false,
+    });
+    highlight.show();
+  }
+</script>
 
 <style lang="scss">
-  .post-header {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-m);
-    padding-bottom: var(--space-3xl);
-  }
-
   .authors {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-s);
-    font-size: var(--step-1);
-    align-items: center;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    padding-bottom: var(--space-2xl);
   }
 
   .author {
     display: inline-flex;
     align-items: center;
     gap: var(--space-xs);
-
-    font-weight: 600;
   }
 
   .avatar {
-    filter: grayscale(100%) contrast(1.3);
+    border-radius: 100%;
+    filter: grayscale(100%) contrast(140%);
+    mix-blend-mode: multiply;
+    user-select: none;
+  }
+
+  .bio-avatar {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
     border-radius: 100%;
   }
 
-  .prose {
-    p + p {
-      margin-top: var(--space-m);
+  .divider {
+    border: 0;
+    margin-block: var(--space-2xl);
+  }
+
+  .bios {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .bio {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-m);
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
     }
+  }
+
+  .social {
+    list-style-type: none;
+    display: flex;
+    padding: 0;
+    gap: var(--space-s);
   }
 </style>

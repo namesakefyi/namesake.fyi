@@ -4,12 +4,17 @@ import type { NamesakeColor } from "~/data/colors";
 
 export const collections = {
   authors: defineCollection({
-    type: "content",
+    type: "data",
     schema: ({ image }) =>
       z.object({
         name: z.string(),
-        title: z.string().optional(),
-        avatar: image().optional(),
+        role: z.string(),
+        bio: z.string(),
+        avatar: image(),
+        socialLinks: z.object({
+          name: z.string(),
+          url: z.string().url()
+        }).array().optional(),
       }),
   }),
 
@@ -34,8 +39,8 @@ export const collections = {
     type: "content",
     schema: ({ image }) =>
       z.object({
-        isDraft: z.boolean(),
         title: z.string(),
+        description: z.string().min(70).max(160),
         publishDate: z
           .string()
           .or(z.date())

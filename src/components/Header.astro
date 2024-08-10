@@ -7,7 +7,10 @@ const { socialLinks } = siteInfo;
 
 <header>
   <a href="/" aria-label="Namesake homepage" id="logo"><Logo /></a>
-  <a href={socialLinks.discord.href} class="button">Join us on Discord</a>
+  <nav>
+    <a href="/blog">Blog</a>
+    <a href={socialLinks.discord.href} class="outline">Join us on Discord</a>
+  </nav>
 </header>
 
 <script>
@@ -19,7 +22,7 @@ const { socialLinks } = siteInfo;
   });
 </script>
 
-<style>
+<style lang="scss">
   header {
     top: 0;
     display: flex;
@@ -36,18 +39,28 @@ const { socialLinks } = siteInfo;
     margin: calc(var(--space-xs) * -1);
   }
 
-  .button {
-    font-size: var(--step--1);
-    font-weight: 600;
-    border: 3px solid var(--text);
-    text-decoration: none;
+  nav {
+    display: flex;
+    gap: var(--space-l);
     margin-inline-start: auto;
-    border-radius: 3px;
 
-    @media (hover: hover) {
-      &:hover {
-        background-color: var(--text);
-        color: var(--bg);
+    a {
+      --nav-border: transparent;
+      font-size: var(--step--1);
+      font-weight: 600;
+      border: 3px solid var(--nav-border);
+      text-decoration: none;
+      border-radius: 3px;
+
+      &.outline {
+        --nav-border: var(--text);
+      }
+
+      @media (hover: hover) {
+        &:hover {
+          background-color: var(--text);
+          color: var(--bg);
+        }
       }
     }
   }

@@ -7,6 +7,7 @@ import BaseLayout from "./BaseLayout.astro";
 
 interface Props {
   title: string;
+  date?: Date;
   description?: string;
   ogImage?: string;
   ogAlt?: string;
@@ -14,7 +15,8 @@ interface Props {
   color?: NamesakeColor;
 }
 
-const { title, description, ogImage, ogAlt, annotation, color } = Astro.props;
+const { title, date, description, ogImage, ogAlt, annotation, color } =
+  Astro.props;
 ---
 
 <BaseLayout
@@ -27,6 +29,7 @@ const { title, description, ogImage, ogAlt, annotation, color } = Astro.props;
   <article itemscope itemtype="https://schema.org/BlogPosting">
     <PageHeader
       title={title}
+      date={date}
       description={description && smartquotes(description)}
       annotation={annotation}
     />
@@ -35,3 +38,18 @@ const { title, description, ogImage, ogAlt, annotation, color } = Astro.props;
     </section>
   </article>
 </BaseLayout>
+
+<style lang="scss" is:global>
+  .prose {
+    max-width: 720px;
+    margin-inline-end: auto;
+
+    h2 {
+      margin-block: var(--space-2xl) var(--space-m);
+    }
+
+    p + p {
+      margin-top: var(--space-m);
+    }
+  }
+</style>
