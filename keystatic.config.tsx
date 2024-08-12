@@ -7,7 +7,7 @@ export default config({
       owner: "namesakefyi",
       name: "namesake.fyi",
     },
-    branchPrefix: "keystatic",
+    branchPrefix: "keystatic/",
   },
 
   collections: {
