@@ -6,23 +6,27 @@ interface Props {
   date: Date;
   url: string;
   subhead?: string;
+  authors?: string[];
+  description?: string;
   image?: {
     src: string;
     alt: string;
   };
 }
 
-const { title, date, url, subhead, image } = Astro.props;
+const { title, date, url, subhead, authors, description, image } = Astro.props;
 ---
 
 <div class="article">
   <time class="date" datetime={date.toISOString()}>
     {dayjs(date).format("MMMM DD, YYYY")}
   </time>
-  <strong class="subhead">{subhead}</strong>
+  {subhead && <strong class="subhead">{subhead}</strong>}
   <a href={url} class="title">
     <span class="title-text">{title}</span>
   </a>
+  {authors && <strong class="authors">By {authors.join(", ")}</strong>}
+  {description && <p class="description">{description}</p>}
   {
     image && (
       <div class="image">
@@ -37,6 +41,12 @@ const { title, date, url, subhead, image } = Astro.props;
     display: flex;
     align-items: flex-start;
     flex-direction: column;
+    gap: var(--space-2xs);
+    break-inside: avoid;
+
+    &:not(:last-child) {
+      padding-block-end: var(--space-2xl);
+    }
   }
 
   .title {
@@ -44,6 +54,7 @@ const { title, date, url, subhead, image } = Astro.props;
     font-weight: 600;
     max-width: 36ch;
     hyphens: auto;
+    margin-block-end: var(--space-xs);
   }
 
   .title,
@@ -52,33 +63,26 @@ const { title, date, url, subhead, image } = Astro.props;
     z-index: 1;
   }
 
-  .title-text,
-  .date,
-  .subhead {
-    background: var(--bg);
-    padding-inline-end: var(--space-xs);
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
+  .title,
+  .title-text {
+    line-height: var(--line-height-display);
   }
 
-  .date,
-  .subhead {
-    padding-block: var(--space-xs);
-    margin-block: calc(var(--space-2xs) * -1);
+  .description {
+    text-wrap: balance;
+    max-width: 40ch;
   }
 
   .image {
     order: -1;
-    align-self: flex-end;
-    padding-inline-start: var(--space-xl);
-    margin-block-end: -4.25em;
+    max-width: 600px;
+    margin-block-end: var(--space-s);
     filter: grayscale(100%) contrast(180%) brightness(140%);
     opacity: 0.9;
     mix-blend-mode: multiply;
 
     img {
       background-color: var(--text);
-      width: 800px;
       border-radius: 3px;
       object-fit: cover;
       aspect-ratio: 5 / 3;

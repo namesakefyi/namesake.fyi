@@ -1,10 +1,14 @@
 ---
 import { Image } from "astro:assets";
-import heroIllustration from "~/assets/index/hero-form.png";
+import heroIllustration from "~/content/pages/_images/hero-form.png";
 import Partners from "~/components/Partners.astro";
-import { Content } from "~/content/pages/index.md";
 import siteInfo from "~/data/site-info";
 import BaseLayout from "~/layouts/BaseLayout.astro";
+
+import { getEntry } from "astro:content";
+
+const entry = await getEntry("pages", "index");
+const { Content } = await entry.render();
 ---
 
 <BaseLayout title={siteInfo.name} description={siteInfo.description}>

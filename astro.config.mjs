@@ -3,14 +3,16 @@ import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
 import markdoc from "@astrojs/markdoc";
+import keystatic from "@keystatic/astro";
 
+// https://astro.build/config
 export default defineConfig({
   output: "hybrid",
   adapter: cloudflare({
     imageService: "compile",
   }),
   site: "https://namesake.fyi",
-  integrations: [sitemap(), react(), markdoc()],
+  integrations: [sitemap(), react(), markdoc(), keystatic()],
   prefetch: true,
   vite: {
     ssr: {

@@ -1,17 +1,31 @@
 ---
+import dayjs from "dayjs";
 import type { RoughAnnotationType } from "rough-notation/lib/model";
 
 interface Props {
   title: string;
+  date?: Date;
   description?: string;
   annotation?: RoughAnnotationType;
 }
 
-const { title, description, annotation = "circle" } = Astro.props;
+const { title, date, description, annotation = "circle" } = Astro.props;
 ---
 
 <div class="page-head">
-  <h1 data-annotation={annotation}>{title}</h1>
+  {
+    date && (
+      <time class="date" datetime={date.toISOString()}>
+        {dayjs(date).format("MMMM DD, YYYY")}
+      </time>
+    )
+  }
+  <h1
+    data-annotation={annotation}
+    class:list={[{ inverted: annotation === "highlight" }]}
+  >
+    {title}
+  </h1>
   {description && <p class="subhead">{description}</p>}
 </div>
 
@@ -26,26 +40,38 @@ const { title, description, annotation = "circle" } = Astro.props;
 
     const highlight = annotate(header, {
       type: annotation,
-      iterations: 2,
+      iterations: annotation === "highlight" ? 1 : 2,
       padding: 10,
+      multiline: true,
     });
     highlight.show();
   }
 </script>
 
-<style>
+<style lang="scss">
   .page-head {
-    padding-block-end: var(--space-3xl);
+    padding-block-end: var(--space-2xl);
+
+    .date {
+      font-weight: 700;
+      display: block;
+      margin-block-end: var(--space-l);
+    }
 
     h1 {
       display: inline;
-      /* Visual alignment */
-      margin-inline-start: -0.06em;
+      text-wrap: balance;
+      margin-inline-start: -0.06em; // Visual alignment
+
+      &.inverted {
+        color: var(--bg);
+      }
     }
 
     .subhead {
       margin-block-start: var(--space-l);
-      font-size: var(--step-1);
+      font-size: var(--step-2);
+      text-wrap: balance;
     }
   }
 </style>

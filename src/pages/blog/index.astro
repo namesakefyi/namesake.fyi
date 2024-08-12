@@ -1,13 +1,10 @@
 ---
 import BaseLayout from "~/layouts/BaseLayout.astro";
-
-import { getCollection } from "astro:content";
+import { getCollection, getEntries } from "astro:content";
 import ArticleLink from "~/components/ArticleLink.astro";
 import PageHeader from "~/components/PageHeader.astro";
 
-const publishedPosts = await getCollection("posts", ({ data }) => {
-  return data.isDraft !== true;
-});
+const posts = await getCollection("posts");
 ---
 
 <BaseLayout
@@ -21,22 +18,29 @@ const publishedPosts = await getCollection("posts", ({ data }) => {
   />
   <div class="posts">
     {
-      publishedPosts.length ? (
-        publishedPosts.map((post) => (
-          <ArticleLink
-            title={post.data.title}
-            date={post.data.publishDate}
-            url={`/blog/${post.slug}`}
-            image={
-              post.data.image
-                ? {
-                    src: post.data.image.src.src,
-                    alt: post.data.image.alt,
-                  }
-                : undefined
-            }
-          />
-        ))
+      posts.length ? (
+        posts.map(async (post) => {
+          const authors = await getEntries(post.data.authors);
+          const authorsNames = authors.map((author) => author.data.name);
+
+          return (
+            <ArticleLink
+              authors={authorsNames}
+              title={post.data.title}
+              date={post.data.publishDate}
+              url={`/blog/${post.slug}`}
+              description={post.data.description}
+              image={
+                post.data.image
+                  ? {
+                      src: post.data.image.src.src,
+                      alt: post.data.image.alt,
+                    }
+                  : undefined
+              }
+            />
+          );
+        })
       ) : (
         <p>No posts found.</p>
       )

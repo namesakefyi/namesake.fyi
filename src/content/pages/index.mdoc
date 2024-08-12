@@ -6,6 +6,6 @@ title: Be seen for who you are
 
 We've been through this process and want it to be easier. We’re building Namesake to help you fill out forms, track your progress, access financial resources, and receive and share community support. You don’t have to do this alone.
 
-The new Namesake app will launch in Massachusetts later this summer, with more states to follow.
+The new Namesake app will launch in Massachusetts later this year, with more states to follow.
 
 Rigid systems weren't built for us, but we’ll figure them out together. **[Join us on Discord today](/chat).**
