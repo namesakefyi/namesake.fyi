@@ -22,16 +22,20 @@ export default config({
         }),
         role: fields.text({
           label: "Role",
+          description: "Should be in the format of 'Role, Organization'",
           validation: { isRequired: true },
         }),
         bio: fields.text({
           label: "Bio",
+          description: "Provide name, pronouns, and a brief bio.",
           multiline: true,
           validation: { isRequired: true },
         }),
         avatar: fields.image({
           label: "Avatar",
           directory: "src/assets/images/authors",
+          publicPath: "~/assets/images/authors/",
+          validation: { isRequired: true },
         }),
         socialLinks: fields.array(
           fields.object({
@@ -51,7 +55,7 @@ export default config({
           {
             label: "Social Links",
             itemLabel: (props) =>
-              `${props.fields.name.value} (${props.fields.url.value})`,
+              `${props.fields.name.value}: ${props.fields.url.value}`,
           },
         ),
       },
@@ -68,7 +72,10 @@ export default config({
         }),
         logo: fields.image({
           label: "Logo",
-          directory: "src/content/partners/_images",
+          description:
+            "Logo should be solid black and edge-to-edge (no extra whitespace). SVG format preferred.",
+          directory: "src/assets/images/partners",
+          publicPath: "../../assets/images/partners/",
           validation: { isRequired: true },
         }),
         url: fields.url({
@@ -77,6 +84,8 @@ export default config({
         }),
         height: fields.integer({
           label: "Height",
+          description:
+            "Height in pixels. Used to make all logos consume similar amounts of visual space despite different dimensions. Value should be between 40 and 80.",
           validation: { isRequired: true },
         }),
       },
@@ -95,6 +104,7 @@ export default config({
         }),
         description: fields.text({
           label: "Description",
+          description: "Should be between 70 and 160 characters.",
           multiline: true,
           validation: { isRequired: true, length: { min: 70, max: 160 } },
         }),
@@ -113,6 +123,7 @@ export default config({
           src: fields.image({
             label: "Image",
             directory: "src/assets/images/posts",
+            publicPath: "~/assets/images/posts/",
           }),
           alt: fields.text({
             label: "Alt Text",
@@ -132,21 +143,25 @@ export default config({
           name: { label: "Title", validation: { isRequired: true } },
         }),
         date: fields.date({
-          label: "Date",
+          label: "Date published",
           validation: { isRequired: true },
         }),
         url: fields.url({
           label: "URL",
+          description: "Link to the press article",
           validation: { isRequired: true },
         }),
         outlet: fields.text({
           label: "Outlet",
+          description:
+            "The name of the publication (use full spelling, no acronyms)",
           validation: { isRequired: true },
         }),
         image: fields.object({
           src: fields.image({
             label: "Image",
-            directory: "src/content/press/_images",
+            directory: "src/assets/images/press",
+            publicPath: "~/assets/images/press/",
           }),
           alt: fields.text({
             label: "Alt Text",
