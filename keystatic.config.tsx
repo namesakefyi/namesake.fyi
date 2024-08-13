@@ -119,16 +119,22 @@ export default config({
             itemLabel: (props) => props.value ?? "Unknown",
           },
         ),
-        image: fields.object({
-          src: fields.image({
-            label: "Image",
-            directory: "src/assets/images/posts",
-            publicPath: "../../assets/images/posts/",
-          }),
-          alt: fields.text({
-            label: "Alt Text",
-          }),
-        }),
+        image: fields.conditional(
+          fields.checkbox({ label: "Include image?", defaultValue: false }),
+          {
+            true: fields.object({
+              src: fields.image({
+                label: "Image",
+                directory: "src/assets/images/posts",
+                publicPath: "../../assets/images/posts/",
+              }),
+              alt: fields.text({
+                label: "Alt Text",
+              }),
+            }),
+            false: fields.empty(),
+          },
+        ),
         content: fields.markdoc({ label: "Content" }),
       },
     }),
