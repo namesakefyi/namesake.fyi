@@ -34,7 +34,7 @@ export default config({
         avatar: fields.image({
           label: "Avatar",
           directory: "src/assets/images/authors",
-          publicPath: "~/assets/images/authors/",
+          publicPath: "../../assets/images/authors/",
           validation: { isRequired: true },
         }),
         socialLinks: fields.array(
@@ -123,7 +123,7 @@ export default config({
           src: fields.image({
             label: "Image",
             directory: "src/assets/images/posts",
-            publicPath: "~/assets/images/posts/",
+            publicPath: "../../assets/images/posts/",
           }),
           alt: fields.text({
             label: "Alt Text",
@@ -161,7 +161,7 @@ export default config({
           src: fields.image({
             label: "Image",
             directory: "src/assets/images/press",
-            publicPath: "~/assets/images/press/",
+            publicPath: "../../assets/images/press/",
           }),
           alt: fields.text({
             label: "Alt Text",
