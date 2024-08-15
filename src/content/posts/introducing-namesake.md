@@ -7,6 +7,9 @@ publishDate: 2024-08-15
 authors:
   - luke-lennon
   - eva-decker
+image:
+  src: ../../assets/images/posts/introducing-namesake/content/namesake.webp
+  alt: "Illustrations of a driver's license, a gavel, a passport, a social security card, and a flower with snails."
 ---
 
 **Namesake began three years ago as a series of Instagram rants.** Navigating the legal name change process was a headache—it felt overwhelming, resource-intensive, and honestly, sort of lonely. What should've been a joyous, celebratory moment of declaring a new identity was instead a slog through bureaucratic paperwork and needless deadnaming. We knew we deserved better.
@@ -39,7 +42,7 @@ Lots new! Let's dive in.
 
 Have you ever noticed the way that images and text degrade when you make a copy of a copy of a copy? You see it in photocopied court documents and, notably, in DIY queer zines. Namesake's new appearance is inspired by the aesthetic overlap of these two very different uses of ink and pastel printer paper. Court documents and DIY zines are both, ultimately, about communication.
 
-![](../../assets/images/posts/introducing-namesake/content/newsletter-email.png)
+![Illustrations of a driver's license, a gavel, a passport, a social security card, and a flower with snails.](../../assets/images/posts/introducing-namesake/content/brand-preview.webp)
 
 You may see a few snails here and there, too, which you can think of as Namesake’s new mascot. (Mollusks are one of the least binary members of the animal kingdom. And no matter how slow the legal process can feel, this is all about going at your own pace.)
 

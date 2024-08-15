@@ -73,8 +73,8 @@ const { title, date, description, ogImage, ogAlt, annotation, color } =
       }
     }
 
-    img {
-      filter: grayscale(100%) contrast(120%) brightness(140%);
+    img:not(.no-filter) {
+      filter: grayscale(100%) contrast(120%) brightness(130%);
       opacity: 0.9;
       mix-blend-mode: multiply;
       border-radius: var(--radius-xs);
