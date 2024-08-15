@@ -125,6 +125,8 @@ export default config({
             true: fields.object({
               src: fields.image({
                 label: "Image",
+                description:
+                  "Images will automatically have filters applied to match the background color of the page.",
                 directory: "src/assets/images/posts",
                 publicPath: "../../assets/images/posts/",
               }),
@@ -135,7 +137,16 @@ export default config({
             false: fields.empty(),
           },
         ),
-        content: fields.markdoc({ label: "Content" }),
+        content: fields.markdoc({
+          label: "Content",
+          extension: "md",
+          options: {
+            image: {
+              directory: "src/assets/images/posts",
+              publicPath: "../../assets/images/posts/",
+            },
+          },
+        }),
       },
     }),
 
@@ -163,16 +174,22 @@ export default config({
             "The name of the publication (use full spelling, no acronyms)",
           validation: { isRequired: true },
         }),
-        image: fields.object({
-          src: fields.image({
-            label: "Image",
-            directory: "src/assets/images/press",
-            publicPath: "../../assets/images/press/",
-          }),
-          alt: fields.text({
-            label: "Alt Text",
-          }),
-        }),
+        image: fields.conditional(
+          fields.checkbox({ label: "Include image?", defaultValue: false }),
+          {
+            true: fields.object({
+              src: fields.image({
+                label: "Image",
+                directory: "src/assets/images/press",
+                publicPath: "../../assets/images/press/",
+              }),
+              alt: fields.text({
+                label: "Alt Text",
+              }),
+            }),
+            false: fields.empty(),
+          },
+        ),
       },
     }),
   },
