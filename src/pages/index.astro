@@ -22,15 +22,15 @@ const { Content } = await entry.render();
         src={heroIllustration}
         alt="Some snails and flowers on top of a court order document"
         class="illustration"
-        width={900}
-        densities={[1, 2]}
+        widths={[800, 1200, 1800]}
+        sizes={`(max-width: 400px) 800px, (max-width: 600px) 1200px, 1800px`}
       />
     </div>
     <div class="content">
       <Content />
+      <Partners />
     </div>
   </div>
-  <Partners />
 </BaseLayout>
 
 <script>
@@ -53,9 +53,20 @@ const { Content } = await entry.render();
     align-items: center;
   }
 
+  @keyframes slideInUp {
+    from {
+      transform: translateY(var(--space-m));
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
   .hero {
     padding-inline: var(--space-2xs);
-    padding-block-start: var(--space-2xl);
+    padding-block-start: var(--space-3xl);
     margin-inline: calc(-1 * var(--space-m));
     position: relative;
   }
@@ -65,6 +76,7 @@ const { Content } = await entry.render();
     user-select: none;
     pointer-events: none;
     mix-blend-mode: multiply;
+    animation: slideInUp 0.5s ease-out 0.3s both;
   }
 
   h1 {
@@ -88,6 +100,7 @@ const { Content } = await entry.render();
     padding-block-start: var(--space-xl);
     max-width: 760px;
     font-size: var(--step-1);
+    animation: slideInUp 0.5s ease-out 0.6s both;
 
     :global(p) + :global(p) {
       margin-top: var(--space-l);
