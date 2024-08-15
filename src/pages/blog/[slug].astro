@@ -32,7 +32,7 @@ const authors = await getEntries(data.authors);
   color="blue"
   annotation="highlight"
 >
-  <div class="authors">
+  <div class="authors" slot="after-header">
     {
       authors.map((author) => (
         <span class="author">
@@ -50,11 +50,9 @@ const authors = await getEntries(data.authors);
       ))
     }
   </div>
-  <div class="prose">
-    <Content />
-  </div>
-  <hr class="divider" />
-  <div class="bios">
+  <Content />
+  <div class="bios" slot="after-content">
+    <hr class="divider" />
     {
       authors.map(({ data: { avatar, name, bio, socialLinks } }) => (
         <div class="bio">
@@ -71,9 +69,9 @@ const authors = await getEntries(data.authors);
           <div class="content">
             <strong>{name}</strong>
             <p>{bio}</p>
-            {socialLinks && socialLinks.length && (
+            {socialLinks && socialLinks.length > 0 && (
               <ul class="social">
-                {socialLinks.map((socialLink, i) => (
+                {socialLinks.map((socialLink) => (
                   <li>
                     <a href={socialLink.url} target="_blank">
                       {socialLink.name}
@@ -144,6 +142,7 @@ const authors = await getEntries(data.authors);
   }
 
   .bio {
+    max-width: 720px;
     display: flex;
     align-items: flex-start;
     gap: var(--space-m);

@@ -33,23 +33,51 @@ const { title, date, description, ogImage, ogAlt, annotation, color } =
       description={description && smartquotes(description)}
       annotation={annotation}
     />
+    <slot name="after-header" />
     <section itemprop="articleBody" class="prose">
       <slot />
     </section>
+    <slot name="after-content" />
   </article>
 </BaseLayout>
 
 <style lang="scss" is:global>
-  .prose {
+  .prose:not(.not-content) {
     max-width: 720px;
     margin-inline-end: auto;
 
-    h2 {
+    h2,
+    h3 {
       margin-block: var(--space-2xl) var(--space-m);
     }
 
-    p + p {
-      margin-top: var(--space-m);
+    p,
+    ul,
+    ol,
+    img {
+      margin-bottom: var(--space-m);
+    }
+
+    img,
+    ul,
+    ol {
+      margin-block: var(--space-xl);
+    }
+
+    ul,
+    ol {
+      padding-inline-start: var(--space-xl);
+
+      li {
+        padding-inline-start: var(--space-s);
+      }
+    }
+
+    img:not(.no-filter) {
+      filter: grayscale(100%) contrast(120%) brightness(130%);
+      opacity: 0.9;
+      mix-blend-mode: multiply;
+      border-radius: var(--radius-xs);
     }
   }
 </style>
