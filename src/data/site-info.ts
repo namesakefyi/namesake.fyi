@@ -54,13 +54,13 @@ const siteInfo: SiteInfo = {
     instagram: {
       name: "Instagram",
       text: "Follow Namesake on Instagram",
-      href: "https://www.instagram.com/joinnamesake/",
+      href: "https://www.instagram.com/namesake.fyi",
       Icon: RiInstagramFill,
     },
     linkedin: {
       name: "LinkedIn",
       text: "Connect with Namesake on LinkedIn",
-      href: "https://www.linkedin.com/company/namesake-collaborative/",
+      href: "https://www.linkedin.com/company/namesake-fyi",
       Icon: RiLinkedinBoxFill,
     },
     email: {
