@@ -1,4 +1,8 @@
 name: Luke Lennon
 role: Co-Founder, Namesake
-avatar: ~/assets/images/authors/luke-lennon/avatar.jpg
-bio: Luke Lennon (any/all) is the founder of Namesake and lorem ipsum dolor sit amet. Donec id quam sed urna placerat tempor. Integer hendrerit, est eget porta porttitor, purus lacus consectetur lectus, sed tincidunt ligula arcu vitae justo. 
+bio: >-
+  Luke Lennon (any/all) wears a few different hats at Namesake, from strategy to
+  admin. They have previously worked at Visible Hands, MassChallenge, and
+  Stratyfy. 
+avatar: ../../assets/images/authors/luke-lennon/avatar.jpeg
+socialLinks: []
