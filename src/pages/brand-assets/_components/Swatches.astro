@@ -18,6 +18,7 @@ import { colors } from "~/data/colors";
           <div class="buttons">
             <button
               class="button swatch-toggle"
+              data-name={color.slug}
               data-color={color.hex}
               title={`Use ${color.name} for site background`}
             >
@@ -42,8 +43,8 @@ import { colors } from "~/data/colors";
 
   swatchToggles.forEach((toggle) => {
     toggle.addEventListener("click", () => {
-      const hex = toggle.dataset.color;
-      if (hex) document.body.style.setProperty("--bg", hex);
+      const name = toggle.dataset.name;
+      if (name) document.body.setAttribute("data-color", name);
     });
   });
 

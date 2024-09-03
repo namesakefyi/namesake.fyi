@@ -68,7 +68,7 @@ const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Namesake`;
                 process.cwd(),
                 "public",
                 "fonts",
-                "AlteHaasGroteskRegular.woff2"
+                "AlteHaasGroteskRegular.woff2",
               ),
             },
             {
@@ -78,7 +78,7 @@ const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Namesake`;
                 process.cwd(),
                 "public",
                 "fonts",
-                "AlteHaasGroteskBold.woff2"
+                "AlteHaasGroteskBold.woff2",
               ),
             },
           ],
@@ -95,7 +95,7 @@ const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Namesake`;
       Fathom.load("GQAJEJLZ");
     </script>
   </head>
-  <body style={`--bg: ${colors[color].hex}`}>
+  <body data-color={color}>
     <Header />
     <main>
       <slot />
