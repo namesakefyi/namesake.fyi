@@ -21,26 +21,42 @@ body {
   font-style: normal;
 }
 
-@supports (mask-image: url()) or (-webkit-mask-image: url()) {
-  body::before,
-  body::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-position: center top;
-    pointer-events: none;
-    z-index: 10;
-  }
+body::before,
+body::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-position: center top;
+  pointer-events: none;
+  z-index: 10;
+}
 
-  body::after {
-    background: var(--bg);
-    mask-image: url("/assets/speckles-1.svg");
-  }
+body::before {
+  background-image: url("/assets/speckles-black.svg");
+}
 
-  body::before {
-    background: var(--text);
-    mask-image: url("/assets/speckles-2.svg");
-  }
+body[data-color="purple"]::after {
+  background-image: url("/assets/speckles-purple.svg");
+}
+
+body[data-color="pink"]::after {
+  background-image: url("/assets/speckles-pink.svg");
+}
+
+body[data-color="blue"]::after {
+  background-image: url("/assets/speckles-blue.svg");
+}
+
+body[data-color="yellow"]::after {
+  background-image: url("/assets/speckles-yellow.svg");
+}
+
+body[data-color="green"]::after {
+  background-image: url("/assets/speckles-green.svg");
+}
+
+body[data-color="brown"]::after {
+  background-image: url("/assets/speckles-brown.svg");
 }
 
 ::selection {
