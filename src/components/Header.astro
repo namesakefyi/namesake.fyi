@@ -1,6 +1,7 @@
 ---
 import siteInfo from "~/data/site-info";
 import Logo from "./Logo.astro";
+import { RiDiscordFill } from "react-icons/ri";
 
 const { socialLinks } = siteInfo;
 ---
@@ -9,7 +10,9 @@ const { socialLinks } = siteInfo;
   <a href="/" aria-label="Namesake homepage" id="logo"><Logo /></a>
   <nav>
     <a href="/blog">Blog</a>
-    <a href={socialLinks.discord.href} class="outline">Join us on Discord</a>
+    <a href={socialLinks.discord.href} class="outline"
+      ><RiDiscordFill size={24} />Chat</a
+    >
   </nav>
 </header>
 
@@ -51,6 +54,8 @@ const { socialLinks } = siteInfo;
       border: 3px solid var(--nav-border);
       text-decoration: none;
       border-radius: 3px;
+      display: inline-flex;
+      gap: var(--space-xs);
 
       &.outline {
         --nav-border: var(--text);

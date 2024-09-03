@@ -34,13 +34,11 @@ body {
 
   body::after {
     background: var(--bg);
-    -webkit-mask-image: url("/assets/speckles-1.svg");
     mask-image: url("/assets/speckles-1.svg");
   }
 
   body::before {
     background: var(--text);
-    -webkit-mask-image: url("/assets/speckles-2.svg");
     mask-image: url("/assets/speckles-2.svg");
   }
 }

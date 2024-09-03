@@ -69,9 +69,12 @@ const { Content } = await entry.render();
     padding-block-start: var(--space-3xl);
     margin-inline: calc(-1 * var(--space-m));
     position: relative;
+    overflow: hidden;
+    max-width: 100vw;
   }
 
   .illustration {
+    width: 100%;
     max-width: 900px;
     user-select: none;
     pointer-events: none;

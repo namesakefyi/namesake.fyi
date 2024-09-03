@@ -4,6 +4,12 @@ import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
 import markdoc from "@astrojs/markdoc";
 import keystatic from "@keystatic/astro";
+import autoprefixer from "autoprefixer";
+import postcssUtopia from "postcss-utopia";
+import postcssMediaMinMax from "postcss-media-minmax";
+import postcssLogicalViewportUnits from "@csstools/postcss-logical-viewport-units";
+import postcssClamp from "postcss-clamp";
+import cssnano from "cssnano";
 
 // https://astro.build/config
 export default defineConfig({
@@ -20,8 +26,26 @@ export default defineConfig({
         (i) => `node:${i}`,
       ),
     },
+    css: {
+      postcss: {
+        plugins: [
+          autoprefixer(),
+          postcssUtopia({
+            minWidth: 320,
+            maxWidth: 1240,
+          }),
+          postcssMediaMinMax(),
+          postcssLogicalViewportUnits(),
+          postcssClamp(),
+          cssnano(),
+        ],
+      },
+    },
   },
   devToolbar: {
     enabled: false,
+  },
+  server: {
+    host: true,
   },
 });
