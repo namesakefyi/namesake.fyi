@@ -26,6 +26,13 @@ const linkGroups: LinkGroup[] = [
       { href: "/brand-assets", label: "Brand Assets" },
     ],
   },
+  {
+    title: "Resources",
+    links: [
+      { href: "/chat", label: "Chat" },
+      { href: "/status", label: "System Status" },
+    ],
+  },
 ];
 ---
 
@@ -67,7 +74,7 @@ const linkGroups: LinkGroup[] = [
       {
         Object.values(socialLinks).map(({ href, Icon, text }) => (
           <a {href} title={text}>
-            <Icon size={24} />
+            <Icon size={28} />
           </a>
         ))
       }
@@ -110,7 +117,7 @@ const linkGroups: LinkGroup[] = [
     gap: var(--space-xl);
 
     + .content {
-      margin-block-start: var(--space-l);
+      margin-block-start: var(--space-xl);
     }
 
     &.end {
@@ -119,7 +126,7 @@ const linkGroups: LinkGroup[] = [
 
     @media (width < 760px) {
       flex-direction: column;
-      gap: var(--space-l);
+      gap: var(--space-xl);
 
       .linkGroup {
         width: unset;
