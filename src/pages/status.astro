@@ -1,0 +1,6 @@
+---
+// Server-render page to avoid temporary flash of "redirecting..." plain text page
+export const prerender = false;
+
+return Astro.redirect("https://status.namesake.fyi", 308);
+---
