@@ -19,17 +19,17 @@
     "check-links": "lychee --config .lychee.toml ."
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.3",
+    "@astrojs/check": "^0.9.4",
     "@astrojs/cloudflare": "11.1.0",
     "@astrojs/markdoc": "^0.11.4",
     "@astrojs/react": "^3.6.2",
-    "@astrojs/sitemap": "^3.1.6",
+    "@astrojs/sitemap": "^3.2.0",
     "@axe-core/playwright": "^4.10.0",
     "@keystatic/astro": "^5.0.0",
     "@keystatic/core": "^0.5.36",
-    "@types/react": "^18.3.10",
+    "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
-    "astro": "^4.15.9",
+    "astro": "^4.15.11",
     "astro-font": "^0.1.81",
     "dayjs": "^1.11.13",
     "fathom-client": "^3.7.2",
@@ -40,7 +40,7 @@
     "typescript": "^5.6.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.2",
+    "@biomejs/biome": "^1.9.3",
     "@csstools/postcss-logical-viewport-units": "^3.0.1",
     "@playwright/test": "^1.47.2",
     "@types/node": "^22.7.4",
