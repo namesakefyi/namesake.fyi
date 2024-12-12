@@ -30,6 +30,14 @@ export default defineConfig({
         (i) => `node:${i}`,
       ),
     },
+    resolve: {
+      // Workaround until fixed: https://github.com/withastro/adapters/pull/436
+      // Use react-dom/server.edge instead of react-dom/server.browser for React 19.
+      // Without this, MessageChannel from node:worker_threads needs to be polyfilled.
+      alias: import.meta.env.PROD && {
+        "react-dom/server": "react-dom/server.edge",
+      },
+    },
     css: {
       postcss: {
         plugins: [
