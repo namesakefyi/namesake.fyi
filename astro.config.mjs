@@ -3,7 +3,6 @@ import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
 import markdoc from "@astrojs/markdoc";
-import keystatic from "@keystatic/astro";
 import autoprefixer from "autoprefixer";
 import postcssUtopia from "postcss-utopia";
 import postcssMediaMinMax from "postcss-media-minmax";
@@ -18,7 +17,12 @@ export default defineConfig({
     imageService: "compile",
   }),
   site: "https://namesake.fyi",
-  integrations: [sitemap(), react(), markdoc(), keystatic()],
+  integrations: [
+    sitemap(),
+    react(),
+    markdoc(),
+    // keystatic() Re-enable when Keystatic supports Astro v5
+  ],
   prefetch: true,
   vite: {
     ssr: {

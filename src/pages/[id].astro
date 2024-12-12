@@ -1,6 +1,5 @@
 ---
 import { getCollection, type CollectionEntry, render } from "astro:content";
-
 import ProseLayout from "~/layouts/ProseLayout.astro";
 
 export interface Props {
@@ -12,11 +11,14 @@ export async function getStaticPaths() {
 
   return pages.map((page) => ({
     params: { id: page.id },
-    props: page,
+    props: { page },
   }));
 }
 
 const { page } = Astro.props;
+
+if (!page) return Astro.redirect("/404");
+
 const { data } = page;
 const { Content } = await render(page);
 ---
