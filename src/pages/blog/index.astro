@@ -28,7 +28,7 @@ const posts = await getCollection("posts");
               authors={authorsNames}
               title={post.data.title}
               date={post.data.publishDate}
-              url={`/blog/${post.slug}`}
+              url={`/blog/${post.id}`}
               description={post.data.description}
               image={
                 post.data.image

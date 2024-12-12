@@ -1,10 +1,11 @@
+import { glob } from "astro/loaders";
 import { z, defineCollection, reference } from "astro:content";
 import type { RoughAnnotationType } from "rough-notation/lib/model";
 import type { NamesakeColor } from "~/data/colors";
 
 export const collections = {
   authors: defineCollection({
-    type: "data",
+    loader: glob({ pattern: "**/[^_]*.yaml", base: "./src/content/authors" }),
     schema: ({ image }) =>
       z.object({
         name: z.string(),
@@ -22,7 +23,7 @@ export const collections = {
   }),
 
   pages: defineCollection({
-    type: "content",
+    loader: glob({ pattern: "**/[^_]*.md", base: "./src/content/pages" }),
     schema: ({ image }) =>
       z.object({
         title: z.string(),
@@ -39,7 +40,7 @@ export const collections = {
   }),
 
   posts: defineCollection({
-    type: "content",
+    loader: glob({ pattern: "**/[^_]*.md", base: "./src/content/posts" }),
     schema: ({ image }) =>
       z.object({
         title: z.string(),
@@ -59,7 +60,7 @@ export const collections = {
   }),
 
   partners: defineCollection({
-    type: "data",
+    loader: glob({ pattern: "**/[^_]*.yaml", base: "./src/content/partners" }),
     schema: ({ image }) =>
       z.object({
         name: z.string(),
@@ -70,7 +71,7 @@ export const collections = {
   }),
 
   press: defineCollection({
-    type: "data",
+    loader: glob({ pattern: "**/[^_]*.yaml", base: "./src/content/press" }),
     schema: ({ image }) =>
       z.object({
         title: z.string(),

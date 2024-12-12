@@ -5,10 +5,11 @@ import Partners from "~/components/Partners.astro";
 import siteInfo from "~/data/site-info";
 import BaseLayout from "~/layouts/BaseLayout.astro";
 
-import { getEntry } from "astro:content";
+import { getEntry, render } from "astro:content";
 
 const entry = await getEntry("pages", "index");
-const { Content } = await entry.render();
+if (!entry) return Astro.redirect("/404");
+const { Content } = await render(entry);
 ---
 
 <BaseLayout title={siteInfo.name} description={siteInfo.description}>

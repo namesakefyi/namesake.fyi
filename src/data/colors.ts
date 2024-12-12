@@ -1,6 +1,6 @@
 type Color = {
+  id: string;
   name: string;
-  slug: string;
   hex: string;
   forText?: boolean;
 };
@@ -17,44 +17,44 @@ export type NamesakeColor =
 
 export const colors: Record<NamesakeColor, Color> = {
   purple: {
+    id: "purple",
     name: "Namesake Purple",
-    slug: "purple",
     hex: "#CDA5EF",
   },
   pink: {
+    id: "pink",
     name: "Pastel Pink",
-    slug: "pink",
     hex: "#ECADD4",
   },
   blue: {
+    id: "blue",
     name: "Pastel Blue",
-    slug: "blue",
     hex: "#96C7F2",
   },
   yellow: {
+    id: "yellow",
     name: "Pastel Yellow",
-    slug: "yellow",
     hex: "#ECDD85",
   },
   green: {
+    id: "green",
     name: "Pastel Green",
-    slug: "green",
     hex: "#97CF9C",
   },
   brown: {
+    id: "brown",
     name: "Pastel Brown",
-    slug: "brown",
     hex: "#DDB896",
   },
   black: {
+    id: "black",
     name: "Photocopy Black",
-    slug: "black",
     hex: "#111111",
     forText: true,
   },
   white: {
+    id: "white",
     name: "Photocopy White",
-    slug: "white",
     hex: "#E1E1E1",
     forText: true,
   },
