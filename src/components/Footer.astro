@@ -36,9 +36,9 @@ const linkGroups: LinkGroup[] = [
   {
     title: "Legal",
     links: [
+      { href: "/abuse", label: "Restricted Use" },
       { href: "/terms", label: "Terms of Service" },
       { href: "/privacy", label: "Privacy Policy" },
-      { href: "/disclaimer", label: "Disclaimer" },
     ],
   },
 ];
@@ -73,9 +73,7 @@ const linkGroups: LinkGroup[] = [
     <div class="copyright">
       <span>{siteInfo.fullName} &copy; {year}</span>
       <span class="disclaimer"
-        ><RiHeart3Line /> T4T. <a href="https://notlegaladvice.law/"
-          >We’re not lawyers.</a
-        ></span
+        ><RiHeart3Line /> T4T. <a href="/terms">We’re not lawyers.</a></span
       >
     </div>
     <div class="social">

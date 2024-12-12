@@ -11,10 +11,13 @@ export const collections = {
         role: z.string(),
         bio: z.string(),
         avatar: image(),
-        socialLinks: z.object({
-          name: z.string(),
-          url: z.string().url()
-        }).array().optional(),
+        socialLinks: z
+          .object({
+            name: z.string(),
+            url: z.string().url(),
+          })
+          .array()
+          .optional(),
       }),
   }),
 
