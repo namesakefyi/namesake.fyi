@@ -1,8 +1,12 @@
 ---
 import { Image } from "astro:assets";
 import ProseLayout from "~/layouts/ProseLayout.astro";
-
-import { getCollection, getEntries, type CollectionEntry } from "astro:content";
+import {
+  getCollection,
+  getEntries,
+  type CollectionEntry,
+  render,
+} from "astro:content";
 
 export interface Props {
   post: CollectionEntry<"posts">;
@@ -12,15 +16,17 @@ export async function getStaticPaths() {
   const posts = await getCollection("posts");
 
   return posts.map((post) => ({
-    params: { slug: post.slug },
+    params: { id: post.id },
     props: { post },
   }));
 }
 
 const { post } = Astro.props;
 
-const { data, render } = post;
-const { Content } = await render();
+if (!post) return Astro.redirect("/404");
+
+const { data } = post;
+const { Content } = await render(post);
 
 const authors = await getEntries(data.authors);
 ---
