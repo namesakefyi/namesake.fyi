@@ -1,0 +1,14 @@
+---
+import { fetchPolicy } from "~/helpers/helpers";
+import ProseLayout from "~/layouts/ProseLayout.astro";
+
+const content = await fetchPolicy("subprocessors");
+---
+
+<ProseLayout
+  title="Subprocessors"
+  description="All the third-party subprocessors that we use to run Namesake."
+  color="brown"
+>
+  <article set:html={content} />
+</ProseLayout>

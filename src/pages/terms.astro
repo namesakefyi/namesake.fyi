@@ -1,0 +1,14 @@
+---
+import { fetchPolicy } from "~/helpers/helpers";
+import ProseLayout from "~/layouts/ProseLayout.astro";
+
+const content = await fetchPolicy("terms");
+---
+
+<ProseLayout
+  title="Terms of Service"
+  description="All the terms that you agree to when you sign up for Namesake."
+  color="brown"
+>
+  <article set:html={content} />
+</ProseLayout>

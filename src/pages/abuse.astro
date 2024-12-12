@@ -1,0 +1,14 @@
+---
+import { fetchPolicy } from "~/helpers/helpers";
+import ProseLayout from "~/layouts/ProseLayout.astro";
+
+const content = await fetchPolicy("abuse");
+---
+
+<ProseLayout
+  title="Use Restrictions Policy"
+  description="It is not okay to use Namesake for these restricted purposes."
+  color="brown"
+>
+  <article set:html={content} />
+</ProseLayout>
