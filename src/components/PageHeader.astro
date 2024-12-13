@@ -32,6 +32,7 @@ const { title, date, description, annotation = "circle" } = Astro.props;
 <script>
   import { annotate } from "rough-notation";
   import type { RoughAnnotationType } from "rough-notation/lib/model";
+  import { annotationConfig } from "~/helpers/helpers";
 
   const header: HTMLElement | null = document.querySelector(".page-head h1");
 
@@ -40,9 +41,7 @@ const { title, date, description, annotation = "circle" } = Astro.props;
 
     const highlight = annotate(header, {
       type: annotation,
-      iterations: annotation === "highlight" ? 1 : 2,
-      padding: 10,
-      multiline: true,
+      ...annotationConfig[annotation],
     });
     highlight.show();
   }
