@@ -1,5 +1,6 @@
 ---
 import { getCollection, type CollectionEntry, render } from "astro:content";
+import TableOfContents from "~/components/TableOfContents.astro";
 import ProseLayout from "~/layouts/ProseLayout.astro";
 
 export interface Props {
@@ -20,7 +21,8 @@ const { page } = Astro.props;
 if (!page) return Astro.redirect("/404");
 
 const { data } = page;
-const { Content } = await render(page);
+const { Content, headings } = await render(page);
+console.log(headings);
 ---
 
 <ProseLayout
