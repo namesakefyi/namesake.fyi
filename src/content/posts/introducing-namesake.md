@@ -12,6 +12,8 @@ image:
   alt: "Illustrations of a driver's license, a gavel, a passport, a social security card, and a flower with snails."
 ---
 
+## Contents
+
 **Namesake began three years ago as a series of Instagram rants.** Navigating the legal name change process was a headache—it felt overwhelming, resource-intensive, and honestly, sort of lonely. What should've been a joyous, celebratory moment of declaring a new identity was instead a slog through bureaucratic paperwork and needless deadnaming. We knew we deserved better.
 
 ## What we've accomplished so far
