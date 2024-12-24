@@ -1,9 +1,11 @@
 ---
 import type { MarkdownHeading } from "astro";
+import type { RoughAnnotationType } from "rough-notation/lib/model";
 interface Props {
     headings?: MarkdownHeading[];
+    annotation?: RoughAnnotationType;
 }
-const { headings } = Astro.props;
+const { headings, annotation = "underline" } = Astro.props;
 ---
 
 {
@@ -11,12 +13,58 @@ const { headings } = Astro.props;
         <ul class="toc">
             {headings.map(({ depth, slug, text }) => (
                 <li style={"--depth: " + depth}>
-                    <a href={`#${slug}`}>{text}</a>
+                    <a href={`#${slug}`} data-annotation={annotation}>
+                        {text}
+                    </a>
                 </li>
             ))}
         </ul>
     )
 }
+<script>
+    import { annotate } from "rough-notation";
+    import type {
+        RoughAnnotation,
+        RoughAnnotationType,
+    } from "rough-notation/lib/model";
+    import { annotationConfig } from "~/helpers/helpers";
+
+    const toc = document.querySelector(".toc");
+    const tocMap = new Map<
+        HTMLHeadingElement,
+        { annotation: RoughAnnotation }
+    >();
+
+    const io = new IntersectionObserver(
+        (entries) => {
+            for (const entry of entries) {
+                const { annotation } = tocMap.get(
+                    entry.target as HTMLHeadingElement,
+                )!;
+
+                entry.intersectionRatio > 0.5
+                    ? annotation.show()
+                    : annotation.hide();
+            }
+        },
+        {
+            threshold: Array.from({ length: 100 }, (_, i) => i * 0.01),
+        },
+    );
+
+    toc?.querySelectorAll("a").forEach((item) => {
+        const id = new URL(item.href).hash;
+        const heading = document.querySelector<HTMLHeadingElement>(id)!;
+        const annotation = item.dataset.annotation as RoughAnnotationType;
+
+        const underline = annotate(item, {
+            type: annotation,
+            ...annotationConfig[annotation],
+        });
+        tocMap.set(heading, { annotation: underline });
+        io.observe(heading);
+    });
+</script>
 <style>
     ul {
         list-style-type: none;
@@ -34,5 +82,11 @@ const { headings } = Astro.props;
     li {
         font-size: var(--step--1);
         margin-inline-start: calc((var(--depth) - 2) * var(--space-m));
+    }
+    a {
+        text-decoration: 1px solid transparent;
+    }
+    a:is(:hover, :focus) {
+        text-decoration: 1px solid currentcolor;
     }
 </style>
