@@ -37,7 +37,11 @@ const {
   ogAlt={ogAlt}
   color={color}
 >
-  <article itemscope itemtype="https://schema.org/BlogPosting">
+  <article
+    class="article-grid"
+    itemscope
+    itemtype="https://schema.org/BlogPosting"
+  >
     <PageHeader
       title={title}
       date={date}
@@ -54,9 +58,45 @@ const {
 </BaseLayout>
 
 <style lang="scss" is:global>
+  .article-grid {
+    display: grid;
+    grid-auto-rows: minmax(min-content, max-content);
+    column-gap: var(--space-m);
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "head"
+      "authors"
+      "toc"
+      "prose"
+      "bios";
+    @media (min-width: 576px) {
+      grid-template-columns: 3fr 1fr;
+      grid-template-areas:
+        "head head"
+        "authors toc"
+        "prose toc"
+        "bios .";
+    }
+    .bios {
+      grid-area: bios;
+    }
+    .prose:not(.not-content) {
+      grid-area: prose;
+    }
+    .toc {
+      grid-area: toc;
+    }
+    .authors {
+      grid-area: authors;
+    }
+    .page-head {
+      grid-area: head;
+    }
+  }
   .prose:not(.not-content) {
     max-width: 720px;
     margin-inline-end: auto;
+    grid-area: prose;
 
     h2,
     h3 {
