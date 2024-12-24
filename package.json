@@ -50,7 +50,6 @@
     "postcss-clamp": "^4.1.0",
     "postcss-media-minmax": "^5.0.0",
     "postcss-utopia": "^1.1.0",
-    "remark-toc": "^9.0.0",
     "sass": "^1.83.0",
     "sharp": "^0.33.5"
   },
