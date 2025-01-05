@@ -23,15 +23,11 @@ const { headings } = Astro.props;
   )
 }
 <script>
-    import { annotate } from "rough-notation";
-    import type {
-        RoughAnnotation,
-        RoughAnnotationType,
-    } from "rough-notation/lib/model";
-    import { annotationConfig } from "~/helpers/helpers";
+  import { annotate } from "rough-notation";
+  import type { RoughAnnotation } from "rough-notation/lib/model";
 
-    const toc = document.querySelector(".toc");
-    const tocMap = new Map<
+  const toc = document.querySelector(".toc")!;
+  const tocMap = new Map<
         HTMLHeadingElement,
         { annotation: RoughAnnotation }
     >();
@@ -53,18 +49,20 @@ const { headings } = Astro.props;
         },
     );
 
-    toc?.querySelectorAll("a").forEach((item) => {
-        const id = new URL(item.href).hash;
-        const heading = document.querySelector<HTMLHeadingElement>(id)!;
-        const annotation = item.dataset.annotation as RoughAnnotationType;
+  toc.querySelectorAll("a").forEach((item) => {
+    const id = new URL(item.href).hash;
+    const heading = document.querySelector<HTMLHeadingElement>(id)!;
 
-        const underline = annotate(item, {
-            type: annotation,
-            ...annotationConfig[annotation],
-        });
-        tocMap.set(heading, { annotation: underline });
-        io.observe(heading);
+    const underline = annotate(item, {
+      type: "underline",
+      animate: false,
+      iterations: 1,
+      multiline: true,
+      padding: 0,
     });
+    tocMap.set(heading, { annotation: underline });
+    io.observe(heading);
+  });
 </script>
 <style>
   @media (min-width: 576px) {
