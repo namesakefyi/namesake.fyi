@@ -9,17 +9,18 @@ const { headings } = Astro.props;
 ---
 
 {
-    headings?.length && (
-        <ul class="toc">
-            {headings.map(({ depth, slug, text }) => (
-                <li style={"--depth: " + depth}>
-                    <a href={`#${slug}`} data-annotation={annotation}>
-                        {text}
-                    </a>
-                </li>
-            ))}
-        </ul>
-    )
+  headings?.length && (
+    <nav class="toc" aria-labelledby="toc-header">
+      <h2 class="toc-header">On this page</h2>
+      <ul>
+        {headings.map(({ depth, slug, text }) => (
+          <li style={"--depth: " + depth}>
+            <a href={`#${slug}`}>{text}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
 }
 <script>
     import { annotate } from "rough-notation";
