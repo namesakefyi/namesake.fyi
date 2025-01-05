@@ -1,8 +1,8 @@
 ---
-import BaseLayout from "~/layouts/BaseLayout.astro";
 import { getCollection, getEntries } from "astro:content";
 import ArticleLink from "~/components/ArticleLink.astro";
 import PageHeader from "~/components/PageHeader.astro";
+import BaseLayout from "~/layouts/BaseLayout.astro";
 
 const posts = await getCollection("posts");
 ---

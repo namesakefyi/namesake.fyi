@@ -1,12 +1,12 @@
 ---
 import { Image } from "astro:assets";
-import ProseLayout from "~/layouts/ProseLayout.astro";
 import {
+  type CollectionEntry,
   getCollection,
   getEntries,
-  type CollectionEntry,
   render,
 } from "astro:content";
+import ProseLayout from "~/layouts/ProseLayout.astro";
 
 export interface Props {
   post: CollectionEntry<"posts">;
