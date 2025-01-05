@@ -1,8 +1,15 @@
 ---
-import { fetchPolicy } from "~/helpers/helpers";
+import { render, getEntry } from "astro:content";
 import ProseLayout from "~/layouts/ProseLayout.astro";
 
-const content = await fetchPolicy("terms");
+const entry = await getEntry("policy", "terms");
+
+if (entry === undefined)
+  throw new Error(
+    "Entry `terms` was undefined, this could mean the source file is under a different path.",
+  );
+
+const { Content } = await render(entry);
 ---
 
 <ProseLayout
@@ -11,5 +18,5 @@ const content = await fetchPolicy("terms");
   color="brown"
   annotation="box"
 >
-  <article set:html={content} />
+  <Content />
 </ProseLayout>

@@ -1,8 +1,14 @@
 ---
-import { fetchPolicy } from "~/helpers/helpers";
+import { render, getEntry } from "astro:content";
 import ProseLayout from "~/layouts/ProseLayout.astro";
 
-const content = await fetchPolicy("privacy");
+const entry = await getEntry("policy", "privacy");
+if (entry === undefined)
+  throw new Error(
+    "Entry `privacy` was undefined, this could mean the source file is under a different path.",
+  );
+
+const { Content } = await render(entry);
 ---
 
 <ProseLayout
@@ -10,5 +16,5 @@ const content = await fetchPolicy("privacy");
   description="The privacy of your data—and it is your data, not ours!—is a big deal to us. Here’s the rundown of what we collect and why, when we access your information, and your rights."
   color="brown"
 >
-  <article set:html={content} />
+  <Content />
 </ProseLayout>
