@@ -1,5 +1,5 @@
+import { defineCollection, reference, z } from "astro:content";
 import { glob } from "astro/loaders";
-import { z, defineCollection, reference } from "astro:content";
 import type { RoughAnnotationType } from "rough-notation/lib/model";
 import type { NamesakeColor } from "~/data/colors";
 

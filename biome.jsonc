@@ -1,25 +1,27 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
-	"files": {
-		"ignore": [
-			".astro",
-			"node_modules",
-			"playwright-report",
-			"test-results",
-			"dist",
-			".vscode"
-		]
-	},
-	"formatter": {
-		"enabled": true,
-		"indentStyle": "space"
-	},
-	"organizeImports": { "enabled": true },
-	"linter": { "enabled": true, "rules": { "recommended": true } },
-	"overrides": [
-		{
-			"include": ["*.astro", "**/*.astro"],
-			"javascript": { "globals": ["exports"] }
-		}
-	]
+  "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+  "files": {
+    "ignore": [
+      ".astro",
+      "node_modules",
+      "playwright-report",
+      "test-results",
+      "dist",
+      ".vscode",
+      // PostCSS
+      "src/styles/theme.css"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space"
+  },
+  "organizeImports": { "enabled": true },
+  "linter": { "enabled": true, "rules": { "recommended": true } },
+  "overrides": [
+    {
+      "include": ["*.astro", "**/*.astro"],
+      "javascript": { "globals": ["exports"] }
+    }
+  ]
 }
