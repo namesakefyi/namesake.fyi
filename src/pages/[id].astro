@@ -22,7 +22,6 @@ if (!page) return Astro.redirect("/404");
 
 const { data } = page;
 const { Content, headings } = await render(page);
-console.log(headings);
 ---
 
 <ProseLayout
@@ -32,6 +31,7 @@ console.log(headings);
   ogAlt={data.ogImage?.alt}
   annotation={data.annotation}
   color={data.color}
+  headings={headings}
 >
   <Content />
 </ProseLayout>

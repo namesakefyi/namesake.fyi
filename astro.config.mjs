@@ -9,7 +9,6 @@ import postcssMediaMinMax from "postcss-media-minmax";
 import postcssLogicalViewportUnits from "@csstools/postcss-logical-viewport-units";
 import postcssClamp from "postcss-clamp";
 import cssnano from "cssnano";
-import remarkToc from "remark-toc";
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,9 +16,6 @@ export default defineConfig({
   adapter: cloudflare({
     imageService: "compile",
   }),
-  markdown: {
-    remarkPlugins: [ [remarkToc, {}] ]
-  },
   site: "https://namesake.fyi",
   integrations: [
     sitemap(),
