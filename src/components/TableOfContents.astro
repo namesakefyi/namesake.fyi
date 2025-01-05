@@ -1,11 +1,11 @@
 ---
 import type { MarkdownHeading } from "astro";
-import type { RoughAnnotationType } from "rough-notation/lib/model";
+
 interface Props {
-    headings?: MarkdownHeading[];
-    annotation?: RoughAnnotationType;
+  headings?: MarkdownHeading[];
 }
-const { headings, annotation = "underline" } = Astro.props;
+
+const { headings } = Astro.props;
 ---
 
 {
