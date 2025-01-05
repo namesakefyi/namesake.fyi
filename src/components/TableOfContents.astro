@@ -67,15 +67,19 @@ const { headings } = Astro.props;
     });
 </script>
 <style>
+  @media (min-width: 576px) {
+    nav {
+      position: sticky;
+      top: var(--space-xl);
+      right: 0;
+      /* `display: grid` will extend the height of this past it's content, let's stop that */
+      max-height: fit-content;
+    }
+  }
   ul {
     list-style-type: none;
     padding-inline-start: 0;
     padding-block: var(--space-l);
-    position: sticky;
-    top: var(--space-xl);
-    right: 0;
-    /* `display: grid` will extend the height of this past it's content, let's stop that */
-    max-height: fit-content;
     display: flex;
     flex-flow: column;
     gap: var(--space-2xs);
