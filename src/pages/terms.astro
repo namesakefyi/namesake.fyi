@@ -3,11 +3,7 @@ import { render, getEntry } from "astro:content";
 import ProseLayout from "~/layouts/ProseLayout.astro";
 
 const entry = await getEntry("policy", "terms");
-
-if (entry === undefined)
-  throw new Error(
-    "Entry `terms` was undefined, this could mean the source file is under a different path.",
-  );
+if (entry === undefined) return Astro.redirect("/404");
 
 const { Content } = await render(entry);
 ---

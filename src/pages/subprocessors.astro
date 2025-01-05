@@ -1,8 +1,13 @@
 ---
+import { render } from "astro:content";
+import { getEntry } from "astro:content";
 import { fetchPolicy } from "~/helpers/helpers";
 import ProseLayout from "~/layouts/ProseLayout.astro";
 
-const content = await fetchPolicy("subprocessors");
+const entry = await getEntry("policy", "subprocessors");
+if (entry === undefined) return Astro.redirect("/404");
+
+const { Content } = await render(entry);
 ---
 
 <ProseLayout
@@ -10,5 +15,5 @@ const content = await fetchPolicy("subprocessors");
   description="All the third-party subprocessors that we use to run Namesake."
   color="brown"
 >
-  <article set:html={content} />
+  <Content />
 </ProseLayout>
