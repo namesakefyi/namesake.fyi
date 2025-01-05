@@ -67,27 +67,25 @@ const { headings } = Astro.props;
     });
 </script>
 <style>
-    ul {
-        list-style-type: none;
-        padding-inline-start: 0;
-        padding-block: var(--space-l);
-        position: sticky;
-        top: var(--space-xl);
-        right: 0;
-        /* `display: grid` will extend the height of this past it's content, let's stop that */
-        max-height: fit-content;
-        display: flex;
-        flex-flow: column;
-        gap: var(--space-2xs);
-    }
-    li {
-        font-size: var(--step--1);
-        margin-inline-start: calc((var(--depth) - 2) * var(--space-m));
-    }
-    a {
-        text-decoration: 1px solid transparent;
-    }
-    a:is(:hover, :focus) {
-        text-decoration: 1px solid currentcolor;
-    }
+  ul {
+    list-style-type: none;
+    padding-inline-start: 0;
+    padding-block: var(--space-l);
+    position: sticky;
+    top: var(--space-xl);
+    right: 0;
+    /* `display: grid` will extend the height of this past it's content, let's stop that */
+    max-height: fit-content;
+    display: flex;
+    flex-flow: column;
+    gap: var(--space-2xs);
+  }
+
+  li {
+    font-size: var(--step--1);
+    margin-inline-start: calc((var(--depth) - 2) * var(--space-m));
+  }
+  a {
+    text-decoration: 1px solid transparent;
+  }
 </style>
