@@ -28,26 +28,59 @@ const { headings } = Astro.props;
 
   const toc = document.querySelector(".toc")!;
   const tocMap = new Map<
-        HTMLHeadingElement,
-        { annotation: RoughAnnotation }
-    >();
+    HTMLHeadingElement,
+    { annotation: RoughAnnotation; rect: DOMRect }
+  >();
 
-    const io = new IntersectionObserver(
-        (entries) => {
-            for (const entry of entries) {
-                const { annotation } = tocMap.get(
-                    entry.target as HTMLHeadingElement,
-                )!;
+  let activeHeading: HTMLHeadingElement | null = null;
+  let lastY = 0;
+  // 1 => scrolling down, -1 => scrolling up
+  let scrollDir = 1;
 
-                entry.intersectionRatio > 0.5
-                    ? annotation.show()
-                    : annotation.hide();
+  /** On next frame, update the scroll dir and lastY */
+  const update = () => {
+    if (window.scrollY != lastY) {
+      scrollDir = window.scrollY - lastY > 0 ? 1 : -1;
+      lastY = window.scrollY;
+    }
+    requestAnimationFrame(update);
+  };
+  requestAnimationFrame(update);
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (Object.is(entry.target, activeHeading)) continue;
+
+        if (entry.intersectionRatio > 0.5) {
+          const target = entry.target as HTMLHeadingElement;
+          const { annotation, rect } = tocMap.get(target)!;
+          const activeConfig = tocMap.get(activeHeading!)!;
+          if (activeConfig) {
+            // if scrolling down and the active heading is
+            // higher on the page than the new heading
+            if (scrollDir > 0 && activeConfig.rect.y < rect.y) {
+              activeConfig.annotation.hide();
+              annotation.show();
+              activeHeading = target;
+
+              // if scrolling up and the active heading is lower
+              // on the page than the new heading
+            } else if (scrollDir < 0 && activeConfig.rect.y > rect.y) {
+              activeConfig.annotation.hide();
+              annotation.show();
+              activeHeading = target;
             }
-        },
-        {
-            threshold: Array.from({ length: 100 }, (_, i) => i * 0.01),
-        },
-    );
+          } else {
+            activeHeading = target;
+          }
+        }
+      }
+    },
+    {
+      threshold: Array.from({ length: 100 }, (_, i) => i * 0.01),
+    },
+  );
 
   toc.querySelectorAll("a").forEach((item) => {
     const id = new URL(item.href).hash;
@@ -60,7 +93,10 @@ const { headings } = Astro.props;
       multiline: true,
       padding: 0,
     });
-    tocMap.set(heading, { annotation: underline });
+    tocMap.set(heading, {
+      annotation: underline,
+      rect: heading.getBoundingClientRect(),
+    });
     io.observe(heading);
   });
 </script>
