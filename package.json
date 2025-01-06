@@ -32,6 +32,7 @@
     "@types/react-dom": "^19.0.2",
     "astro": "^5.1.1",
     "astro-font": "^0.1.81",
+    "astro-github-file-loader": "^1.0.2",
     "dayjs": "^1.11.13",
     "fathom-client": "^3.7.2",
     "marked": "^15.0.4",
