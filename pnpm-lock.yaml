@@ -17,6 +17,9 @@ importers:
       '@astrojs/markdoc':
         specifier: ^0.12.4
         version: 0.12.4(@types/react@19.0.2)(astro@5.1.1(@types/node@22.10.2)(idb-keyval@6.2.1)(jiti@2.4.2)(rollup@4.29.1)(sass@1.83.0)(typescript@5.7.2)(yaml@2.5.1))(react@19.0.0)
+      '@astrojs/markdown-remark':
+        specifier: ^6.0.1
+        version: 6.0.1
       '@astrojs/react':
         specifier: ^4.1.2
         version: 4.1.2(@types/node@22.10.2)(@types/react-dom@19.0.2(@types/react@19.0.2))(@types/react@19.0.2)(jiti@2.4.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.83.0)(yaml@2.5.1)

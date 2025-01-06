@@ -22,6 +22,7 @@
     "@astrojs/check": "^0.9.4",
     "@astrojs/cloudflare": "12.1.0",
     "@astrojs/markdoc": "^0.12.4",
+    "@astrojs/markdown-remark": "^6.0.1",
     "@astrojs/react": "^4.1.2",
     "@astrojs/sitemap": "^3.2.1",
     "@axe-core/playwright": "^4.10.1",
