@@ -1,7 +1,5 @@
 ---
-import { render } from "astro:content";
-import { getEntry } from "astro:content";
-import { fetchPolicy } from "~/helpers/helpers";
+import { render, getEntry } from "astro:content";
 import ProseLayout from "~/layouts/ProseLayout.astro";
 
 const entry = await getEntry("policy", "subprocessors");
