@@ -42,7 +42,7 @@ function policyLoader(): Loader {
           depth: groups.flag.length,
           slug: groups.content
             .toLowerCase()
-            .replaceAll(/\s/g, "_")
+            .replaceAll(/\s/g, "-")
             .replaceAll(/\,\.\(\)\[\]\+\?\!\'\"/g, ""),
           text: groups.content,
         },
@@ -55,14 +55,13 @@ function policyLoader(): Loader {
     name: "policy-loader",
     load: async (context: LoaderContext) => {
       const { tree } = await get<GithubTreeData>(gitTreeUrl, "json");
-
       for await (const leaf of tree) {
         // Can't do anything with a directory
         if (leaf.type === "tree") continue;
         const text = await get<string>(url + leaf.path, "text");
         const digest = context.generateDigest(text);
 
-        const [id, extension] = leaf.path.split(".");
+        const [id] = leaf.path.split(".");
         context.store.set({
           id,
           // Need to pass an empty object to appease the typescript gods
