@@ -1,8 +1,11 @@
 ---
-import { fetchPolicy } from "~/helpers/helpers";
+import { render, getEntry } from "astro:content";
 import ProseLayout from "~/layouts/ProseLayout.astro";
 
-const content = await fetchPolicy("terms");
+const entry = await getEntry("policy", "terms");
+if (entry === undefined) return Astro.redirect("/404");
+
+const { Content } = await render(entry);
 ---
 
 <ProseLayout
@@ -11,5 +14,5 @@ const content = await fetchPolicy("terms");
   color="brown"
   annotation="box"
 >
-  <article set:html={content} />
+  <Content />
 </ProseLayout>

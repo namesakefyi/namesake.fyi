@@ -1,14 +1,14 @@
-import { defineConfig } from "astro/config";
 import cloudflare from "@astrojs/cloudflare";
-import sitemap from "@astrojs/sitemap";
-import react from "@astrojs/react";
 import markdoc from "@astrojs/markdoc";
-import autoprefixer from "autoprefixer";
-import postcssUtopia from "postcss-utopia";
-import postcssMediaMinMax from "postcss-media-minmax";
+import react from "@astrojs/react";
+import sitemap from "@astrojs/sitemap";
 import postcssLogicalViewportUnits from "@csstools/postcss-logical-viewport-units";
-import postcssClamp from "postcss-clamp";
+import { defineConfig } from "astro/config";
+import autoprefixer from "autoprefixer";
 import cssnano from "cssnano";
+import postcssClamp from "postcss-clamp";
+import postcssMediaMinMax from "postcss-media-minmax";
+import postcssUtopia from "postcss-utopia";
 
 // https://astro.build/config
 export default defineConfig({
