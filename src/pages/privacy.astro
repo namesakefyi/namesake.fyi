@@ -5,13 +5,14 @@ import ProseLayout from "~/layouts/ProseLayout.astro";
 const entry = await getEntry("policy", "privacy");
 if (entry === undefined) return Astro.redirect("/404");
 
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
 ---
 
 <ProseLayout
   title="Privacy"
   description="The privacy of your data—and it is your data, not ours!—is a big deal to us. Here’s the rundown of what we collect and why, when we access your information, and your rights."
   color="brown"
+  headings={headings}
 >
   <Content />
 </ProseLayout>
