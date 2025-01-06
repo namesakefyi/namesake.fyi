@@ -1,67 +1,18 @@
 import { glob } from "astro/loaders";
 import { z, defineCollection, reference } from "astro:content";
-import type { RenderedContent } from "astro:content";
-import type { Loader, LoaderContext } from "astro/loaders";
 import type { RoughAnnotationType } from "rough-notation/lib/model";
 import type { NamesakeColor } from "~/data/colors";
-import { createMarkdownProcessor } from "@astrojs/markdown-remark";
+import {
+  createMarkdownProcessor,
+  type MarkdownProcessor,
+} from "@astrojs/markdown-remark";
+import { githubFileLoader } from "astro-github-file-loader";
 
-type GithubTreeLeaf = {
-  path: string;
-  mode: string;
-  type: "tree" | "blob"; // tree is a directory, blob is a file
-  sha: string;
-  url: string;
-};
-
-type GithubTreeData = {
-  url: string;
-  hash: string;
-  tree: GithubTreeLeaf[];
-};
-
-function policyLoader(): Loader {
-  const gitTreeUrl =
-    "https://api.github.com/repos/namesakefyi/policies/git/trees/main?recursive=1";
-  const url = "https://raw.githubusercontent.com/namesakefyi/policies/main/";
-
-  const get = async <T>(url: string, type: "json" | "text"): Promise<T> => {
-    const result = await fetch(url);
-    const final = await result[type]();
-    return final;
-  };
-
-  return {
-    name: "policy-loader",
-    load: async (context: LoaderContext) => {
-      const processor = await createMarkdownProcessor(context.config.markdown);
-      const { tree } = await get<GithubTreeData>(gitTreeUrl, "json");
-
-      for await (const leaf of tree) {
-        // Can't do anything with a directory
-        if (leaf.type === "tree") continue;
-        const text = await get<string>(url + leaf.path, "text");
-
-        const { code: html, metadata } = await processor.render(text);
-
-        const digest = context.generateDigest(text);
-
-        const [id] = leaf.path.split(".");
-        context.store.set({
-          id,
-          // Need to pass an empty object to appease the typescript gods
-          data: {},
-          body: text,
-          rendered: {
-            html,
-            metadata,
-          },
-          digest,
-        });
-      }
-    },
-  };
-}
+/**
+ * To not create a processor for each file in the
+ * policy repo, we "cache" it here in a let
+ */
+let processor: MarkdownProcessor;
 
 export const collections = {
   authors: defineCollection({
@@ -147,6 +98,20 @@ export const collections = {
       }),
   }),
   policy: defineCollection({
-    loader: policyLoader(),
+    loader: githubFileLoader({
+      username: "namesakefyi",
+      repo: "policies",
+      processors: {
+        md: async (text, config) => {
+          processor ??= await createMarkdownProcessor(config.markdown);
+
+          const { code: html, metadata } = await processor.render(text);
+          return {
+            html,
+            metadata,
+          };
+        },
+      },
+    }),
   }),
 };
