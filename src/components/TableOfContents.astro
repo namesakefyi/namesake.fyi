@@ -10,8 +10,10 @@ const { headings } = Astro.props;
 
 {
   headings?.length && (
-    <nav class="toc" aria-labelledby="toc-header">
-      <h2 class="toc-header">On this page</h2>
+    <nav class="toc" aria-labelledby="tocHeader">
+      <h2 class="toc-header" id="tocHeader">
+        On this page
+      </h2>
       <ul>
         {headings.map(({ depth, slug, text }) => (
           <li style={"--depth: " + depth}>
