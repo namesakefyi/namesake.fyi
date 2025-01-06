@@ -104,8 +104,9 @@ export const collections = {
       processors: {
         md: async (text, config) => {
           processor ??= await createMarkdownProcessor(config.markdown);
-
-          const { code: html, metadata } = await processor.render(text);
+          const textWithoutH1 = text.replace(/^# .*\n/gm, "");
+          const { code: html, metadata } =
+            await processor.render(textWithoutH1);
           return {
             html,
             metadata,
