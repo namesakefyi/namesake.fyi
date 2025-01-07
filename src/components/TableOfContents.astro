@@ -156,16 +156,6 @@ const { headings } = Astro.props;
   );
 </script>
 <style>
-  @media (min-width: 576px) {
-    nav {
-      position: sticky;
-      top: var(--space-xl);
-      right: 0;
-      /* `display: grid` will extend the height of this past it's content, let's stop that */
-      max-height: fit-content;
-    }
-  }
-
   h2 {
     font-size: var(--step-0);
   }

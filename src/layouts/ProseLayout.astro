@@ -77,6 +77,14 @@ const useTableOfContents = headings && headings.length > 0;
         "authors toc"
         "prose toc"
         "bios .";
+
+      .toc {
+        position: sticky;
+        top: var(--space-xl);
+        right: 0;
+        /* `display: grid` will extend the height of this past it's content, let's stop that */
+        max-height: fit-content;
+      }
     }
 
     .bios {
