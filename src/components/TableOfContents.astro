@@ -108,10 +108,10 @@ const { headings } = Astro.props;
           },
         );
 
-        this.#items = Array.from(this.querySelectorAll("a"));
+        this.#links = Array.from(this.querySelectorAll("a"));
         this.#headings = [];
 
-        this.#items.forEach((link) => {
+        this.#links.forEach((link) => {
           const { hash } = new URL(link.href);
           const heading = document.querySelector<HTMLHeadingElement>(hash);
 
@@ -119,13 +119,12 @@ const { headings } = Astro.props;
 
           this.#headings.push(heading);
           this.#topIO.observe(heading);
-          this.#bottomIO.observe(heading);
         });
       }
 
       getAnnotationFromIndex(i: number): RoughAnnotation | null {
-        if (i < 0 || i > this.#items.length - 1) return null;
-        const item = this.#items[i];
+        if (i < 0 || i > this.#links.length - 1) return null;
+        const item = this.#links[i];
 
         if (!this.#annotations.has(item)) {
           this.#annotations.set(
