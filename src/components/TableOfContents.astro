@@ -35,7 +35,7 @@ const { headings } = Astro.props;
     class extends HTMLElement {
       #topIO: IntersectionObserver;
       #bottomIO: IntersectionObserver;
-      #items: HTMLAnchorElement[];
+      #links: HTMLAnchorElement[];
       #headings: HTMLHeadingElement[];
       #annotations: Map<HTMLAnchorElement, RoughAnnotation>;
       #index = 0;
