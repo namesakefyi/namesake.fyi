@@ -14,7 +14,7 @@ const { headings } = Astro.props;
       <h2 class="toc-header" id="tocHeader">
         On this page
       </h2>
-      <t-o-c>
+      <table-of-contents>
         <ul>
           {headings.map(({ depth, slug, text }) => (
             <li style={"--depth: " + depth}>
@@ -22,7 +22,7 @@ const { headings } = Astro.props;
             </li>
           ))}
         </ul>
-      </t-o-c>
+      </table-of-contents>
     </nav>
   )
 }
@@ -31,8 +31,8 @@ const { headings } = Astro.props;
   import type { RoughAnnotation } from "rough-notation/lib/model";
 
   customElements.define(
-    "t-o-c",
-    class TOC extends HTMLElement {
+    "table-of-contents",
+    class extends HTMLElement {
       #topIO: IntersectionObserver;
       #bottomIO: IntersectionObserver;
       #items: HTMLAnchorElement[];
