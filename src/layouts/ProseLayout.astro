@@ -105,6 +105,10 @@ const useTableOfContents = headings && headings.length > 0;
     margin-inline-end: auto;
     grid-area: prose;
 
+    [id] {
+      scroll-margin-top: 1ex;
+    }
+
     h2,
     h3 {
       margin-block: var(--space-2xl) var(--space-m);
