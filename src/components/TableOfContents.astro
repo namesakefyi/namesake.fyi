@@ -40,16 +40,6 @@ const { headings } = Astro.props;
       #annotations: Map<HTMLAnchorElement, RoughAnnotation>;
       #index = 0;
 
-      set activeIndex(v: number) {
-        let nextIndex = v;
-        if (v < 0) nextIndex = 0;
-        if (v >= this.#headings.length) v = this.#headings.length - 1;
-        this.#index = nextIndex;
-      }
-      get activeIndex() {
-        return this.#index;
-      }
-
       constructor() {
         super();
         this.#annotations = new Map();
