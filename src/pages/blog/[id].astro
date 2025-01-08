@@ -26,7 +26,7 @@ const { post } = Astro.props;
 if (!post) return Astro.redirect("/404");
 
 const { data } = post;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 
 const authors = await getEntries(data.authors);
 ---
@@ -37,6 +37,7 @@ const authors = await getEntries(data.authors);
   description={data.description}
   color="blue"
   annotation="highlight"
+  headings={headings}
 >
   <div class="authors" slot="after-header">
     {

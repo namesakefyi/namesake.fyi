@@ -20,7 +20,7 @@ const { page } = Astro.props;
 if (!page) return Astro.redirect("/404");
 
 const { data } = page;
-const { Content } = await render(page);
+const { Content, headings } = await render(page);
 ---
 
 <ProseLayout
@@ -30,6 +30,7 @@ const { Content } = await render(page);
   ogAlt={data.ogImage?.alt}
   annotation={data.annotation}
   color={data.color}
+  headings={headings}
 >
   <Content />
 </ProseLayout>

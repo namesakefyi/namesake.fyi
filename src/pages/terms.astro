@@ -5,7 +5,7 @@ import ProseLayout from "~/layouts/ProseLayout.astro";
 const entry = await getEntry("policy", "terms");
 if (entry === undefined) return Astro.redirect("/404");
 
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
 ---
 
 <ProseLayout
@@ -13,6 +13,7 @@ const { Content } = await render(entry);
   description="All the terms that you agree to when you sign up for Namesake."
   color="brown"
   annotation="box"
+  headings={headings}
 >
   <Content />
 </ProseLayout>

@@ -4,6 +4,8 @@ import PageHeader from "~/components/PageHeader.astro";
 import type { NamesakeColor } from "~/data/colors";
 import { smartquotes } from "../helpers/helpers";
 import BaseLayout from "./BaseLayout.astro";
+import type { MarkdownHeading } from "astro";
+import TableOfContents from "~/components/TableOfContents.astro";
 
 interface Props {
   title: string;
@@ -13,10 +15,19 @@ interface Props {
   ogAlt?: string;
   annotation?: RoughAnnotationType;
   color?: NamesakeColor;
+  headings?: MarkdownHeading[];
 }
 
-const { title, date, description, ogImage, ogAlt, annotation, color } =
-  Astro.props;
+const {
+  title,
+  date,
+  description,
+  ogImage,
+  ogAlt,
+  annotation,
+  color,
+  headings,
+} = Astro.props;
 ---
 
 <BaseLayout
@@ -26,7 +37,11 @@ const { title, date, description, ogImage, ogAlt, annotation, color } =
   ogAlt={ogAlt}
   color={color}
 >
-  <article itemscope itemtype="https://schema.org/BlogPosting">
+  <article
+    class="article-grid"
+    itemscope
+    itemtype="https://schema.org/BlogPosting"
+  >
     <PageHeader
       title={title}
       date={date}
@@ -34,6 +49,7 @@ const { title, date, description, ogImage, ogAlt, annotation, color } =
       annotation={annotation}
     />
     <slot name="after-header" />
+    <TableOfContents headings={headings} />
     <section itemprop="articleBody" class="prose">
       <slot />
     </section>
@@ -42,9 +58,63 @@ const { title, date, description, ogImage, ogAlt, annotation, color } =
 </BaseLayout>
 
 <style lang="scss" is:global>
+  .article-grid {
+    display: grid;
+    grid-auto-rows: minmax(min-content, max-content);
+    column-gap: var(--space-m);
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "head"
+      "authors"
+      "toc"
+      "prose"
+      "bios";
+    @media (width >= 900px) {
+      grid-template-columns: 3fr 1fr;
+      grid-template-areas:
+        "head head"
+        "authors toc"
+        "prose toc"
+        "bios .";
+
+      .toc {
+        position: sticky;
+        top: var(--space-xl);
+        right: 0;
+        /* `display: grid` will extend the height of this past it's content, let's stop that */
+        max-height: fit-content;
+      }
+    }
+
+    .bios {
+      grid-area: bios;
+    }
+
+    .prose:not(.not-content) {
+      grid-area: prose;
+    }
+
+    .toc {
+      grid-area: toc;
+    }
+
+    .authors {
+      grid-area: authors;
+    }
+
+    .page-head {
+      grid-area: head;
+    }
+  }
+
   .prose:not(.not-content) {
     max-width: 720px;
     margin-inline-end: auto;
+    grid-area: prose;
+
+    [id] {
+      scroll-margin-top: 1ex;
+    }
 
     h2,
     h3 {
