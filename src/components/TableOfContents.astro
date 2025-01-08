@@ -34,92 +34,71 @@ const { headings } = Astro.props;
   customElements.define(
     "table-of-contents",
     class extends HTMLElement {
-      #topIO: IntersectionObserver;
-      #bottomIO: IntersectionObserver;
+      #io: IntersectionObserver;
       #links: HTMLAnchorElement[];
       #headings: HTMLHeadingElement[];
       #annotations: Map<HTMLAnchorElement, RoughAnnotation>;
-      #index = 0;
+      #activeIndex = 0;
 
       constructor() {
         super();
         this.#annotations = new Map();
-        const middle = window.innerHeight / 2;
 
-        this.#topIO = new IntersectionObserver(
+        // 90% of the viewport, to expand subtract from this value to bring the bottom threshold lower
+        const ioBottomThreshold = window.innerHeight * 0.9;
+        this.#io = new IntersectionObserver(
           (entries, _obs) => {
             for (const entry of entries) {
-              if (entry.isIntersecting) {
-                const { boundingClientRect } = entry;
+              const target = entry.target as HTMLHeadingElement;
+              const { boundingClientRect, intersectionRect, isIntersecting } =
+                entry;
+              console.log({ boundingClientRect, intersectionRect });
+              if (
+                boundingClientRect.top < intersectionRect.bottom &&
+                isIntersecting
+              ) {
+                this.#activeIndex = this.#headings.indexOf(target);
+                this.#headings.forEach((h, i) => {
+                  const annotation = this.getAnnotationFromIndex(i);
+
+                  Object.is(h, target)
+                    ? annotation?.show()
+                    : annotation?.hide();
+                });
                 /**
-                 * If the boundingClientRect.top is greater than 0,
-                 * we can safely assume the element is scrolling into the top
-                 * half of the screen from the bottom half
-                 *
-                 * This means we can hide the active annotation, and
-                 * show the next annotation in the index
+                 * Make sure it isn't intersecting so we aren't calling this
+                 * when the heading is scrolling off screen
                  */
-                if (boundingClientRect.top > 0) {
-                  this.getAnnotationFromIndex(this.activeIndex)?.hide();
-                  this.activeIndex = this.#headings.indexOf(
-                    entry.target as HTMLHeadingElement,
-                  );
-                  this.getAnnotationFromIndex(this.activeIndex)?.show();
-                }
+              } else if (
+                boundingClientRect.top > intersectionRect.bottom &&
+                !isIntersecting
+              ) {
+                this.#activeIndex -= 1;
+                this.#headings.forEach((h, i) => {
+                  const annotation = this.getAnnotationFromIndex(i);
+
+                  i === this.#activeIndex
+                    ? annotation?.show()
+                    : annotation?.hide();
+                });
               }
             }
           },
           {
             threshold: 0,
-            rootMargin: "0px 0px " + -middle + "px 0px",
+            rootMargin: `0px 0px ${-ioBottomThreshold}px 0px`,
           },
         );
 
-        this.#bottomIO = new IntersectionObserver(
-          (entries, _obs) => {
-            for (const entry of entries) {
-              if (entry.isIntersecting) {
-                const { boundingClientRect } = entry;
-                /**
-                 * If the boundingclientRect.bottom is < window.innerHeight
-                 * we cans afely assume the element is scrolling into the
-                 * bottom half of the viewport from the top half
-                 *
-                 * this means we can deactivate the associated annotation
-                 * and go to the previous heading and activate that
-                 */
-                if (boundingClientRect.bottom < window.innerHeight) {
-                  this.getAnnotationFromIndex(this.activeIndex)?.hide();
-                  // If we're at the very first heading and it is going off screen,
-                  // don't try to annotate the previous one
-                  if (this.activeIndex !== 0) {
-                    this.activeIndex =
-                      this.#headings.indexOf(
-                        entry.target as HTMLHeadingElement,
-                      ) - 1;
-                    this.getAnnotationFromIndex(this.activeIndex)?.show();
-                  }
-                }
-              }
-            }
-          },
-          {
-            threshold: 0,
-            rootMargin: -middle + "px 0px 0px 0px",
-          },
-        );
-
-        this.#links = Array.from(this.querySelectorAll("a"));
         this.#headings = [];
-
-        this.#links.forEach((link) => {
+        this.#links = Array.from(this.querySelectorAll("a"), (link) => {
           const { hash } = new URL(link.href);
-          const heading = document.querySelector<HTMLHeadingElement>(hash);
-
-          if (!heading) return;
+          const heading = document.querySelector<HTMLHeadingElement>(hash)!;
 
           this.#headings.push(heading);
-          this.#topIO.observe(heading);
+          this.#io.observe(heading);
+
+          return link;
         });
       }
 
