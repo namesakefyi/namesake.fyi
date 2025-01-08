@@ -28,7 +28,6 @@ const {
   color,
   headings,
 } = Astro.props;
-const useTableOfContents = headings && headings.length > 0;
 ---
 
 <BaseLayout
@@ -50,7 +49,7 @@ const useTableOfContents = headings && headings.length > 0;
       annotation={annotation}
     />
     <slot name="after-header" />
-    {useTableOfContents && <TableOfContents headings={headings} />}
+    <TableOfContents headings={headings} />
     <section itemprop="articleBody" class="prose">
       <slot />
     </section>

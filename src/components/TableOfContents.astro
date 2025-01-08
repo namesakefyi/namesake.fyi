@@ -6,10 +6,12 @@ interface Props {
 }
 
 const { headings } = Astro.props;
+
+const showTOC = headings && headings.length > 2;
 ---
 
 {
-  headings?.length && (
+  showTOC && (
     <nav class="toc" aria-labelledby="tocHeader">
       <h2 class="toc-header" id="tocHeader">
         On this page
