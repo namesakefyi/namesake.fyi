@@ -40,7 +40,7 @@ const showTOC = headings && headings.length > 2;
       #links: HTMLAnchorElement[];
       #headings: HTMLHeadingElement[];
       #annotations: Map<HTMLAnchorElement, RoughAnnotation>;
-      #activeIndex = 0;
+      #activeIndex = -1;
 
       constructor() {
         super();
@@ -54,19 +54,13 @@ const showTOC = headings && headings.length > 2;
               const target = entry.target as HTMLHeadingElement;
               const { boundingClientRect, intersectionRect, isIntersecting } =
                 entry;
-              console.log({ boundingClientRect, intersectionRect });
+
               if (
                 boundingClientRect.top < intersectionRect.bottom &&
                 isIntersecting
               ) {
                 this.#activeIndex = this.#headings.indexOf(target);
-                this.#headings.forEach((h, i) => {
-                  const annotation = this.getAnnotationFromIndex(i);
-
-                  Object.is(h, target)
-                    ? annotation?.show()
-                    : annotation?.hide();
-                });
+                this.updateAnnotation();
                 /**
                  * Make sure it isn't intersecting so we aren't calling this
                  * when the heading is scrolling off screen
@@ -75,14 +69,8 @@ const showTOC = headings && headings.length > 2;
                 boundingClientRect.top > intersectionRect.bottom &&
                 !isIntersecting
               ) {
-                this.#activeIndex -= 1;
-                this.#headings.forEach((h, i) => {
-                  const annotation = this.getAnnotationFromIndex(i);
-
-                  i === this.#activeIndex
-                    ? annotation?.show()
-                    : annotation?.hide();
-                });
+                this.#activeIndex = this.#headings.indexOf(target) - 1;
+                this.updateAnnotation();
               }
             }
           },
@@ -98,9 +86,27 @@ const showTOC = headings && headings.length > 2;
           const heading = document.querySelector<HTMLHeadingElement>(hash)!;
 
           this.#headings.push(heading);
-          this.#io.observe(heading);
 
           return link;
+        });
+        /**
+         * Observing the element runs the callback,
+         * this leads to the second to last item being annotated
+         *
+         * here we reverse the array, and observe them from bottom
+         * to top and avoid any annotations rendering when the
+         * user is at the top of the page
+         */
+        this.#headings.toReversed().forEach((h) => this.#io.observe(h));
+      }
+
+      updateAnnotation() {
+        const activeHeading = this.#headings[this.#activeIndex];
+
+        this.#headings.forEach((h, i) => {
+          const annotation = this.getAnnotationFromIndex(i);
+
+          Object.is(h, activeHeading) ? annotation?.show() : annotation?.hide();
         });
       }
 
