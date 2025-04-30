@@ -3927,8 +3927,8 @@ packages:
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
 
-  vite@6.3.3:
-    resolution: {integrity: sha512-5nXH+QsELbFKhsEfWLkHrvgRpTdGJzqOZ+utSdmPTvwHmvU6ITTm3xx+mRusihkcI8GeC7lCDyn3kDtiki9scw==}
+  vite@6.3.4:
+    resolution: {integrity: sha512-BiReIiMS2fyFqbqNT/Qqt4CVITDU9M9vE+DKcVAsB+ZV0wvTKd+3hMbkpxz1b+NmEDMegpVbisKiAZOnvO92Sw==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
     peerDependencies:
@@ -4266,7 +4266,7 @@ snapshots:
       '@cloudflare/workers-types': 4.20250428.0
       astro: 5.7.6(@types/node@22.15.3)(idb-keyval@6.2.1)(jiti@2.4.2)(rollup@4.40.1)(sass@1.87.0)(typescript@5.8.3)(yaml@2.5.1)
       tinyglobby: 0.2.13
-      vite: 6.3.3(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0)(yaml@2.5.1)
+      vite: 6.3.4(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0)(yaml@2.5.1)
       wrangler: 4.13.2(@cloudflare/workers-types@4.20250428.0)
     transitivePeerDependencies:
       - '@types/node'
@@ -4362,11 +4362,11 @@ snapshots:
     dependencies:
       '@types/react': 19.1.2
       '@types/react-dom': 19.1.2(@types/react@19.1.2)
-      '@vitejs/plugin-react': 4.4.1(vite@6.3.3(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0)(yaml@2.5.1))
+      '@vitejs/plugin-react': 4.4.1(vite@6.3.4(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0)(yaml@2.5.1))
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
       ultrahtml: 1.6.0
-      vite: 6.3.3(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0)(yaml@2.5.1)
+      vite: 6.3.4(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0)(yaml@2.5.1)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -6578,14 +6578,14 @@ snapshots:
       '@urql/core': 5.1.1(graphql@16.10.0)
       wonka: 6.3.5
 
-  '@vitejs/plugin-react@4.4.1(vite@6.3.3(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0)(yaml@2.5.1))':
+  '@vitejs/plugin-react@4.4.1(vite@6.3.4(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0)(yaml@2.5.1))':
     dependencies:
       '@babel/core': 7.26.10
       '@babel/plugin-transform-react-jsx-self': 7.25.9(@babel/core@7.26.10)
       '@babel/plugin-transform-react-jsx-source': 7.25.9(@babel/core@7.26.10)
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
-      vite: 6.3.3(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0)(yaml@2.5.1)
+      vite: 6.3.4(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0)(yaml@2.5.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -6784,8 +6784,8 @@ snapshots:
       unist-util-visit: 5.0.0
       unstorage: 1.16.0(idb-keyval@6.2.1)
       vfile: 6.0.3
-      vite: 6.3.3(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0)(yaml@2.5.1)
-      vitefu: 1.0.6(vite@6.3.3(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0)(yaml@2.5.1))
+      vite: 6.3.4(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0)(yaml@2.5.1)
+      vitefu: 1.0.6(vite@6.3.4(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0)(yaml@2.5.1))
       xxhash-wasm: 1.1.0
       yargs-parser: 21.1.1
       yocto-spinner: 0.2.2
@@ -9035,7 +9035,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vite@6.3.3(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0)(yaml@2.5.1):
+  vite@6.3.4(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0)(yaml@2.5.1):
     dependencies:
       esbuild: 0.25.3
       fdir: 6.4.4(picomatch@4.0.2)
@@ -9050,9 +9050,9 @@ snapshots:
       sass: 1.87.0
       yaml: 2.5.1
 
-  vitefu@1.0.6(vite@6.3.3(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0)(yaml@2.5.1)):
+  vitefu@1.0.6(vite@6.3.4(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0)(yaml@2.5.1)):
     optionalDependencies:
-      vite: 6.3.3(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0)(yaml@2.5.1)
+      vite: 6.3.4(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0)(yaml@2.5.1)
 
   volar-service-css@0.0.61(@volar/language-service@2.4.6):
     dependencies:
