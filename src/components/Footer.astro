@@ -37,8 +37,9 @@ const linkGroups: LinkGroup[] = [
   {
     title: "Resources",
     links: [
-      { href: "/chat", label: "Chat" },
-      { href: "/status", label: "Status" },
+      { href: siteInfo.urls.app, label: "App" },
+      { href: siteInfo.urls.chat, label: "Chat" },
+      { href: siteInfo.urls.status, label: "Status" },
     ],
   },
 ];
@@ -186,6 +187,7 @@ const linkGroups: LinkGroup[] = [
 
     a {
       font-size: var(--step--1);
+      border-radius: 5px;
     }
   }
 
@@ -213,11 +215,19 @@ const linkGroups: LinkGroup[] = [
     display: inline-flex;
     align-items: center;
     gap: var(--space-xs);
+
+    a {
+      border-radius: 5px;
+    }
   }
 
   .social {
     display: flex;
     gap: var(--space-m);
     font-size: var(--step-2);
+
+    a {
+      border-radius: 5px;
+    }
   }
 </style>

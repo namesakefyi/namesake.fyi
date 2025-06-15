@@ -1,11 +1,11 @@
 ---
-title: Be seen for who you are
+title: Your name is yours to change
 ---
 
-**Changing your legal name and gender marker is tough.** From court paperwork to ID cards, social security, bank accounts, and dozens of other places—it’s a lot to manage.
+**Changing your legal name and gender marker is tough.** There's paperwork, bureaucracy, and dozens of tasks to keep track of. Finding a notary. Paying fees. Judges and systems with uncertain hostility toward trans people.
 
-We've been through this process and want it to be easier. We’re building Namesake to help you fill out forms, track your progress, access financial resources, and receive and share community support. You don’t have to do this alone.
+It can all feel overwhelming, but it doesn't have to be.
 
-The new Namesake app will launch in Massachusetts later this year, with more states to follow.
+We're trans, and we've been through the process ourselves. We built Namesake to help you answer questions, fill out forms, track progress, access financial resources, and receive community support. **You don’t have to do this alone.**
 
-Rigid systems weren't built for us, but we’ll figure them out together. **[Join us on Discord today](/chat).**
+Rigid systems weren't built for us, but we’ll figure them out together.

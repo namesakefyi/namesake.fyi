@@ -97,6 +97,7 @@ export const collections = {
           .optional(),
       }),
   }),
+
   policy: defineCollection({
     loader: githubFileLoader({
       username: "namesakefyi",

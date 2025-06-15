@@ -1,6 +1,9 @@
 ---
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import type { RoughAnnotationType } from "rough-notation/lib/model";
+
+dayjs.extend(utc);
 
 interface Props {
   title: string;
@@ -16,7 +19,7 @@ const { title, date, description, annotation = "circle" } = Astro.props;
   {
     date && (
       <time class="date" datetime={date.toISOString()}>
-        {dayjs(date).format("MMMM DD, YYYY")}
+        {dayjs.utc(date).format("MMMM DD, YYYY")}
       </time>
     )
   }

@@ -3,16 +3,14 @@ import { RiDiscordFill } from "react-icons/ri";
 import siteInfo from "~/data/site-info";
 import Logo from "./Logo.astro";
 
-const { socialLinks } = siteInfo;
+const { socialLinks, urls } = siteInfo;
 ---
 
 <header>
   <a href="/" aria-label="Namesake homepage" id="logo"><Logo /></a>
   <nav>
-    <a href="/blog">Blog</a>
-    <a href={socialLinks.discord.href} class="outline"
-      ><RiDiscordFill size={24} />Chat</a
-    >
+    <a href="/blog" class="button ghost small">Blog</a>
+    <a href={urls.app} class="button primary small">Go to App</a>
   </nav>
 </header>
 
@@ -40,33 +38,12 @@ const { socialLinks } = siteInfo;
   a {
     padding: var(--space-xs) var(--space-s);
     margin: calc(var(--space-xs) * -1);
+    border-radius: 5px;
   }
 
   nav {
     display: flex;
     gap: var(--space-l);
     margin-inline-start: auto;
-
-    a {
-      --nav-border: transparent;
-      font-size: var(--step--1);
-      font-weight: 600;
-      border: 3px solid var(--nav-border);
-      text-decoration: none;
-      border-radius: 3px;
-      display: inline-flex;
-      gap: var(--space-xs);
-
-      &.outline {
-        --nav-border: var(--text);
-      }
-
-      @media (hover: hover) {
-        &:hover {
-          background-color: var(--text);
-          color: var(--bg);
-        }
-      }
-    }
   }
 </style>

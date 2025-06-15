@@ -6,6 +6,7 @@ import siteInfo from "~/data/site-info";
 import BaseLayout from "~/layouts/BaseLayout.astro";
 
 import { getEntry, render } from "astro:content";
+import { RiArrowRightLine } from "react-icons/ri";
 
 const entry = await getEntry("pages", "index");
 if (!entry) return Astro.redirect("/404");
@@ -15,7 +16,8 @@ const { Content } = await render(entry);
 <BaseLayout title={siteInfo.name} description={siteInfo.description}>
   <div class="home">
     <h1>
-      <span>Be seen for</span><br /><span class="who-you-are">who you are.</span
+      <span>Your name is</span><br /><span class="hero-highlight"
+        >yours to change</span
       >
     </h1>
     <div class="hero">
@@ -29,6 +31,12 @@ const { Content } = await render(entry);
     </div>
     <div class="content">
       <Content />
+      <div class="buttons">
+        <a href={siteInfo.urls.app} class="button primary"
+          >Get started <RiArrowRightLine className="icon" /></a
+        >
+        <a href={siteInfo.urls.chat}>Join us on Discord</a>
+      </div>
       <Partners />
     </div>
   </div>
@@ -37,9 +45,10 @@ const { Content } = await render(entry);
 <script>
   import { annotate } from "rough-notation";
 
-  const whoYouAre: HTMLElement | null = document.querySelector(".who-you-are");
-  if (whoYouAre) {
-    const highlight = annotate(whoYouAre, {
+  const heroHighlight: HTMLElement | null =
+    document.querySelector(".hero-highlight");
+  if (heroHighlight) {
+    const highlight = annotate(heroHighlight, {
       type: "highlight",
       iterations: 1,
     });
@@ -85,10 +94,14 @@ const { Content } = await render(entry);
 
   h1 {
     text-align: center;
-    font-size: var(--step-7);
+    font-size: var(--step-5);
 
-    @media (width < 420px) {
+    @media (width >= 420px) {
       font-size: var(--step-6);
+    }
+
+    @media (width >= 600px) {
+      font-size: var(--step-7);
     }
 
     span {
@@ -96,7 +109,7 @@ const { Content } = await render(entry);
     }
   }
 
-  .who-you-are {
+  .hero-highlight {
     color: var(--bg);
   }
 
@@ -113,5 +126,17 @@ const { Content } = await render(entry);
     @media (width < 540px) {
       font-size: var(--step-0);
     }
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-l);
+    margin-block-start: var(--space-3xl);
+  }
+
+  .icon {
+    margin-inline-end: calc(var(--space-2xs) * -1);
   }
 </style>

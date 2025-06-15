@@ -1,5 +1,8 @@
 ---
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
 
 interface Props {
   title: string;
@@ -19,7 +22,7 @@ const { title, date, url, subhead, authors, description, image } = Astro.props;
 
 <div class="article">
   <time class="date" datetime={date.toISOString()}>
-    {dayjs(date).format("MMMM DD, YYYY")}
+    {dayjs.utc(date).format("MMMM DD, YYYY")}
   </time>
   {subhead && <strong class="subhead">{subhead}</strong>}
   <a href={url} class="title">

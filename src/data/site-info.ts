@@ -25,18 +25,28 @@ export type SiteInfo = {
     src: string;
     alt: string;
   };
+  urls: {
+    app: string;
+    chat: string;
+    status: string;
+  };
   socialLinks: Record<SocialPlatform, SocialLink>;
 };
 
 const siteInfo: SiteInfo = {
   name: "Namesake",
   fullName: "Namesake Collaborative",
-  title: "Be seen for who you are",
+  title: "Your name is yours to change",
   description:
     "Streamlining the legal name and gender marker change process in the US.",
+  urls: {
+    app: "https://app.namesake.fyi",
+    chat: "/chat",
+    status: "/status",
+  },
   image: {
     src: "/og/social.png",
-    alt: "Be seen for who you are",
+    alt: "Your name is yours to change",
   },
   socialLinks: {
     discord: {
