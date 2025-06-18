@@ -56,6 +56,9 @@ importers:
       fathom-client:
         specifier: ^3.7.2
         version: 3.7.2
+      markdoc:
+        specifier: ^0.1.3
+        version: 0.1.3
       react:
         specifier: ^19.1.0
         version: 19.1.0
@@ -2862,6 +2865,10 @@ packages:
   magicast@0.3.5:
     resolution: {integrity: sha512-L0WhttDl+2BOsybvEOLK7fW3UA0OQ0IQ2d6Zl2x/a6vVRs3bAY0ECOSHHeL5jD+SbOpOCUEi0y1DgHEn9Qn1AQ==}
 
+  markdoc@0.1.3:
+    resolution: {integrity: sha512-4X9A4dcNv1EPcrKIAtpd+jgcn8J7x+qUaUEeDnu/InnZ02jBlOzjlOPTbNxDjh/POHxHFZckBbOiFhQ7V8mXiw==}
+    hasBin: true
+
   markdown-table@3.0.4:
     resolution: {integrity: sha512-wiYz4+JrLyb/DqW2hkFJxP7Vd7JuTDm77fvbM8VfEQdmSMqcImWeeRbHwZjBjIFki/VaMK2BhFi7oUUZeM5bqw==}
 
@@ -3100,6 +3107,10 @@ packages:
     peerDependenciesMeta:
       encoding:
         optional: true
+
+  node-markdown@0.1.1:
+    resolution: {integrity: sha512-1BN+BEA0IVhZWgjryNjzVSUbTxwbSFvdoAsOBk6ih6fDkdFBhMNoFgfD1r5ysrBsCD8JbO0ceSk9ml9ty4EdTA==}
+    deprecated: highlight is deprecated in favor of "highliht.js"
 
   node-mock-http@1.0.0:
     resolution: {integrity: sha512-0uGYQ1WQL1M5kKvGRXWQ3uZCHtLTO8hln3oBjIusM75WoesZ909uQJs/Hb946i2SS+Gsrhkaa6iAO17jRIv6DQ==}
@@ -7634,6 +7645,10 @@ snapshots:
       '@babel/types': 7.27.6
       source-map-js: 1.2.1
 
+  markdoc@0.1.3:
+    dependencies:
+      node-markdown: 0.1.1
+
   markdown-table@3.0.4: {}
 
   match-sorter@6.3.4:
@@ -8137,6 +8152,8 @@ snapshots:
   node-fetch@2.7.0:
     dependencies:
       whatwg-url: 5.0.0
+
+  node-markdown@0.1.1: {}
 
   node-mock-http@1.0.0: {}
 
