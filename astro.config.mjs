@@ -1,6 +1,7 @@
 import cloudflare from "@astrojs/cloudflare";
 import markdoc from "@astrojs/markdoc";
 import react from "@astrojs/react";
+import keystatic from "@keystatic/astro";
 import sitemap from "@astrojs/sitemap";
 import postcssLogicalViewportUnits from "@csstools/postcss-logical-viewport-units";
 import { defineConfig } from "astro/config";
@@ -17,12 +18,7 @@ export default defineConfig({
     imageService: "compile",
   }),
   site: "https://namesake.fyi",
-  integrations: [
-    sitemap(),
-    react(),
-    markdoc(),
-    // keystatic() Re-enable when Keystatic supports Astro v5
-  ],
+  integrations: [sitemap(), react(), markdoc(), keystatic()],
   prefetch: true,
   vite: {
     ssr: {
