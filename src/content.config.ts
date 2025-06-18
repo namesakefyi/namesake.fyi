@@ -63,8 +63,8 @@ export const collections = {
         authors: z.array(reference("authors")),
         image: z
           .object({
-            src: image(),
-            alt: z.string(),
+            src: image().optional(),
+            alt: z.string().optional(),
           })
           .optional(),
       }),

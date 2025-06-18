@@ -6,7 +6,6 @@ description: >-
 publishDate: 2025-06-30
 authors:
   - eva-decker
-image: {}
 ---
 **Over the past year, we've completely rebuilt the Namesake app.** We're launching this new version today and we hope it helps you!
 
