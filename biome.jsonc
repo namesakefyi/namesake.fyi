@@ -1,27 +1,54 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.0.5/schema.json",
   "files": {
-    "ignore": [
-      ".astro",
-      "node_modules",
-      "playwright-report",
-      "test-results",
-      "dist",
-      ".vscode",
-      // PostCSS
-      "src/styles/theme.css"
+    "includes": [
+      "**",
+      "!**/node_modules",
+      "!**/playwright-report",
+      "!**/test-results",
+      "!**/dist",
+      "!**/.vscode",
+      "!**/src/styles/theme.css",
+      "!.astro/**"
     ]
   },
   "formatter": {
     "enabled": true,
     "indentStyle": "space"
   },
-  "organizeImports": { "enabled": true },
-  "linter": { "enabled": true, "rules": { "recommended": true } },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "style": {
+        "noParameterAssign": "error",
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useSelfClosingElements": "error",
+        "useSingleVarDeclarator": "error",
+        "noUnusedTemplateLiteral": "error",
+        "useNumberNamespace": "error",
+        "noInferrableTypes": "error",
+        "noUselessElse": "error"
+      }
+    }
+  },
   "overrides": [
     {
-      "include": ["*.astro", "**/*.astro"],
-      "javascript": { "globals": ["exports"] }
+      "includes": ["**/*.astro"],
+      "javascript": { "globals": ["exports"] },
+      "linter": {
+        "rules": {
+          "correctness": {
+            // Currently causing false positives in Astro
+            // https://github.com/biomejs/biome/issues/2233
+            "noUnusedImports": "off",
+            "noUnusedVariables": "off"
+          }
+        }
+      }
     }
   ]
 }
