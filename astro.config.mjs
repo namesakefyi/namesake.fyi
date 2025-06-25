@@ -3,6 +3,7 @@ import markdoc from "@astrojs/markdoc";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import postcssLogicalViewportUnits from "@csstools/postcss-logical-viewport-units";
+import keystatic from "@keystatic/astro";
 import { defineConfig } from "astro/config";
 import autoprefixer from "autoprefixer";
 import cssnano from "cssnano";
@@ -17,12 +18,7 @@ export default defineConfig({
     imageService: "compile",
   }),
   site: "https://namesake.fyi",
-  integrations: [
-    sitemap(),
-    react(),
-    markdoc(),
-    // keystatic() Re-enable when Keystatic supports Astro v5
-  ],
+  integrations: [sitemap(), react(), markdoc(), keystatic()],
   prefetch: true,
   vite: {
     ssr: {

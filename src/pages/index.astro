@@ -1,12 +1,11 @@
 ---
 import { Image } from "astro:assets";
+import { getEntry, render } from "astro:content";
+import { RiArrowRightLine } from "react-icons/ri";
 import Partners from "~/components/Partners.astro";
 import heroIllustration from "~/content/pages/_images/hero-form.png";
 import siteInfo from "~/data/site-info";
 import BaseLayout from "~/layouts/BaseLayout.astro";
-
-import { getEntry, render } from "astro:content";
-import { RiArrowRightLine } from "react-icons/ri";
 
 const entry = await getEntry("pages", "index");
 if (!entry) return Astro.redirect("/404");

@@ -1,12 +1,12 @@
 import { defineCollection, reference, z } from "astro:content";
-import { glob } from "astro/loaders";
-import type { RoughAnnotationType } from "rough-notation/lib/model";
-import type { NamesakeColor } from "~/data/colors";
 import {
   createMarkdownProcessor,
   type MarkdownProcessor,
 } from "@astrojs/markdown-remark";
+import { glob } from "astro/loaders";
 import { githubFileLoader } from "astro-github-file-loader";
+import type { RoughAnnotationType } from "rough-notation/lib/model";
+import type { NamesakeColor } from "~/data/colors";
 
 /**
  * To not create a processor for each file in the
@@ -51,7 +51,7 @@ export const collections = {
   }),
 
   posts: defineCollection({
-    loader: glob({ pattern: "**/[^_]*.md", base: "./src/content/posts" }),
+    loader: glob({ pattern: "**/[^_]*.mdoc", base: "./src/content/posts" }),
     schema: ({ image }) =>
       z.object({
         title: z.string(),

@@ -1,9 +1,8 @@
 ---
-import BaseLayout from "~/layouts/BaseLayout.astro";
-
 import { getCollection } from "astro:content";
 import ArticleLink from "~/components/ArticleLink.astro";
 import PageHeader from "~/components/PageHeader.astro";
+import BaseLayout from "~/layouts/BaseLayout.astro";
 
 const pressArticles = await getCollection("press");
 pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
