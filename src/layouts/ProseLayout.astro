@@ -57,6 +57,51 @@ const {
   </article>
 </BaseLayout>
 
+<script>
+  import { annotate } from "rough-notation";
+
+  const blockquotes = document.querySelectorAll("blockquote");
+
+  if (blockquotes) {
+    for (const blockquote of blockquotes) {
+      console.log(blockquote);
+      const highlight = annotate(blockquote, {
+        type: "bracket",
+        iterations: 2,
+        animate: false,
+        brackets: ["left", "right"],
+      });
+      highlight.show();
+    }
+  }
+
+  const cites = document.querySelectorAll("cite");
+  if (cites) {
+    for (const cite of cites) {
+      cite.style.color = "var(--bg)";
+      const highlight = annotate(cite, {
+        type: "highlight",
+        iterations: 2,
+        animate: false,
+        multiline: true,
+      });
+      highlight.show();
+    }
+  }
+
+  const dividers = document.querySelectorAll("hr");
+  if (dividers) {
+    for (const divider of dividers) {
+      const highlight = annotate(divider, {
+        type: "underline",
+        iterations: 1,
+        animate: false,
+      });
+      highlight.show();
+    }
+  }
+</script>
+
 <style lang="scss" is:global>
   .article-grid {
     display: grid;
@@ -116,21 +161,25 @@ const {
       scroll-margin-top: 1ex;
     }
 
-    h2,
-    h3 {
-      margin-block: var(--space-2xl) var(--space-m);
-      text-wrap: balance;
+    h2 {
+      margin-block-start: var(--space-3xl);
     }
 
-    *:first-child {
-      margin-block-start: 0;
+    h3 {
+      margin-block-start: var(--space-xl);
+    }
+
+    h2,
+    h3 {
+      margin-block-end: var(--space-m);
+      text-wrap: balance;
     }
 
     p,
     ul,
     ol,
     img {
-      margin-bottom: var(--space-m);
+      margin-block: var(--space-m);
     }
 
     img,
@@ -156,10 +205,29 @@ const {
     }
 
     img:not(.no-filter) {
-      filter: grayscale(100%) contrast(120%) brightness(130%);
-      opacity: 0.9;
+      filter: grayscale(100%);
+      opacity: 1;
+      mix-blend-mode: luminosity;
+      border-radius: var(--radius-2xs);
+    }
+
+    img.multiply {
       mix-blend-mode: multiply;
-      border-radius: var(--radius-xs);
+    }
+
+    blockquote {
+      margin-block: calc(var(--space-m) * 2);
+      padding-inline: var(--space-m);
+      font-size: var(--step-1);
+    }
+
+    blockquote cite {
+      font-weight: 600;
+    }
+
+    hr {
+      border-color: transparent;
+      margin-block: var(--space-2xl);
     }
   }
 </style>

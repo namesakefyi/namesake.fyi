@@ -23,10 +23,7 @@ const { title, date, description, annotation = "circle" } = Astro.props;
       </time>
     )
   }
-  <h1
-    data-annotation={annotation}
-    class:list={[{ inverted: annotation === "highlight" }]}
-  >
+  <h1 data-annotation={annotation}>
     {title}
   </h1>
   {description && <p class="subhead">{description}</p>}
@@ -41,6 +38,8 @@ const { title, date, description, annotation = "circle" } = Astro.props;
 
   if (header) {
     const annotation = header.dataset.annotation as RoughAnnotationType;
+
+    if (annotation === "highlight") header.style.color = "var(--bg)";
 
     const highlight = annotate(header, {
       type: annotation,
@@ -65,10 +64,6 @@ const { title, date, description, annotation = "circle" } = Astro.props;
       text-wrap: balance;
       margin-inline-start: -0.06em; // Visual alignment
       hyphens: auto;
-
-      &.inverted {
-        color: var(--bg);
-      }
 
       @media (width < 700px) {
         font-size: var(--step-5);

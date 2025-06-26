@@ -114,9 +114,10 @@ const { Content } = await render(entry);
 
   .content {
     padding-block-start: var(--space-xl);
-    max-width: 760px;
+    max-width: 860px;
     font-size: var(--step-1);
     animation: slideInUp 0.6s ease-out 0.6s both;
+    text-wrap: pretty;
 
     :global(p) + :global(p) {
       margin-top: var(--space-l);

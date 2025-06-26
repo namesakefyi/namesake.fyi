@@ -59,7 +59,7 @@ const authors = await getEntries(data.authors);
   </div>
   <Content />
   <div class="bios" slot="after-content">
-    <hr class="divider" />
+    <hr />
     {
       authors.map(({ data: { avatar, name, bio, socialLinks } }) => (
         <div class="bio">
@@ -94,20 +94,6 @@ const authors = await getEntries(data.authors);
   </div>
 </ProseLayout>
 
-<script>
-  import { annotate } from "rough-notation";
-
-  const divider: HTMLElement | null = document.querySelector(".divider");
-  if (divider) {
-    const highlight = annotate(divider, {
-      type: "underline",
-      iterations: 1,
-      animate: false,
-    });
-    highlight.show();
-  }
-</script>
-
 <style lang="scss">
   .authors {
     display: flex;
@@ -137,7 +123,7 @@ const authors = await getEntries(data.authors);
     border-radius: 100%;
   }
 
-  .divider {
+  hr {
     border: 0;
     margin-block: var(--space-2xl);
   }
