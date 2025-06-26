@@ -208,6 +208,7 @@ const {
       filter: grayscale(100%);
       opacity: 1;
       mix-blend-mode: luminosity;
+      transform: translate3d(0, 0, 0); // Safari bugfix
       border-radius: var(--radius-2xs);
     }
 
@@ -217,13 +218,14 @@ const {
 
     blockquote {
       margin-block: calc(var(--space-m) * 2);
-      padding-inline: var(--space-m);
+      padding-inline: var(--space-s);
       font-size: var(--step-1);
       hyphens: auto;
     }
 
     blockquote cite {
       font-weight: 600;
+      hyphens: none;
     }
 
     hr {

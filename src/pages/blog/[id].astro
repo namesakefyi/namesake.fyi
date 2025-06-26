@@ -36,7 +36,7 @@ const authors = await getEntries(data.authors);
   date={data.publishDate}
   description={data.description}
   color="blue"
-  annotation="highlight"
+  annotation={data.annotation ?? "highlight"}
   headings={headings}
 >
   <div class="authors" slot="after-header">
@@ -52,7 +52,10 @@ const authors = await getEntries(data.authors);
               densities={[1, 2]}
             />
           )}
-          <strong>{author.data.name}</strong> <span>{author.data.role}</span>
+          <div class="author-info">
+            <strong>{author.data.name}</strong>
+            <span class="role">{author.data.role}</span>
+          </div>
         </span>
       ))
     }
@@ -98,20 +101,36 @@ const authors = await getEntries(data.authors);
   .authors {
     display: flex;
     flex-direction: column;
-    gap: var(--space-2xs);
+    gap: var(--space-s);
     padding-bottom: var(--space-2xl);
   }
 
   .author {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-xs);
+    gap: var(--space-s);
+
+    .author-info {
+      display: inline-flex;
+      align-items: baseline;
+      gap: var(--space-xs);
+
+      @media (width <= 600px) {
+        flex-direction: column;
+        gap: 0;
+      }
+    }
+
+    .role {
+      font-size: var(--step--1);
+    }
   }
 
   .avatar {
     border-radius: 100%;
-    filter: grayscale(100%);
-    mix-blend-mode: luminosity;
+    filter: grayscale(100%) contrast(120%);
+    mix-blend-mode: multiply;
+    transform: translate3d(0, 0, 0);
     user-select: none;
   }
 

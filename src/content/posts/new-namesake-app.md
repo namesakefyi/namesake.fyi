@@ -6,6 +6,7 @@ publishDate: 2025-06-30
 authors:
   - eva-decker
   - mb-bischoff
+annotation: underline
 # image:
 #   src: ../../assets/images/posts/introducing-namesake/content/namesake.webp
 #   alt: "Illustrations of a driver's license, a gavel, a passport, a social security card, and a flower with snails."

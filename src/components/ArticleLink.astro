@@ -81,9 +81,9 @@ const { title, date, url, subhead, authors, description, image } = Astro.props;
     order: -1;
     max-width: 600px;
     margin-block-end: var(--space-s);
-    filter: grayscale(100%) contrast(180%) brightness(140%);
-    opacity: 0.9;
+    filter: grayscale(100%);
     mix-blend-mode: luminosity;
+    transform: translate3d(0, 0, 0); // Safari bugfix
 
     img {
       border-radius: 3px;
