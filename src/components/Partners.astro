@@ -72,6 +72,10 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
       img {
         max-width: min(240px, 40vw);
       }
+
+      @media (forced-colors: active) {
+        filter: invert(1);
+      }
     }
   }
 </style>

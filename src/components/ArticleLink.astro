@@ -83,12 +83,10 @@ const { title, date, url, subhead, authors, description, image } = Astro.props;
     margin-block-end: var(--space-s);
     filter: grayscale(100%) contrast(180%) brightness(140%);
     opacity: 0.9;
-    mix-blend-mode: multiply;
+    mix-blend-mode: luminosity;
 
     img {
       border-radius: 3px;
-      // object-fit: cover;
-      // aspect-ratio: 5 / 3;
     }
   }
 </style>

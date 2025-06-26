@@ -35,8 +35,9 @@ const { title, date, description, annotation = "circle" } = Astro.props;
   import { annotationConfig } from "~/helpers/helpers";
 
   const header: HTMLElement | null = document.querySelector(".page-head h1");
+  const isForcedColors = window.matchMedia("(forced-colors: active)").matches;
 
-  if (header) {
+  if (header && !isForcedColors) {
     const annotation = header.dataset.annotation as RoughAnnotationType;
 
     if (annotation === "highlight") header.style.color = "var(--bg)";
