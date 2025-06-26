@@ -1,7 +1,7 @@
 ---
-title: A new, more accessible Namesake app
+title: "Easier legal name changes for all"
 description: >-
-  We've rebuilt Namesake from the ground up to make it easier to update your legal name in Massachusetts and beyond.
+  We've rebuilt the Namesake app from the ground up to simplify updating your legal name in Massachusetts and beyond.
 publishDate: 2025-06-30
 authors:
   - eva-decker
@@ -76,7 +76,7 @@ First, we’ll be responding to your feedback. Have suggestions for Namesake? Ra
 
 ### Shutting down the old app
 
-**The existing app at [masstpc.joinnamesake.com](http://masstpc.joinnamesake.com) will shut down on July 31, 2025.** At this point, all user data within that site will be permanently deleted. There is no way to transfer data from the old site to the new one. If you have forms from the site you would like to download, please do so before July 31st. If you run into issues, we can help support you at [hey@namesake.fyi](mailto:hey@namesake.fyi).
+**The [legacy app](http://masstpc.joinnamesake.com) will shut down on July 31, 2025.** At this point, all user data within that site will be permanently deleted. There is no way to transfer data from the old site to the new one. If you have forms from the site you would like to download, please do so before July 31st. If you run into issues, we can help support you at [hey@namesake.fyi](mailto:hey@namesake.fyi).
 
 ### Supporting more states
 
