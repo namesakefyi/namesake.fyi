@@ -62,7 +62,6 @@ const authors = await getEntries(data.authors);
   </div>
   <Content />
   <div class="bios" slot="after-content">
-    <hr />
     {
       authors.map(({ data: { avatar, name, bio, socialLinks } }) => (
         <div class="bio">
@@ -128,7 +127,7 @@ const authors = await getEntries(data.authors);
 
   .avatar {
     border-radius: 100%;
-    filter: grayscale(100%) contrast(120%);
+    filter: grayscale(100%);
     mix-blend-mode: multiply;
     transform: translate3d(0, 0, 0);
     user-select: none;
@@ -142,15 +141,11 @@ const authors = await getEntries(data.authors);
     border-radius: 100%;
   }
 
-  hr {
-    border: 0;
-    margin-block: var(--space-2xl);
-  }
-
   .bios {
     display: flex;
     flex-direction: column;
     gap: var(--space-xl);
+    margin-block-start: var(--space-3xl);
   }
 
   .bio {
