@@ -101,10 +101,10 @@ We are here to support you in finding a name that you love, and in owning identi
 
 [Sign up for Namesake](https://app.namesake.fyi) and [join us on Discord](https://namesake.fyi/chat), or support our work by making a tax-deductible donation.
 
-Happy Pride.
+Happy Pride &hearts;
 
 ---
 
 This release would not have been possible without the work of:
 
-Ari Trakh, Charly Robles, Dana Teagle, Ginger, Joshua Hogsett, Justin Kang, Kelsey Gunstra, Kit Mills, Luke Lennon, Margot Miville, Martin Lindberg, mb bishoff, Melody Universe, MG Xiong, moon dave, Oliver Bello, Seneca Artemis, Tre’Andre Carmel Valentine, Vicky O at Movement Stickers, Zo Holmes, the Massachusetts Transgender Political Coalition, and many others. Thank you!
+Ari Trakh, Charly Robles, Dana Teagle, Ginger, Joshua Hogsett, Justin Kang, Kelsey Gunstra, Kit Mills, Luke Lennon, Margot Miville, Martin Lindberg, mb bishoff, Melody Universe, MG Xiong, moon davé, Oliver Bello, Seneca Artemis, Tre’Andre Carmel Valentine, Vicky O at Movement Stickers, Zo Holmes, the Massachusetts Transgender Political Coalition, and many others. Thank you!
