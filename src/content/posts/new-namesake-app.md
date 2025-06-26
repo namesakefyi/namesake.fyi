@@ -99,7 +99,7 @@ This is a difficult, destabilizing time. Our federal institutions are being gutt
 
 We are here to support you in finding a name that you love, and in owning identity documents which reflect who you are. Respectful and accessible name changes are one part of a larger puzzle in creating a world where trans people—and all people—can live life freely and joyously.
 
-[Sign up for Namesake](https://app.namesake.fyi) and [join us on Discord](https://namesake.fyi/chat), or support our work by making a tax-deductible donation.
+[Sign up for Namesake](https://app.namesake.fyi) and [join us on Discord](/chat), or support our work by making a [tax-deductible donation](/donate).
 
 Happy Pride &hearts;
 

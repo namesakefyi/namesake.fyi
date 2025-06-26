@@ -29,6 +29,7 @@ export type SiteInfo = {
     app: string;
     chat: string;
     status: string;
+    donate: string;
   };
   socialLinks: Record<SocialPlatform, SocialLink>;
 };
@@ -43,6 +44,7 @@ const siteInfo: SiteInfo = {
     app: "https://app.namesake.fyi",
     chat: "/chat",
     status: "/status",
+    donate: "/donate",
   },
   image: {
     src: "/og/social.png",
