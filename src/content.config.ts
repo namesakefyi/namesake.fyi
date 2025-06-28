@@ -51,7 +51,7 @@ export const collections = {
   }),
 
   posts: defineCollection({
-    loader: glob({ pattern: "**/[^_]*.mdoc", base: "./src/content/posts" }),
+    loader: glob({ pattern: "**/[^_]*.md", base: "./src/content/posts" }),
     schema: ({ image }) =>
       z.object({
         title: z.string(),
@@ -60,6 +60,7 @@ export const collections = {
           .string()
           .or(z.date())
           .transform((v) => new Date(v)),
+        annotation: z.custom<RoughAnnotationType>().optional(),
         authors: z.array(reference("authors")),
         image: z
           .object({
@@ -97,6 +98,7 @@ export const collections = {
           .optional(),
       }),
   }),
+
   policy: defineCollection({
     loader: githubFileLoader({
       username: "namesakefyi",
