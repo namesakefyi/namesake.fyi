@@ -1,5 +1,9 @@
 name: Eva Decker
 role: Co-Founder, Namesake
-bio: Eva Decker (she/they) leads Namesake's product and design. Previously, she's worked as a product designer and design engineer at Scribe, Cityblock, and Dropbox.
+bio: Eva Decker (they/she) leads Namesake's product and design. Previously, they've worked as a product designer and design engineer at Scribe, Cityblock, and Dropbox.
 avatar: ../../assets/images/authors/eva-decker/avatar.jpg
-socialLinks: []
+socialLinks:
+  - name: Website
+    url: https://eva.town
+  - name: GitHub
+    url: https://github.com/evadecker

@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { getEntry, render } from "astro:content";
+import { RiArrowRightLine } from "react-icons/ri";
 import Partners from "~/components/Partners.astro";
 import heroIllustration from "~/content/pages/_images/hero-form.png";
 import siteInfo from "~/data/site-info";
@@ -29,6 +30,12 @@ const { Content } = await render(entry);
     </div>
     <div class="content">
       <Content />
+      <div class="buttons">
+        <a href={siteInfo.urls.app} class="button primary"
+          >Get started <RiArrowRightLine className="icon" /></a
+        >
+        <a href={siteInfo.urls.chat}>Join us on Discord</a>
+      </div>
       <Partners />
     </div>
   </div>
