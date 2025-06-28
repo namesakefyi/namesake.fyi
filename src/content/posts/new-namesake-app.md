@@ -16,7 +16,7 @@ annotation: underline
 
 ## Why redesign? Why now?
 
-The first Namesake app launched in 2021. In those four years, Namesake has supported over 1,000 youth and adults in Massachusetts, and helped connect folks to over $45,000 in financial assistance through our partnership with the [Massachusetts Transgender Political Coalition](https://www.masstpc.org/). But we want to do even more.
+The first Namesake app launched in 2021. In those four years, Namesake has supported over 1,000 youth and adults in Massachusetts, and helped connect folks to over $45,000 in financial assistance through our partnership with the [Massachusetts Transgender Political Coalition](https://www.masstpc.org/). Now we want to do even more.
 
 Our existing web app was created using Bubble, a low-code app platform. Early on, Bubble  helped Namesake build quickly for Massachusetts, but now, Bubble has become a barrier. Writing our own code comes with many benefits:
 
@@ -41,7 +41,7 @@ Back in August, we announced a [new look for Namesake](/blog/introducing-namesak
 
 ![A screenshot of a browser window displaying the Namesake 'Getting Started' quest, which features a sidebar on the left for navigating between 'Getting Started', 'Court Order', 'Social Security', and more, and a main content area featuring illustrations which detail how to navigate the legal name change process.](../../assets/images/posts/new-namesake-app/namesake-desktop.png)
 
-When you log in, you’ll see a view containing all your **quests**—the word we’re using to refer to each “thing to do” when updating your identity documents—and a few placeholders to get you started. Each quest includes a step-by-step guide walking you through what needs to be done, and disclosure elements which expand to reveal answers to frequently asked questions.
+When you log in, you’ll see all of your **quests**—the word we’re using to refer to each “thing to do” when updating your identity documents. Each quest includes a step-by-step guide walking you through what needs to be done, along with answers to frequently asked questions.
 
 ![A hand holding an iPhone displaying the home page of Namesake, featuring a progress bar representing percent completion toward all name change quests, along with a list of various quests for 'Court Order', 'Social Security', 'State ID', and more.](../../assets/images/posts/new-namesake-app/namesake-phone.png)
 
@@ -49,11 +49,9 @@ You have complete control over your settings, including preferences for theme an
 
 ### Clearer, more accessible forms
 
-If a quest requires filling out documents, a guided form will walk you through the process. All questions are clear and straightforward, avoid legal jargon, and explain terms where necessary. All elements have been tested for accessibility to ensure that everyone is able to easily fill out forms, whether they are using a desktop, mobile device, or assistive technologies.
+If a quest requires completing documents, a guided form will walk you through the process. All questions are written to avoid legal jargon and explain terms where necessary. All elements have been tested for accessibility across desktop, mobile, and assistive technologies.  To help avoid guesswork on open-ended questions, we provide suggested responses and context about what the court is looking for.
 
 ![A hand holding an iPhone displaying a form with a question that reads, 'Would you like to waive the newspaper publication requirement?'](../../assets/images/posts/new-namesake-app/namesake-phone-2.png)
-
-Open-ended questions like “What is the reason you’re changing your name?” can induce uncertainty. What should I write? How much detail do I share? To help avoid this guesswork, we provide suggested responses and context about what the court is looking for.
 
 Depending on your responses, all of the relevant forms will be compiled and merged into a single packet for you to download, review, and submit. After submission, documents will remain organized and visible in a documents tab.
 
@@ -61,29 +59,29 @@ Depending on your responses, all of the relevant forms will be compiled and merg
 
 ### Improved security
 
-Legal name change forms ask for a lot of private, sensitive information. To safeguard this, we’ve implemented end-to-end encryption for all form responses. End-to-end encryption means that nobody—not even Namesake—can read your responses.
+Legal name change forms ask for a lot of private, sensitive information. To safeguard this, we’ve implemented end-to-end encryption for all form responses. End-to-end encryption means that nobody—not even Namesake—can read what you share.
 
-Here’s how it works: when you submit your form responses, we use an encryption key linked to your device to scramble the responses before saving them to the database. Your encryption key is never shared with anyone or sent to Namesake, preventing anyone except the person on your device—you!—from decrypting the information.
+Here’s how it works: when you submit your form responses, we use an encryption key linked to your device to scramble the responses before saving them to the database. Your encryption key is never shared with anyone or sent to Namesake, preventing anyone except you from decrypting the information.
 
-You can delete all of your data at any time, and we plan to offer anonymous sign-in in the future. Out of an abundance of safety, we never ask for your social security number, and always request that you fill it out by hand.
+You can delete all of your data at any time, and we plan to offer anonymous sign-in in the future. Out of an abundance of safety, we never ask for your social security number, and always request that you fill it out on your own.
 
 ### We're open source
 
-Finally, as part of our commitment to security and transparency, our entire new app is open source and MIT-licensed. You can [view the codebase](https://github.com/namesakefyi/namesake) on GitHub. We welcome new contributors! Check out our [contribution guide](https://github.com/namesakefyi/namesake/blob/main/CONTRIBUTING.md) and explore some [good first issues](https://github.com/namesakefyi/namesake/contribute). Questions? Come chat with us in the #code channel [on Discord](https://namesake.fyi/chat).
+Finally, as part of our commitment to security and transparency, our entire new app is open source and MIT-licensed. You can [view the codebase](https://github.com/namesakefyi/namesake) on GitHub. We welcome new contributors! Check out our [contribution guide](https://github.com/namesakefyi/namesake/blob/main/CONTRIBUTING.md) and explore some [good first issues](https://github.com/namesakefyi/namesake/contribute). Questions? Come chat with us in the #code channel [on Discord](/chat).
 
 ## What's next?
 
-First, we’ll be responding to your feedback. Have suggestions for Namesake? Ran into an issue? Let us know.
+First, we’ll be responding to your feedback. Have suggestions for Namesake? Ran into an issue? Let us know on [Discord](/chat) or by emailing [hey@namesake.fyi](mailto:hey@namesake.fyi).
 
 ### Shutting down the old app
 
-**The [legacy app](http://masstpc.joinnamesake.com) will shut down on July 31, 2025.** At this point, all user data within that site will be permanently deleted. There is no way to transfer data from the old site to the new one. If you have forms from the site you would like to download, please do so before July 31st. If you run into issues, we can help support you at [hey@namesake.fyi](mailto:hey@namesake.fyi).
+**The [legacy app](http://masstpc.joinnamesake.com) will shut down on July 31, 2025.** At this point, all user data within that site will be permanently deleted. There is no way to transfer data from the old site to the new one. If you have forms from the site you would like to download, please do so before July 31st. If you run into issues, we can support you at [hey@namesake.fyi](mailto:hey@namesake.fyi).
 
 ### Supporting more states
 
 We’re looking to support additional states, starting with New York!
 
-If you work for an organization which helps facilitate trans name changes in the US and you’re interested in partnering with Namesake, please reach out to us at [hey@namesake.fyi](mailto:hey@namesake.fyi). We’d love to work with you.
+If you work for an organization that helps facilitate trans name changes in the US and you’re interested in partnering with Namesake, please reach out at [hey@namesake.fyi](mailto:hey@namesake.fyi). We’d love to work with you.
 
 ### New feature development
 
