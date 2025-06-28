@@ -5,9 +5,6 @@ description: >-
 publishDate: 2025-06-27
 authors:
   - luke-lennon
-# image:
-  # src: ../../assets/images/posts/introducing-namesake/content/namesake.webp
-  # alt: "Illustrations of a driver's license, a gavel, a passport, a social security card, and a flower with snails."
 ---
 
 ## How it started
@@ -24,11 +21,11 @@ Then, in 2020 I tried to get a car loan, only to discover that I was credit invi
 
 After all, I had never cared about how the government labeled or recognized me; I just wanted to live my life safely and with autonomy. The experience underscored just how far-reaching the implications of a name change could be, and how digitization presented an opportunity to address the systemic oppression embedded in legacy systems. 
 
-So, in 2021 I took a chance and started building Namesake part-time. I moved quickly and learned a lot (maybe I’ll save those learnings for a future email).
+So, in 2021 I took a chance and started building Namesake part-time. I moved quickly and learned a lot (maybe something for another time).
 
 ## How it's going
 
-Since our start, we’ve supported 1000+ youth and adults in Massachusetts through our catalytic partnership with the Massachusetts Trans Political Coalition (thank you, MTPC!). We’ve co-led nearly 100 statewide name change clinics and trainings, and we’ve helped connect folks to over $45,000 in financial assistance. We’ve advocated for more equitable policy and processes, and we’ve fostered information sharing across the country through partnerships and collaboration. We’ve raised funds to keep it going. We even launched a [Discord](/chat) last year to facilitate more mutual aid and support. I’m proud of what we’ve built, and endlessly grateful for all of the people who have contributed to and rooted for Namesake.
+Since Namesake's start, we’ve supported 1000+ youth and adults in Massachusetts through our catalytic partnership with the Massachusetts Trans Political Coalition (thank you, MTPC!). We’ve co-led nearly 100 statewide name change clinics and trainings, and we’ve helped connect folks to over $45,000 in financial assistance. We’ve advocated for more equitable policy and processes, and we’ve fostered information sharing across the country through partnerships and collaboration. We’ve raised funds to keep it going. We even launched a [Discord](/chat) last year to facilitate more mutual aid and support. I’m proud of what we’ve built, and endlessly grateful for all of the people who have contributed to and rooted for Namesake.
 
 That being said, a lot has happened in the world since we first started, and to put it bluntly, it’s terrifying. There are the certainties: the politicization of trans identities and its real-life impact on real-life humans, the bigotry, the danger. And there are the uncertainties, too—what will happen when I try to renew my license or passport? Will I be detained at an airport? Will I be able to access my hormones in the future? Will my marriage be recognized? The list goes on, in every direction, intersecting with all of the other horrors in our current world. I hope you’re also aware, enraged, and [taking action](https://secure.everyaction.com/P2P/j5xaSW4gmU6FZu4D3ELZbQ2/qX69jknqEfCPfGBFvdy_DQ2).
 
@@ -38,7 +35,7 @@ To that end, it’s more important than ever that we not only continue Namesake,
 
 Early last year I began seriously reflecting on my future with Namesake. I wanted to ensure that its potential was not limited by my personal skill-set, needs, and responsibilities--so this fall, I decided to step back from running its day-to-day operations. As you can imagine, this is not a decision I’ve made lightly, especially at this critical time. I’ve poured so much of myself into Namesake, but I feel that I am not the person to take it to the next level, especially as my partner and I embark on a new journey in Oregon (their home state) this fall. 
 
-While I will continue to support from afar, Eva has slowly taken the lead at Namesake, and I’m so grateful for her empathy, creativity, and resistance. They are not only a talented and brilliant designer and engineer, but more importantly a truly amazing person. I’m so excited about her vision for Namesake’s future (seriously, peek at the sweet [new design](/blog/introducing-namesake). She will (re)introduce herself (and Namesake 2.0) properly soon, I’m sure! In the meantime, if you want to support Namesake, reach out at [eva@namesake.fyi](mailto:eva@namesake.fyi).
+While I will continue to support from afar, Eva has slowly taken the lead at Namesake, and I’m so grateful for her empathy, creativity, and resistance. They are not only a talented and brilliant designer and engineer, but more importantly a truly amazing person. I’m so excited about her vision for Namesake’s future. She will (re)introduce herself (and the new Namesake app) properly soon! In the meantime, if you want to support Namesake, reach out at [eva@namesake.fyi](mailto:eva@namesake.fyi).
 
 ## Thank you for everything
 
