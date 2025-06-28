@@ -39,7 +39,6 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
     margin-inline: auto;
     width: 100%;
     max-width: 100vw;
-    overflow: hidden;
     gap: var(--space-3xl);
     padding-block: var(--space-xl);
     margin-block-start: var(--space-3xl);
@@ -67,10 +66,15 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
 
       a {
         display: inline-block;
+        border-radius: 5px;
       }
 
       img {
         max-width: min(240px, 40vw);
+      }
+
+      @media (forced-colors: active) {
+        filter: invert(1);
       }
     }
   }

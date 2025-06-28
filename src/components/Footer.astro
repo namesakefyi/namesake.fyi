@@ -37,8 +37,9 @@ const linkGroups: LinkGroup[] = [
   {
     title: "Resources",
     links: [
-      { href: "/chat", label: "Chat" },
-      { href: "/status", label: "Status" },
+      { href: siteInfo.urls.chat, label: "Chat" },
+      { href: siteInfo.urls.donate, label: "Donate" },
+      { href: siteInfo.urls.status, label: "Status" },
     ],
   },
 ];
@@ -71,10 +72,8 @@ const linkGroups: LinkGroup[] = [
   </div>
   <div class="content end">
     <div class="copyright">
-      <span>{siteInfo.fullName} &copy; {year}</span>
-      <span class="disclaimer"
-        ><RiHeart3Line /> T4T. <a href="/terms">We’re not lawyers.</a></span
-      >
+      {siteInfo.fullName} &copy; {year}
+      <RiHeart3Line /> T4T
     </div>
     <div class="social">
       {
@@ -86,138 +85,137 @@ const linkGroups: LinkGroup[] = [
       }
     </div>
   </div>
-</footer>
 
-<style lang="scss">
-  footer {
-    --footerBg: var(--text);
-    --footerText: var(--bg);
+  <style lang="scss">
+    footer {
+      --footerBg: var(--text);
+      --footerText: var(--bg);
 
-    background: var(--footerBg);
-    color: var(--footerText);
-    line-height: 1.5;
-    width: 100%;
-    padding-block: var(--space-xl) var(--space-l);
-    margin-block-start: var(--space-2xl);
-    position: relative;
+      background: var(--footerBg);
+      color: var(--footerText);
+      line-height: 1.5;
+      width: 100%;
+      padding-block: var(--space-xl) var(--space-l);
+      margin-block-start: var(--space-2xl);
+      position: relative;
 
-    :focus-visible {
-      outline-color: var(--footerText);
-    }
+      :focus-visible {
+        outline-color: var(--footerText);
+      }
 
-    @media (hover: hover) {
-      a:hover {
-        text-decoration: underline;
+      @media (hover: hover) {
+        a:hover {
+          text-decoration: underline;
+        }
       }
     }
-  }
 
-  .content {
-    padding-inline: var(--space-l);
-    flex: 1;
-    width: 100%;
-    max-width: 1200px;
-    margin-inline: auto;
-    display: flex;
-    justify-content: space-between;
-    gap: var(--space-xl);
-
-    + .content {
-      margin-block-start: var(--space-xl);
-    }
-
-    &.end {
-      align-items: center;
-    }
-
-    @media (width < 900px) {
-      flex-direction: column;
+    .content {
+      padding-inline: var(--space-l);
+      flex: 1;
+      width: 100%;
+      max-width: 1200px;
+      margin-inline: auto;
+      display: flex;
+      justify-content: space-between;
       gap: var(--space-xl);
 
-      .linkGroup {
-        width: unset;
-        flex: 1;
+      + .content {
+        margin-block-start: var(--space-xl);
       }
 
-      .social {
-        gap: var(--space-l);
+      &.end {
+        align-items: center;
       }
 
-      .copyright {
-        order: 1;
+      @media (width < 900px) {
+        flex-direction: column;
+        gap: var(--space-xl);
+
+        .linkGroup {
+          width: unset;
+          flex: 1;
+        }
+
+        .social {
+          gap: var(--space-l);
+        }
+
+        .copyright {
+          order: 1;
+        }
       }
     }
-  }
 
-  @keyframes snailing {
-    0% {
-      transform: translateX(0);
+    @keyframes snailing {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(calc(-100% - 100vw));
+      }
     }
-    100% {
-      transform: translateX(calc(-100% - 100vw));
-    }
-  }
 
-  .footer-illustration {
-    width: 100%;
-    position: absolute;
-    bottom: 100%;
-    height: 48px;
-    overflow: hidden;
-
-    img {
-      height: 100%;
-      width: auto;
+    .footer-illustration {
+      width: 100%;
       position: absolute;
-      left: 100%;
-      bottom: -4px;
-      mix-blend-mode: multiply;
-      user-select: none;
-      animation: snailing 300s infinite linear;
-      // Offset start
-      animation-delay: -24s;
+      bottom: 100%;
+      height: 48px;
+      overflow: hidden;
+
+      img {
+        height: 100%;
+        width: auto;
+        position: absolute;
+        left: 100%;
+        bottom: -4px;
+        mix-blend-mode: multiply;
+        user-select: none;
+        animation: snailing 300s infinite linear;
+        // Offset start
+        animation-delay: -24s;
+      }
     }
-  }
 
-  .links {
-    display: flex;
-    gap: var(--space-m);
-    align-items: stretch;
+    .links {
+      display: flex;
+      gap: var(--space-m);
+      align-items: stretch;
 
-    a {
+      a {
+        font-size: var(--step--1);
+        border-radius: 5px;
+      }
+    }
+
+    .linkGroup {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 12ch;
+
+      > * {
+        padding-block: var(--space-2xs);
+      }
+    }
+
+    .copyright {
       font-size: var(--step--1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
     }
-  }
 
-  .linkGroup {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 12ch;
+    .social {
+      display: flex;
+      gap: var(--space-m);
+      font-size: var(--step-2);
 
-    > * {
-      padding-block: var(--space-2xs);
+      a {
+        border-radius: 5px;
+      }
     }
-  }
-
-  .copyright {
-    font-size: var(--step--1);
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    gap: var(--space-xs);
-    flex-wrap: wrap;
-  }
-
-  .disclaimer {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-xs);
-  }
-
-  .social {
-    display: flex;
-    gap: var(--space-m);
-    font-size: var(--step-2);
-  }
-</style>
+  </style>
+</footer>
