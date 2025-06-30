@@ -1,5 +1,5 @@
 ---
-title: A Note from Luke
+title: A note from Luke
 description: >-
   Luke reflects on their time building Namesake, and speaks about what's next.
 publishDate: 2025-06-27
