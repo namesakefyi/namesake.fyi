@@ -1,6 +1,9 @@
 ---
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import type { RoughAnnotationType } from "rough-notation/lib/model";
+
+dayjs.extend(utc);
 
 interface Props {
   title: string;
@@ -16,14 +19,11 @@ const { title, date, description, annotation = "circle" } = Astro.props;
   {
     date && (
       <time class="date" datetime={date.toISOString()}>
-        {dayjs(date).format("MMMM DD, YYYY")}
+        {dayjs.utc(date).format("MMMM DD, YYYY")}
       </time>
     )
   }
-  <h1
-    data-annotation={annotation}
-    class:list={[{ inverted: annotation === "highlight" }]}
-  >
+  <h1 data-annotation={annotation}>
     {title}
   </h1>
   {description && <p class="subhead">{description}</p>}
@@ -35,9 +35,12 @@ const { title, date, description, annotation = "circle" } = Astro.props;
   import { annotationConfig } from "~/helpers/helpers";
 
   const header: HTMLElement | null = document.querySelector(".page-head h1");
+  const isForcedColors = window.matchMedia("(forced-colors: active)").matches;
 
-  if (header) {
+  if (header && !isForcedColors) {
     const annotation = header.dataset.annotation as RoughAnnotationType;
+
+    if (annotation === "highlight") header.style.color = "var(--bg)";
 
     const highlight = annotate(header, {
       type: annotation,
@@ -62,10 +65,6 @@ const { title, date, description, annotation = "circle" } = Astro.props;
       text-wrap: balance;
       margin-inline-start: -0.06em; // Visual alignment
       hyphens: auto;
-
-      &.inverted {
-        color: var(--bg);
-      }
 
       @media (width < 700px) {
         font-size: var(--step-5);
