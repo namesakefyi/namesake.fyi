@@ -95,7 +95,7 @@ This is a difficult, destabilizing time. Our federal institutions are being gutt
 > 
 > <cite>Charly Robles, Programs Manager, MTPC</cite>
 
-We are here to support you in finding a name that you love, and in owning identity documents which reflect who you are. Respectful and accessible name changes are one part of a larger puzzle in creating a world where trans people—and all people—can live life freely and joyously.
+We are here to support you in finding a name that you love, and in owning identity documents which reflect who you are. Respectful and accessible name changes are one part of a larger puzzle in creating a world where all people can live life freely and joyously.
 
 [Sign up for Namesake](https://app.namesake.fyi) and [join us on Discord](/chat), or support our work by making a [tax-deductible donation](/donate).
 
@@ -105,4 +105,4 @@ Happy Pride &hearts;
 
 This release would not have been possible without the work of:
 
-Ari Trakh, Charly Robles, Dana Teagle, Ginger, Joshua Hogsett, Justin Kang, Kelsey Gunstra, Kit Mills, Luke Lennon, Margot Miville, Martin Lindberg, mb bishoff, Melody Universe, MG Xiong, moon davé, Oliver Bello, Seneca Artemis, Tre’Andre Carmel Valentine, Vicky O at Movement Stickers, Zo Holmes, the Massachusetts Transgender Political Coalition, and many others. Thank you!
+Ari Trakh, Charly Robles, Dana Teagle, Ginger, Joshua Hogsett, Justin Kang, Kelsey Gunstra, Kit Mills, Luke Lennon, Margot Miville, Martin Lindberg, mb bischoff, Melody Universe, MG Xiong, moon davé, Oliver Bello, Seneca Artemis, Tre’Andre Carmel Valentine, Vicky O at Movement Stickers, Zo Holmes, the Massachusetts Transgender Political Coalition, and many others. Thank you!
