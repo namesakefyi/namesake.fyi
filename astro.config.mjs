@@ -5,11 +5,13 @@ import sitemap from "@astrojs/sitemap";
 import postcssLogicalViewportUnits from "@csstools/postcss-logical-viewport-units";
 import keystatic from "@keystatic/astro";
 import { defineConfig } from "astro/config";
+import mdx from "@astrojs/mdx";
 import autoprefixer from "autoprefixer";
 import cssnano from "cssnano";
 import postcssClamp from "postcss-clamp";
 import postcssMediaMinMax from "postcss-media-minmax";
 import postcssUtopia from "postcss-utopia";
+import embeds from "astro-embed/integration";
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,7 +20,7 @@ export default defineConfig({
     imageService: "compile",
   }),
   site: "https://namesake.fyi",
-  integrations: [sitemap(), react(), markdoc(), keystatic()],
+  integrations: [sitemap(), embeds(), mdx(), react(), markdoc(), keystatic()],
   prefetch: true,
   vite: {
     ssr: {

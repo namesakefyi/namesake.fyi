@@ -51,7 +51,7 @@ export const collections = {
   }),
 
   posts: defineCollection({
-    loader: glob({ pattern: "**/[^_]*.md", base: "./src/content/posts" }),
+    loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/content/posts" }),
     schema: ({ image }) =>
       z.object({
         title: z.string(),
