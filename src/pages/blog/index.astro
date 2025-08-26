@@ -30,14 +30,8 @@ const sortedPosts = posts.sort(
               date={post.data.publishDate}
               url={`/blog/${post.id}`}
               description={post.data.description}
-              image={
-                post.data.image
-                  ? {
-                      src: post.data.image.src.src,
-                      alt: post.data.image.alt,
-                    }
-                  : undefined
-              }
+              image={post.data.image}
+              imageAlt={post.data.imageAlt}
             />
           );
         })

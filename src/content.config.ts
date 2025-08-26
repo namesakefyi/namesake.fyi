@@ -51,7 +51,7 @@ export const collections = {
   }),
 
   posts: defineCollection({
-    loader: glob({ pattern: "**/[^_]*.md", base: "./src/content/posts" }),
+    loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/content/posts" }),
     schema: ({ image }) =>
       z.object({
         title: z.string(),
@@ -62,12 +62,8 @@ export const collections = {
           .transform((v) => new Date(v)),
         annotation: z.custom<RoughAnnotationType>().optional(),
         authors: z.array(reference("authors")),
-        image: z
-          .object({
-            src: image(),
-            alt: z.string(),
-          })
-          .optional(),
+        image: image().optional(),
+        imageAlt: z.string().optional(),
       }),
   }),
 
@@ -90,12 +86,8 @@ export const collections = {
         date: z.date(),
         url: z.string(),
         outlet: z.string(),
-        image: z
-          .object({
-            src: image(),
-            alt: z.string(),
-          })
-          .optional(),
+        image: image().optional(),
+        imageAlt: z.string().optional(),
       }),
   }),
 
