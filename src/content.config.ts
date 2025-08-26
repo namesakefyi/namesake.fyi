@@ -86,12 +86,8 @@ export const collections = {
         date: z.date(),
         url: z.string(),
         outlet: z.string(),
-        image: z
-          .object({
-            src: image(),
-            alt: z.string(),
-          })
-          .optional(),
+        image: image().optional(),
+        imageAlt: z.string().optional(),
       }),
   }),
 
