@@ -28,7 +28,7 @@ if (!post) return Astro.redirect("/404");
 const { data } = post;
 const { Content, headings } = await render(post);
 
-const authors = await getEntries(data.authors);
+const authors = data.authors ? await getEntries(data.authors) : [];
 ---
 
 <ProseLayout
@@ -39,61 +39,65 @@ const authors = await getEntries(data.authors);
   annotation={data.annotation ?? "highlight"}
   headings={headings}
 >
-  <div class="authors" slot="after-header">
-    {
-      authors.map((author) => (
-        <span class="author">
-          {author.data.avatar && (
-            <Image
-              class="avatar"
-              src={author.data.avatar}
-              alt={`${author.data.name} photo`}
-              width={32}
-              densities={[1, 2]}
-            />
-          )}
-          <div class="author-info">
-            <strong>{author.data.name}</strong>
-            <span class="role">{author.data.role}</span>
-          </div>
-        </span>
-      ))
-    }
-  </div>
-  <Content />
-  <div class="bios" slot="after-content">
-    {
-      authors.map(({ data: { avatar, name, bio, socialLinks } }) => (
-        <div class="bio">
-          <div class="bio-avatar">
-            <Image
-              class="avatar"
-              src={avatar}
-              alt={`${name} photo`}
-              width={80}
-              height={80}
-              densities={[1, 2]}
-            />
-          </div>
-          <div class="content">
-            <strong>{name}</strong>
-            <p>{bio}</p>
-            {socialLinks && socialLinks.length > 0 && (
-              <ul class="social">
-                {socialLinks.map((socialLink) => (
-                  <li>
-                    <a href={socialLink.url} target="_blank">
-                      {socialLink.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+  {
+    authors.length > 0 && (
+      <div class="authors" slot="after-header">
+        {authors.map((author) => (
+          <span class="author">
+            {author.data.avatar && (
+              <Image
+                class="avatar"
+                src={author.data.avatar}
+                alt={`${author.data.name} photo`}
+                width={32}
+                densities={[1, 2]}
+              />
             )}
+            <div class="author-info">
+              <strong>{author.data.name}</strong>
+              <span class="role">{author.data.role}</span>
+            </div>
+          </span>
+        ))}
+      </div>
+    )
+  }
+  <Content />
+  {
+    authors.length > 0 && (
+      <div class="bios" slot="after-content">
+        {authors.map(({ data: { avatar, name, bio, socialLinks } }) => (
+          <div class="bio">
+            <div class="bio-avatar">
+              <Image
+                class="avatar"
+                src={avatar}
+                alt={`${name} photo`}
+                width={80}
+                height={80}
+                densities={[1, 2]}
+              />
+            </div>
+            <div class="content">
+              <strong>{name}</strong>
+              <p>{bio}</p>
+              {socialLinks && socialLinks.length > 0 && (
+                <ul class="social">
+                  {socialLinks.map((socialLink) => (
+                    <li>
+                      <a href={socialLink.url} target="_blank">
+                        {socialLink.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
-        </div>
-      ))
-    }
-  </div>
+        ))}
+      </div>
+    )
+  }
 </ProseLayout>
 
 <style lang="scss">

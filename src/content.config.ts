@@ -61,7 +61,7 @@ export const collections = {
           .or(z.date())
           .transform((v) => new Date(v)),
         annotation: z.custom<RoughAnnotationType>().optional(),
-        authors: z.array(reference("authors")),
+        authors: z.array(reference("authors")).optional(),
         image: image().optional(),
         imageAlt: z.string().optional(),
       }),
