@@ -7,9 +7,8 @@ authors:
   - eva-decker
   - mb-bischoff
 annotation: underline
-image:
-  src: ../../assets/images/posts/new-namesake-app/namesake-phone.png
-  alt: "A hand holding an iPhone displaying the home page of Namesake, featuring a progress bar representing percent completion toward all name change quests, along with a list of various quests for 'Court Order', 'Social Security', 'State ID', and more."
+image: ../../assets/images/posts/new-namesake-app/namesake-phone.png
+imageAlt: "A hand holding an iPhone displaying the home page of Namesake, featuring a progress bar representing percent completion toward all name change quests, along with a list of various quests for 'Court Order', 'Social Security', 'State ID', and more."
 ---
 
 **Over the past year, we've completely rebuilt the Namesake app.** It has a [new design](#all-new-design), [more accessible forms](#clearer-more-accessible-forms), [improved security](#improved-security), and is now [open source](#were-open-source). This new app builds a foundation for us to support name changes in many more locations and for different types of activities. You can [sign up today](https://app.namesake.fyi).

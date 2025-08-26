@@ -1,4 +1,5 @@
 ---
+import { Image, type ImageMetadata } from "astro:assets";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 
@@ -11,33 +12,32 @@ interface Props {
   subhead?: string;
   authors?: string[];
   description?: string;
-  image?: {
-    src: string;
-    alt: string;
-  };
+  image?: ImageMetadata;
+  imageAlt?: string;
 }
 
-const { title, date, url, subhead, authors, description, image } = Astro.props;
+const { title, date, url, subhead, authors, description, image, imageAlt } =
+  Astro.props;
 ---
 
-<div class="article">
+<article class="article">
   <time class="date" datetime={date.toISOString()}>
     {dayjs.utc(date).format("MMMM DD, YYYY")}
   </time>
   {subhead && <strong class="subhead">{subhead}</strong>}
-  <a href={url} class="title">
-    <span class="title-text">{title}</span>
-  </a>
+  <h2 class="title">
+    <a href={url} class="title-text">{title}</a>
+  </h2>
   {authors && <strong class="authors">By {authors.join(", ")}</strong>}
   {description && <p class="description">{description}</p>}
   {
-    image && (
-      <div class="image">
-        <img src={image.src} alt={image.alt} />
-      </div>
+    image && imageAlt && (
+      <a class="image" href={url} tabindex="-1">
+        <Image src={image} alt={imageAlt} />
+      </a>
     )
   }
-</div>
+</article>
 
 <style lang="scss">
   .article {

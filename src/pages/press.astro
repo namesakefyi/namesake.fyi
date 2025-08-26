@@ -22,14 +22,8 @@ pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
           date={data.date}
           url={data.url}
           subhead={data.outlet}
-          image={
-            data.image
-              ? {
-                  src: data.image.src.src,
-                  alt: data.image.alt,
-                }
-              : undefined
-          }
+          image={data.image}
+          imageAlt={data.imageAlt}
         />
       ))
     }
