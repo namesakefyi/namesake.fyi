@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import { getEntries, type ReferenceDataEntry } from "astro:content";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 
@@ -10,7 +11,7 @@ interface Props {
   date: Date;
   url: string;
   subhead?: string;
-  authors?: string[];
+  authors?: ReferenceDataEntry<"authors", string>[];
   description?: string;
   image?: ImageMetadata;
   imageAlt?: string;
@@ -18,6 +19,12 @@ interface Props {
 
 const { title, date, url, subhead, authors, description, image, imageAlt } =
   Astro.props;
+
+const authorsNames = authors
+  ? await getEntries(authors).then((authors) =>
+      authors.map((author) => author.data.name),
+    )
+  : undefined;
 ---
 
 <article class="article">
@@ -28,7 +35,11 @@ const { title, date, url, subhead, authors, description, image, imageAlt } =
   <h2 class="title">
     <a href={url} class="title-text">{title}</a>
   </h2>
-  {authors && <strong class="authors">By {authors.join(", ")}</strong>}
+  {
+    authorsNames && (
+      <strong class="authors">By {authorsNames.join(", ")}</strong>
+    )
+  }
   {description && <p class="description">{description}</p>}
   {
     image && imageAlt && (

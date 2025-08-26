@@ -19,22 +19,17 @@ const sortedPosts = posts.sort(
   <div class="posts">
     {
       sortedPosts.length ? (
-        sortedPosts.map(async (post) => {
-          const authors = await getEntries(post.data.authors);
-          const authorsNames = authors.map((author) => author.data.name);
-
-          return (
-            <ArticleLink
-              authors={authorsNames}
-              title={post.data.title}
-              date={post.data.publishDate}
-              url={`/blog/${post.id}`}
-              description={post.data.description}
-              image={post.data.image}
-              imageAlt={post.data.imageAlt}
-            />
-          );
-        })
+        sortedPosts.map((post) => (
+          <ArticleLink
+            authors={post.data.authors}
+            title={post.data.title}
+            date={post.data.publishDate}
+            url={`/blog/${post.id}`}
+            description={post.data.description}
+            image={post.data.image}
+            imageAlt={post.data.imageAlt}
+          />
+        ))
       ) : (
         <p>No posts found.</p>
       )
