@@ -51,7 +51,8 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
       display: grid;
       justify-items: center;
       align-items: center;
-      grid-template-columns: repeat(3, 1fr);
+      // Can increase this back to 3 columns when we have more partners
+      grid-template-columns: repeat(2, 1fr);
       grid-auto-rows: 80px;
       gap: var(--space-l) var(--space-xl);
       user-select: none;

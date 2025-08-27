@@ -1,17 +1,17 @@
 import cloudflare from "@astrojs/cloudflare";
 import markdoc from "@astrojs/markdoc";
+import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import postcssLogicalViewportUnits from "@csstools/postcss-logical-viewport-units";
 import keystatic from "@keystatic/astro";
 import { defineConfig } from "astro/config";
-import mdx from "@astrojs/mdx";
+import embeds from "astro-embed/integration";
 import autoprefixer from "autoprefixer";
 import cssnano from "cssnano";
 import postcssClamp from "postcss-clamp";
 import postcssMediaMinMax from "postcss-media-minmax";
 import postcssUtopia from "postcss-utopia";
-import embeds from "astro-embed/integration";
 
 // https://astro.build/config
 export default defineConfig({
@@ -22,6 +22,7 @@ export default defineConfig({
   site: "https://namesake.fyi",
   integrations: [sitemap(), embeds(), mdx(), react(), markdoc(), keystatic()],
   prefetch: true,
+  trailingSlash: "never",
   vite: {
     ssr: {
       external: ["buffer", "path", "fs", "os", "crypto", "async_hooks"].map(
