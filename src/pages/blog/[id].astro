@@ -35,6 +35,9 @@ const authors = data.authors ? await getEntries(data.authors) : [];
   title={data.title}
   date={data.publishDate}
   description={data.description}
+  ogImage={data.image?.src}
+  ogAlt={data.imageAlt}
+  author={authors.map((author) => author.data.name).join(", ")}
   color="blue"
   annotation={data.annotation ?? "highlight"}
   headings={headings}

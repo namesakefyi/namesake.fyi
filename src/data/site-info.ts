@@ -5,9 +5,16 @@ import {
   RiInstagramFill,
   RiLinkedinBoxFill,
   RiMailSendFill,
+  RiRssFill,
 } from "react-icons/ri";
 
-type SocialPlatform = "discord" | "github" | "instagram" | "linkedin" | "email";
+type SocialPlatform =
+  | "rss"
+  | "discord"
+  | "github"
+  | "instagram"
+  | "linkedin"
+  | "email";
 
 export type SocialLink = {
   name: string;
@@ -80,6 +87,12 @@ const siteInfo: SiteInfo = {
       text: "Email Namesake",
       href: "mailto:hey@namesake.fyi",
       Icon: RiMailSendFill,
+    },
+    rss: {
+      name: "RSS",
+      text: "Subscribe to Namesake's RSS feed",
+      href: "/rss.xml",
+      Icon: RiRssFill,
     },
   },
 };

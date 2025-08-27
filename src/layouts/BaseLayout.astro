@@ -13,6 +13,7 @@ import "../styles/theme.css";
 export interface Props {
   title: string;
   description?: string;
+  author?: string;
   ogImage?: string;
   ogAlt?: string;
   color?: NamesakeColor;
@@ -21,6 +22,7 @@ export interface Props {
 const {
   title,
   description = siteInfo.description,
+  author = siteInfo.fullName,
   ogImage = siteInfo.image.src,
   ogAlt = siteInfo.image.alt,
   color = "purple",
@@ -34,28 +36,12 @@ const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Namesake`;
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="generator" content={Astro.generator} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="light" />
-    <meta name="theme-color" content={colors[color]?.hex} />
-    <link rel="icon" href="/favicon.ico?v3" sizes="32x32" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v3" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="canonical" href={canonicalURL} />
-    <meta name="description" content={description} />
-    <meta property="og:title" content={title} />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content={new URL(ogImage, Astro.url.origin)} />
-    <meta property="og:image:alt" content={ogAlt} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalURL} />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:site_name" content="Namesake" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="manifest" href="/manifest.json" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
     <title>{pageTitle}</title>
+    <script>
+      import * as Fathom from "fathom-client";
+      Fathom.load("GQAJEJLZ");
+    </script>
     <AstroFont
       config={[
         {
@@ -90,10 +76,28 @@ const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Namesake`;
         },
       ]}
     />
-    <script>
-      import * as Fathom from "fathom-client";
-      Fathom.load("GQAJEJLZ");
-    </script>
+    <meta name="generator" content={Astro.generator} />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content={colors[color]?.hex} />
+    <link rel="icon" href="/favicon.ico?v3" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v3" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="description" content={description} />
+    <meta name="author" content={author} />
+    <meta property="og:title" content={title} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={new URL(ogImage, Astro.url.origin)} />
+    <meta property="og:image:alt" content={ogAlt} />
+    <meta property="og:author" content={author} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Namesake" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
   <body data-color={color}>
     <Header />
