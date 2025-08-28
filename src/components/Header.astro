@@ -13,11 +13,12 @@ const { pathname } = Astro.url;
       <li>
         <a
           href="/blog"
-          aria-current={pathname.slice(1) === "blog" ? "page" : "false"}
-          class="button ghost small">Blog</a>
+          aria-current={pathname.slice(1).startsWith("blog") ? "page" : "false"}
+          >Blog</a
+        >
       </li>
-      <li><a href="/donate" class="button secondary small">Donate</a></li>
-      <li><a href={urls.app} class="button primary small">Sign In</a></li>
+      <li><a href="/donate">Donate</a></li>
+      <li><a href={urls.app}>Sign In</a></li>
     </ul>
   </nav>
 </header>
@@ -35,9 +36,9 @@ const { pathname } = Astro.url;
   header {
     top: 0;
     display: flex;
-    align-items: center;
+    align-items: baseline;
     justify-content: space-between;
-    padding: var(--space-m) var(--space-l);
+    padding: var(--space-l);
     width: 100%;
     max-width: 1200px;
     margin-inline: auto;
@@ -48,11 +49,20 @@ const { pathname } = Astro.url;
     display: flex;
     padding: unset;
     margin: unset;
-    gap: var(--space-xs);
 
     a {
       padding: var(--space-xs) var(--space-s);
       border-radius: 5px;
+      text-decoration: none;
+      font-size: var(--step-0);
+      font-weight: 600;
+
+      &[aria-current="page"],
+      &:hover {
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 1.5px;
+      }
     }
   }
 </style>
