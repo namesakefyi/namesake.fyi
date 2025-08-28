@@ -3,14 +3,23 @@ import siteInfo from "~/data/site-info";
 import Logo from "./Logo.astro";
 
 const { urls } = siteInfo;
+const { pathname } = Astro.url;
 ---
 
 <header>
-  <a href="/" aria-label="Namesake homepage" id="logo"><Logo /></a>
-  <nav>
-    <a href="/blog" class="button ghost small">Blog</a>
-    <a href="/donate" class="button secondary small">Donate</a>
-    <a href={urls.app} class="button primary small">Sign In</a>
+  <a href="/" aria-label="Home" id="logo"><Logo /></a>
+  <nav aria-label="Site">
+    <ul role="list">
+      <li>
+        <a
+          href="/blog"
+          aria-current={pathname.slice(1).startsWith("blog") ? "page" : "false"}
+          >Blog</a
+        >
+      </li>
+      <li><a href="/donate">Donate</a></li>
+      <li><a href={urls.app}>Sign In</a></li>
+    </ul>
   </nav>
 </header>
 
@@ -27,23 +36,37 @@ const { urls } = siteInfo;
   header {
     top: 0;
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    align-items: baseline;
+    justify-content: space-between;
     padding: var(--space-l);
     width: 100%;
     max-width: 1200px;
     margin-inline: auto;
   }
 
-  a {
-    padding: var(--space-xs) var(--space-s);
-    margin: calc(var(--space-xs) * -1);
-    border-radius: 5px;
+  #logo {
+    transform: translateY(2px);
   }
 
-  nav {
+  ul {
+    list-style: none;
     display: flex;
-    gap: var(--space-l);
-    margin-inline-start: auto;
+    padding: unset;
+    margin: unset;
+
+    a {
+      padding: var(--space-xs) var(--space-s);
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: var(--step-0);
+      font-weight: 600;
+
+      &[aria-current="page"],
+      &:hover {
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 0.1em;
+      }
+    }
   }
 </style>
