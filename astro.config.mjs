@@ -23,6 +23,11 @@ export default defineConfig({
   integrations: [sitemap(), embeds(), mdx(), react(), markdoc(), keystatic()],
   prefetch: true,
   trailingSlash: "never",
+  build: {
+    // Eliminate trailing slashes from Cloudflare Pages
+    // https://creativehike.com/posts/removing-trailng-slashes-astro
+    format: "file",
+  },
   vite: {
     ssr: {
       external: ["buffer", "path", "fs", "os", "crypto", "async_hooks"].map(
