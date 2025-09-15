@@ -45,8 +45,10 @@ import Swatches from "./_components/Swatches.astro";
         inverted
       />
     </div>
-    <a class="button" href="/assets/brand-assets/namesake-logos.zip" download
-      ><RiDownloadLine />Download All</a
+    <a
+      class="button secondary"
+      href="/assets/brand-assets/namesake-logos.zip"
+      download><RiDownloadLine />Download All</a
     >
   </section>
   <section>
@@ -58,8 +60,10 @@ import Swatches from "./_components/Swatches.astro";
         >Yann Le Coroller</a
       > and is freely distributed. It emulates the look of printed text.
     </p>
-    <a class="button" href="/assets/brand-assets/alte-haas-grotesk.zip" download
-      ><RiDownloadLine />Download Alte Haas Grotesk</a
+    <a
+      class="button secondary"
+      href="/assets/brand-assets/alte-haas-grotesk.zip"
+      download><RiDownloadLine />Download Alte Haas Grotesk</a
     >
   </section>
   <section>
@@ -102,22 +106,7 @@ import Swatches from "./_components/Swatches.astro";
 
   .button {
     display: inline-flex;
-    gap: var(--space-s);
-    font-weight: 600;
-    background-color: var(--text);
-    border: 3px solid var(--text);
-    border-radius: 3px;
-    color: var(--bg);
-    text-decoration: none;
-    padding: var(--space-s) var(--space-m);
     margin-top: var(--space-m);
-    cursor: pointer;
-
-    @media (hover: hover) {
-      &:hover {
-        background-color: var(--bg);
-        color: var(--text);
-      }
-    }
+    padding-inline: var(--space-m);
   }
 </style>

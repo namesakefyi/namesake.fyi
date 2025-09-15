@@ -162,9 +162,9 @@ img {
   border-radius: 5px;
   font-weight: 600;
   text-decoration: none;
-  height: var(--space-3xl);
   gap: var(--space-xs);
   border: 3px solid transparent;
+  cursor: pointer;
 
   &.primary {
     background-color: var(--text);
@@ -192,21 +192,9 @@ img {
     }
   }
 
-  &.ghost {
-    background-color: transparent;
-    color: var(--text);
-    border-color: transparent;
-
-    @media (hover: hover) {
-      &:hover {
-        border-color: var(--text);
-      }
-    }
-  }
-
   &.small {
-    padding: var(--space-xs) var(--space-s);
-    height: var(--space-2xl);
+    padding: var(--space-2xs) var(--space-xs);
+    gap: var(--space-2xs);
     font-size: var(--step--1);
   }
 
