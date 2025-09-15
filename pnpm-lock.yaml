@@ -41,6 +41,9 @@ importers:
       '@keystatic/core':
         specifier: ^0.5.48
         version: 0.5.48(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      '@remixicon/react':
+        specifier: ^4.6.0
+        version: 4.6.0(react@19.1.1)
       '@types/react':
         specifier: ^19.1.12
         version: 19.1.12
@@ -77,9 +80,6 @@ importers:
       react-dom:
         specifier: ^19.1.1
         version: 19.1.1(react@19.1.1)
-      react-icons:
-        specifier: ^5.5.0
-        version: 5.5.0(react@19.1.1)
       rough-notation:
         specifier: ^0.5.1
         version: 0.5.1
@@ -1855,6 +1855,11 @@ packages:
     resolution: {integrity: sha512-OR/pwZReWbCIxuHJYB1L4fTwliA+mzVvUJMWwXIRy6Eh5d07spS3FZEKFvOgjMxA1nyv5PLf8eyr5RuuP1GGAA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
+
+  '@remixicon/react@4.6.0':
+    resolution: {integrity: sha512-bY56maEgT5IYUSRotqy9h03IAKJC85vlKtWFg2FKzfs8JPrkdBAYSa9dxoUSKFwGzup8Ux6vjShs9Aec3jvr2w==}
+    peerDependencies:
+      react: '>=18.2.0'
 
   '@rolldown/pluginutils@1.0.0-beta.9':
     resolution: {integrity: sha512-e9MeMtVWo186sgvFFJOPGy7/d2j2mZhLJIdVW0C/xDluuOvymEATqz6zKsP0ZmXGzQtqlyjz5sC1sYQUoJG98w==}
@@ -3791,11 +3796,6 @@ packages:
     resolution: {integrity: sha512-Dlq/5LAZgF0Gaz6yiqZCf6VCcZs1ghAJyrsu84Q/GT0gV+mCxbfmKNoGRKBYMJ8IEdGPqu49YWXD02GCknEDkw==}
     peerDependencies:
       react: ^19.1.1
-
-  react-icons@5.5.0:
-    resolution: {integrity: sha512-MEFcXdkP3dLo8uumGI5xN3lDFNsRtrjbOEKDLD7yv76v4wpnEq2Lt2qeHaQOr34I/wPN3s3+N08WkQ+CW37Xiw==}
-    peerDependencies:
-      react: '*'
 
   react-refresh@0.17.0:
     resolution: {integrity: sha512-z6F7K9bV85EfseRCp2bzrpyQ0Gkw1uLoCel9XBVWPg/TjRj94SkJzUTGfOa4bs7iJvBWtQG0Wq7wnI0syw3EBQ==}
@@ -6934,6 +6934,10 @@ snapshots:
       '@react-types/shared': 3.31.0(react@19.1.1)
       react: 19.1.1
 
+  '@remixicon/react@4.6.0(react@19.1.1)':
+    dependencies:
+      react: 19.1.1
+
   '@rolldown/pluginutils@1.0.0-beta.9': {}
 
   '@rollup/pluginutils@5.3.0(rollup@4.50.1)':
@@ -9332,10 +9336,6 @@ snapshots:
     dependencies:
       react: 19.1.1
       scheduler: 0.26.0
-
-  react-icons@5.5.0(react@19.1.1):
-    dependencies:
-      react: 19.1.1
 
   react-refresh@0.17.0: {}
 

@@ -1,26 +1,28 @@
-import type { IconType } from "react-icons/lib";
 import {
+  type RemixiconComponentType,
+  RiBlueskyFill,
   RiDiscordFill,
   RiGithubFill,
   RiInstagramFill,
   RiLinkedinBoxFill,
   RiMailSendFill,
   RiRssFill,
-} from "react-icons/ri";
+} from "@remixicon/react";
 
 type SocialPlatform =
-  | "rss"
+  | "bluesky"
   | "discord"
+  | "email"
   | "github"
   | "instagram"
   | "linkedin"
-  | "email";
+  | "rss";
 
 export type SocialLink = {
   name: string;
   text: string;
   href: string;
-  Icon: IconType;
+  Icon: RemixiconComponentType;
 };
 
 export type SiteInfo = {
@@ -75,6 +77,12 @@ const siteInfo: SiteInfo = {
       text: "Follow Namesake on Instagram",
       href: "https://www.instagram.com/namesake.fyi",
       Icon: RiInstagramFill,
+    },
+    bluesky: {
+      name: "Bluesky",
+      text: "Follow Namesake on Bluesky",
+      href: "https://bsky.app/profile/namesake.fyi",
+      Icon: RiBlueskyFill,
     },
     linkedin: {
       name: "LinkedIn",
