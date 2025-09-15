@@ -17,7 +17,7 @@ import { colors } from "~/data/colors";
           </div>
           <div class="buttons">
             <button
-              class="button swatch-toggle"
+              class="button secondary small swatch-toggle"
               data-name={color.id}
               data-color={color.hex}
               title={`Use ${color.name} for site background`}
@@ -25,7 +25,7 @@ import { colors } from "~/data/colors";
               Set bg
             </button>
             <button
-              class="button copy-hex"
+              class="button secondary small copy-hex"
               data-clipboard-text={color.hex}
               title={`Copy ${color.name} hex code`}
             >
@@ -112,29 +112,6 @@ import { colors } from "~/data/colors";
   }
 
   .button {
-    background-color: transparent;
     display: inline-flex;
-    align-items: center;
-    color: var(--text);
-    font-size: var(--step--1);
-    gap: var(--space-xs);
-    border: 3px solid var(--text);
-    padding: var(--space-2xs) var(--space-s);
-    text-decoration: none;
-    font-weight: 600;
-    border-radius: 3px;
-    cursor: pointer;
-
-    @media (hover: hover) {
-      &:hover {
-        background-color: var(--text);
-        color: var(--bg);
-      }
-    }
-
-    &:focus-visible {
-      outline: 3px solid var(--text);
-      outline-offset: 2px;
-    }
   }
 </style>

@@ -19,11 +19,15 @@ const { assetName, name, instructions, inverted } = Astro.props;
     <h3>{name}</h3>
     <p>{instructions}</p>
     <div class="buttons">
-      <a class="button" href={`/assets/brand-assets/${assetName}.svg`} download
-        ><RiDownloadLine />SVG</a
+      <a
+        class="button secondary small"
+        href={`/assets/brand-assets/${assetName}.svg`}
+        download><RiDownloadLine />SVG</a
       >
-      <a class="button" href={`/assets/brand-assets/${assetName}.png`} download
-        ><RiDownloadLine />PNG</a
+      <a
+        class="button secondary small"
+        href={`/assets/brand-assets/${assetName}.png`}
+        download><RiDownloadLine />PNG</a
       >
     </div>
   </div>
@@ -66,25 +70,5 @@ const { assetName, name, instructions, inverted } = Astro.props;
 
   .button {
     display: inline-flex;
-    font-size: var(--step--1);
-    align-items: center;
-    gap: var(--space-2xs);
-    border: 3px solid var(--text);
-    padding: var(--space-2xs) var(--space-xs);
-    text-decoration: none;
-    font-weight: 600;
-    border-radius: 3px;
-
-    @media (hover: hover) {
-      &:hover {
-        background-color: var(--text);
-        color: var(--bg);
-      }
-    }
-
-    &:focus-visible {
-      outline: 3px solid var(--text);
-      outline-offset: 2px;
-    }
   }
 </style>
