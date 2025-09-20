@@ -1,0 +1,55 @@
+---
+import type { SanityDocument } from "@sanity/client";
+import PortableText from "~/components/PortableText.astro";
+import ProseLayout from "~/layouts/ProseLayout.astro";
+import { loadQuery } from "~/sanity/lib/loadQuery";
+
+export async function getStaticPaths() {
+  const { data: pages } = await loadQuery<SanityDocument[]>({
+    query: `*[_type == "page" && defined(slug)]{
+      _id,
+      title,
+      slug,
+      description,
+      content,
+      ogImage,
+      annotation,
+      color
+    }`,
+  });
+
+  return pages.map((page) => ({
+    params: { slug: page.slug.current },
+    props: { page },
+  }));
+}
+
+const { params } = Astro;
+
+const { data: page } = await loadQuery<SanityDocument>({
+  query: `*[_type == "page" && slug.current == $slug][0]{
+    _id,
+    title,
+    slug,
+    description,
+    content,
+    ogImage,
+    annotation,
+    color
+  }`,
+  params,
+});
+
+if (!page) return Astro.redirect("/404");
+---
+
+<ProseLayout
+  title={page.title}
+  description={page.description}
+  ogImage={page.ogImage?.asset}
+  ogAlt={page.ogImage?.alt}
+  annotation={page.annotation}
+  color={page.color}
+>
+  <PortableText value={page.content} />
+</ProseLayout>

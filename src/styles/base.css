@@ -203,3 +203,12 @@ img {
     height: 1.25em;
   }
 }
+
+.avatar {
+  border-radius: 100%;
+  filter: grayscale(100%);
+  mix-blend-mode: luminosity;
+  transform: translate3d(0, 0, 0);
+  overflow: hidden;
+  user-select: none;
+}
