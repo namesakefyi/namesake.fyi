@@ -28,10 +28,7 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
             rel="noopener noreferrer"
             aria-label={`Visit ${partner.name}`}
           >
-            <SanityImage
-              asset={partner.logo.asset}
-              alt={partner.name}
-            />
+            <SanityImage asset={partner.logo.asset} alt={partner.name} />
           </a>
         </li>
       ))
@@ -39,7 +36,7 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
   </ul>
 </div>
 
-<style>
+<style lang="scss">
   .partners {
     display: flex;
     align-items: center;
@@ -85,7 +82,8 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
         border-radius: 5px;
       }
 
-      picture, img {
+      picture,
+      img {
         display: block;
         width: 200px;
 

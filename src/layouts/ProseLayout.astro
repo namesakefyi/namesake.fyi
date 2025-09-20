@@ -114,7 +114,7 @@ const dateObj = typeof date === "string" ? new Date(date) : date;
   }
 </script>
 
-<style is:global>
+<style lang="scss" is:global>
   .article-grid {
     display: grid;
     grid-auto-rows: minmax(min-content, max-content);
@@ -220,7 +220,7 @@ const dateObj = typeof date === "string" ? new Date(date) : date;
       filter: grayscale(100%);
       opacity: 1;
       mix-blend-mode: luminosity;
-      transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0); // Safari bugfix
       border-radius: var(--radius-2xs);
     }
 

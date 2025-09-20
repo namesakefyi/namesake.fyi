@@ -76,7 +76,7 @@ if (!page) return Astro.redirect("/404");
   }
 </script>
 
-<style>
+<style lang="scss">
   .home {
     display: flex;
     flex-direction: column;
@@ -145,7 +145,7 @@ if (!page) return Astro.redirect("/404");
     animation: slideInUp 0.6s ease-out 0.6s both;
     text-wrap: pretty;
 
-    p + p {
+    :global(p) + :global(p) {
       margin-top: var(--space-l);
     }
 

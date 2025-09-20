@@ -50,7 +50,7 @@ const { title, date, description, annotation = "circle" } = Astro.props;
   }
 </script>
 
-<style>
+<style lang="scss">
   .page-head {
     padding-block-end: var(--space-2xl);
 
@@ -63,7 +63,7 @@ const { title, date, description, annotation = "circle" } = Astro.props;
     h1 {
       display: inline;
       text-wrap: balance;
-      margin-inline-start: -0.06em;
+      margin-inline-start: -0.06em; // Visual alignment
       hyphens: auto;
 
       @media (width < 700px) {

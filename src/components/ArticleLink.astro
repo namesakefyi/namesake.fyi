@@ -32,11 +32,7 @@ const dateObj = typeof date === "string" ? new Date(date) : date;
   <h2 class="title">
     <a href={url} class="title-text">{title}</a>
   </h2>
-  {
-    authors && (
-      <strong class="authors">By {authors.join(", ")}</strong>
-    )
-  }
+  {authors && <strong class="authors">By {authors.join(", ")}</strong>}
   {description && <p class="description">{description}</p>}
   {
     image && (
@@ -47,7 +43,7 @@ const dateObj = typeof date === "string" ? new Date(date) : date;
   }
 </article>
 
-<style>
+<style lang="scss">
   .article {
     display: flex;
     align-items: flex-start;
@@ -91,7 +87,7 @@ const dateObj = typeof date === "string" ? new Date(date) : date;
     margin-block-end: var(--space-s);
     filter: grayscale(100%);
     mix-blend-mode: luminosity;
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); // Safari bugfix
 
     img {
       border-radius: 3px;
