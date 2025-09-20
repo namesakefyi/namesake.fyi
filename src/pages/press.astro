@@ -1,11 +1,23 @@
 ---
-import { getCollection } from "astro:content";
+import type { SanityDocument } from "@sanity/client";
 import ArticleLink from "~/components/ArticleLink.astro";
 import PageHeader from "~/components/PageHeader.astro";
 import BaseLayout from "~/layouts/BaseLayout.astro";
+import { loadQuery } from "~/sanity/lib/loadQuery";
 
-const pressArticles = await getCollection("press");
-pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const { params } = Astro.props;
+
+const { data: pressArticles } = await loadQuery<SanityDocument[]>({
+  query: `*[_type == "press"]{
+    _id,
+    title,
+    outlet,
+    url,
+    date,
+    image
+  } | order(date desc)`,
+  params,
+});
 ---
 
 <BaseLayout
@@ -16,21 +28,24 @@ pressArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
   <PageHeader title="Press" />
   <div class="articles">
     {
-      pressArticles.map(({ data }) => (
-        <ArticleLink
-          title={data.title}
-          date={data.date}
-          url={data.url}
-          subhead={data.outlet}
-          image={data.image}
-          imageAlt={data.imageAlt}
-        />
-      ))
+      pressArticles.length ? (
+        pressArticles.map((article) => (
+          <ArticleLink
+            title={article.title}
+            date={article.date}
+            url={article.url}
+            subhead={article.outlet}
+            image={article.image}
+          />
+        ))
+      ) : (
+        <p>No press articles found.</p>
+      )
     }
   </div>
 </BaseLayout>
 
-<style lang="scss">
+<style>
   .articles {
     padding-bottom: var(--space-3xl);
     columns: 2;

@@ -1,0 +1,14 @@
+---
+import { PortableText as PortableTextInternal } from "astro-portabletext";
+import PortableTextImage from "./PortableTextImage.astro";
+import YouTube from "./YouTube.astro";
+
+const components = {
+  type: {
+    youtube: YouTube,
+    image: PortableTextImage,
+  },
+};
+---
+
+<PortableTextInternal value={Astro.props.value} components={components} />

@@ -1,56 +1,53 @@
 ---
-import { Image } from "astro:assets";
-import { getEntries, type ReferenceDataEntry } from "astro:content";
+import type { SanityAssetDocument } from "@sanity/client";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import SanityImage from "./SanityImage.astro";
 
 dayjs.extend(utc);
 
 interface Props {
   title: string;
-  date: Date;
+  date: string | Date;
   url: string;
   subhead?: string;
-  authors?: ReferenceDataEntry<"authors", string>[];
+  authors?: string[];
   description?: string;
-  image?: ImageMetadata;
-  imageAlt?: string;
+  image?: {
+    asset: SanityAssetDocument;
+    alt?: string;
+  };
 }
 
-const { title, date, url, subhead, authors, description, image, imageAlt } =
-  Astro.props;
+const { title, date, url, subhead, authors, description, image } = Astro.props;
 
-const authorsNames = authors
-  ? await getEntries(authors).then((authors) =>
-      authors.map((author) => author.data.name),
-    )
-  : undefined;
+const dateObj = typeof date === "string" ? new Date(date) : date;
 ---
 
 <article class="article">
-  <time class="date" datetime={date.toISOString()}>
-    {dayjs.utc(date).format("MMMM DD, YYYY")}
+  <time class="date" datetime={dateObj.toISOString()}>
+    {dayjs.utc(dateObj).format("MMMM DD, YYYY")}
   </time>
   {subhead && <strong class="subhead">{subhead}</strong>}
   <h2 class="title">
     <a href={url} class="title-text">{title}</a>
   </h2>
   {
-    authorsNames && (
-      <strong class="authors">By {authorsNames.join(", ")}</strong>
+    authors && (
+      <strong class="authors">By {authors.join(", ")}</strong>
     )
   }
   {description && <p class="description">{description}</p>}
   {
-    image && imageAlt && (
+    image && (
       <a class="image" href={url} tabindex="-1">
-        <Image src={image} alt={imageAlt} />
+        <SanityImage asset={image.asset} alt={image.alt} />
       </a>
     )
   }
 </article>
 
-<style lang="scss">
+<style>
   .article {
     display: flex;
     align-items: flex-start;
@@ -94,7 +91,7 @@ const authorsNames = authors
     margin-block-end: var(--space-s);
     filter: grayscale(100%);
     mix-blend-mode: luminosity;
-    transform: translate3d(0, 0, 0); // Safari bugfix
+    transform: translate3d(0, 0, 0);
 
     img {
       border-radius: 3px;
