@@ -1,4 +1,8 @@
-// Given text (a heading or title), generate a slug
+/**
+ * Given text (a heading or title), generate a slug
+ * @example
+ * generateSlug("What we've accomplished so far") // "what-weve-accomplished-so-far"
+ */
 export function generateSlug(text: string): string {
   return text
     .toLowerCase()

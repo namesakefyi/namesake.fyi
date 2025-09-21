@@ -3,7 +3,9 @@ import type { Block } from "astro-portabletext/types";
 import { generateSlug } from "./generateSlug";
 import { getChildrenText } from "./getChildrenText";
 
-// Function to extract headings from Sanity content
+/**
+ * Extract headings from Sanity content
+ */
 export function extractHeadings(content: Block[]): MarkdownHeading[] {
   if (!content) return [];
 
