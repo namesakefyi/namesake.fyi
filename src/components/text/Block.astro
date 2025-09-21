@@ -16,7 +16,7 @@ const { getDefaultComponent } = usePortableText(node);
 const isHeading = node.style && /^h[1-6]$/.test(node.style);
 
 const level = isHeading
-  ? (Number.parseInt(node.style.charAt(1), 10) as 1 | 2 | 3 | 4)
+  ? (Number.parseInt(node.style.charAt(1), 10) as 1 | 2 | 3 | 4 | 5 | 6)
   : 1;
 
 const slug = generateSlug(getChildrenText(node));

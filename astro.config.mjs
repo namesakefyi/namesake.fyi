@@ -11,7 +11,6 @@ import postcssClamp from "postcss-clamp";
 import postcssMediaMinMax from "postcss-media-minmax";
 import postcssUtopia from "postcss-utopia";
 
-// https://astro.build/config
 export default defineConfig({
   output: "static",
   adapter: cloudflare({

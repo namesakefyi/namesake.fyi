@@ -46,11 +46,14 @@ const { data: posts } = await loadQuery<SanityDocument[]>({
   </div>
 </BaseLayout>
 
-<style>
+<style lang="scss">
   .posts {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3xl);
     padding-bottom: var(--space-3xl);
+    columns: 2;
+    column-gap: var(--space-3xl);
+
+    @media (width < 800px) {
+      columns: 1;
+    }
   }
 </style>

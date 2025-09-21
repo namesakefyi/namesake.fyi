@@ -1,6 +1,6 @@
 ---
 interface Props {
-  level: 1 | 2 | 3 | 4;
+  level: 1 | 2 | 3 | 4 | 5 | 6;
   slug: string;
 }
 
@@ -32,6 +32,7 @@ const HeadingTag = `h${level}` as keyof HTMLElementTagNameMap;
     text-align: center;
     border-radius: 4rem;
     width: 1em;
+    line-height: 0.98; // Fix vertical shift on hover / weight change
     text-decoration: none;
     opacity: 0;
     transition: opacity 0.2s ease;
