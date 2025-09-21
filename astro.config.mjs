@@ -25,7 +25,7 @@ export default defineConfig({
       projectId: "k4p1j15y",
       dataset: "production",
       useCdn: false, // Disabled for static builds
-      studioBasePath: "/admin",
+      studioBasePath: "/studio",
       apiVersion: "2025-09-19",
     }),
     react(),

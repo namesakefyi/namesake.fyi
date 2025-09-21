@@ -6,7 +6,7 @@ import {
   partnerType,
   postType,
   pressType,
-} from "~/sanity/schema";
+} from "./src/sanity/schema";
 
 export default defineConfig({
   name: "namesake",

@@ -1,0 +1,8 @@
+---
+import type { TextNodeProps } from "astro-portabletext/types";
+import { smartquotes } from "~/helpers/helpers";
+
+export type Props = TextNodeProps;
+---
+
+{smartquotes(Astro.props.node.text)}

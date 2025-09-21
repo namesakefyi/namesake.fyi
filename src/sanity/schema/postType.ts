@@ -1,11 +1,16 @@
-import { RiArticleLine } from "@remixicon/react";
+import { DocumentTextIcon } from "@sanity/icons";
 import { defineArrayMember, defineType } from "sanity";
+import { annotationOptions, richTextBlock } from "./richText";
+import { blockquoteBlock } from "./richText/blockquote";
+import { breakBlock } from "./richText/break";
+import { imageBlock } from "./richText/image";
+import { youtubeBlock } from "./richText/youtube";
 
 export const postType = defineType({
   name: "post",
   title: "Post",
   type: "document",
-  icon: RiArticleLine,
+  icon: DocumentTextIcon,
   fields: [
     {
       name: "title",
@@ -42,15 +47,7 @@ export const postType = defineType({
       type: "string",
       description: "Rough annotation type for highlighting the title",
       options: {
-        list: [
-          { title: "Highlight", value: "highlight" },
-          { title: "Underline", value: "underline" },
-          { title: "Strike-through", value: "strike-through" },
-          { title: "Bracket", value: "bracket" },
-          { title: "Circle", value: "circle" },
-          { title: "Box", value: "box" },
-          { title: "Crossed-off", value: "crossed-off" },
-        ],
+        list: annotationOptions,
       },
     },
     {
@@ -84,49 +81,11 @@ export const postType = defineType({
       title: "Content",
       type: "array",
       of: [
-        defineArrayMember({
-          type: "block",
-          styles: [
-            { title: "Normal", value: "normal" },
-            { title: "H1", value: "h1" },
-            { title: "H2", value: "h2" },
-            { title: "H3", value: "h3" },
-            { title: "H4", value: "h4" },
-            { title: "Quote", value: "blockquote" },
-          ],
-          lists: [
-            { title: "Bullet", value: "bullet" },
-            { title: "Numbered", value: "number" },
-          ],
-          marks: {
-            decorators: [{ title: "Bold", value: "strong" }],
-            annotations: [
-              {
-                name: "link",
-                type: "object",
-                title: "Link",
-                fields: [
-                  {
-                    name: "href",
-                    type: "url",
-                    title: "URL",
-                  },
-                ],
-              },
-            ],
-          },
-        }),
-        defineArrayMember({
-          type: "image",
-          options: { hotspot: true },
-          fields: [
-            {
-              name: "alt",
-              type: "string",
-              title: "Alt Text",
-            },
-          ],
-        }),
+        defineArrayMember(richTextBlock),
+        defineArrayMember(blockquoteBlock),
+        defineArrayMember(breakBlock),
+        defineArrayMember(imageBlock),
+        defineArrayMember(youtubeBlock),
       ],
     },
   ],

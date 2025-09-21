@@ -1,0 +1,10 @@
+---
+import { PortableText as PortableTextInternal } from "astro-portabletext";
+
+const { content, cite } = Astro.props.node;
+---
+
+<blockquote>
+  <PortableTextInternal value={content} />
+  {cite && <cite>{cite}</cite>}
+</blockquote>

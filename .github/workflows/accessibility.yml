@@ -1,7 +1,7 @@
 name: Accessibility
 on:
   push:
-    branches: main
+    branches: [main]
     paths:
       [
         "src/**/*.ts",
@@ -11,7 +11,7 @@ on:
         "package.json",
       ]
   pull_request:
-    branches: main
+    branches: [main]
     paths:
       [
         "src/**/*.ts",

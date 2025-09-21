@@ -1,7 +1,7 @@
 ---
 import type { SanityDocument } from "@sanity/client";
-import PortableText from "~/components/PortableText.astro";
 import SanityImage from "~/components/SanityImage.astro";
+import PortableText from "~/components/text/PortableText.astro";
 import ProseLayout from "~/layouts/ProseLayout.astro";
 import { loadQuery } from "~/sanity/lib/loadQuery";
 
@@ -30,7 +30,21 @@ const { data: post } = await loadQuery<SanityDocument>({
     description,
     image,
     annotation,
-    content,
+    content[]{
+      ...,
+      markDefs[]{
+        ...,
+        _type == "internalLink" => {
+          ...,
+          "reference": reference->{
+            _id,
+            _type,
+            "slug": slug.current,
+            title
+          }
+        }
+      }
+    },
     "authors": authors[]->{
       _id,
       name,
@@ -76,7 +90,7 @@ const { data: post } = await loadQuery<SanityDocument>({
       </div>
     )
   }
-  <PortableText portableText={post.content} />
+  <PortableText value={post.content} />
   {
     post.authors && post.authors.length > 0 && (
       <div class="bios" slot="after-content">

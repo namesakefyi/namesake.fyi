@@ -1,11 +1,14 @@
-import { RiFileTextLine } from "@remixicon/react";
-import { defineField, defineType } from "sanity";
+import { DocumentTextIcon } from "@sanity/icons";
+import { defineArrayMember, defineField, defineType } from "sanity";
+import { annotationOptions, colorOptions, richTextBlock } from "./richText";
+import { imageBlock } from "./richText/image";
+import { youtubeBlock } from "./richText/youtube";
 
 export const pageType = defineType({
   name: "page",
   title: "Page",
   type: "document",
-  icon: RiFileTextLine,
+  icon: DocumentTextIcon,
   fields: [
     defineField({
       name: "title",
@@ -38,48 +41,9 @@ export const pageType = defineType({
       type: "array",
       description: "The main content of the page.",
       of: [
-        {
-          type: "block",
-          styles: [
-            { title: "Normal", value: "normal" },
-            { title: "H1", value: "h1" },
-            { title: "H2", value: "h2" },
-            { title: "H3", value: "h3" },
-            { title: "H4", value: "h4" },
-          ],
-          lists: [
-            { title: "Bullet", value: "bullet" },
-            { title: "Number", value: "number" },
-          ],
-          marks: {
-            decorators: [{ title: "Bold", value: "strong" }],
-            annotations: [
-              {
-                title: "URL",
-                name: "link",
-                type: "object",
-                fields: [
-                  {
-                    title: "URL",
-                    name: "href",
-                    type: "url",
-                  },
-                ],
-              },
-            ],
-          },
-        },
-        {
-          type: "image",
-          options: { hotspot: true },
-          fields: [
-            {
-              name: "alt",
-              type: "string",
-              title: "Alt text",
-            },
-          ],
-        },
+        defineArrayMember(richTextBlock),
+        defineArrayMember(imageBlock),
+        defineArrayMember(youtubeBlock),
       ],
     }),
     defineField({
@@ -105,15 +69,7 @@ export const pageType = defineType({
       type: "string",
       description: "The type of visual annotation to apply to the page title.",
       options: {
-        list: [
-          { title: "Highlight", value: "highlight" },
-          { title: "Circle", value: "circle" },
-          { title: "Box", value: "box" },
-          { title: "Underline", value: "underline" },
-          { title: "Strike-through", value: "strikethrough" },
-          { title: "Crossed-off", value: "crossed-off" },
-          { title: "Bracket", value: "bracket" },
-        ],
+        list: annotationOptions,
       },
     }),
     defineField({
@@ -122,14 +78,7 @@ export const pageType = defineType({
       type: "string",
       description: "The color for this page.",
       options: {
-        list: [
-          { title: "Purple", value: "purple" },
-          { title: "Blue", value: "blue" },
-          { title: "Green", value: "green" },
-          { title: "Yellow", value: "yellow" },
-          { title: "Pink", value: "pink" },
-          { title: "Brown", value: "brown" },
-        ],
+        list: colorOptions,
       },
     }),
   ],
