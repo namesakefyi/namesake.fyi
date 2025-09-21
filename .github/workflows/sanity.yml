@@ -22,10 +22,10 @@ jobs:
         with:
           version: 8
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js v22
         uses: actions/setup-node@v5
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '22.x'
           cache: "pnpm"
 
       - name: Install dependencies
