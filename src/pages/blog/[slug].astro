@@ -3,6 +3,7 @@ import type { SanityDocument } from "@sanity/client";
 import SanityImage from "~/components/SanityImage.astro";
 import PortableText from "~/components/text/PortableText.astro";
 import ProseLayout from "~/layouts/ProseLayout.astro";
+import { extractHeadings } from "~/sanity/lib/extractHeadings";
 import { loadQuery } from "~/sanity/lib/loadQuery";
 
 export async function getStaticPaths() {
@@ -42,6 +43,8 @@ const { data: post } = await loadQuery<SanityDocument>({
   }`,
   params,
 });
+
+const headings = extractHeadings(post.content);
 ---
 
 <ProseLayout
@@ -53,6 +56,7 @@ const { data: post } = await loadQuery<SanityDocument>({
   author={post.authors?.map((author: any) => author.name).join(", ")}
   color="blue"
   annotation={post.annotation ?? "highlight"}
+  headings={headings}
 >
   {
     post.authors && post.authors.length > 0 && (

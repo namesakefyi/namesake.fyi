@@ -2,6 +2,7 @@
 import type { SanityDocument } from "@sanity/client";
 import PortableText from "~/components/text/PortableText.astro";
 import ProseLayout from "~/layouts/ProseLayout.astro";
+import { extractHeadings } from "~/sanity/lib/extractHeadings";
 import { loadQuery } from "~/sanity/lib/loadQuery";
 
 export async function getStaticPaths() {
@@ -41,6 +42,8 @@ const { data: page } = await loadQuery<SanityDocument>({
 });
 
 if (!page) return Astro.redirect("/404");
+
+const headings = extractHeadings(page.content);
 ---
 
 <ProseLayout
@@ -50,6 +53,7 @@ if (!page) return Astro.redirect("/404");
   ogAlt={page.ogImage?.alt}
   annotation={page.annotation}
   color={page.color}
+  headings={headings}
 >
   <PortableText value={page.content} />
 </ProseLayout>

@@ -1,12 +1,13 @@
 ---
 import { usePortableText } from "astro-portabletext";
 import type { Block, BlockProps } from "astro-portabletext/types";
+import { generateSlug } from "~/sanity/lib/generateSlug";
+import { getChildrenText } from "~/sanity/lib/getChildrenText";
 import Heading from "./Heading.astro";
 
 export type Props = BlockProps;
 
 const props = Astro.props;
-
 const { node } = props;
 
 // biome-ignore lint/correctness/useHookAtTopLevel: Biome is wrong
@@ -17,20 +18,6 @@ const isHeading = node.style && /^h[1-6]$/.test(node.style);
 const level = isHeading
   ? (Number.parseInt(node.style.charAt(1), 10) as 1 | 2 | 3 | 4)
   : 1;
-
-const getChildrenText = (node: Block) =>
-  node.children
-    .map((node) => (typeof node === "string" ? node : node.text || ""))
-    .join("");
-
-function generateSlug(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, "") // Remove special characters
-    .replace(/\s+/g, "-") // Replace spaces with hyphens
-    .replace(/-+/g, "-") // Replace multiple hyphens with single
-    .trim();
-}
 
 const slug = generateSlug(getChildrenText(node));
 
