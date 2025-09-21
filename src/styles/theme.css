@@ -32,6 +32,10 @@
   --radius-m: var(--space-m);
   --radius-l: var(--space-l);
 
+  /* Font weights */
+  --weight-normal: 400;
+  --weight-bold: 700;
+
   /* Colors */
   --bg: #CDA5EF;
   --text: #111111;
@@ -52,7 +56,7 @@
 }
 
 [data-color="yellow"] {
-  --bg: #ECDD85; 
+  --bg: #ECDD85;
 }
 
 [data-color="green"] {

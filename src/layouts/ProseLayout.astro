@@ -11,7 +11,7 @@ import BaseLayout from "./BaseLayout.astro";
 
 interface Props {
   title: string;
-  date?: Date | string;
+  date?: string; // ISO 8601 date string from Sanity
   description?: string;
   author?: string;
   ogImage?: SanityAssetDocument;
@@ -35,9 +35,6 @@ const {
 
 // Convert Sanity asset to URL for BaseLayout
 const ogImageUrl = ogImage ? urlForImage(ogImage).url() : undefined;
-
-// Convert date to Date object if it's a string
-const dateObj = typeof date === "string" ? new Date(date) : date;
 ---
 
 <BaseLayout
@@ -55,7 +52,7 @@ const dateObj = typeof date === "string" ? new Date(date) : date;
   >
     <PageHeader
       title={title}
-      date={dateObj || undefined}
+      date={date}
       description={description && smartquotes(description)}
       annotation={annotation}
     />
@@ -236,7 +233,7 @@ const dateObj = typeof date === "string" ? new Date(date) : date;
     }
 
     blockquote cite {
-      font-weight: 600;
+      font-weight: var(--weight-bold);
       hyphens: none;
     }
 

@@ -8,7 +8,7 @@ dayjs.extend(utc);
 
 interface Props {
   title: string;
-  date: string | Date;
+  date: string;
   url: string;
   subhead?: string;
   authors?: string[];
@@ -21,7 +21,7 @@ interface Props {
 
 const { title, date, url, subhead, authors, description, image } = Astro.props;
 
-const dateObj = typeof date === "string" ? new Date(date) : date;
+const dateObj = new Date(date);
 ---
 
 <article class="article">
@@ -58,7 +58,7 @@ const dateObj = typeof date === "string" ? new Date(date) : date;
 
   .title {
     font-size: var(--step-3);
-    font-weight: 600;
+    font-weight: var(--weight-bold);
     max-width: 36ch;
     text-wrap: balance;
     hyphens: auto;
