@@ -35,5 +35,3 @@ jobs:
         run: pnpm sanity deploy
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
-
-
