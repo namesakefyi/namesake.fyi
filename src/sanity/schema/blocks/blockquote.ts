@@ -1,7 +1,7 @@
 import { BlockquoteIcon } from "@sanity/icons";
 import { defineArrayMember, type ObjectDefinition } from "sanity";
-import { externalLink } from "./externalLink";
-import { internalLink } from "./internalLink";
+import { externalLink } from "../annotations/externalLink";
+import { internalLink } from "../annotations/internalLink";
 
 export const blockquoteBlock: ObjectDefinition = {
   type: "object",

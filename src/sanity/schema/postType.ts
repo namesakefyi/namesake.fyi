@@ -1,10 +1,13 @@
 import { DocumentTextIcon } from "@sanity/icons";
 import { defineArrayMember, defineType } from "sanity";
-import { annotationOptions, richTextBlock } from "./richText";
-import { blockquoteBlock } from "./richText/blockquote";
-import { breakBlock } from "./richText/break";
-import { imageBlock } from "./richText/image";
-import { youtubeBlock } from "./richText/youtube";
+import {
+  annotationOptions,
+  blockquoteBlock,
+  breakBlock,
+  imageBlock,
+  richTextBlock,
+  youtubeBlock,
+} from "./blocks";
 
 export const postType = defineType({
   name: "post",

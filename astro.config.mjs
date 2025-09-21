@@ -23,7 +23,9 @@ export default defineConfig({
     sanity({
       projectId: "k4p1j15y",
       dataset: "production",
-      useCdn: false, // Disabled for static builds
+      // Disabled CDN static builds to prevent stale content
+      // If we change output to "server" in the future, enable CDN
+      useCdn: false,
       studioBasePath: "/studio",
       apiVersion: "2025-09-19",
     }),

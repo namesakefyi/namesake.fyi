@@ -1,8 +1,12 @@
 import { DocumentTextIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { annotationOptions, colorOptions, richTextBlock } from "./richText";
-import { imageBlock } from "./richText/image";
-import { youtubeBlock } from "./richText/youtube";
+import {
+  annotationOptions,
+  colorOptions,
+  imageBlock,
+  richTextBlock,
+  youtubeBlock,
+} from "./blocks";
 
 export const pageType = defineType({
   name: "page",
