@@ -66,7 +66,7 @@ const headings = extractHeadings(post.content);
             {author.avatar && (
               <SanityImage
                 className="avatar"
-                asset={author.avatar}
+                asset={author.avatar?.asset}
                 alt={`${author.name} photo`}
                 options={{ width: 32, height: 32 }}
               />
@@ -89,7 +89,7 @@ const headings = extractHeadings(post.content);
             <div class="bio-avatar">
               <SanityImage
                 className="avatar"
-                asset={author.avatar.asset}
+                asset={author.avatar?.asset}
                 alt={`${author.name} photo`}
                 options={{ width: 80, height: 80 }}
               />

@@ -7,7 +7,7 @@ export default defineCliConfig({
   },
   studioHost: "namesake",
   server: {
-    hostname: "losthost",
+    hostname: "localhost",
     port: 4321,
   },
 });
