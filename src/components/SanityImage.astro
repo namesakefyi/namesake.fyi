@@ -17,10 +17,19 @@ if (!asset) {
 }
 
 const url = urlForImage(asset).url();
-const webpUrl = urlForImage(asset).format("webp").withOptions(options).url();
+const webpUrl = urlForImage(asset)
+  .format("webp")
+  .withOptions(options)
+  .dpr(2)
+  .url();
 ---
 
 <picture class={className}>
   <source srcset={webpUrl} type="image/webp" />
-  <img src={url} alt={alt || ""} />
+  <img
+    src={url}
+    alt={alt || ""}
+    width={options.width}
+    height={options.height}
+  />
 </picture>

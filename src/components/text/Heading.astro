@@ -1,0 +1,63 @@
+---
+interface Props {
+  level: 1 | 2 | 3 | 4;
+  slug: string;
+}
+
+const { level, slug } = Astro.props;
+
+const HeadingTag = `h${level}` as keyof HTMLElementTagNameMap;
+---
+
+<HeadingTag id={slug} class="heading">
+  <span class="heading-content">
+    <slot />
+  </span>
+  <a href={`#${slug}`} class="heading-anchor" aria-hidden tabindex="-1">#</a>
+</HeadingTag>
+
+<style lang="scss">
+  .heading {
+    position: relative;
+    scroll-margin-top: 2rem;
+  }
+
+  .heading-anchor {
+    position: absolute;
+    left: -1.75rem;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 4rem;
+    width: 1.5rem;
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    font-weight: normal;
+
+    &:hover,
+    &:focus {
+      font-weight: 700;
+      opacity: 1;
+    }
+
+    @media (width <= 1200px) {
+      position: static;
+      display: inline;
+      margin-right: 0.5rem;
+      opacity: 1;
+      width: auto;
+    }
+  }
+
+  .heading:hover .heading-anchor,
+  .heading-anchor:focus {
+    opacity: 1;
+  }
+
+  .heading-content {
+    display: inline;
+  }
+</style>

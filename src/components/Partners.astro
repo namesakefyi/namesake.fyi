@@ -4,13 +4,7 @@ import { loadQuery } from "~/sanity/lib/loadQuery";
 import SanityImage from "./SanityImage.astro";
 
 const { data: partners } = await loadQuery<SanityDocument[]>({
-  query: `*[_type == "partner"]{
-    _id,
-    name,
-    logo,
-    url,
-    height
-  }`,
+  query: `*[_type == "partner"]`,
 });
 
 const shuffledPartners = partners.sort(() => 0.5 - Math.random());
@@ -28,7 +22,11 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
             rel="noopener noreferrer"
             aria-label={`Visit ${partner.name}`}
           >
-            <SanityImage asset={partner.logo.asset} alt={partner.name} />
+            <SanityImage
+              asset={partner.logo.asset}
+              alt={partner.name}
+              options={{ width: 200 }}
+            />
           </a>
         </li>
       ))
