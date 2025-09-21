@@ -1,7 +1,7 @@
 import { PlayIcon } from "@sanity/icons";
 import type { ObjectDefinition, Rule } from "sanity";
-import { YouTubePreview } from "~/sanity/components/YouTubePreview";
 import { YouTubeInput } from "../../components/YouTubeInput";
+import { YouTubePreview } from "../../components/YouTubePreview";
 
 export const youtubeBlock: ObjectDefinition = {
   type: "object",
