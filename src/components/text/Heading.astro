@@ -10,55 +10,22 @@ const HeadingTag = `h${level}` as keyof HTMLElementTagNameMap;
 ---
 
 <HeadingTag id={slug} class="heading">
-  <span class="heading-content">
-    <slot />
-  </span>
-  <a href={`#${slug}`} class="heading-anchor" aria-hidden tabindex="-1">#</a>
+  <a href={`#${slug}`}><slot /></a>
 </HeadingTag>
 
 <style lang="scss">
   .heading {
     position: relative;
     scroll-margin-top: 2rem;
-  }
 
-  .heading-anchor {
-    position: absolute;
-    left: -1em;
-    top: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    border-radius: 4rem;
-    width: 1em;
-    line-height: 0.98; // Fix vertical shift on hover / weight change
-    text-decoration: none;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    font-weight: normal;
-
-    &:hover,
-    &:focus {
-      font-weight: var(--weight-bold);
-      opacity: 1;
-    }
-
-    @media (width <= 1200px) {
-      position: static;
+    > a {
       display: inline;
-      margin-right: 0.5rem;
-      opacity: 1;
-      width: auto;
+      text-decoration: none;
+      color: inherit;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
-  }
-
-  .heading:hover .heading-anchor,
-  .heading-anchor:focus {
-    opacity: 1;
-  }
-
-  .heading-content {
-    display: inline;
   }
 </style>
