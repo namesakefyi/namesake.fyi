@@ -44,6 +44,8 @@ const { data: post } = await loadQuery<SanityDocument>({
   params,
 });
 
+if (!post) return Astro.redirect("/404");
+
 const headings = extractHeadings(post.content);
 ---
 
