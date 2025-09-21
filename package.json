@@ -60,6 +60,7 @@
     "@biomejs/biome": "^2.2.4",
     "@csstools/postcss-logical-viewport-units": "^3.0.3",
     "@playwright/test": "^1.55.0",
+    "@sanity/cli": "^4.9.0",
     "@types/node": "^24.4.0",
     "autoprefixer": "^10.4.21",
     "cssnano": "^7.1.1",
