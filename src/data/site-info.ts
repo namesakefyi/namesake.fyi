@@ -30,6 +30,10 @@ export type SiteInfo = {
   fullName: string;
   title: string;
   description: string;
+  fiscalSponsor: {
+    name: string;
+    url: string;
+  };
   image: {
     src: string;
     alt: string;
@@ -49,6 +53,10 @@ const siteInfo: SiteInfo = {
   title: "Your name is yours to change",
   description:
     "Streamlining the legal name and gender marker change process in the US.",
+  fiscalSponsor: {
+    name: "Superbloom Design",
+    url: "https://superbloom.design/",
+  },
   urls: {
     app: "https://app.namesake.fyi",
     chat: "/chat",
