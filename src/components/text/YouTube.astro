@@ -1,0 +1,7 @@
+---
+import { YouTube as YouTubeEmbed } from "astro-embed";
+
+const { url } = Astro.props.node;
+---
+
+<YouTubeEmbed id={url} />

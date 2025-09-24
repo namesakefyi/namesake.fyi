@@ -1,0 +1,35 @@
+---
+import type { SanityAssetDocument } from "@sanity/client";
+import type { ImageUrlBuilderOptionsWithAliases } from "@sanity/image-url/lib/types/types";
+import { urlForImage } from "~/sanity/lib/urlForImage";
+
+interface Props {
+  asset: SanityAssetDocument;
+  alt?: string;
+  className?: string;
+  options?: Partial<ImageUrlBuilderOptionsWithAliases>;
+}
+
+const { asset, alt, className, options = {} } = Astro.props;
+
+if (!asset) {
+  throw new Error("SanityImage: No asset provided");
+}
+
+const url = urlForImage(asset).url();
+const webpUrl = urlForImage(asset)
+  .format("webp")
+  .withOptions(options)
+  .dpr(2)
+  .url();
+---
+
+<picture class={className}>
+  <source srcset={webpUrl} type="image/webp" />
+  <img
+    src={url}
+    alt={alt || ""}
+    width={options.width}
+    height={options.height}
+  />
+</picture>

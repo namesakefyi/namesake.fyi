@@ -1,0 +1,36 @@
+---
+export interface Props {
+  children: string;
+  value: {
+    reference: {
+      _type: string;
+      slug: string;
+      title: string;
+    };
+  };
+}
+
+const { children, value } = Astro.props;
+const { reference } = value;
+
+// Determine the correct URL and title
+let href = "#";
+let title = "";
+
+if (!reference) {
+  // Handle broken links gracefully
+  href = "#";
+  title = "Broken link";
+} else {
+  // Determine the correct URL based on the document type
+  if (reference._type === "post") {
+    href = `/blog/${reference.slug}`;
+  } else if (reference._type === "page") {
+    href = `/${reference.slug}`;
+  }
+
+  title = reference.title || "";
+}
+---
+
+<a href={href} title={title}>{children}</a>

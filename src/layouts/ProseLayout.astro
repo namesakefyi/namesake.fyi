@@ -1,18 +1,20 @@
 ---
+import type { SanityAssetDocument } from "@sanity/client";
 import type { MarkdownHeading } from "astro";
 import type { RoughAnnotationType } from "rough-notation/lib/model";
 import PageHeader from "~/components/PageHeader.astro";
 import TableOfContents from "~/components/TableOfContents.astro";
 import type { NamesakeColor } from "~/data/colors";
+import { urlForImage } from "~/sanity/lib/urlForImage";
 import { smartquotes } from "../helpers/helpers";
 import BaseLayout from "./BaseLayout.astro";
 
 interface Props {
   title: string;
-  date?: Date;
+  date?: string;
   description?: string;
   author?: string;
-  ogImage?: string;
+  ogImage?: SanityAssetDocument;
   ogAlt?: string;
   annotation?: RoughAnnotationType;
   color?: NamesakeColor;
@@ -30,13 +32,16 @@ const {
   color,
   headings,
 } = Astro.props;
+
+// Convert Sanity asset to URL for BaseLayout
+const ogImageUrl = ogImage ? urlForImage(ogImage).url() : undefined;
 ---
 
 <BaseLayout
   title={title}
   description={description && smartquotes(description)}
   author={author}
-  ogImage={ogImage}
+  ogImage={ogImageUrl}
   ogAlt={ogAlt}
   color={color}
 >
@@ -130,7 +135,6 @@ const {
         position: sticky;
         top: var(--space-xl);
         right: 0;
-        /* `display: grid` will extend the height of this past it's content, let's stop that */
         max-height: fit-content;
       }
     }
@@ -229,7 +233,7 @@ const {
     }
 
     blockquote cite {
-      font-weight: 600;
+      font-weight: var(--weight-bold);
       hyphens: none;
     }
 
