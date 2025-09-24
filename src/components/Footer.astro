@@ -70,6 +70,9 @@ const linkGroups: LinkGroup[] = [
       }
     </div>
   </div>
+  <div class="logo">
+    <Logo />
+  </div>
   <div class="content end">
     <div class="copyright">
       T4T <RiHeart3Line className="heart" />
@@ -88,9 +91,6 @@ const linkGroups: LinkGroup[] = [
         ))
       }
     </div>
-  </div>
-  <div class="logo">
-    <Logo />
   </div>
 
   <style lang="scss">
@@ -133,6 +133,8 @@ const linkGroups: LinkGroup[] = [
 
       &.end {
         align-items: center;
+        gap: var(--space-l);
+        padding-block-end: var(--space-2xl);
       }
 
       @media (width < 900px) {
@@ -237,7 +239,7 @@ const linkGroups: LinkGroup[] = [
     }
 
     .logo {
-      padding-block-start: var(--space-2xl);
+      padding-block: var(--space-2xl);
       padding-inline: var(--space-l);
       max-width: 1200px;
       margin-inline: auto;
@@ -245,7 +247,6 @@ const linkGroups: LinkGroup[] = [
       :global(svg) {
         width: 100%;
         height: auto;
-        margin-bottom: calc(var(--space-m) * -1);
       }
     }
   </style>
