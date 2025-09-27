@@ -8,7 +8,7 @@ import { loadQuery } from "~/sanity/lib/loadQuery";
 const { params } = Astro.props;
 
 const { data: posts } = await loadQuery<SanityDocument[]>({
-  query: `*[_type == "post" && defined(slug)]{
+  query: `*[_type == "post" && defined(slug) && publishDate <= now()]{
     title,
     slug,
     publishDate,
