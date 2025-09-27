@@ -2,9 +2,9 @@
 import { RiHeart3Line } from "@remixicon/react";
 import siteInfo from "~/data/site-info";
 import Subscribe from "./Subscribe.astro";
+import Logo from "./Logo.astro";
 
 const { socialLinks } = siteInfo;
-const year = new Date().getFullYear();
 
 type Link = {
   href: string;
@@ -70,10 +70,17 @@ const linkGroups: LinkGroup[] = [
       }
     </div>
   </div>
+  <div class="logo">
+    <Logo />
+  </div>
   <div class="content end">
     <div class="copyright">
-      {siteInfo.fullName} &copy; {year}
-      <RiHeart3Line /> T4T
+      T4T <RiHeart3Line className="heart" />
+      <span
+        >A project of <a href={siteInfo.fiscalSponsor.url}
+          >{siteInfo.fiscalSponsor.name}</a
+        ></span
+      >
     </div>
     <div class="social">
       {
@@ -95,7 +102,7 @@ const linkGroups: LinkGroup[] = [
       color: var(--footerText);
       line-height: 1.5;
       width: 100%;
-      padding-block: var(--space-xl) var(--space-l);
+      padding-block-start: var(--space-xl);
       margin-block-start: var(--space-2xl);
       position: relative;
 
@@ -126,6 +133,8 @@ const linkGroups: LinkGroup[] = [
 
       &.end {
         align-items: center;
+        gap: var(--space-l);
+        padding-block-end: var(--space-2xl);
       }
 
       @media (width < 900px) {
@@ -212,6 +221,11 @@ const linkGroups: LinkGroup[] = [
       align-items: center;
       gap: var(--space-xs);
       flex-wrap: wrap;
+
+      .heart {
+        width: 1em;
+        height: 1em;
+      }
     }
 
     .social {
@@ -221,6 +235,18 @@ const linkGroups: LinkGroup[] = [
 
       a {
         border-radius: 5px;
+      }
+    }
+
+    .logo {
+      padding-block: var(--space-2xl);
+      padding-inline: var(--space-l);
+      max-width: 1200px;
+      margin-inline: auto;
+
+      :global(svg) {
+        width: 100%;
+        height: auto;
       }
     }
   </style>
