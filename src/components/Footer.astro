@@ -1,8 +1,8 @@
 ---
 import { RiHeart3Line } from "@remixicon/react";
 import siteInfo from "~/data/site-info";
-import Subscribe from "./Subscribe.astro";
 import Logo from "./Logo.astro";
+import Subscribe from "./Subscribe.astro";
 
 const { socialLinks } = siteInfo;
 
@@ -240,6 +240,11 @@ const linkGroups: LinkGroup[] = [
 
     .logo {
       padding-block: var(--space-2xl);
+
+      @media (width >= 900px) {
+        padding-block-end: var(--space-l);
+      }
+
       padding-inline: var(--space-l);
       max-width: 1200px;
       margin-inline: auto;
