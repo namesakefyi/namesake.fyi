@@ -29,6 +29,7 @@ const { data: post } = await loadQuery<SanityDocument>({
     slug,
     publishDate,
     description,
+    showDescription,
     image,
     annotation,
     content,
@@ -53,6 +54,7 @@ const headings = extractHeadings(post.content);
   title={post.title}
   date={post.publishDate}
   description={post.description}
+  showDescription={post.showDescription}
   ogImage={post.image?.asset}
   ogAlt={post.image?.alt}
   author={post.authors?.map((author: any) => author.name).join(", ")}

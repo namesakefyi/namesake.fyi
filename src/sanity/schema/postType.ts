@@ -39,6 +39,12 @@ export const postType = defineType({
       validation: (Rule) => Rule.required().min(70).max(160),
     },
     {
+      name: "showDescription",
+      title: "Show description in page header",
+      type: "boolean",
+      initialValue: true,
+    },
+    {
       name: "publishDate",
       title: "Publish Date",
       type: "datetime",

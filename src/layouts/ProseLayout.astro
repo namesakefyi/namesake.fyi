@@ -13,6 +13,7 @@ interface Props {
   title: string;
   date?: string;
   description?: string;
+  showDescription?: boolean;
   author?: string;
   ogImage?: SanityAssetDocument;
   ogAlt?: string;
@@ -25,6 +26,7 @@ const {
   title,
   date,
   description,
+  showDescription,
   author,
   ogImage,
   ogAlt,
@@ -35,6 +37,11 @@ const {
 
 // Convert Sanity asset to URL for BaseLayout
 const ogImageUrl = ogImage ? urlForImage(ogImage).url() : undefined;
+
+const headerDescription =
+  showDescription === false
+    ? undefined
+    : description && smartquotes(description);
 ---
 
 <BaseLayout
@@ -53,7 +60,7 @@ const ogImageUrl = ogImage ? urlForImage(ogImage).url() : undefined;
     <PageHeader
       title={title}
       date={date}
-      description={description && smartquotes(description)}
+      description={headerDescription}
       annotation={annotation}
     />
     <slot name="after-header" />
@@ -77,7 +84,7 @@ const ogImageUrl = ogImage ? urlForImage(ogImage).url() : undefined;
         type: "bracket",
         iterations: 2,
         animate: false,
-        brackets: ["left", "right"],
+        brackets: ["left"],
       });
       highlight.show();
     }

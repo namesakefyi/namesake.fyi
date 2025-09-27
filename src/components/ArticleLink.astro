@@ -37,7 +37,11 @@ const dateObj = new Date(date);
   {
     image && (
       <a class="image" href={url} tabindex="-1">
-        <SanityImage asset={image.asset} alt={image.alt} />
+        <SanityImage
+          asset={image.asset}
+          alt={image.alt}
+          options={{ width: 800, height: 450 }}
+        />
       </a>
     )
   }

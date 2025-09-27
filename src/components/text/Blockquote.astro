@@ -1,10 +1,17 @@
 ---
 import { PortableText as PortableTextInternal } from "astro-portabletext";
+import { smartquotes } from "~/helpers/helpers";
 
 const { content, cite } = Astro.props.node;
 ---
 
 <blockquote>
   <PortableTextInternal value={content} />
-  {cite && <cite>{cite}</cite>}
+  {cite && <cite>{smartquotes(cite)}</cite>}
 </blockquote>
+
+<style lang="scss">
+  cite::before {
+    content: "—";
+  }
+</style>
