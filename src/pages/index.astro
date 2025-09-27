@@ -1,18 +1,37 @@
 ---
 import { Image } from "astro:assets";
-import { getEntry, render } from "astro:content";
 import { RiArrowRightLine } from "@remixicon/react";
+import type { SanityDocument } from "@sanity/client";
 import Partners from "~/components/Partners.astro";
-import heroIllustration from "~/content/pages/_images/hero-form.png";
+import PortableText from "~/components/text/PortableText.astro";
+import heroIllustration from "~/pages/home/hero-form.png";
 import siteInfo from "~/data/site-info";
 import BaseLayout from "~/layouts/BaseLayout.astro";
+import { loadQuery } from "~/sanity/lib/loadQuery";
 
-const entry = await getEntry("pages", "index");
-if (!entry) return Astro.redirect("/404");
-const { Content } = await render(entry);
+// Fetch the home page from Sanity (slug: "index" or empty slug for home)
+const { data: page } = await loadQuery<SanityDocument>({
+  query: `*[_type == "page" && (slug.current == "index" || slug.current == "" || !defined(slug))][0]{
+    _id,
+    title,
+    slug,
+    description,
+    content,
+    ogImage,
+    annotation,
+    color
+  }`,
+});
+
+if (!page) return Astro.redirect("/404");
 ---
 
-<BaseLayout title={siteInfo.name} description={siteInfo.description}>
+<BaseLayout
+  title={page.title || siteInfo.name}
+  description={page.description || siteInfo.description}
+  ogImage={page.ogImage?.asset}
+  ogAlt={page.ogImage?.alt}
+>
   <div class="home">
     <h1>
       <span>Your name is</span>
@@ -28,7 +47,7 @@ const { Content } = await render(entry);
       />
     </div>
     <div class="content">
-      <Content />
+      <PortableText value={page.content} />
       <div class="buttons">
         <a href={siteInfo.urls.app} class="button primary"
           >Get started <RiArrowRightLine className="icon" /></a

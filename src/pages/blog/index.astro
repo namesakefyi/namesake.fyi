@@ -1,13 +1,23 @@
 ---
-import { getCollection } from "astro:content";
+import type { SanityDocument } from "@sanity/client";
 import ArticleLink from "~/components/ArticleLink.astro";
 import PageHeader from "~/components/PageHeader.astro";
 import BaseLayout from "~/layouts/BaseLayout.astro";
+import { loadQuery } from "~/sanity/lib/loadQuery";
 
-const posts = await getCollection("posts");
-const sortedPosts = posts.sort(
-  (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime(),
-);
+const { params } = Astro.props;
+
+const { data: posts } = await loadQuery<SanityDocument[]>({
+  query: `*[_type == "post" && defined(slug) && publishDate <= now()]{
+    title,
+    slug,
+    publishDate,
+    description,
+    image,
+    "authors": authors[]->name
+  } | order(publishDate desc)`,
+  params,
+});
 ---
 
 <BaseLayout
@@ -18,16 +28,15 @@ const sortedPosts = posts.sort(
   <PageHeader title="Blog" description="The latest news from Namesake." />
   <div class="posts">
     {
-      sortedPosts.length ? (
-        sortedPosts.map((post) => (
+      posts.length ? (
+        posts.map((post) => (
           <ArticleLink
-            authors={post.data.authors}
-            title={post.data.title}
-            date={post.data.publishDate}
-            url={`/blog/${post.id}`}
-            description={post.data.description}
-            image={post.data.image}
-            imageAlt={post.data.imageAlt}
+            authors={post.authors}
+            title={post.title}
+            date={post.publishDate}
+            url={`/blog/${post.slug.current}`}
+            description={post.description}
+            image={post.image}
           />
         ))
       ) : (
@@ -39,9 +48,12 @@ const sortedPosts = posts.sort(
 
 <style lang="scss">
   .posts {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3xl);
     padding-bottom: var(--space-3xl);
+    columns: 2;
+    column-gap: var(--space-3xl);
+
+    @media (width < 800px) {
+      columns: 1;
+    }
   }
 </style>

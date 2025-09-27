@@ -1,26 +1,36 @@
 import cloudflare from "@astrojs/cloudflare";
-import markdoc from "@astrojs/markdoc";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import postcssLogicalViewportUnits from "@csstools/postcss-logical-viewport-units";
-import keystatic from "@keystatic/astro";
+import sanity from "@sanity/astro";
 import { defineConfig } from "astro/config";
-import embeds from "astro-embed/integration";
 import autoprefixer from "autoprefixer";
 import cssnano from "cssnano";
 import postcssClamp from "postcss-clamp";
 import postcssMediaMinMax from "postcss-media-minmax";
 import postcssUtopia from "postcss-utopia";
 
-// https://astro.build/config
 export default defineConfig({
   output: "static",
   adapter: cloudflare({
     imageService: "compile",
   }),
   site: "https://namesake.fyi",
-  integrations: [sitemap(), embeds(), mdx(), react(), markdoc(), keystatic()],
+  integrations: [
+    sitemap(),
+    mdx(),
+    sanity({
+      projectId: "k4p1j15y",
+      dataset: "production",
+      // Disabled CDN static builds to prevent stale content
+      // If we change output to "server" in the future, enable CDN
+      useCdn: false,
+      studioBasePath: "/studio",
+      apiVersion: "2025-09-19",
+    }),
+    react(),
+  ],
   prefetch: true,
   trailingSlash: "never",
   build: {

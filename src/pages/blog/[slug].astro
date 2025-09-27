@@ -1,0 +1,186 @@
+---
+import type { SanityDocument } from "@sanity/client";
+import SanityImage from "~/components/SanityImage.astro";
+import PortableText from "~/components/text/PortableText.astro";
+import ProseLayout from "~/layouts/ProseLayout.astro";
+import { extractHeadings } from "~/sanity/lib/extractHeadings";
+import { loadQuery } from "~/sanity/lib/loadQuery";
+
+export async function getStaticPaths() {
+  const { data: posts } = await loadQuery<SanityDocument[]>({
+    query: `*[_type == "post"]`,
+  });
+
+  return posts.map(({ slug }) => {
+    return {
+      params: {
+        slug: slug.current,
+      },
+    };
+  });
+}
+
+const { params } = Astro;
+
+const { data: post } = await loadQuery<SanityDocument>({
+  query: `*[_type == "post" && slug.current == $slug][0]{
+    _id,
+    title,
+    slug,
+    publishDate,
+    description,
+    showDescription,
+    image,
+    annotation,
+    content,
+    "authors": authors[]->{
+      _id,
+      name,
+      role,
+      bio,
+      avatar,
+      socialLinks
+    }
+  }`,
+  params,
+});
+
+if (!post) return Astro.redirect("/404");
+
+const headings = extractHeadings(post.content);
+---
+
+<ProseLayout
+  title={post.title}
+  date={post.publishDate}
+  description={post.description}
+  showDescription={post.showDescription}
+  ogImage={post.image?.asset}
+  ogAlt={post.image?.alt}
+  author={post.authors?.map((author: any) => author.name).join(", ")}
+  color="blue"
+  annotation={post.annotation ?? "highlight"}
+  headings={headings}
+>
+  {
+    post.authors && post.authors.length > 0 && (
+      <div class="authors" slot="after-header">
+        {post.authors.map((author: any) => (
+          <span class="author">
+            {author.avatar && (
+              <SanityImage
+                className="avatar"
+                asset={author.avatar?.asset}
+                alt={`${author.name} photo`}
+                options={{ width: 32, height: 32 }}
+              />
+            )}
+            <div class="author-info">
+              <strong>{author.name}</strong>
+              <span class="role">{author.role}</span>
+            </div>
+          </span>
+        ))}
+      </div>
+    )
+  }
+  <PortableText value={post.content} />
+  {
+    post.authors && post.authors.length > 0 && (
+      <div class="bios" slot="after-content">
+        {post.authors.map((author: any) => (
+          <div class="bio">
+            <div class="bio-avatar">
+              <SanityImage
+                className="avatar"
+                asset={author.avatar?.asset}
+                alt={`${author.name} photo`}
+                options={{ width: 80, height: 80 }}
+              />
+            </div>
+            <div class="content">
+              <strong>{author.name}</strong>
+              <p>{author.bio}</p>
+              {author.socialLinks && author.socialLinks.length > 0 && (
+                <ul class="social">
+                  {author.socialLinks.map((socialLink: any) => (
+                    <li>
+                      <a href={socialLink.url} target="_blank">
+                        {socialLink.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    )
+  }
+</ProseLayout>
+
+<style lang="scss">
+  .authors {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    padding-bottom: var(--space-2xl);
+  }
+
+  .author {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-s);
+
+    .author-info {
+      display: inline-flex;
+      align-items: baseline;
+      gap: var(--space-xs);
+
+      @media (width <= 600px) {
+        flex-direction: column;
+        gap: 0;
+      }
+    }
+
+    .role {
+      font-size: var(--step--1);
+    }
+  }
+
+  .bio-avatar {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    border-radius: 100%;
+  }
+
+  .bios {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    margin-block-start: var(--space-3xl);
+  }
+
+  .bio {
+    max-width: 720px;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-m);
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+  }
+
+  .social {
+    list-style-type: none;
+    display: flex;
+    padding: 0;
+    gap: var(--space-s);
+  }
+</style>

@@ -1,0 +1,18 @@
+---
+export interface Props {
+  children: string;
+  value: {
+    href: string;
+    blank?: boolean;
+  };
+}
+
+const { children, value } = Astro.props;
+const { href, blank = true } = value;
+---
+
+<a
+  href={href}
+  target={blank ? "_blank" : undefined}
+  rel={blank ? "noopener noreferrer" : undefined}>{children}</a
+>

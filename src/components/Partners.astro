@@ -1,8 +1,12 @@
 ---
-import { Image } from "astro:assets";
-import { getCollection } from "astro:content";
+import type { SanityDocument } from "@sanity/client";
+import { loadQuery } from "~/sanity/lib/loadQuery";
+import SanityImage from "./SanityImage.astro";
 
-const partners = await getCollection("partners");
+const { data: partners } = await loadQuery<SanityDocument[]>({
+  query: `*[_type == "partner"]`,
+});
+
 const shuffledPartners = partners.sort(() => 0.5 - Math.random());
 ---
 
@@ -13,16 +17,15 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
       shuffledPartners.map((partner) => (
         <li>
           <a
-            href={partner.data.url}
+            href={partner.url}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`Visit ${partner.data.name}`}
+            aria-label={`Visit ${partner.name}`}
           >
-            <Image
-              src={partner.data.logo}
-              alt={partner.data.name}
-              height={partner.data.height}
-              densities={[1, 2]}
+            <SanityImage
+              asset={partner.logo.asset}
+              alt={partner.name}
+              options={{ width: 200 }}
             />
           </a>
         </li>
@@ -44,6 +47,7 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
     margin-block-start: var(--space-3xl);
 
     ul {
+      --row-height: 80px;
       list-style-type: none;
       margin: 0;
       padding: 0;
@@ -51,9 +55,8 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
       display: grid;
       justify-items: center;
       align-items: center;
-      // Can increase this back to 3 columns when we have more partners
-      grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: 80px;
+      grid-template-columns: repeat(2, minmax(240px, 1fr));
+      grid-auto-rows: var(--row-height);
       gap: var(--space-l) var(--space-xl);
       user-select: none;
 
@@ -65,13 +68,27 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
         grid-template-columns: repeat(2, 1fr);
       }
 
+      li {
+        min-height: 0;
+        line-height: 0;
+      }
+
       a {
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         border-radius: 5px;
       }
 
+      picture,
       img {
-        max-width: min(240px, 40vw);
+        display: block;
+        width: 200px;
+
+        @supports (object-fit: contain) {
+          height: var(--row-height);
+          object-fit: contain;
+        }
       }
 
       @media (forced-colors: active) {

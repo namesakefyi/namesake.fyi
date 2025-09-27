@@ -1,0 +1,37 @@
+---
+import { PortableText as PortableTextInternal } from "astro-portabletext";
+import type { PortableTextProps } from "astro-portabletext/types";
+import Block from "./Block.astro";
+import Blockquote from "./Blockquote.astro";
+import ExternalLink from "./ExternalLink.astro";
+import HorizontalRule from "./HorizontalRule.astro";
+import InternalLink from "./InternalLink.astro";
+import PortableTextImage from "./PortableTextImage.astro";
+import Strong from "./Strong.astro";
+import Text from "./Text.astro";
+import YouTube from "./YouTube.astro";
+
+interface Props {
+  value: PortableTextProps["value"];
+}
+
+const { value } = Astro.props;
+
+const components = {
+  text: Text,
+  block: Block,
+  marks: {
+    link: ExternalLink,
+    internalLink: InternalLink,
+    strong: Strong,
+  },
+  type: {
+    blockquote: Blockquote,
+    youtube: YouTube,
+    image: PortableTextImage,
+    break: HorizontalRule,
+  },
+};
+---
+
+<PortableTextInternal value={value} components={components} />
