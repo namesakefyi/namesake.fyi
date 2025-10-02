@@ -10,8 +10,8 @@ const { data: partners } = await loadQuery<SanityDocument[]>({
 const shuffledPartners = partners.sort(() => 0.5 - Math.random());
 ---
 
-<div class="partners">
-  <h2 class="visually-hidden">Partners</h2>
+<section class="partners">
+  <h2>Partners</h2>
   <ul>
     {
       shuffledPartners.map((partner) => (
@@ -32,7 +32,7 @@ const shuffledPartners = partners.sort(() => 0.5 - Math.random());
       ))
     }
   </ul>
-</div>
+</section>
 
 <style lang="scss">
   .partners {
