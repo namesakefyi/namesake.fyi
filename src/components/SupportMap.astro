@@ -1,11 +1,27 @@
 ---
 import type { SanityDocument } from "@sanity/client";
-import { feature } from "topojson-client";
-import { loadQuery } from "~/sanity/lib/loadQuery";
 import usaStates from "@severo_bo/us-atlas-2023/states-albers-10m.json";
+import type { Feature } from "geojson";
+import { feature } from "topojson-client";
+import type { GeometryCollection, Topology } from "topojson-specification";
 import { formatStateList } from "~/helpers/helpers";
+import { loadQuery } from "~/sanity/lib/loadQuery";
 
-const { data: states } = await loadQuery<SanityDocument[]>({
+interface StateData extends SanityDocument {
+  name: string;
+  slug: string;
+  namesakeSupport: "full" | "prioritized" | "none";
+}
+
+interface StateFeature extends Feature {
+  properties: {
+    name: string;
+    supportLevel: "full" | "prioritized" | "none";
+    [key: string]: unknown;
+  };
+}
+
+const { data: states } = await loadQuery<StateData[]>({
   query: `*[_type == "state"]{
     name,
     "slug": slug.current,
@@ -13,120 +29,114 @@ const { data: states } = await loadQuery<SanityDocument[]>({
   }`,
 });
 
-// Create a lookup map for state support status by state name
-const stateSupport = states.reduce(
-  (acc, state) => {
-    acc[state.name] = state.namesakeSupport || "none";
-    return acc;
-  },
-  {} as Record<string, string>,
-);
-
-// Convert TopoJSON to GeoJSON features and add support data on the server
-const stateFeatures = feature(usaStates, usaStates.objects.states).features.map(
-  (geoFeature: any) => ({
-    ...geoFeature,
-    properties: {
-      ...geoFeature.properties,
-      supportLevel: stateSupport[geoFeature.properties.name] || "none",
+function processStateFeatures(states: StateData[]): StateFeature[] {
+  const stateSupport = states.reduce(
+    (acc, state) => {
+      acc[state.name] = state.namesakeSupport || "none";
+      return acc;
     },
-  }),
-);
+    {} as Record<string, string>,
+  );
 
-// Get state lists
+  const topology = usaStates as unknown as Topology;
+  const featureCollection = feature(
+    topology,
+    topology.objects.states as GeometryCollection,
+  );
+
+  return featureCollection.features.map(
+    (geoFeature: Feature): StateFeature => ({
+      ...geoFeature,
+      properties: {
+        ...geoFeature.properties,
+        name: geoFeature.properties?.name || "",
+        supportLevel: (stateSupport[geoFeature.properties?.name] || "none") as
+          | "full"
+          | "prioritized"
+          | "none",
+      },
+    }),
+  );
+}
+
+const stateFeatures = processStateFeatures(states);
 const fullSupportStates = states
   .filter((state) => state.namesakeSupport === "full")
   .map((state) => state.name);
-
 const prioritizedStates = states
   .filter((state) => state.namesakeSupport === "prioritized")
   .map((state) => state.name);
 
-// Compose the complete support message
-const supportMessage = `We fully support ${formatStateList(fullSupportStates)}. We are prioritizing support for ${formatStateList(prioritizedStates)} next.`;
+const supportMessage = `We fully support ${formatStateList(fullSupportStates)}, and we are prioritizing support for ${formatStateList(prioritizedStates)} next.`;
 ---
 
 <section class="support">
   <header>
-    <h2>Where we support</h2>
+    <h2>States we support</h2>
     <p set:html={supportMessage} />
   </header>
   <div id="support-map" data-states={JSON.stringify(stateFeatures)}></div>
 </section>
 
 <script>
-  // @ts-ignore - D3 types may not be properly configured
   import * as d3 from "d3";
 
-  const width = 975;
-  const height = 610;
-
-  const path = d3.geoPath();
+  const MAP_CONFIG = {
+    width: 975,
+    height: 610,
+    legendPosition: { x: 0.8, y: 40 },
+    patterns: {
+      hatch: { width: 5, height: 5, strokeWidth: 1.4 },
+      dots: { width: 4, height: 4, radius: 0.6 },
+    },
+  };
 
   const container = document.querySelector("#support-map") as HTMLElement;
-
   const stateFeatures = JSON.parse(container?.dataset.states || "[]");
 
+  const path = d3.geoPath();
   const svg = d3
     .create("svg")
-    .attr("viewBox", `0 0 ${width} ${height}`)
+    .attr("viewBox", `0 0 ${MAP_CONFIG.width} ${MAP_CONFIG.height}`)
     .attr("style", "max-width: 100%; height: auto;");
 
   const defs = svg.append("defs");
 
-  // Hatchmark pattern for prioritized states
   const hatchPattern = defs
     .append("pattern")
     .attr("id", "hatchmarks")
     .attr("patternUnits", "userSpaceOnUse")
-    .attr("width", 5)
-    .attr("height", 5);
+    .attr("width", MAP_CONFIG.patterns.hatch.width)
+    .attr("height", MAP_CONFIG.patterns.hatch.height);
 
-  hatchPattern
-    .append("path")
-    .attr("d", "M-1,6 L6,-1")
-    .attr("stroke", "var(--text)")
-    .attr("stroke-linecap", "square")
-    .attr("stroke-width", 0.8);
+  ["M-1,6 L6,-1", "M-1,1 L1,-1", "M4,6 L6,4"].forEach((pathData) => {
+    hatchPattern
+      .append("path")
+      .attr("d", pathData)
+      .attr("stroke", "var(--text)")
+      .attr("stroke-linecap", "square")
+      .attr("stroke-width", MAP_CONFIG.patterns.hatch.strokeWidth);
+  });
 
-  hatchPattern
-    .append("path")
-    .attr("d", "M-1,1 L1,-1")
-    .attr("stroke", "var(--text)")
-    .attr("stroke-linecap", "square")
-    .attr("stroke-width", 0.8);
-
-  hatchPattern
-    .append("path")
-    .attr("d", "M4,6 L6,4")
-    .attr("stroke", "var(--text)")
-    .attr("stroke-linecap", "square")
-    .attr("stroke-width", 0.8);
-
-  // Dot pattern for none states - diagonal arrangement
   const dotPattern = defs
     .append("pattern")
     .attr("id", "dots")
     .attr("patternUnits", "userSpaceOnUse")
-    .attr("width", 6)
-    .attr("height", 6);
+    .attr("width", MAP_CONFIG.patterns.dots.width)
+    .attr("height", MAP_CONFIG.patterns.dots.height);
 
-  // Create diagonal dots pattern
-  dotPattern
-    .append("circle")
-    .attr("cx", 1.5)
-    .attr("cy", 1.5)
-    .attr("r", 0.6)
-    .attr("fill", "var(--text)");
+  [
+    { cx: 1, cy: 1 },
+    { cx: 3, cy: 3 },
+  ].forEach((pos) => {
+    dotPattern
+      .append("circle")
+      .attr("cx", pos.cx)
+      .attr("cy", pos.cy)
+      .attr("r", MAP_CONFIG.patterns.dots.radius)
+      .attr("fill", "var(--text)");
+  });
 
-  dotPattern
-    .append("circle")
-    .attr("cx", 4.5)
-    .attr("cy", 4.5)
-    .attr("r", 0.6)
-    .attr("fill", "var(--text)");
-
-  // Create tooltip
   const tooltip = d3
     .select("body")
     .append("div")
@@ -141,53 +151,52 @@ const supportMessage = `We fully support ${formatStateList(fullSupportStates)}. 
     .style("pointer-events", "none")
     .style("z-index", "1000");
 
-  // Create paths for each state - use specific selector to avoid pattern paths
   const paths = svg
     .selectAll("path.state")
     .data(stateFeatures)
     .enter()
     .append("path")
-    .attr("d", path)
+    .attr("d", (d: any) => path(d))
     .attr("class", "state")
     .attr("stroke", "var(--bg)")
-    .attr("stroke-width", 0);
+    .attr("stroke-linecap", "round")
+    .attr("stroke-linejoin", "round")
+    .attr("stroke-width", 1.5);
 
-  // Apply fills based on support level
   paths.each(function (d: any) {
     const element = d3.select(this);
     const supportLevel = d.properties.supportLevel;
-    const stateName = d.properties.name;
+    const fillMap = {
+      full: "var(--text)",
+      prioritized: "url(#hatchmarks)",
+      none: "url(#dots)",
+    };
 
-    if (supportLevel === "full") {
-      element.attr("fill", "var(--text)");
-    } else if (supportLevel === "prioritized") {
-      element.attr("fill", "url(#hatchmarks)");
-    } else {
-      // For "none" - use dot pattern
-      element.attr("fill", "url(#dots)");
-    }
-
-    // Store support level for tooltip
-    element.attr("data-support", supportLevel);
-    element.attr("data-name", stateName);
+    element
+      .attr(
+        "fill",
+        fillMap[supportLevel as keyof typeof fillMap] || "url(#dots)",
+      )
+      .attr("data-support", supportLevel)
+      .attr("data-name", d.properties.name);
   });
 
-  // Add event handlers
   paths
-    .on("mouseover", function (event: any, d: any) {
+    .on("mouseover", function (_event, d: any) {
       const supportLevel = d.properties.supportLevel;
-      let supportText = "";
+      const textMap = {
+        full: "Full Support",
+        prioritized: "Support Coming Soon",
+        none: "No Support Yet",
+      };
+      const supportText =
+        textMap[supportLevel as keyof typeof textMap] || "No Support Yet";
 
-      if (supportLevel === "full") {
-        supportText = "Full Support";
-      } else if (supportLevel === "prioritized") {
-        supportText = "Prioritized Support";
-      } else {
-        supportText = "No Support Yet";
-      }
+      const hoveredState = d3.select(this);
+      hoveredState.attr("stroke", "var(--text)").attr("stroke-width", 2.5);
 
-      // Highlight the hovered state with thicker stroke
-      d3.select(this).attr("stroke", "var(--text)").attr("stroke-width", 3);
+      const node = hoveredState.node();
+      if (node && node.parentNode) node.parentNode.appendChild(node);
 
       tooltip
         .style("visibility", "visible")
@@ -199,52 +208,58 @@ const supportMessage = `We fully support ${formatStateList(fullSupportStates)}. 
         .style("left", event.pageX + 16 + "px");
     })
     .on("mouseout", function () {
-      // Reset all states to original stroke
-      paths.attr("stroke", "var(--bg)").attr("stroke-width", 0);
-
+      paths.attr("stroke", "var(--bg)").attr("stroke-width", 2);
       tooltip.style("visibility", "hidden");
     });
 
-  // Create legend
+  const supportCounts = stateFeatures.reduce(
+    (counts: Record<string, number>, feature: any) => {
+      const level = feature.properties.supportLevel;
+      counts[level] = (counts[level] || 0) + 1;
+      return counts;
+    },
+    {},
+  );
+
   const legendData = [
     {
       type: "full",
       label: "Full Support",
       fill: "var(--text)",
-      pattern: null,
+      count: supportCounts.full || 0,
     },
     {
       type: "prioritized",
-      label: "Prioritized (Next Up)",
+      label: "Next Up",
       fill: "url(#hatchmarks)",
-      pattern: "hatchmarks",
+      count: supportCounts.prioritized || 0,
     },
     {
       type: "none",
       label: "No Support Yet",
       fill: "url(#dots)",
-      pattern: "dots",
+      count: supportCounts.none || 0,
     },
   ];
 
   const legendGroup = svg
     .append("g")
     .attr("class", "legend")
-    .attr("transform", `translate(${width * 0.8}, 40)`);
+    .attr(
+      "transform",
+      `translate(${MAP_CONFIG.width * MAP_CONFIG.legendPosition.x}, ${MAP_CONFIG.legendPosition.y})`,
+    );
 
-  // Stack legend items vertically
   const legendItems = legendGroup
     .selectAll(".legend-item")
     .data(legendData)
     .enter()
     .append("g")
     .attr("class", "legend-item")
-    .attr("transform", (d: any, i: number) => `translate(0, ${i * 24})`);
+    .attr("transform", (_d: any, i: number) => `translate(0, ${i * 24})`);
 
-  // Add invisible background rectangles for better hover areas
   legendItems
     .append("rect")
-    .attr("class", "legend-hover-area")
     .attr("x", -85)
     .attr("y", -12)
     .attr("width", 160)
@@ -252,7 +267,15 @@ const supportMessage = `We fully support ${formatStateList(fullSupportStates)}. 
     .attr("fill", "transparent")
     .style("cursor", "pointer");
 
-  // Add legend squares
+  legendItems
+    .append("text")
+    .attr("x", -88)
+    .attr("y", 5)
+    .attr("font-size", "16px")
+    .attr("fill", "var(--text)")
+    .attr("text-anchor", "end")
+    .text((d: any) => d.count);
+
   legendItems
     .append("rect")
     .attr("x", -80)
@@ -264,7 +287,6 @@ const supportMessage = `We fully support ${formatStateList(fullSupportStates)}. 
     .attr("stroke-width", 1.5)
     .attr("rx", 2);
 
-  // Add legend text
   legendItems
     .append("text")
     .attr("x", -56)
@@ -274,40 +296,40 @@ const supportMessage = `We fully support ${formatStateList(fullSupportStates)}. 
     .attr("text-anchor", "start")
     .text((d: any) => d.label);
 
-  // Add interactive functionality to legend items
   legendItems
     .style("cursor", "pointer")
-    .on("mouseover", function (event: any, d: any) {
+    .on("mouseover", function (_event: any, d: any) {
       const hoveredType = d.type;
 
-      // Dim all states
-      paths.style("opacity", 0.25);
+      paths.style("opacity", 0.1);
 
-      // Highlight states matching the hovered legend item
       paths
         .filter(
           (stateData: any) => stateData.properties.supportLevel === hoveredType,
         )
+        .attr("stroke", "var(--text)")
+        .attr("stroke-width", 2.5)
         .style("opacity", 1);
 
-      // Highlight the hovered legend item
       d3.select(this).style("opacity", 1);
 
-      // Dim other legend items
       legendItems
         .filter((legendData: any) => legendData.type !== hoveredType)
         .style("opacity", 0.6);
     })
     .on("mouseout", function () {
-      // Reset all states to full opacity and restore strokes
-      paths.style("opacity", 1);
+      paths
+        .style("opacity", 1)
+        .attr("stroke", "var(--bg)")
+        .attr("stroke-width", 2);
 
-      // Reset all legend items to full opacity
       legendItems.style("opacity", 1);
     });
 
-  // Append the SVG element
-  container?.append(svg.node());
+  const svgNode = svg.node();
+  if (container && svgNode) {
+    container.append(svgNode);
+  }
 </script>
 
 <style>
