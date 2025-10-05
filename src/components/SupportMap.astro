@@ -389,6 +389,7 @@ function getFillForSupportLevel(supportLevel: string): string {
   .legend {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     font-size: var(--step--1);
@@ -398,7 +399,7 @@ function getFillForSupportLevel(supportLevel: string): string {
       display: flex;
       align-items: center;
       gap: var(--space-2xs);
-      padding: var(--space-m);
+      padding: var(--space-s) var(--space-m);
       cursor: pointer;
       transition: opacity 0.2s ease;
 
