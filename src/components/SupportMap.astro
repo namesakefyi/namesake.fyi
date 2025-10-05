@@ -413,22 +413,11 @@ function getFillForSupportLevel(supportLevel: string): string {
     }
 
     .legend-box {
-      position: relative;
       flex-shrink: 0;
       width: 16px;
       height: 16px;
-      border: 1.5px solid var(--text);
       border-radius: 4.5px;
       overflow: hidden;
-      position: relative;
-
-      &::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border: 1px solid var(--bg);
-        border-radius: 3px;
-      }
     }
 
     .legend-pattern {
