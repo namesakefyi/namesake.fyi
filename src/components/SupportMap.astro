@@ -194,9 +194,9 @@ function getFillForSupportLevel(supportLevel: string): string {
                 class="legend-pattern"
                 width="100%"
                 height="100%"
-                viewBox="0 0 15 15"
+                viewBox="0 0 18 18"
               >
-                <rect width="15" height="15" fill={item.fill} />
+                <rect width="18" height="18" fill={item.fill} />
               </svg>
             </div>
             <span class="legend-count">{item.count}</span>
@@ -229,8 +229,8 @@ function getFillForSupportLevel(supportLevel: string): string {
       svg.selectAll("pattern").attr("patternTransform", `scale(${1 / scale})`);
 
       d3.selectAll(".legend-pattern rect")
-        .attr("width", 15 / scale)
-        .attr("height", 15 / scale)
+        .attr("width", 18 / scale)
+        .attr("height", 18 / scale)
         .attr("transform", `scale(${scale})`);
     }
   }
@@ -413,13 +413,22 @@ function getFillForSupportLevel(supportLevel: string): string {
     }
 
     .legend-box {
+      position: relative;
       flex-shrink: 0;
-      width: 15px;
-      height: 15px;
+      width: 16px;
+      height: 16px;
       border: 1.5px solid var(--text);
-      border-radius: 3px;
+      border-radius: 4.5px;
       overflow: hidden;
       position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: 1px solid var(--bg);
+        border-radius: 3px;
+      }
     }
 
     .legend-pattern {
