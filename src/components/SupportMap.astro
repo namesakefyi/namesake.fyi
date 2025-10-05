@@ -1,12 +1,12 @@
 ---
 import type { SanityDocument } from "@sanity/client";
 import usaStates from "@severo_bo/us-atlas-2023/states-albers-10m.json";
-import { feature } from "topojson-client";
+import { geoPath } from "d3-geo";
 import type { Feature } from "geojson";
+import { feature } from "topojson-client";
 import type { GeometryCollection, Topology } from "topojson-specification";
 import { formatStateList } from "~/helpers/helpers";
 import { loadQuery } from "~/sanity/lib/loadQuery";
-import { geoPath } from "d3-geo";
 
 const { data: states } = await loadQuery<SanityDocument[]>({
   query: `*[_type == "state"]{
