@@ -47,7 +47,7 @@ if (!page) return Astro.redirect("/404");
         sizes={`(max-width: 400px) 800px, (max-width: 600px) 1200px, 1800px`}
       />
     </div>
-    <div class="content">
+    <section class="content">
       <PortableText value={page.content} />
       <div class="buttons">
         <a href={siteInfo.urls.app} class="button primary"
@@ -55,9 +55,9 @@ if (!page) return Astro.redirect("/404");
         >
         <a href={siteInfo.urls.chat}>Join us on Discord</a>
       </div>
-      <SupportMap />
-      <Partners />
-    </div>
+    </section>
+    <SupportMap />
+    <Partners />
   </div>
 </BaseLayout>
 

@@ -267,25 +267,12 @@ function getFillForSupportLevel(supportLevel: string): string {
       const containerNode = container.node() as HTMLElement;
       const tooltipRect = tooltipNode.getBoundingClientRect();
       const containerRect = containerNode.getBoundingClientRect();
-      const viewportWidth = window.innerWidth;
-      const viewportHeight = window.innerHeight;
 
       const containerX = event.clientX - containerRect.left;
       const containerY = event.clientY - containerRect.top;
 
       let left = containerX + 16;
       let top = containerY + 16;
-
-      const absoluteLeft = containerRect.left + left;
-      const absoluteTop = containerRect.top + top;
-
-      if (absoluteLeft + tooltipRect.width > viewportWidth) {
-        left = containerX - tooltipRect.width - 16;
-      }
-
-      if (absoluteTop + tooltipRect.height > viewportHeight) {
-        top = containerY - tooltipRect.height - 16;
-      }
 
       if (left < 0) left = 16;
       if (top < 0) top = 16;
@@ -336,8 +323,10 @@ function getFillForSupportLevel(supportLevel: string): string {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-2xl);
+    gap: var(--space-l);
     padding-block-start: var(--space-3xl);
+    width: 100%;
+    max-width: 1200px;
   }
 
   header {
@@ -347,6 +336,7 @@ function getFillForSupportLevel(supportLevel: string): string {
     align-items: center;
     gap: var(--space-m);
     text-wrap: balance;
+    max-width: 600px;
   }
 
   .map-container {
