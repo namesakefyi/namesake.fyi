@@ -6,6 +6,7 @@ import {
   partnerType,
   postType,
   pressType,
+  stateType,
 } from "./src/sanity/schema";
 
 export default defineConfig({
@@ -15,6 +16,6 @@ export default defineConfig({
   dataset: "production",
   plugins: [structureTool()],
   schema: {
-    types: [authorType, pageType, postType, pressType, partnerType],
+    types: [authorType, pageType, postType, pressType, partnerType, stateType],
   },
 });

@@ -3,10 +3,11 @@ import { Image } from "astro:assets";
 import { RiArrowRightLine } from "@remixicon/react";
 import type { SanityDocument } from "@sanity/client";
 import Partners from "~/components/Partners.astro";
+import SupportMap from "~/components/SupportMap.astro";
 import PortableText from "~/components/text/PortableText.astro";
-import heroIllustration from "~/pages/home/hero-form.png";
 import siteInfo from "~/data/site-info";
 import BaseLayout from "~/layouts/BaseLayout.astro";
+import heroIllustration from "~/pages/home/hero-form.png";
 import { loadQuery } from "~/sanity/lib/loadQuery";
 
 // Fetch the home page from Sanity (slug: "index" or empty slug for home)
@@ -46,7 +47,7 @@ if (!page) return Astro.redirect("/404");
         sizes={`(max-width: 400px) 800px, (max-width: 600px) 1200px, 1800px`}
       />
     </div>
-    <div class="content">
+    <section class="content">
       <PortableText value={page.content} />
       <div class="buttons">
         <a href={siteInfo.urls.app} class="button primary"
@@ -54,8 +55,9 @@ if (!page) return Astro.redirect("/404");
         >
         <a href={siteInfo.urls.chat}>Join us on Discord</a>
       </div>
-      <Partners />
-    </div>
+    </section>
+    <SupportMap />
+    <Partners />
   </div>
 </BaseLayout>
 
