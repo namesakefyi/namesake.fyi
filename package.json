@@ -39,7 +39,7 @@
     "@severo_bo/us-atlas-2023": "^4.0.0",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
-    "astro": "^5.13.10",
+    "astro": "^5.14.3",
     "astro-embed": "^0.9.1",
     "astro-font": "^1.1.0",
     "astro-github-file-loader": "^1.1.0",
