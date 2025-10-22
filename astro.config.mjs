@@ -12,7 +12,7 @@ import postcssMediaMinMax from "postcss-media-minmax";
 import postcssUtopia from "postcss-utopia";
 
 export default defineConfig({
-  output: "static",
+  output: "server",
   adapter: cloudflare({
     imageService: "compile",
   }),
