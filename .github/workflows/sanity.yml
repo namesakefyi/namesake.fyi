@@ -12,6 +12,7 @@ jobs:
     name: Deploy Sanity Studio
     runs-on: ubuntu-latest
     permissions: write-all
+    if: ${{ github.actor != 'dependabot[bot]' }}
 
     steps:
       - name: Checkout code
