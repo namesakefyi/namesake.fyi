@@ -79,7 +79,8 @@
     "postcss-media-minmax": "^5.0.0",
     "postcss-utopia": "^1.1.0",
     "sass": "^1.93.2",
-    "sharp": "^0.34.4"
+    "sharp": "^0.34.4",
+    "wrangler": "^4.44.0"
   },
   "homepage": "https://namesake.fyi",
   "bugs": {
