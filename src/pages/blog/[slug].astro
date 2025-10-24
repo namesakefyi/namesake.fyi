@@ -6,21 +6,9 @@ import ProseLayout from "~/layouts/ProseLayout.astro";
 import { extractHeadings } from "~/sanity/lib/extractHeadings";
 import { loadQuery } from "~/sanity/lib/loadQuery";
 
-export async function getStaticPaths() {
-  const { data: posts } = await loadQuery<SanityDocument[]>({
-    query: `*[_type == "post"]`,
-  });
+const { slug } = Astro.params;
 
-  return posts.map(({ slug }) => {
-    return {
-      params: {
-        slug: slug.current,
-      },
-    };
-  });
-}
-
-const { params } = Astro;
+if (!slug) return Astro.redirect("/404");
 
 const { data: post } = await loadQuery<SanityDocument>({
   query: `*[_type == "post" && slug.current == $slug][0]{
@@ -42,7 +30,9 @@ const { data: post } = await loadQuery<SanityDocument>({
       socialLinks
     }
   }`,
-  params,
+  params: {
+    slug,
+  },
 });
 
 if (!post) return Astro.redirect("/404");
