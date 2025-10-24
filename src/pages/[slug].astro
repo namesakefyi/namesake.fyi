@@ -5,27 +5,9 @@ import ProseLayout from "~/layouts/ProseLayout.astro";
 import { extractHeadings } from "~/sanity/lib/extractHeadings";
 import { loadQuery } from "~/sanity/lib/loadQuery";
 
-export async function getStaticPaths() {
-  const { data: pages } = await loadQuery<SanityDocument[]>({
-    query: `*[_type == "page" && defined(slug)]{
-      _id,
-      title,
-      slug,
-      description,
-      content,
-      ogImage,
-      annotation,
-      color
-    }`,
-  });
+const { slug } = Astro.params;
 
-  return pages.map((page) => ({
-    params: { slug: page.slug.current },
-    props: { page },
-  }));
-}
-
-const { params } = Astro;
+if (!slug) return Astro.redirect("/404");
 
 const { data: page } = await loadQuery<SanityDocument>({
   query: `*[_type == "page" && slug.current == $slug][0]{
@@ -38,7 +20,9 @@ const { data: page } = await loadQuery<SanityDocument>({
     annotation,
     color
   }`,
-  params,
+  params: {
+    slug,
+  },
 });
 
 if (!page) return Astro.redirect("/404");

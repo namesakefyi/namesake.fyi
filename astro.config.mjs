@@ -4,7 +4,7 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import postcssLogicalViewportUnits from "@csstools/postcss-logical-viewport-units";
 import sanity from "@sanity/astro";
-import { defineConfig } from "astro/config";
+import { defineConfig, passthroughImageService } from "astro/config";
 import autoprefixer from "autoprefixer";
 import cssnano from "cssnano";
 import postcssClamp from "postcss-clamp";
@@ -16,6 +16,9 @@ export default defineConfig({
   adapter: cloudflare({
     imageService: "compile",
   }),
+  image: {
+    service: passthroughImageService(),
+  },
   site: "https://namesake.fyi",
   integrations: [
     sitemap(),
@@ -23,9 +26,7 @@ export default defineConfig({
     sanity({
       projectId: "k4p1j15y",
       dataset: "production",
-      // Disabled CDN static builds to prevent stale content
-      // If we change output to "server" in the future, enable CDN
-      useCdn: false,
+      useCdn: true,
       studioBasePath: "/studio",
       apiVersion: "2025-09-19",
     }),
