@@ -4,8 +4,8 @@
   "version": "0.0.1",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "dev": "wrangler types && astro dev --open",
-    "start": "wrangler types && astro dev",
+    "dev": "astro dev --open",
+    "start": "astro dev",
     "build": "wrangler types && astro check && astro build",
     "preview": "wrangler types && astro preview",
     "astro": "astro",
