@@ -36,8 +36,8 @@ importers:
         specifier: ^4.11.0
         version: 4.11.0(playwright-core@1.56.1)
       '@portabletext/types':
-        specifier: ^2.0.15
-        version: 2.0.15
+        specifier: ^3.0.0
+        version: 3.0.0
       '@remixicon/react':
         specifier: ^4.7.0
         version: 4.7.0(react@19.2.0)
