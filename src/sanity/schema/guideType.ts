@@ -3,7 +3,7 @@ import { defineArrayMember, defineField, defineType } from "sanity";
 import {
   blockquoteBlock,
   breakBlock,
-  faqBlock,
+  detailsBlock,
   imageBlock,
   richTextBlock,
   youtubeBlock,
@@ -54,7 +54,7 @@ export const guideType = defineType({
       of: [
         defineArrayMember(blockquoteBlock),
         defineArrayMember(breakBlock),
-        defineArrayMember(faqBlock),
+        defineArrayMember(detailsBlock),
         defineArrayMember(richTextBlock),
         defineArrayMember(imageBlock),
         defineArrayMember(youtubeBlock),

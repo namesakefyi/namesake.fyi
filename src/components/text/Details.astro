@@ -2,12 +2,12 @@
 import { PortableText as PortableTextInternal } from "astro-portabletext";
 import { smartquotes } from "~/helpers/helpers";
 
-const { question, answer } = Astro.props.node;
+const { summary, content } = Astro.props.node;
 ---
 
 <details>
-  {question && <summary>{smartquotes(question)}</summary>}
-  <div class="answer"><PortableTextInternal value={answer} /></div>
+  <summary>{smartquotes(summary)}</summary>
+  <div class="details-content"><PortableTextInternal value={content} /></div>
 </details>
 
 <style lang="scss">
@@ -82,7 +82,7 @@ const { question, answer } = Astro.props.node;
     }
   }
 
-  .answer {
+  .details-content {
     padding-block-end: var(--space-s);
     padding-inline: var(--details-indent) var(--space-m);
 

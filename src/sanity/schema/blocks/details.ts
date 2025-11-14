@@ -3,19 +3,18 @@ import { defineArrayMember, type ObjectDefinition } from "sanity";
 import { externalLink } from "../annotations/externalLink";
 import { internalLink } from "../annotations/internalLink";
 
-export const faqBlock: ObjectDefinition = {
+export const detailsBlock: ObjectDefinition = {
   type: "object",
-  name: "faq",
-  title: "FAQ",
+  name: "details",
+  title: "Details",
   icon: HelpCircleIcon,
   fields: [
     {
-      name: "question",
+      name: "summary",
       type: "string",
     },
     {
-      name: "answer",
-      title: "Quote",
+      name: "content",
       type: "array",
       of: [
         defineArrayMember({
