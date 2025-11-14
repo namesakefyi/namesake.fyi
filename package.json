@@ -28,7 +28,7 @@
     "@astrojs/rss": "^4.0.13",
     "@astrojs/sitemap": "^3.6.0",
     "@axe-core/playwright": "^4.11.0",
-    "@portabletext/types": "^2.0.15",
+    "@portabletext/types": "^3.0.0",
     "@remixicon/react": "^4.7.0",
     "@sanity/astro": "^3.2.10",
     "@sanity/client": "^7.12.1",
