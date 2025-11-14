@@ -3,6 +3,7 @@ import { PortableText as PortableTextInternal } from "astro-portabletext";
 import type { PortableTextProps } from "astro-portabletext/types";
 import Block from "./Block.astro";
 import Blockquote from "./Blockquote.astro";
+import Details from "./Details.astro";
 import ExternalLink from "./ExternalLink.astro";
 import HorizontalRule from "./HorizontalRule.astro";
 import InternalLink from "./InternalLink.astro";
@@ -27,6 +28,7 @@ const components = {
   },
   type: {
     blockquote: Blockquote,
+    faq: Details,
     youtube: YouTube,
     image: PortableTextImage,
     break: HorizontalRule,

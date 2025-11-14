@@ -2,6 +2,8 @@ import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import {
   authorType,
+  categoryType,
+  guideType,
   pageType,
   partnerType,
   postType,
@@ -16,6 +18,15 @@ export default defineConfig({
   dataset: "production",
   plugins: [structureTool()],
   schema: {
-    types: [authorType, pageType, postType, pressType, partnerType, stateType],
+    types: [
+      authorType,
+      categoryType,
+      guideType,
+      pageType,
+      postType,
+      pressType,
+      partnerType,
+      stateType,
+    ],
   },
 });
