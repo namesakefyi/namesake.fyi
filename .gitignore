@@ -29,3 +29,6 @@ pnpm-debug.log*
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# wrangler
+worker-configuration.d.ts

@@ -5,12 +5,19 @@ import SanityImage from "../SanityImage.astro";
 const { asset, alt, caption, width } = Astro.props.node;
 ---
 
-<SanityImage
-  asset={asset}
-  alt={alt}
-  options={{
-    width,
-  }}
->
-  <PortableTextInternal value={caption} />
-</SanityImage>
+<figure>
+  <SanityImage
+    asset={asset}
+    alt={alt}
+    options={{
+      width,
+    }}
+  />
+  {
+    caption && (
+      <figcaption>
+        <PortableTextInternal value={caption} />
+      </figcaption>
+    )
+  }
+</figure>

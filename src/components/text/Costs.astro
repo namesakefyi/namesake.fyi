@@ -29,7 +29,7 @@ const totalCosts = formatTotalCosts(costs);
   </thead>
   <tbody>
     {
-      costs?.map((cost) => (
+      (costs as any[])?.map((cost) => (
         <tr>
           <td>
             {cost.title}

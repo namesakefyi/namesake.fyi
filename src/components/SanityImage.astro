@@ -19,20 +19,10 @@ if (!asset) {
 const url = urlForImage(asset).withOptions(options).auto("format").dpr(2).url();
 ---
 
-<figure class={className}>
-  <img
-    src={url}
-    alt={alt || ""}
-    width={options.width}
-    height={options.height}
-  />
-  <figcaption>
-    <slot />
-  </figcaption>
-</figure>
-
-<style>
-  figcaption {
-    font-size: var(--step--1);
-  }
-</style>
+<img
+  class={className}
+  src={url}
+  alt={alt || ""}
+  width={options.width}
+  height={options.height}
+/>
