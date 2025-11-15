@@ -1,5 +1,6 @@
 ---
 import { getEntry, render } from "astro:content";
+import TableOfContents from "~/components/TableOfContents.astro";
 import ProseLayout from "~/layouts/ProseLayout.astro";
 
 const entry = await getEntry("policy", "subprocessors");
@@ -12,7 +13,7 @@ const { Content, headings } = await render(entry);
   title="Subprocessors"
   description="All the third-party subprocessors that we use to run Namesake."
   color="brown"
-  headings={headings}
 >
+  <TableOfContents headings={headings} slot="toc" />
   <Content />
 </ProseLayout>

@@ -1,5 +1,6 @@
 ---
 import { getEntry, render } from "astro:content";
+import TableOfContents from "~/components/TableOfContents.astro";
 import ProseLayout from "~/layouts/ProseLayout.astro";
 
 const entry = await getEntry("policy", "abuse");
@@ -13,7 +14,7 @@ const { Content, headings } = await render(entry);
   description="It is not okay to use Namesake for these restricted purposes."
   color="brown"
   annotation="crossed-off"
-  headings={headings}
 >
+  <TableOfContents headings={headings} slot="toc" />
   <Content />
 </ProseLayout>

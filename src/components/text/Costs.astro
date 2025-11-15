@@ -1,0 +1,87 @@
+---
+import type { SanityDocument } from "@sanity/client";
+import { formatCurrency } from "~/helpers/formatCurrency";
+import { formatTotalCosts } from "~/helpers/formatTotalCosts";
+import { loadQuery } from "~/sanity/lib/loadQuery";
+
+const { _ref } = Astro.props.node;
+
+const { data: guide } = await loadQuery<SanityDocument>({
+  query: `*[_type == "guide" && _id == $_ref][0]{
+    costs
+  }`,
+  params: {
+    _ref,
+  },
+});
+
+const { costs } = guide;
+
+const totalCosts = formatTotalCosts(costs);
+---
+
+<table>
+  <thead class="visually-hidden">
+    <tr>
+      <th>Cost</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      (costs as any[])?.map((cost) => (
+        <tr>
+          <td>
+            {cost.title}
+            {cost.required === "notRequired" && "(optional)"}
+          </td>
+          <td>{formatCurrency(cost.amount)}</td>
+        </tr>
+      ))
+    }
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>Total</td>
+      <td>{totalCosts}</td>
+    </tr>
+  </tfoot>
+</table>
+
+<style>
+  table {
+    border-collapse: collapse;
+    border: 0.5px solid var(--text);
+    width: 100%;
+    margin-block: var(--space-l);
+    table-layout: fixed;
+  }
+
+  th,
+  td {
+    padding: var(--space-2xs) var(--space-l);
+    width: 100px;
+  }
+
+  tbody tr:not(:last-child) td {
+    border-bottom: 0.5px dotted var(--text);
+  }
+
+  tfoot td {
+    font-size: var(--step-1);
+    padding-block: var(--space-s);
+    border-top: 0.5px solid var(--text);
+    font-weight: var(--weight-bold);
+  }
+
+  th:first-child,
+  td:first-child {
+    text-align: left;
+    padding-inline-end: var(--space-l);
+  }
+
+  th:last-child,
+  td:last-child {
+    text-align: right;
+  }
+</style>

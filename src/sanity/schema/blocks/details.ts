@@ -1,27 +1,20 @@
-import { ImageIcon } from "@sanity/icons";
-import { defineArrayMember } from "sanity";
+import { HelpCircleIcon } from "@sanity/icons";
+import { defineArrayMember, type ObjectDefinition } from "sanity";
 import { externalLink } from "../annotations/externalLink";
 import { internalLink } from "../annotations/internalLink";
 
-export const imageBlock = {
-  type: "image",
-  icon: ImageIcon,
-  options: { hotspot: true },
+export const detailsBlock: ObjectDefinition = {
+  type: "object",
+  name: "details",
+  title: "Details",
+  icon: HelpCircleIcon,
   fields: [
     {
-      name: "alt",
+      name: "summary",
       type: "string",
-      title: "Alt Text",
     },
     {
-      name: "width",
-      title: "Width",
-      description: "Image width, in pixels",
-      type: "number",
-    },
-    {
-      name: "caption",
-      title: "Caption",
+      name: "content",
       type: "array",
       of: [
         defineArrayMember({
@@ -38,4 +31,10 @@ export const imageBlock = {
       ],
     },
   ],
+  preview: {
+    select: {
+      title: "summary",
+      subtitle: "content",
+    },
+  },
 };
