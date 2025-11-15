@@ -31,4 +31,10 @@ export const detailsBlock: ObjectDefinition = {
       ],
     },
   ],
+  preview: {
+    select: {
+      title: "summary",
+      subtitle: "content",
+    },
+  },
 };

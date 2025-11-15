@@ -16,20 +16,23 @@ if (!asset) {
   throw new Error("SanityImage: No asset provided");
 }
 
-const url = urlForImage(asset).url();
-const webpUrl = urlForImage(asset)
-  .format("webp")
-  .withOptions(options)
-  .dpr(2)
-  .url();
+const url = urlForImage(asset).withOptions(options).auto("format").dpr(2).url();
 ---
 
-<picture class={className}>
-  <source srcset={webpUrl} type="image/webp" />
+<figure class={className}>
   <img
     src={url}
     alt={alt || ""}
     width={options.width}
     height={options.height}
   />
-</picture>
+  <figcaption>
+    <slot />
+  </figcaption>
+</figure>
+
+<style>
+  figcaption {
+    font-size: var(--step--1);
+  }
+</style>

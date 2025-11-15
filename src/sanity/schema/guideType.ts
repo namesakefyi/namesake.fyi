@@ -3,6 +3,7 @@ import { defineArrayMember, defineField, defineType } from "sanity";
 import {
   blockquoteBlock,
   breakBlock,
+  costsBlock,
   detailsBlock,
   imageBlock,
   richTextBlock,
@@ -21,6 +22,13 @@ export const guideType = defineType({
       description: "Title of the guide (e.g. 'Court Order')",
       type: "string",
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "description",
+      title: "Description",
+      description:
+        "A brief, high-level summary of what role this guide serves within the name change process.",
+      type: "string",
     }),
     defineField({
       name: "state",
@@ -48,12 +56,68 @@ export const guideType = defineType({
       },
     }),
     defineField({
+      name: "costs",
+      title: "Costs",
+      type: "array",
+      of: [
+        {
+          title: "Cost",
+          name: "cost",
+          type: "object",
+          options: {
+            columns: 3,
+            modal: {
+              type: "popover",
+            },
+          },
+          fields: [
+            {
+              name: "title",
+              title: "Title",
+              type: "string",
+            },
+            {
+              name: "amount",
+              title: "Amount",
+              type: "number",
+            },
+            {
+              name: "required",
+              title: "Required?",
+              type: "string",
+              initialValue: "required",
+              options: {
+                list: [
+                  { title: "Required", value: "required" },
+                  { title: "Not required", value: "notRequired" },
+                ],
+              },
+            },
+          ],
+          preview: {
+            select: {
+              title: "title",
+              amount: "amount",
+            },
+            prepare(selection) {
+              const { title, amount } = selection;
+              return {
+                title: title,
+                subtitle: amount ? `$${amount}` : "Free",
+              };
+            },
+          },
+        },
+      ],
+    }),
+    defineField({
       name: "content",
       title: "Content",
       type: "array",
       of: [
         defineArrayMember(blockquoteBlock),
         defineArrayMember(breakBlock),
+        defineArrayMember(costsBlock),
         defineArrayMember(detailsBlock),
         defineArrayMember(richTextBlock),
         defineArrayMember(imageBlock),

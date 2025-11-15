@@ -1,7 +1,16 @@
 ---
+import { PortableText as PortableTextInternal } from "astro-portabletext";
 import SanityImage from "../SanityImage.astro";
 
-const { asset, alt } = Astro.props.node;
+const { asset, alt, caption, width } = Astro.props.node;
 ---
 
-<SanityImage asset={asset} alt={alt} />
+<SanityImage
+  asset={asset}
+  alt={alt}
+  options={{
+    width,
+  }}
+>
+  <PortableTextInternal value={caption} />
+</SanityImage>

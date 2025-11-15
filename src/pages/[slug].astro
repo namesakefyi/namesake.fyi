@@ -1,5 +1,6 @@
 ---
 import type { SanityDocument } from "@sanity/client";
+import TableOfContents from "~/components/TableOfContents.astro";
 import PortableText from "~/components/text/PortableText.astro";
 import ProseLayout from "~/layouts/ProseLayout.astro";
 import { extractHeadings } from "~/sanity/lib/extractHeadings";
@@ -37,7 +38,7 @@ const headings = extractHeadings(page.content);
   ogAlt={page.ogImage?.alt}
   annotation={page.annotation}
   color={page.color}
-  headings={headings}
 >
+  <TableOfContents headings={headings} slot="toc" />
   <PortableText value={page.content} />
 </ProseLayout>

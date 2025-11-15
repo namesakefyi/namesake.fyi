@@ -28,7 +28,9 @@ const { data: guides } = await loadQuery<SanityDocument[]>({
     {
       guides.length ? (
         guides.map((guide) => (
-          <a href={`/guides/${guide.slug.current}`}>{guide.title}</a>
+          <a class="guide" href={`/guides/${guide.slug.current}`}>
+            {guide.title}
+          </a>
         ))
       ) : (
         <p>No guides found.</p>
@@ -36,3 +38,32 @@ const { data: guides } = await loadQuery<SanityDocument[]>({
     }
   </div>
 </BaseLayout>
+
+<style>
+  .guides {
+    display: grid;
+    gap: var(--space-m);
+
+    @media (width > 600px) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media (width > 1000px) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+
+  .guide {
+    border: 0.5px solid var(--text);
+    padding: var(--space-m);
+    text-decoration: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+    }
+  }
+</style>

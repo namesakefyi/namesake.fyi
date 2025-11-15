@@ -1,9 +1,7 @@
 ---
 import type { SanityAssetDocument } from "@sanity/client";
-import type { MarkdownHeading } from "astro";
 import type { RoughAnnotationType } from "rough-notation/lib/model";
 import PageHeader from "~/components/PageHeader.astro";
-import TableOfContents from "~/components/TableOfContents.astro";
 import type { NamesakeColor } from "~/data/colors";
 import { urlForImage } from "~/sanity/lib/urlForImage";
 import { smartquotes } from "../helpers/helpers";
@@ -19,7 +17,6 @@ interface Props {
   ogAlt?: string;
   annotation?: RoughAnnotationType;
   color?: NamesakeColor;
-  headings?: MarkdownHeading[];
 }
 
 const {
@@ -32,7 +29,6 @@ const {
   ogAlt,
   annotation,
   color,
-  headings,
 } = Astro.props;
 
 // Convert Sanity asset to URL for BaseLayout
@@ -64,7 +60,9 @@ const headerDescription =
       annotation={annotation}
     />
     <slot name="after-header" />
-    <TableOfContents headings={headings} />
+    <section class="toc">
+      <slot name="toc" />
+    </section>
     <section itemprop="articleBody" class="prose">
       <slot />
     </section>
@@ -79,7 +77,6 @@ const headerDescription =
 
   if (blockquotes) {
     for (const blockquote of blockquotes) {
-      console.log(blockquote);
       const highlight = annotate(blockquote, {
         type: "bracket",
         iterations: 2,

@@ -4,22 +4,18 @@ import PortableText from "~/components/text/PortableText.astro";
 import ProseLayout from "~/layouts/ProseLayout.astro";
 import { extractHeadings } from "~/sanity/lib/extractHeadings";
 import { loadQuery } from "~/sanity/lib/loadQuery";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import TableOfContents from "~/components/TableOfContents.astro";
+
+dayjs.extend(utc);
 
 const { slug } = Astro.params;
 
 if (!slug) return Astro.redirect("/404");
 
 const { data: guide } = await loadQuery<SanityDocument>({
-  query: `*[_type == "guide" && slug.current == $slug][0]{
-    _id,
-    title,
-    slug,
-    content,
-    "category": category[]->{
-      _id,
-      name,
-    }
-  }`,
+  query: `*[_type == "guide" && slug.current == $slug][0]`,
   params: {
     slug,
   },
@@ -30,6 +26,22 @@ if (!guide) return Astro.redirect("/404");
 const headings = extractHeadings(guide.content);
 ---
 
-<ProseLayout title={guide.title} color="white" headings={headings}>
+<ProseLayout title={guide.title} description={guide.description} color="white">
+  <TableOfContents headings={headings} slot="toc" />
   <PortableText value={guide.content} />
+  <div class="date-updated">
+    Last updated{" "}
+    <time datetime={guide._updatedAt}>
+      {dayjs.utc(guide._updatedAt).format("MMMM DD, YYYY")}
+    </time>
+  </div>
 </ProseLayout>
+
+<style>
+  .date-updated {
+    margin-block-start: var(--space-3xl);
+    padding-block-start: var(--space-s);
+    border-top: 0.5px solid var(--text);
+    font-size: var(--step--1);
+  }
+</style>
