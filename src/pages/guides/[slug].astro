@@ -32,10 +32,10 @@ const headings = extractHeadings(guide.content);
   <TableOfContents headings={headings} slot="toc" />
   <PortableText value={guide.content} />
   <div class="date-updated">
-    Last updated {" "}
-    <time datetime={guide._updatedAt}>
-      {dayjs.utc(guide._updatedAt).local().format("LL [at] LT")}
-    </time>
+    Page last edited on {" "}
+    <time datetime={guide._updatedAt}
+      >{dayjs.utc(guide._updatedAt).local().format("LL [at] LT")}</time
+    >.
   </div>
 </ProseLayout>
 
