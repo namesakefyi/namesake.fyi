@@ -20,6 +20,9 @@
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build"
   },
+  "lint-staged": {
+    "*": "pnpm check:fix"
+  },
   "dependencies": {
     "@astrojs/check": "^0.9.5",
     "@astrojs/cloudflare": "12.6.10",
