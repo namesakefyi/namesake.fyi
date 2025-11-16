@@ -33,17 +33,15 @@ export function Autocomplete<T extends object>({
   const { contains } = useFilter({ sensitivity: "base" });
 
   return (
-    <div className="my-autocomplete">
-      <AriaAutocomplete filter={contains} {...props}>
-        <SearchField label={label} placeholder={placeholder} />
-        <Menu
-          items={items}
-          onAction={onAction}
-          renderEmptyState={renderEmptyState}
-        >
-          {children}
-        </Menu>
-      </AriaAutocomplete>
-    </div>
+    <AriaAutocomplete filter={contains} {...props}>
+      <SearchField label={label} placeholder={placeholder} />
+      <Menu
+        items={items}
+        onAction={onAction}
+        renderEmptyState={renderEmptyState}
+      >
+        {children}
+      </Menu>
+    </AriaAutocomplete>
   );
 }

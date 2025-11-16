@@ -28,7 +28,7 @@
 }
 
 .react-aria-DateSegment {
-  padding: 0 2px;
+  padding: 2px 3px;
   font-variant-numeric: tabular-nums;
   text-align: end;
   color: var(--text-color);
