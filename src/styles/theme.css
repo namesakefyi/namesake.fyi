@@ -1,3 +1,19 @@
+@font-face {
+  font-family: 'Alte Haas Grotesk';
+  src: url('/fonts/AlteHaasGroteskRegular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Alte Haas Grotesk';
+  src: url('/fonts/AlteHaasGroteskBold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   @utopia typeScale({
     minFontSize: 18,
@@ -5,7 +21,7 @@
     minTypeScale: 1.2,
     maxTypeScale: 1.25,
     positiveSteps: 7,
-    negativeSteps: 1,
+    negativeSteps: 2,
   });
 
   @utopia spaceScale({
@@ -14,6 +30,13 @@
     positiveSteps: [1.5, 2, 3, 4, 6],
     negativeSteps: [0.75, 0.5],
   });
+
+  /* Fonts */
+  --font-sans: 'Alte Haas Grotesk', Helvetica, Arial, sans-serif;
+
+  /* Font weights */
+  --weight-normal: 400;
+  --weight-bold: 700;
 
   /* Line heights */
   --line-height-single: 1;
@@ -32,41 +55,82 @@
   --radius-m: var(--space-m);
   --radius-l: var(--space-l);
 
-  /* Font weights */
-  --weight-normal: 400;
-  --weight-bold: 700;
+  /* Core colors: prefer referencing the semantic colors, instead */
+  --namesake-black: #111111;
+  --namesake-white: #E1E1E1;
+  --namesake-purple: #CDA5EF;
+  --namesake-pink: #ECADD4;
+  --namesake-blue: #96C7F2;
+  --namesake-yellow: #ECDD85;
+  --namesake-green: #97CF9C;
+  --namesake-brown: #DDB896;
 
-  /* Colors */
-  --bg: #CDA5EF;
-  --text: #111111;
-  --text-placeholder: rgba(0, 0, 0, 0.5);
-  --white: #ffffff;
+  /* Semantic colors */
+  --background-color: var(--namesake-purple);
+  --focus-ring-color: var(--namesake-black);
+  --text-color: var(--namesake-black);
+  --text-color-disabled: color-mix(in srgb, var(--namesake-black) 35%, transparent);
+  --text-color-placeholder: color-mix(in srgb, var(--namesake-black) 50%, transparent);
+  --link-color: var(--namesake-black);
+  --border-color: var(--namesake-black);
+  --border-color-disabled: color-mix(in srgb, var(--namesake-black) 35%, transparent);
+  --field-background: var(--background-color);
+  --field-text-color: var(--namesake-black);
+  --overlay-background: var(--background-color);
+  --button-background: var(--background-color);
+  --highlight-background: var(--namesake-black);
+  --highlight-background-invalid: #5e0a0d;
+  --highlight-foreground: var(--background-color);
+  --highlight-overlay: rgb(from #6f46ed r g b / 15%);
+  --invalid-color: #9a0c14;
 }
 
 [data-color="purple"] {
-  --bg: #CDA5EF;
+  --background-color: var(--namesake-purple);
 }
 
 [data-color="pink"] {
-  --bg: #ECADD4;
+  --background-color: var(--namesake-pink);
 }
 
 [data-color="blue"] {
-  --bg: #96C7F2;
+  --background-color: var(--namesake-blue);
 }
 
 [data-color="yellow"] {
-  --bg: #ECDD85;
+  --background-color: var(--namesake-yellow);
 }
 
 [data-color="green"] {
-  --bg: #97CF9C;
+  --background-color: var(--namesake-green);
 }
 
 [data-color="brown"] {
-  --bg: #DDB896;
+  --background-color: var(--namesake-brown);
 }
 
 [data-color="white"] {
-  --bg: #E1E1E1;
+  --background-color: var(--namesake-white);
+}
+
+/* Windows high contrast mode overrides */
+@media (forced-colors: active) {
+  :root {
+    --background-color: Canvas;
+    --focus-ring-color: Highlight;
+    --text-color: ButtonText;
+    --text-color-disabled: GrayText;
+    --text-color-placeholder: ButtonText;
+    --link-color: LinkText;
+    --border-color: ButtonBorder;
+    --border-color-disabled: GrayText;
+    --field-background: Field;
+    --field-text-color: FieldText;
+    --overlay-background: Canvas;
+    --button-background: ButtonFace;
+    --highlight-background: Highlight;
+    --highlight-background-invalid: LinkText;
+    --highlight-foreground: HighlightText;
+    --invalid-color: LinkText;
+  }
 }

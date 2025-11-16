@@ -89,7 +89,7 @@ function generateDotPositions(
 
 function getFillForSupportLevel(supportLevel: string): string {
   const fillMap = {
-    full: "var(--text)",
+    full: "var(--text-color)",
     prioritized: "url(#hatchmarks)",
     none: "url(#dots)",
   };
@@ -119,7 +119,7 @@ function getFillForSupportLevel(supportLevel: string): string {
             ).map((pathData) => (
               <path
                 d={pathData}
-                stroke="var(--text)"
+                stroke="var(--text-color)"
                 stroke-linecap="square"
                 stroke-width={MAP_CONFIG.patterns.hatch.strokeWidth}
               />
@@ -142,7 +142,7 @@ function getFillForSupportLevel(supportLevel: string): string {
                 cx={pos.cx}
                 cy={pos.cy}
                 r={MAP_CONFIG.patterns.dots.radius}
-                fill="var(--text)"
+                fill="var(--text-color)"
               />
             ))
           }
@@ -166,7 +166,7 @@ function getFillForSupportLevel(supportLevel: string): string {
           {
             type: "full",
             label: "Full Support",
-            fill: "var(--text)",
+            fill: "var(--text-color)",
             count: stateFeatures.filter(
               (f) => f.properties.supportLevel === "full",
             ).length,
@@ -360,14 +360,14 @@ function getFillForSupportLevel(supportLevel: string): string {
   }
 
   .state {
-    stroke: var(--bg);
+    stroke: var(--background-color);
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 1.5;
     vector-effect: non-scaling-stroke;
 
     &[data-hovered="true"] {
-      stroke: var(--text);
+      stroke: var(--text-color);
       stroke-width: 2;
     }
 
@@ -418,8 +418,8 @@ function getFillForSupportLevel(supportLevel: string): string {
   .map-tooltip {
     position: absolute;
     white-space: nowrap;
-    background: var(--text);
-    color: var(--bg);
+    background: var(--text-color);
+    color: var(--background-color);
     padding: 8px 12px;
     border-radius: 4px;
     font-size: 14px;

@@ -1,0 +1,12 @@
+.react-aria-CheckboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  color: var(--text-color);
+
+  [slot="description"] {
+    display: block;
+    margin-top: var(--space-2xs);
+    font-size: var(--step--2);
+  }
+}

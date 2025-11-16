@@ -1,0 +1,40 @@
+.react-aria-Disclosure {
+  width: 100%;
+
+  .react-aria-Heading {
+    margin: 0;
+    padding: 0.5em 0;
+  }
+
+  .react-aria-Button[slot="trigger"] {
+    background: none;
+    border: none;
+    box-shadow: none;
+    font-weight: bold;
+    font-size: var(--step-0);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    svg {
+      rotate: 0deg;
+      transition: rotate 200ms;
+    }
+  }
+
+  &[data-expanded] .react-aria-Button[slot="trigger"] svg {
+    rotate: 90deg;
+  }
+}
+
+.react-aria-DisclosurePanel {
+  margin-left: var(--space-2xl);
+  color: var(--text-color);
+  height: var(--disclosure-panel-height);
+  transition: height 250ms;
+  overflow: clip;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}

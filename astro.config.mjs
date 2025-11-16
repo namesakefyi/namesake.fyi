@@ -2,14 +2,8 @@ import cloudflare from "@astrojs/cloudflare";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
-import postcssLogicalViewportUnits from "@csstools/postcss-logical-viewport-units";
 import sanity from "@sanity/astro";
 import { defineConfig, passthroughImageService } from "astro/config";
-import autoprefixer from "autoprefixer";
-import cssnano from "cssnano";
-import postcssClamp from "postcss-clamp";
-import postcssMediaMinMax from "postcss-media-minmax";
-import postcssUtopia from "postcss-utopia";
 
 export default defineConfig({
   output: "server",
@@ -51,21 +45,6 @@ export default defineConfig({
       // Without this, MessageChannel from node:worker_threads needs to be polyfilled.
       alias: import.meta.env.PROD && {
         "react-dom/server": "react-dom/server.edge",
-      },
-    },
-    css: {
-      postcss: {
-        plugins: [
-          autoprefixer(),
-          postcssUtopia({
-            minWidth: 320,
-            maxWidth: 1240,
-          }),
-          postcssMediaMinMax(),
-          postcssLogicalViewportUnits(),
-          postcssClamp(),
-          cssnano(),
-        ],
       },
     },
   },

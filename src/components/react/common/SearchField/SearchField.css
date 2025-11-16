@@ -1,0 +1,90 @@
+.react-aria-SearchField {
+  display: grid;
+  grid-template-areas:
+    "label label"
+    "input button"
+    "help  help";
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  width: fit-content;
+  color: var(--text-color);
+  position: relative;
+
+  .react-aria-Input {
+    grid-area: input;
+    width: 100%;
+    padding: var(--space-xs) var(--space-xl) var(--space-xs) var(--space-xs);
+    margin: 0;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--field-background);
+    font-size: var(--step-0);
+    color: var(--field-text-color);
+    outline: none;
+
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-decoration {
+      -webkit-appearance: none;
+    }
+
+    &::placeholder {
+      color: var(--text-color-placeholder);
+      opacity: 1;
+    }
+
+    &[data-focused] {
+      outline: 2px solid var(--focus-ring-color);
+      outline-offset: -1px;
+    }
+  }
+
+  .react-aria-Button {
+    grid-area: button;
+    position: absolute;
+    width: var(--space-xl);
+    height: var(--space-xl);
+    right: var(--space-2xs);
+    border-radius: 50%;
+    line-height: 1;
+    vertical-align: middle;
+    text-align: center;
+    background: transparent;
+    border: none;
+    padding: 0;
+
+    &[data-hovered] {
+      background: var(--highlight-background);
+      color: var(--highlight-foreground);
+    }
+  }
+
+  &[data-empty] button {
+    display: none;
+  }
+
+  .react-aria-Input {
+    &[data-invalid] {
+      border-color: var(--invalid-color);
+    }
+  }
+
+  .react-aria-FieldError {
+    grid-area: help;
+    font-size: var(--step--1);
+    color: var(--invalid-color);
+  }
+
+  [slot="description"] {
+    grid-area: help;
+    display: block;
+    margin-top: var(--space-2xs);
+    font-size: var(--step--2);
+  }
+
+  .react-aria-Input {
+    &[data-disabled] {
+      border-color: var(--border-color-disabled);
+      color: var(--text-color-disabled);
+    }
+  }
+}

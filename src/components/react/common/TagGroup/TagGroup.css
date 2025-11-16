@@ -1,0 +1,100 @@
+.react-aria-TagGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: small;
+  color: var(--text-color);
+}
+
+.react-aria-TagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.react-aria-Tag {
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  forced-color-adjust: none;
+  border-radius: var(--radius-xs);
+  padding: var(--space-2xs) var(--space-s);
+  font-size: var(--step--1);
+  outline: none;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  transition: border-color 200ms;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &[data-focus-visible] {
+    outline: 2px solid var(--focus-ring-color);
+    outline-offset: 2px;
+  }
+
+  &[data-selected] {
+    border-color: var(--highlight-background);
+    background: var(--highlight-background);
+    color: var(--highlight-foreground);
+  }
+
+  [slot="remove"] {
+    background: none;
+    border: 1px solid var(--border-color);
+    padding: 0;
+    margin-left: 4px;
+    color: var(--text-color);
+    transition: color 200ms;
+    outline: none;
+    font-size: 0.95em;
+    border-radius: 100%;
+    aspect-ratio: 1 / 1;
+    height: calc(100% - 4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &[data-focus-visible] {
+      outline: 2px solid var(--focus-ring-color);
+      outline-offset: -1px;
+    }
+  }
+
+  &[data-selected] {
+    [slot="remove"] {
+      color: inherit;
+    }
+  }
+}
+
+.react-aria-Tag[data-href] {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.react-aria-TagList {
+  .react-aria-Tag {
+    &[data-disabled] {
+      border-color: var(--border-color-disabled);
+      color: var(--text-color-disabled);
+    }
+
+    &:not([data-disabled]) {
+      cursor: pointer;
+    }
+  }
+}
+
+.react-aria-TagGroup {
+  [slot="description"] {
+    display: block;
+    margin-top: var(--space-2xs);
+    font-size: var(--step--2);
+  }
+
+  [slot="errorMessage"] {
+    font-size: var(--step--1);
+    color: var(--invalid-color);
+  }
+}

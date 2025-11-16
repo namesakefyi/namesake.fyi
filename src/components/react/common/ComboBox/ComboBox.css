@@ -1,0 +1,105 @@
+.react-aria-ComboBox {
+  color: var(--text-color);
+
+  > div:has(.react-aria-Input) {
+    display: flex;
+    align-items: center;
+  }
+
+  .react-aria-Input {
+    margin: 0;
+    font-size: var(--step-0);
+    background: var(--field-background);
+    color: var(--field-text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: var(--space-2xs) var(--space-l) var(--space-2xs) var(--space-xs);
+    vertical-align: middle;
+    outline: none;
+    min-width: 0;
+
+    &[data-focused] {
+      outline: 2px solid var(--focus-ring-color);
+      outline-offset: -1px;
+    }
+  }
+
+  .field-Button {
+    margin-left: calc(-1 * var(--space-l));
+  }
+}
+
+.react-aria-Popover[data-trigger="ComboBox"] {
+  width: var(--trigger-width);
+
+  .react-aria-ListBox {
+    display: block;
+    width: unset;
+    max-height: inherit;
+    min-height: unset;
+    border: none;
+
+    .react-aria-Header {
+      padding-left: var(--space-xl);
+    }
+  }
+
+  .react-aria-ListBoxItem {
+    padding: 0 var(--space-s) 0 var(--space-xl);
+
+    &[data-focus-visible] {
+      outline: none;
+    }
+
+    &[data-selected] {
+      font-weight: 600;
+      background: unset;
+      color: var(--text-color);
+
+      &::before {
+        content: "✓";
+        alt: " ";
+        position: absolute;
+        top: 4px;
+        left: 4px;
+      }
+    }
+
+    &[data-focused],
+    &[data-pressed] {
+      background: var(--highlight-background);
+      color: var(--highlight-foreground);
+    }
+  }
+}
+
+.react-aria-ListBoxItem[href] {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.react-aria-ComboBox {
+  .react-aria-Input {
+    &[data-disabled] {
+      border-color: var(--border-color-disabled);
+    }
+  }
+
+  .react-aria-Button {
+    &[data-disabled] {
+      background: var(--border-color-disabled);
+    }
+  }
+
+  .react-aria-Input {
+    &[data-invalid]:not([data-focused]) {
+      border-color: var(--invalid-color);
+    }
+  }
+
+  [slot="description"] {
+    display: block;
+    margin-top: var(--space-2xs);
+    font-size: var(--step--2);
+  }
+}

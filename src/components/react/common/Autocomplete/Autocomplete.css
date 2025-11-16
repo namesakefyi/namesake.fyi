@@ -1,0 +1,16 @@
+.react-aria-SearchField {
+  width: 100%;
+}
+
+.react-aria-Menu {
+  &[data-empty] {
+    align-items: center;
+    justify-content: center;
+    font-style: italic;
+  }
+}
+
+.react-aria-MenuItem[href] {
+  text-decoration: none;
+  cursor: pointer;
+}

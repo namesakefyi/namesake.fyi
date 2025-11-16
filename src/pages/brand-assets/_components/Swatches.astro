@@ -9,7 +9,10 @@ import { colors } from "~/data/colors";
       .map((color) => (
         <li
           class="swatch"
-          style={{ backgroundColor: color.hex, "--bg": color.hex }}
+          style={{
+            backgroundColor: color.hex,
+            "--background-color": color.hex,
+          }}
         >
           <div class="swatch-title">
             <strong class="swatch-name">{color.name}</strong>
@@ -89,7 +92,7 @@ import { colors } from "~/data/colors";
     justify-content: space-between;
     padding: var(--space-m);
     align-items: center;
-    border: 3px solid var(--text);
+    border: 3px solid var(--text-color);
     border-radius: 3px;
     position: relative;
 

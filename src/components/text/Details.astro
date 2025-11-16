@@ -12,7 +12,7 @@ const { summary, content } = Astro.props.node;
 
 <style lang="scss">
   details {
-    border: 0.5px solid var(--text);
+    border: 0.5px solid var(--border-color);
 
     --details-indent: calc(var(--space-xl) + var(--space-s) - 1px);
     --details-transition-duration: 0.2s;
@@ -66,14 +66,15 @@ const { summary, content } = Astro.props.node;
     }
 
     &::before {
-      content: "▶︎";
+      content: "";
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z'%3E%3C/path%3E%3C/svg%3E");
       padding: var(--space-xs);
       transition: rotate 0.15s ease-out;
       position: absolute;
-      left: 1rem;
-      top: 1rem;
-      width: 1rem;
-      height: 1rem;
+      left: 0.9em;
+      top: 0.85em;
+      width: var(--space-l);
+      height: var(--space-l);
       font-size: 0.6em;
       display: flex;
       align-items: center;
