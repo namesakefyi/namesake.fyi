@@ -18,7 +18,7 @@ type Story = StoryFn<typeof Tooltip>;
 export const Example: Story = (args) => (
   <TooltipTrigger>
     <Button>
-      <RiSaveLine size={18} />
+      <RiSaveLine size={24} />
     </Button>
     <Tooltip {...args}>Save</Tooltip>
   </TooltipTrigger>

@@ -8,9 +8,10 @@
   font-size: var(--step--1);
   color: var(--text-color);
   forced-color-adjust: none;
+  overflow: hidden;
 
   .indicator {
-    width: var(--space-2xl);
+    width: calc(var(--space-l) * 2);
     height: var(--space-l);
     border: 2px solid var(--border-color);
     background: var(--field-background);
@@ -30,14 +31,6 @@
     }
   }
 
-  &[data-pressed] .indicator {
-    border-color: var(--highlight-background);
-
-    &:before {
-      background: var(--highlight-background);
-    }
-  }
-
   &[data-selected] {
     .indicator {
       border-color: var(--highlight-background);
@@ -46,12 +39,6 @@
       &:before {
         background: var(--field-background);
         transform: translateX(100%);
-      }
-    }
-
-    &[data-pressed] {
-      .indicator {
-        background: var(--highlight-background);
       }
     }
   }

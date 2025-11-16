@@ -4,14 +4,14 @@
   background: var(--button-background);
   border: 1px solid var(--border-color);
   forced-color-adjust: none;
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
   appearance: none;
   vertical-align: middle;
   font-size: var(--step--1);
   text-align: center;
   margin: 0;
   outline: none;
-  padding: 6px 10px;
+  padding: var(--space-2xs) var(--space-s);
   display: inline-flex;
   align-items: center;
   justify-content: center;

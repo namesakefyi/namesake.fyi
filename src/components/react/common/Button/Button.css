@@ -8,21 +8,15 @@
   vertical-align: middle;
   font-size: var(--step--1);
   font-weight: var(--weight-bold);
-  box-shadow: 0 1px 0 var(--border-color), inset 0 -1px 0 var(--border-color);
   text-align: center;
   margin: 0;
   outline: none;
-  padding: var(--space-xs) var(--space-m);
+  padding: var(--space-xs) var(--space-s);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2xs);
-
-  &[data-pressed] {
-    box-shadow: none;
-    transform: translateY(2px);
-  }
 
   &[data-focus-visible] {
     outline: 2px solid var(--focus-ring-color);

@@ -17,7 +17,7 @@ export const Determinate: Story = (args) => <ProgressCircle {...args} />;
 Determinate.args = {
   "aria-label": "Loading…",
   value: 60,
-  size: 48,
+  size: 32,
 };
 
 export const Indeterminate: Story = (args) => <ProgressCircle {...args} />;
@@ -25,5 +25,5 @@ export const Indeterminate: Story = (args) => <ProgressCircle {...args} />;
 Indeterminate.args = {
   "aria-label": "Loading…",
   isIndeterminate: true,
-  size: 48,
+  size: 32,
 };

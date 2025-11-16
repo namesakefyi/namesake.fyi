@@ -15,10 +15,6 @@
   width: 100%;
 }
 
-.react-aria-Label {
-  margin-bottom: 0.5em;
-}
-
 .react-aria-Menu {
   &[data-empty] {
     align-items: center;

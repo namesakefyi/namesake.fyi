@@ -34,14 +34,14 @@ export function ProgressCircle(props: ProgressCircleProps) {
               cx="50%"
               cy="50%"
               r={radius}
-              stroke="color-mix(in srgb, var(--border-color) 50%, transparent)"
+              stroke="color-mix(in srgb, var(--border-color) 20%, transparent)"
               strokeWidth={strokeWidth}
             />
             <circle
               cx="50%"
               cy="50%"
               r={radius}
-              stroke="var(--highlight-background)"
+              stroke="var(--border-color)"
               strokeWidth={strokeWidth}
               // Normalize the path length to 100 so we can easily set stroke-dashoffset to a percentage.
               pathLength="100"
