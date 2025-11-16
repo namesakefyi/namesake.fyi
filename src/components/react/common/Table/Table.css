@@ -1,4 +1,3 @@
-
 .react-aria-Table {
   border: 1px solid var(--border-color);
   background: var(--field-background);
@@ -17,6 +16,33 @@
   &[data-focus-visible] {
     outline: 2px solid var(--focus-ring-color);
     outline-offset: -1px;
+  }
+
+  .react-aria-Column {
+    .column-header {
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      font-size: var(--step--1);
+    }
+
+    .sort-indicator {
+      padding: 0 2px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &:not([data-sort-direction]) .sort-indicator {
+      visibility: hidden;
+    }
+  }
+
+  .react-aria-Column,
+  .react-aria-Cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .react-aria-TableHeader {
@@ -55,6 +81,26 @@
     &[data-disabled] {
       color: var(--text-color-disabled);
     }
+
+    &[data-dragging] {
+      opacity: 0.6;
+      transform: translateZ(0);
+    }
+
+    &[data-href] {
+      cursor: pointer;
+    }
+
+    [slot="drag"] {
+      all: unset;
+      width: 15px;
+      text-align: center;
+
+      &[data-focus-visible] {
+        border-radius: 4px;
+        outline: 2px solid var(--focus-ring-color);
+      }
+    }
   }
 
   .react-aria-Cell,
@@ -82,30 +128,6 @@
 
   .react-aria-ProgressBar {
     margin: auto;
-  }
-}
-
-.react-aria-Row[data-href] {
-  cursor: pointer;
-}
-
-.react-aria-Column {
-  .column-header {
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-    font-size: var(--step--1);
-  }
-
-  .sort-indicator {
-    padding: 0 2px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &:not([data-sort-direction]) .sort-indicator {
-    visibility: hidden;
   }
 }
 
@@ -179,31 +201,6 @@
     &[data-resizing] {
       border-color: var(--focus-ring-color);
       background-color: transparent;
-    }
-  }
-
-  .react-aria-Column,
-  .react-aria-Cell {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-
-.react-aria-Row {
-  &[data-dragging] {
-    opacity: 0.6;
-    transform: translateZ(0);
-  }
-
-  [slot="drag"] {
-    all: unset;
-    width: 15px;
-    text-align: center;
-
-    &[data-focus-visible] {
-      border-radius: 4px;
-      outline: 2px solid var(--focus-ring-color);
     }
   }
 }
