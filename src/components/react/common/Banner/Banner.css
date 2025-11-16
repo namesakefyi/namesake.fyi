@@ -1,0 +1,36 @@
+.banner {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  width: 100%;
+  border: 1px solid var(--border-color);
+  background-color: var(--field-background);
+
+  .banner-icon {
+    background-color: var(--highlight-background);
+    color: var(--highlight-foreground);
+    padding: var(--space-s) var(--space-2xs);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  svg {
+    flex-shrink: 0;
+    width: var(--space-l);
+  }
+
+  &[data-variant="error"] {
+    border-color: var(--invalid-color);
+    color: var(--invalid-color);
+
+    .banner-icon {
+      background-color: var(--invalid-color);
+    }
+  }
+}
+
+.banner-content {
+  font-size: var(--step-0);
+  flex: 1;
+  padding: var(--space-s) var(--space-m);
+}
