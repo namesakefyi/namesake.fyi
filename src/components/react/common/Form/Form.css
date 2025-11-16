@@ -33,8 +33,9 @@
   margin-bottom: var(--space-2xs);
   font-size: var(--step--1);
 
-  &:has(~ [data-focused]),
-  &:has(~ [data-focus-within]) {
+  &:has(~ [data-focused="true"]),
+  &:has(~ [data-focus-within="true"]),
+  &:has(~ [aria-expanded="true"]) {
     font-weight: var(--weight-bold);
   }
 }

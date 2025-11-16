@@ -42,18 +42,21 @@
   .react-aria-Button {
     grid-area: button;
     position: absolute;
-    width: var(--space-l);
-    height: var(--space-l);
+    width: var(--space-xl);
+    height: var(--space-xl);
     right: var(--space-2xs);
     border-radius: 50%;
-    font-size: var(--step--1);
     line-height: 1;
     vertical-align: middle;
     text-align: center;
-    background: var(--highlight-background);
-    color: var(--highlight-foreground);
+    background: transparent;
     border: none;
     padding: 0;
+
+    &[data-hovered] {
+      background: var(--highlight-background);
+      color: var(--highlight-foreground);
+    }
   }
 
   &[data-empty] button {
@@ -74,7 +77,9 @@
 
   [slot="description"] {
     grid-area: help;
-    font-size: var(--step--1);
+    display: block;
+    margin-top: var(--space-2xs);
+    font-size: var(--step--2);
   }
 
   .react-aria-Input {

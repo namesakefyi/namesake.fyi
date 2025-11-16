@@ -6,7 +6,9 @@
   color: var(--text-color);
 
   [slot="description"] {
-    font-size: var(--step--1);
+    display: block;
+    margin-top: var(--space-2xs);
+    font-size: var(--step--2);
   }
 }
 

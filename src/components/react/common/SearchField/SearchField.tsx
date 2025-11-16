@@ -31,7 +31,7 @@ export function SearchField({
       {label && <Label>{label}</Label>}
       <Input placeholder={placeholder} />
       <Button>
-        <RiCloseLine size={14} />
+        <RiCloseLine size={20} />
       </Button>
       {description && <Text slot="description">{description}</Text>}
       <FieldError>{errorMessage}</FieldError>

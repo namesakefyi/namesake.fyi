@@ -21,7 +21,7 @@
     minTypeScale: 1.2,
     maxTypeScale: 1.25,
     positiveSteps: 7,
-    negativeSteps: 1,
+    negativeSteps: 2,
   });
 
   @utopia spaceScale({

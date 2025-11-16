@@ -89,11 +89,13 @@
 
 .react-aria-TagGroup {
   [slot="description"] {
-    font-size: 12px;
+    display: block;
+    margin-top: var(--space-2xs);
+    font-size: var(--step--2);
   }
 
   [slot="errorMessage"] {
-    font-size: 12px;
+    font-size: var(--step--1);
     color: var(--invalid-color);
   }
 }

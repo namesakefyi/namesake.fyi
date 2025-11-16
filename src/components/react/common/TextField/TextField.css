@@ -35,7 +35,9 @@
   }
 
   [slot="description"] {
-    font-size: 12px;
+    display: block;
+    margin-top: var(--space-2xs);
+    font-size: var(--step--2);
   }
 
   .react-aria-Input,

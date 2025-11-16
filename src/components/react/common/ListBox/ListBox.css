@@ -68,7 +68,9 @@
   [slot="label"] {}
 
   [slot="description"] {
-    font-size: small;
+    display: block;
+    margin-top: var(--space-2xs);
+    font-size: var(--step--2);
   }
 
   &[data-disabled] {
