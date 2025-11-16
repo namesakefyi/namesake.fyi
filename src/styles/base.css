@@ -1,12 +1,12 @@
 html {
   font-size: 100%;
   height: 100%;
-  background-color: var(--text);
+  background-color: var(--text-color);
 }
 
 body {
-  color: var(--text);
-  background-color: var(--bg);
+  color: var(--text-color);
+  background-color: var(--background-color);
   background-position: center top;
   display: flex;
   min-height: 100dvh;
@@ -60,8 +60,8 @@ body[data-color="brown"]::after {
 }
 
 ::selection {
-  background: var(--text);
-  color: var(--bg);
+  background: var(--text-color);
+  color: var(--background-color);
 }
 
 main {
@@ -120,14 +120,14 @@ small {
 
 a {
   text-decoration: underline;
-  text-decoration-color: var(--text);
+  text-decoration-color: var(--text-color);
   text-underline-offset: max(0.1em, 2.5px);
 }
 
 @media (hover: hover) {
   a:hover,
   a:focus {
-    text-decoration-color: var(--text);
+    text-decoration-color: var(--text-color);
   }
 }
 
@@ -150,7 +150,7 @@ img {
 }
 
 :focus-visible {
-  outline: 3px solid var(--text);
+  outline: 3px solid var(--text-color);
   outline-offset: 2px;
 }
 
@@ -167,27 +167,27 @@ img {
   cursor: pointer;
 
   &.primary {
-    background-color: var(--text);
-    border-color: var(--text);
-    color: var(--bg);
+    background-color: var(--text-color);
+    border-color: var(--text-color);
+    color: var(--background-color);
 
     @media (hover: hover) {
       &:hover {
-        background-color: var(--bg);
-        color: var(--text);
+        background-color: var(--background-color);
+        color: var(--text-color);
       }
     }
   }
 
   &.secondary {
-    background-color: var(--bg);
-    color: var(--text);
-    border-color: var(--text);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-color: var(--text-color);
 
     @media (hover: hover) {
       &:hover {
-        background-color: var(--text);
-        color: var(--bg);
+        background-color: var(--text-color);
+        color: var(--background-color);
       }
     }
   }

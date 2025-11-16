@@ -71,7 +71,7 @@ if (!page) return Astro.redirect("/404");
 
   const isForcedColors = window.matchMedia("(forced-colors: active)").matches;
   if (heroHighlight && !isForcedColors) {
-    heroHighlight.style.color = "var(--bg)";
+    heroHighlight.style.color = "var(--background-color)";
     const highlight = annotate(heroHighlight, {
       type: "highlight",
       iterations: 1,
@@ -139,7 +139,7 @@ if (!page) return Astro.redirect("/404");
   }
 
   .hero-highlight {
-    color: var(--bg);
+    color: var(--background-color);
   }
 
   .content {

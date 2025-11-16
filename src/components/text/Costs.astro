@@ -51,7 +51,7 @@ const totalCosts = formatTotalCosts(costs);
 <style>
   table {
     border-collapse: collapse;
-    border: 0.5px solid var(--text);
+    border: 0.5px solid var(--text-color);
     width: 100%;
     margin-block: var(--space-l);
     table-layout: fixed;
@@ -64,13 +64,13 @@ const totalCosts = formatTotalCosts(costs);
   }
 
   tbody tr:not(:last-child) td {
-    border-bottom: 0.5px dotted var(--text);
+    border-bottom: 0.5px dotted var(--text-color);
   }
 
   tfoot td {
     font-size: var(--step-1);
     padding-block: var(--space-s);
-    border-top: 0.5px solid var(--text);
+    border-top: 0.5px solid var(--text-color);
     font-weight: var(--weight-bold);
   }
 

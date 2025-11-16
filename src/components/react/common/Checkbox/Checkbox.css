@@ -1,0 +1,83 @@
+.react-aria-Checkbox {
+  --selected-color: var(--highlight-background);
+  --selected-color-pressed: var(--highlight-background);
+  --checkmark-color: var(--background-color);
+
+  display: flex;
+  /* This is needed so the HiddenInput is positioned correctly */
+  position: relative;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--text-color);
+  forced-color-adjust: none;
+
+  .checkbox {
+    width: var(--space-xl);
+    height: var(--space-xl);
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  svg {
+    width: 75%;
+    height: 75%;
+    fill: none;
+    stroke: var(--checkmark-color);
+    stroke-width: 2;
+  }
+
+  &[data-focus-visible] .checkbox {
+    outline: 2px solid var(--focus-ring-color);
+    outline-offset: 2px;
+  }
+
+  &[data-selected],
+  &[data-indeterminate] {
+    .checkbox {
+      border-color: var(--selected-color);
+      background: var(--selected-color);
+    }
+
+    &[data-pressed] .checkbox {
+      border-color: var(--selected-color-pressed);
+      background: var(--selected-color-pressed);
+    }
+
+    svg {
+      stroke-dashoffset: 44;
+    }
+  }
+
+  &[data-indeterminate] {
+    & svg {
+      stroke: none;
+      fill: var(--checkmark-color);
+    }
+  }
+
+  &[data-invalid] {
+    .checkbox {
+      --checkmark-color: var(--highlight-foreground);
+      border-color: var(--invalid-color);
+    }
+
+    &[data-selected],
+    &[data-indeterminate] {
+      .checkbox {
+        background: var(--invalid-color);
+      }
+    }
+  }
+
+  &[data-disabled] {
+    color: var(--text-color-disabled);
+
+    .checkbox {
+      border-color: var(--border-color-disabled);
+    }
+  }
+}

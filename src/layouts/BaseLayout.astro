@@ -1,6 +1,4 @@
 ---
-import { join } from "node:path";
-import { AstroFont } from "astro-font";
 import Footer from "~/components/Footer.astro";
 import Header from "~/components/Header.astro";
 import type { NamesakeColor } from "~/data/colors";
@@ -42,39 +40,17 @@ const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Namesake`;
       import * as Fathom from "fathom-client";
       Fathom.load("GQAJEJLZ");
     </script>
-    <AstroFont
-      config={[
-        {
-          name: "Alte Haas Grotesk",
-          src: [
-            {
-              style: "normal",
-              weight: "400",
-              path: join(
-                process.cwd(),
-                "public",
-                "fonts",
-                "AlteHaasGroteskRegular.woff2",
-              ),
-            },
-            {
-              style: "bold",
-              weight: "600",
-              path: join(
-                process.cwd(),
-                "public",
-                "fonts",
-                "AlteHaasGroteskBold.woff2",
-              ),
-            },
-          ],
-          preload: true,
-          display: "swap",
-          selector: "body",
-          fallback: "sans-serif",
-          cssVariable: "font-sans",
-        },
-      ]}
+    <link
+      rel="preload"
+      href="/fonts/AlteHaasGroteskRegular.woff2"
+      as="font"
+      type="font/woff2"
+    />
+    <link
+      rel="preload"
+      href="/fonts/AlteHaasGroteskBold.woff2"
+      as="font"
+      type="font/woff2"
     />
     <meta name="generator" content={Astro.generator} />
     <meta name="color-scheme" content="light" />
