@@ -10,15 +10,15 @@ If you need help with your legal name change or gender marker change, come join 
 
 | Location         | Description                                                             |
 | :--------------- | :---------------------------------------------------------------------- |
+| `e2e`            | End-to-end tests written using Playwright.                              |
 | `public`         | Images, fonts, favicons, and app icons.                                 |
 | `src/components` | All of the .astro components that are used and reused across the site.  |
-| `src/data`       | Shared data for site info and colors.                                   |
-| `src/helpers`    | Helper functions and other utilities.                                   |
+| `src/constants`  | Shared data for site info and colors.                                   |
 | `src/layouts`    | Shared layout files for wrapping pages.                                 |
 | `src/pages`      | Page-based routing for everything on the site.                          |
 | `src/sanity`     | Schemas and components used for Sanity, our CMS.
 | `src/styles`     | Global site styles.                                                     |
-| `tests`          | End-to-end tests written using Playwright.                              |
+| `src/utils`      | Helper functions and other utilities.                                   |
 
 ## Accessibility
 
