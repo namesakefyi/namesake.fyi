@@ -213,9 +213,6 @@ importers:
       postcss-utopia:
         specifier: ^1.1.0
         version: 1.1.0(postcss@8.5.6)
-      sass:
-        specifier: ^1.94.2
-        version: 1.94.2
       sharp:
         specifier: ^0.34.5
         version: 0.34.5
@@ -15794,7 +15791,8 @@ snapshots:
 
   immer@10.2.0: {}
 
-  immutable@5.1.4: {}
+  immutable@5.1.4:
+    optional: true
 
   import-fresh@3.3.1:
     dependencies:
@@ -18254,6 +18252,7 @@ snapshots:
       source-map-js: 1.2.1
     optionalDependencies:
       '@parcel/watcher': 2.5.1
+    optional: true
 
   sax@1.2.1: {}
 
