@@ -31,6 +31,6 @@ jobs:
         uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
         with:
           install_command: pnpm install
-          build_command: pnpm build-storybook
+          build_command: pnpm storybook:build
           path: storybook-static
           checkout: false
