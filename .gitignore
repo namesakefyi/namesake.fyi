@@ -32,6 +32,9 @@ pnpm-debug.log*
 /blob-report/
 /playwright/.cache/
 
+# cloudflare
+.wrangler/
+
 # storybook
 *storybook.log
 storybook-static
