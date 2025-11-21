@@ -32,7 +32,7 @@ const { title, date, description, annotation = "circle" } = Astro.props;
 <script>
   import { annotate } from "rough-notation";
   import type { RoughAnnotationType } from "rough-notation/lib/model";
-  import { annotationConfig } from "~/helpers/helpers";
+  import { annotationConfig } from "~/constants/annotations";
 
   const header: HTMLElement | null = document.querySelector(".page-head h1");
   const isForcedColors = window.matchMedia("(forced-colors: active)").matches;

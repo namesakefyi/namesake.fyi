@@ -1,7 +1,7 @@
 import type { TitledListValue } from "@sanity/types";
 import type { RoughAnnotationType } from "rough-notation/lib/model";
-import type { NamesakeColor } from "../../../data/colors";
-import { colors } from "../../../data/colors";
+import type { NamesakeColor } from "../../../constants/colors";
+import { colors } from "../../../constants/colors";
 import { externalLink, internalLink } from "../annotations";
 
 export const richTextBlock = {

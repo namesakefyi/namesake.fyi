@@ -39,7 +39,7 @@ jobs:
       - name: Use Node.js v22
         uses: actions/setup-node@v6
         with:
-          node-version: '22.x'
+          node-version: "22.x"
           cache: "pnpm"
 
       - name: Install dependencies
@@ -49,7 +49,7 @@ jobs:
         run: pnpm exec playwright install chromium
 
       - name: Run Playwright tests
-        run: pnpm test
+        run: pnpm test:e2e
 
       - name: Upload Playwright results
         uses: actions/upload-artifact@v5

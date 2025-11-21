@@ -1,4 +1,4 @@
-type Cost = {
+export type Cost = {
   title: string;
   amount: number;
   required?: "required" | "notRequired";
