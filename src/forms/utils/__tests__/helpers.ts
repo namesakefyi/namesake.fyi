@@ -14,4 +14,3 @@ export const testPdfDefinition = definePdf({
     shouldReturnOriginalDocuments: data.shouldReturnOriginalDocuments,
   }),
 });
-
