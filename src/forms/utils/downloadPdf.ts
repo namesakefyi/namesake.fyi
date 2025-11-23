@@ -22,4 +22,3 @@ export async function downloadPdf({
     console.error(error);
   }
 }
-

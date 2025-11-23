@@ -1,7 +1,7 @@
-import { formatBirthplaceStateOrCountry } from "../formatBirthplaceStateOrCountry";
-import { BIRTHPLACES } from "~/constants/jurisdictions";
-import { COUNTRIES } from "~/constants/countries";
 import { describe, expect, it } from "vitest";
+import { COUNTRIES } from "~/constants/countries";
+import { BIRTHPLACES } from "~/constants/jurisdictions";
+import { formatBirthplaceStateOrCountry } from "../formatBirthplaceStateOrCountry";
 
 describe("formatBirthplaceStateOrCountry", () => {
   it("returns state name when valid state is provided", () => {

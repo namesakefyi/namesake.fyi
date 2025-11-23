@@ -7,4 +7,3 @@ import type { PDFDefinition } from "~/constants/forms";
 export function definePdf(pdf: PDFDefinition): PDFDefinition {
   return pdf;
 }
-

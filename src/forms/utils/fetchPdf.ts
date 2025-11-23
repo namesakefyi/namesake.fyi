@@ -18,4 +18,3 @@ export async function fetchPdf(path: string): Promise<ArrayBuffer> {
 
   return response.arrayBuffer();
 }
-

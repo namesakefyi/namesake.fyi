@@ -52,4 +52,3 @@ export async function downloadMergedPdf({
   const mergedPdfBytes = await mergedPdf.save();
   downloadPdf({ pdfBytes: mergedPdfBytes, title });
 }
-

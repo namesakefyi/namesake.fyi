@@ -135,4 +135,3 @@ describe("downloadMergedPdf", () => {
     expect(fetch).toHaveBeenCalledWith("/forms/pdf-cover-logo.png");
   });
 });
-

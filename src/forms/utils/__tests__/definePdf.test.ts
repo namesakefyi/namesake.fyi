@@ -23,4 +23,3 @@ describe("definePdf", () => {
     expect(typeof definition.fields).toBe("function");
   });
 });
-

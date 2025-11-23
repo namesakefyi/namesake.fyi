@@ -117,4 +117,3 @@ describe("downloadPdf", () => {
     expect(mockAnchor.download).toBe("Custom Form Name.pdf");
   });
 });
-

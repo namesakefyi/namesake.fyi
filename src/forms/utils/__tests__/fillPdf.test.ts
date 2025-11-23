@@ -21,9 +21,9 @@ describe("fillPdf", () => {
     const form = pdfDoc.getForm();
     expect(form.getTextField("newFirstName").getText()).toBe("New");
     expect(form.getTextField("oldFirstName").getText()).toBe("Old");
-    expect(
-      form.getCheckBox("shouldReturnOriginalDocuments").isChecked(),
-    ).toBe(true);
+    expect(form.getCheckBox("shouldReturnOriginalDocuments").isChecked()).toBe(
+      true,
+    );
   });
 
   it("should handle empty or undefined values", async () => {
@@ -40,9 +40,9 @@ describe("fillPdf", () => {
     const form = pdfDoc.getForm();
     expect(form.getTextField("newFirstName").getText()).toBeUndefined();
     expect(form.getTextField("oldFirstName").getText()).toBeUndefined();
-    expect(
-      form.getCheckBox("shouldReturnOriginalDocuments").isChecked(),
-    ).toBe(false);
+    expect(form.getCheckBox("shouldReturnOriginalDocuments").isChecked()).toBe(
+      false,
+    );
   });
 
   it("should set a title and author", async () => {
@@ -57,4 +57,3 @@ describe("fillPdf", () => {
     expect(pdfDoc.getAuthor()).toBe("Filled by Namesake Collaborative");
   });
 });
-

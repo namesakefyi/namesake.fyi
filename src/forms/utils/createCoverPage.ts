@@ -148,4 +148,3 @@ export async function createCoverPage({
 
   return await pdfDoc.save();
 }
-

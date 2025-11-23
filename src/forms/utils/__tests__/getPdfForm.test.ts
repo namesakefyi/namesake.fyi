@@ -15,9 +15,9 @@ describe("getPdfForm", () => {
 
     expect(form.getTextField("newFirstName").getText()).toBe("New");
     expect(form.getTextField("oldFirstName").getText()).toBe("Old");
-    expect(
-      form.getCheckBox("shouldReturnOriginalDocuments").isChecked(),
-    ).toBe(true);
+    expect(form.getCheckBox("shouldReturnOriginalDocuments").isChecked()).toBe(
+      true,
+    );
   });
 
   it("should throw error for invalid PDF path", async () => {
@@ -43,4 +43,3 @@ describe("getPdfForm", () => {
     consoleSpy.mockRestore();
   });
 });
-

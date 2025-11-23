@@ -30,4 +30,3 @@ describe("fetchPdf", () => {
     await expect(fetchPdf("/test.pdf")).rejects.toThrow("Invalid content type");
   });
 });
-
