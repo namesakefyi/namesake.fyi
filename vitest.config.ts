@@ -8,5 +8,7 @@ export default getViteConfig({
     globals: true,
     include: ["src/**/*.test.{ts,tsx}"],
     exclude: [...configDefaults.exclude, "e2e/**"],
+    setupFiles: ["./src/vitest.setup.ts"],
+    environment: "jsdom",
   },
 });

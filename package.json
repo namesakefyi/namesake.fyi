@@ -38,6 +38,7 @@
     "@astrojs/rss": "^4.0.14",
     "@astrojs/sitemap": "^3.6.0",
     "@axe-core/playwright": "^4.11.0",
+    "@cantoo/pdf-lib": "^2.5.3",
     "@portabletext/types": "^3.0.0",
     "@remixicon/react": "^4.7.0",
     "@sanity/astro": "^3.2.10",
@@ -57,6 +58,7 @@
     "d3-selection": "^3.0.0",
     "dayjs": "^1.11.19",
     "fathom-client": "^3.7.2",
+    "language-name-map": "^0.3.0",
     "markdown-it": "^14.1.0",
     "postcss": "^8.5.6",
     "react": "^19.2.0",
@@ -69,6 +71,7 @@
     "sanity": "^4.18.0",
     "styled-components": "^6.1.19",
     "topojson-client": "^3.1.0",
+    "typed-usa-states": "^2.1.0",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
