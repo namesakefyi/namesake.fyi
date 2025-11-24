@@ -15,7 +15,7 @@
   box-sizing: border-box;
 
   &[data-focus-visible] {
-    outline: 2px solid var(--focus-ring-color);
+    outline: 3px solid var(--focus-ring-color);
     outline-offset: -1px;
   }
 
@@ -50,7 +50,7 @@
   min-height: var(--space-xl);
 
   &[data-focus-visible] {
-    outline: 2px solid var(--focus-ring-color);
+    outline: 3px solid var(--focus-ring-color);
     outline-offset: -2px;
   }
 
@@ -133,7 +133,7 @@
     }
 
     &[data-focus-visible] {
-      outline: 2px solid var(--focus-ring-color);
+      outline: 3px solid var(--focus-ring-color);
       outline-offset: -2px;
     }
   }
@@ -189,13 +189,13 @@
 }
 
 .react-aria-ListBox[data-drop-target] {
-  outline: 2px solid var(--highlight-background);
+  outline: 3px solid var(--highlight-background);
   outline-offset: -1px;
   background: var(--highlight-overlay);
 }
 
 .react-aria-ListBoxItem[data-drop-target] {
-  outline: 2px solid var(--highlight-background);
+  outline: 3px solid var(--highlight-background);
   background: var(--highlight-overlay);
 }
 

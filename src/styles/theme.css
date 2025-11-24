@@ -57,7 +57,7 @@
 
   /* Core colors: prefer referencing the semantic colors, instead */
   --namesake-black: #111111;
-  --namesake-white: #E1E1E1;
+  --namesake-white: light-dark(#E1E1E1, #111111);
   --namesake-purple: #CDA5EF;
   --namesake-pink: #ECADD4;
   --namesake-blue: #96C7F2;

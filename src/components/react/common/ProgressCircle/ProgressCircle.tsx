@@ -2,6 +2,7 @@
 
 import type { ProgressBarProps } from "react-aria-components";
 import { composeRenderProps, ProgressBar } from "react-aria-components";
+import "./ProgressCircle.css";
 
 export interface ProgressCircleProps extends ProgressBarProps {
   size?: number;
@@ -14,6 +15,7 @@ export function ProgressCircle(props: ProgressCircleProps) {
 
   return (
     <ProgressBar
+      className="progress-circle"
       {...props}
       style={composeRenderProps(props.style, (style) => ({
         ...style,
@@ -34,14 +36,14 @@ export function ProgressCircle(props: ProgressCircleProps) {
               cx="50%"
               cy="50%"
               r={radius}
-              stroke="color-mix(in srgb, var(--border-color) 20%, transparent)"
+              stroke="color-mix(in srgb, currentColor 20%, transparent)"
               strokeWidth={strokeWidth}
             />
             <circle
               cx="50%"
               cy="50%"
               r={radius}
-              stroke="var(--border-color)"
+              stroke="currentColor"
               strokeWidth={strokeWidth}
               // Normalize the path length to 100 so we can easily set stroke-dashoffset to a percentage.
               pathLength="100"

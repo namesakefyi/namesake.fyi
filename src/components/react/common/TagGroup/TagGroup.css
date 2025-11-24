@@ -29,7 +29,7 @@
   text-overflow: ellipsis;
 
   &[data-focus-visible] {
-    outline: 2px solid var(--focus-ring-color);
+    outline: 3px solid var(--focus-ring-color);
     outline-offset: 2px;
   }
 
@@ -56,7 +56,7 @@
     justify-content: center;
 
     &[data-focus-visible] {
-      outline: 2px solid var(--focus-ring-color);
+      outline: 3px solid var(--focus-ring-color);
       outline-offset: -1px;
     }
   }

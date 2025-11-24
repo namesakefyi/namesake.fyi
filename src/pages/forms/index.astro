@@ -1,0 +1,69 @@
+---
+import type { SanityDocument } from "@sanity/client";
+import PageHeader from "~/components/PageHeader.astro";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { loadQuery } from "~/sanity/lib/loadQuery";
+
+const { params } = Astro.props;
+
+const { data: forms } = await loadQuery<SanityDocument[]>({
+  query: `*[_type == "form" && defined(slug)]{
+    title,
+    slug,
+  } | order(publishDate desc)`,
+  params,
+});
+---
+
+<BaseLayout
+  title="Forms"
+  description="Namesake's guided forms can help you fill out name change documents."
+  color="white"
+>
+  <PageHeader
+    title="Forms"
+    description="Namesake's guided forms can help you fill out name change documents."
+  />
+  <div class="forms">
+    {
+      forms.length ? (
+        forms.map((form) => (
+          <a class="form" href={`/forms/${form.slug.current}`}>
+            {form.title}
+          </a>
+        ))
+      ) : (
+        <p>No forms found.</p>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .forms {
+    display: grid;
+    gap: var(--space-m);
+
+    @media (width > 600px) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media (width > 1000px) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+
+  .form {
+    border: 0.5px solid var(--text-color);
+    padding: var(--space-m);
+    text-decoration: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+    }
+  }
+</style>

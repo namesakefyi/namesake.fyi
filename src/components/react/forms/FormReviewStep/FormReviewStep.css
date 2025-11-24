@@ -1,0 +1,49 @@
+.form-review-step {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2xl);
+}
+
+.form-review-step-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.form-review-step-title {
+  font-size: var(--step-3);
+  letter-spacing: var(--letter-spacing-condensed);
+  line-height: 1.1;
+  text-wrap: pretty;
+}
+
+.form-review-step-description {
+  font-size: var(--step-1);
+  text-wrap: pretty;
+}
+
+.form-review-step-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+  width: 100%;
+}
+
+.form-review-step-placeholder {
+  padding: var(--space-2xl);
+  background: var(--surface-color);
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-m);
+  text-align: center;
+  width: 100%;
+}
+
+.form-review-step-placeholder p {
+  color: var(--text-color-muted);
+  font-size: var(--step-0);
+}
+
+.form-review-step-disclaimer {
+  font-size: var(--step--1);
+}

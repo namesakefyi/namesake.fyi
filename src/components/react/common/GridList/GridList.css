@@ -16,7 +16,7 @@
   box-sizing: border-box;
 
   &[data-focus-visible] {
-    outline: 2px solid var(--focus-ring-color);
+    outline: 3px solid var(--focus-ring-color);
     outline-offset: -1px;
   }
 
@@ -35,7 +35,7 @@
     transform: translateZ(0);
 
     &[data-focus-visible] {
-      outline: 2px solid var(--focus-ring-color);
+      outline: 3px solid var(--focus-ring-color);
       outline-offset: -2px;
     }
 
@@ -137,7 +137,7 @@
 
     &[data-focus-visible] {
       border-radius: 4px;
-      outline: 2px solid var(--focus-ring-color);
+      outline: 3px solid var(--focus-ring-color);
     }
   }
 }
@@ -154,13 +154,13 @@
 }
 
 .react-aria-GridList[data-drop-target] {
-  outline: 2px solid var(--highlight-background);
+  outline: 3px solid var(--highlight-background);
   outline-offset: -1px;
   background: var(--highlight-overlay);
 }
 
 .react-aria-GridListItem[data-drop-target] {
-  outline: 2px solid var(--highlight-background);
+  outline: 3px solid var(--highlight-background);
   background: var(--highlight-overlay);
 }
 

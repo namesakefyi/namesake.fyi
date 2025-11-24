@@ -4,6 +4,7 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import sanity from "@sanity/astro";
 import { defineConfig, passthroughImageService } from "astro/config";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
   output: "server",
@@ -34,6 +35,7 @@ export default defineConfig({
     format: "file",
   },
   vite: {
+    plugins: [tsconfigPaths()],
     ssr: {
       external: ["buffer", "path", "fs", "os", "crypto", "async_hooks"].map(
         (i) => `node:${i}`,

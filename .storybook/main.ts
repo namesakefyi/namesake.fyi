@@ -15,13 +15,16 @@ const excludedProps = new Set([
 ]);
 
 const config: StorybookConfig = {
+  framework: "@storybook/react-vite",
+  core: {
+    builder: "@storybook/builder-vite",
+  },
   stories: ["../src/components/react/**/*.stories.@(ts|tsx)"],
   addons: [
     "@storybook/addon-themes",
     "@storybook/addon-links",
     "@vueless/storybook-dark-mode",
   ],
-  framework: "@storybook/react-vite",
   staticDirs: ["../public"],
   typescript: {
     reactDocgen: "react-docgen-typescript",

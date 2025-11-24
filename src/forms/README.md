@@ -1,91 +1,161 @@
 # Forms
 
-This directory contains all the blank PDFs that Namesake uses to fill forms, including schemas and tests for those forms.
+This directory contains all the React components and multi-step guided forms that help users fill out name change documents.
 
 ## Naming and organization
 
-Forms should be titled using all lowercase `kebab-case`. File names should begin with the form code, if one exists, followed by the full form title. For example, the form "Petition to Change Name of Adult" with the code "CJP 27" has the file name `cjp27-petition-to-change-name-of-adult.pdf`.
+Form directories should use lowercase `kebab-case`. Directory names should typically match the state or jurisdiction prefix followed by a brief descriptor. For example, the Massachusetts court order form is in `/ma-court-order`.
 
-If the form code contains any spaces or hyphens, those should be omitted. For example, the form code "CJ-D 400" is `cjd400`. Together with the title "Probate and Family Court Motion", the file name is `cjd400-probate-and-family-court-motion.pdf`.
+Each form directory should contain:
+- A main form component file (e.g., `MaCourtOrderForm.tsx`)
+- A `/steps` subdirectory containing all step components
 
-State-specific PDFs should be placed within a folder using the state's two-character abbreviation, like `/ma`. Federal forms, such as ones for Social Security or Passports, go in `/federal`.
+## Creating a new form
 
-## Defining PDF schemas
+### 1. Create the form directory structure
 
-Each `.pdf` file should be accompanied by a `.ts` definition of the same name containing a single `default export`. For example:
+Create a new directory for your form with the main component and steps folder:
 
-```ts
-// cjp27-petition-to-change-name-of-adult.ts
-import { definePdf } from "~/utils/pdf";
-import pdf from "./cjp27-petition-to-change-name-of-adult.pdf";
+```
+src/forms/
+  my-new-form/
+    MyNewForm.tsx
+    steps/
+      Step1.tsx
+      Step2.tsx
+      ...
+```
 
-export default definePdf({
-  // Add title, optional code and jurisdiction, and
-  // pass in the path to the pdf file
-  title: "Petition to Change Name of Adult",
-  code: "CJP 27",
-  jurisdiction: "MA",
-  pdfPath: pdf,
+### 2. Build individual step components
 
-  // Add the field schema. Keys in the `data`
-  // object should all be from USER_FORM_DATA_FIELDS.
-  fields: (data: {
-    oldFirstName: string;
-    oldMiddleName: string;
-    oldLastName: string;
-    // ... Additional user form data
-  }) => ({
-    // The keys in the return object are the names
-    // of the fields (as defined in the PDF).
-    firstNameField: data.oldFirstName,
-    middle_name_field: data.oldMiddleName,
-    "Last Name Field": data.newLastName,
-    // ... Additional field mappings
+Each step should export a single component that accepts `StepComponentProps`:
+
+```tsx
+// steps/NameStep.tsx
+import { FormStep } from "../../../components/react/forms/FormStep";
+import type { StepComponentProps } from "../../../components/react/forms/FormContainer";
+
+export function NameStep(_props: StepComponentProps) {
+  return (
+    <FormStep
+      title="What is your current name?"
+      description="Type it exactly as it appears on your ID."
+    >
+      {/* Add form fields here using react-hook-form's useFormContext */}
+      <TextField name="currentName" label="Full Name" />
+    </FormStep>
+  );
+}
+```
+
+The `FormStep` component provides consistent layout, handles the continue button, and manages navigation. The `StepComponentProps` interface includes `onNext` and `onBack` callbacks, though these are typically not needed directly since `FormStep` handles them.
+
+### 3. Create the main form component
+
+The main form component should:
+- Accept optional `title` and `description` props (passed from Sanity)
+- Initialize a form using `react-hook-form`'s `useForm` hook
+- Define a `STEPS` array with step IDs and components
+- Render a `FormContainer` with the form configuration
+
+```tsx
+// MyNewForm.tsx
+import { useForm } from "react-hook-form";
+import {
+  FormContainer,
+  type Step,
+} from "../../components/react/forms/FormContainer";
+import { NameStep } from "./steps/NameStep";
+import { AddressStep } from "./steps/AddressStep";
+
+const STEPS: readonly Step[] = [
+  { id: "name", component: NameStep },
+  { id: "address", component: AddressStep },
+];
+
+export interface MyNewFormProps {
+  /** Form title from Sanity (optional, falls back to default) */
+  title?: string;
+  /** Form description from Sanity (optional, falls back to default) */
+  description?: string;
+}
+
+export function MyNewForm({
+  title = "My Default Title",
+  description = "Default description for this form.",
+}: MyNewFormProps = {}) {
+  const form = useForm({
+    defaultValues: {
+      currentName: "",
+      address: "",
+      // Add all form fields with defaults
+    },
   });
-});
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Form submitted!");
+    console.log("Form data:", form.getValues());
+    // TODO: Handle form submission (save to database, generate PDFs, etc.)
+  };
+
+  return (
+    <FormContainer
+      title={title}
+      description={description}
+      steps={STEPS}
+      form={form}
+      onSubmit={handleSubmit}
+    />
+  );
+}
 ```
 
-## Renaming PDF fields and adding new fields
+### 4. Register the form
 
-Sometimes original PDFs do not include form fields embedded within the PDF. Other PDFs do include form fields, but they are named poorly. In either case, you will want to make modifications to the PDF to add missing fields and name fields consistently.
-
-To edit a PDF, download the original, then open it in the [Nutrient.io PDF Form Creator](https://www.nutrient.io/demo/pdf-form-creator). In the left sidebar, expand the "Create a Fillable Form" section, and it will allow you to add new form fields. Click on each field within the PDF to see a popover that allows you to rename it.
-
-In general, it's good to name the fields so that they match the global constants for user form data. This will make mapping between the PDF field names and the names in our database much easier.
-
-Once you have finished editing the PDF, click the download button in the top right, rename the file, and add it to the appropriate directory within `/src/forms`.
-
-## Testing PDFs
-
-Every PDF and definition should also include a test to validate that the form renders, checkboxes get checked, text fields get filled, etc.
-
-Since we've already defined definitions for the data, this is pretty straightforward. Use `getPdfForm` to return a [PDFForm](https://pdf-lib.js.org/docs/api/classes/pdfform) object from `pdf-lib`, and then use methods like [getCheckBox](https://pdf-lib.js.org/docs/api/classes/pdfform#getcheckbox) and [getTextField](https://pdf-lib.js.org/docs/api/classes/pdfform#gettextfield) to test the values in the PDF.
-
-Take extra care to test any conditional logic around checkboxes.
+Add your new form to `formRegistry.ts` to make it available throughout the application:
 
 ```ts
-describe("CJP27 Petition to Change Name of Adult", () => {
-  const testData = {
-    newFirstName: "New",
-    newMiddleName: "Newly",
-    newLastName: "Name",
-    oldFirstName: "Old",
-    oldMiddleName: "Oldly",
-    oldLastName: "Name",
-    // More test data...
-  } as const;
+// formRegistry.ts
+import { MyNewForm } from "./my-new-form/MyNewForm";
 
-  it("maps all fields correctly to the PDF", async () => {
-    const form = await getPdfForm({
-      pdf: petitionToChangeNameOfAdult,
-      userData: testData,
-    });
-
-    expect(form.getTextField("newFirstName").getText()).toBe("New");
-    expect(form.getTextField("newMiddleName").getText()).toBe("Newly");
-    expect(form.getTextField("newLastName").getText()).toBe("Name");
-
-    // Test more fields...
-  })
-});
+export const FORM_REGISTRY: Record<string, FormRegistryEntry> = {
+  "my-new-form": {
+    id: "my-new-form",
+    title: "My New Form",
+    component: MyNewForm,
+  },
+  // ... other forms
+};
 ```
+
+The registry serves two purposes:
+1. **Frontend**: Maps form IDs to React components via `getFormComponent()`
+2. **Sanity CMS**: Provides dropdown options for the form component picker
+
+## Attaching a form to a Sanity entry
+
+Once your form is registered, you can create a Sanity entry to make it accessible at a URL:
+
+1. **Open Sanity Studio** at your Sanity workspace URL (`/studio`)
+
+2. **Create a new Form document**:
+   - Click the "Create" button or navigate to "Form" in Sanity Studio
+   - Fill in the required fields:
+     - **Title**: Display title (e.g., "Court Order: Massachusetts")
+     - **Description**: Brief summary of the form's purpose
+     - **Form Component**: Select your registered form from the dropdown (e.g., "My New Form")
+     - **State**: (Optional) Link to a state reference if applicable
+     - **Category**: Select the appropriate category (e.g., "Legal Documents")
+     - **Slug**: URL-friendly identifier (e.g., `my-new-form`)
+
+3. **Publish the document**
+
+4. **Access the form** at `/forms/[slug]` (e.g., `/forms/my-new-form`)
+
+The form will automatically:
+- Use the title and description from Sanity (overriding defaults)
+- Render using the selected form component
+- Display the last updated timestamp
+- Be included in the forms listing page at `/forms`
+

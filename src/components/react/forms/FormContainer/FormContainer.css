@@ -1,0 +1,12 @@
+.form-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  padding-block-end: var(--space-m);
+}
+
+.form-container-content {
+  padding-block: var(--space-xl);
+  width: 100%;
+}
