@@ -1,23 +1,47 @@
 "use client";
 
 import {
-  type ButtonProps,
   composeRenderProps,
   Button as RACButton,
+  type ButtonProps as RACButtonProps,
 } from "react-aria-components";
 import { ProgressCircle } from "../ProgressCircle";
-
 import "./Button.css";
+import type { RemixiconComponentType } from "@remixicon/react";
+import clsx from "clsx";
 
-export function Button(props: ButtonProps) {
+export interface ButtonProps extends RACButtonProps {
+  variant?: "primary" | "secondary";
+  size?: "medium" | "large";
+  icon?: RemixiconComponentType | null;
+  endIcon?: RemixiconComponentType | null;
+}
+
+export function Button({
+  variant = "secondary",
+  size = "medium",
+  icon: Icon,
+  endIcon: EndIcon,
+  className,
+  ...props
+}: ButtonProps) {
+  const iconSize = size === "large" ? 28 : 24;
+
   return (
-    <RACButton {...props}>
+    <RACButton
+      data-variant={variant}
+      data-size={size}
+      {...props}
+      className={clsx("namesake-button", className)}
+    >
       {composeRenderProps(props.children, (children, { isPending }) => (
         <>
-          {!isPending && children}
+          {!isPending && Icon && <Icon size={iconSize} />}
           {isPending && (
             <ProgressCircle aria-label="Saving..." isIndeterminate />
           )}
+          {children}
+          {EndIcon && <EndIcon size={iconSize} />}
         </>
       ))}
     </RACButton>

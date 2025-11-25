@@ -3,6 +3,7 @@ import { structureTool } from "sanity/structure";
 import {
   authorType,
   categoryType,
+  formType,
   guideType,
   pageType,
   partnerType,
@@ -21,6 +22,7 @@ export default defineConfig({
     types: [
       authorType,
       categoryType,
+      formType,
       guideType,
       pageType,
       postType,

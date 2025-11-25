@@ -1,5 +1,6 @@
 export * from "./authorType";
 export * from "./categoryType";
+export * from "./formType";
 export * from "./guideType";
 export * from "./pageType";
 export * from "./partnerType";

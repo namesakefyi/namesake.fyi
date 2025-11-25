@@ -1,0 +1,211 @@
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { FormProvider, type UseFormReturn } from "react-hook-form";
+import { Form } from "../../common/Form";
+import { FormNavigation } from "../FormNavigation";
+import { FormReviewStep } from "../FormReviewStep";
+import { FormTitleStep } from "../FormTitleStep";
+import { FormStepContext } from "./FormStepContext";
+import "./FormContainer.css";
+
+export interface Step {
+  id: string;
+  component: React.ComponentType<StepComponentProps>;
+}
+
+export interface StepComponentProps {
+  onNext: () => void;
+  onBack: () => void;
+}
+
+export interface FormContainerProps {
+  /** The title of the form. */
+  title: string;
+
+  /** An optional description to provide more context. */
+  description?: string;
+
+  /** Optional child content to display on the title step. */
+  children?: React.ReactNode;
+
+  /** The form steps to render (after the title step). */
+  steps: readonly Step[];
+
+  /** The form instance from react-hook-form's useForm hook. */
+  form: UseFormReturn<any>;
+
+  /** Submit handler for the final form submission. */
+  onSubmit: React.FormEventHandler<HTMLFormElement>;
+
+  /** Whether to warn the user before leaving with unsaved changes. */
+  warnOnExit?: boolean;
+}
+
+export function FormContainer({
+  title,
+  description,
+  children,
+  steps,
+  form,
+  onSubmit,
+  warnOnExit = true,
+}: FormContainerProps) {
+  // Navigation index: -1 = title, 0 to steps.length-1 = actual steps, steps.length = review
+  const [navigationIndex, setNavigationIndex] = useState(-1);
+
+  // Warn before leaving with unsaved changes
+  useEffect(() => {
+    if (!warnOnExit) return;
+
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (form.formState.isDirty) {
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [form.formState.isDirty, warnOnExit]);
+
+  // Sync step with URL hash
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1); // Remove #
+
+      // If no hash, go to title
+      if (!hash) {
+        setNavigationIndex(-1);
+        return;
+      }
+
+      // Check if it's the review step
+      if (hash === "review") {
+        setNavigationIndex(steps.length);
+        return;
+      }
+
+      // Find the step in the actual steps array
+      const stepIndex = steps.findIndex((step) => step.id === hash);
+      if (stepIndex !== -1) {
+        setNavigationIndex(stepIndex);
+      }
+    };
+
+    // Set initial step from hash
+    handleHashChange();
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, [steps]);
+
+  // Update hash when navigation changes
+  useEffect(() => {
+    let targetHash = "";
+
+    if (navigationIndex === -1) {
+      // Title step - no hash
+      targetHash = "";
+    } else if (navigationIndex === steps.length) {
+      // Review step
+      targetHash = "#review";
+    } else if (navigationIndex >= 0 && navigationIndex < steps.length) {
+      // Actual step
+      targetHash = `#${steps[navigationIndex].id}`;
+    }
+
+    const currentPath = window.location.pathname + window.location.search;
+    const targetUrl = currentPath + targetHash;
+
+    if (window.location.href !== window.location.origin + targetUrl) {
+      window.history.pushState(null, "", targetUrl);
+    }
+  }, [navigationIndex, steps]);
+
+  const goToNextStep = useCallback(() => {
+    // Can go from title (-1) through all steps (0 to steps.length-1) to review (steps.length)
+    if (navigationIndex < steps.length) {
+      setNavigationIndex(navigationIndex + 1);
+    }
+  }, [navigationIndex, steps.length]);
+
+  const goToPreviousStep = useCallback(() => {
+    // Can go back from review (steps.length) through all steps to title (-1)
+    if (navigationIndex > -1) {
+      setNavigationIndex(navigationIndex - 1);
+    }
+  }, [navigationIndex]);
+
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (navigationIndex === steps.length) {
+      // On the review step, trigger the actual form submission
+      onSubmit(e);
+    } else {
+      // Otherwise, just go to the next step
+      goToNextStep();
+    }
+  };
+
+  // Determine what to render based on navigationIndex
+  const renderCurrentStep = () => {
+    if (navigationIndex === -1) {
+      return <FormTitleStep onStart={goToNextStep}>{children}</FormTitleStep>;
+    }
+
+    if (navigationIndex === steps.length) {
+      return <FormReviewStep />;
+    }
+
+    if (navigationIndex >= 0 && navigationIndex < steps.length) {
+      const StepComponent = steps[navigationIndex].component;
+      return <StepComponent onNext={goToNextStep} onBack={goToPreviousStep} />;
+    }
+
+    return null;
+  };
+
+  // Calculate the current step index for the context (1-based for actual steps, 0 for title/review)
+  const currentStepIndex =
+    navigationIndex >= 0 && navigationIndex < steps.length
+      ? navigationIndex + 1
+      : 0;
+
+  const isReviewStep = navigationIndex === steps.length;
+
+  const stepContextValue = useMemo(
+    () => ({
+      onNext: goToNextStep,
+      onBack: goToPreviousStep,
+      formTitle: title,
+      formDescription: description,
+      currentStepIndex,
+      totalSteps: steps.length,
+      isReviewStep,
+    }),
+    [
+      goToNextStep,
+      goToPreviousStep,
+      title,
+      description,
+      currentStepIndex,
+      steps.length,
+      isReviewStep,
+    ],
+  );
+
+  const showNavigation = navigationIndex >= 0;
+
+  return (
+    <FormProvider {...form}>
+      <FormStepContext.Provider value={stepContextValue}>
+        <Form
+          className="form-container"
+          onSubmit={handleFormSubmit}
+          autoComplete="on"
+        >
+          {showNavigation && <FormNavigation />}
+          <div className="form-container-content">{renderCurrentStep()}</div>
+        </Form>
+      </FormStepContext.Provider>
+    </FormProvider>
+  );
+}

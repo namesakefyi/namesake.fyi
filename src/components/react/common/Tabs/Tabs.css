@@ -91,7 +91,7 @@
   outline: none;
 
   &[data-focus-visible] {
-    outline: 2px solid var(--focus-ring-color);
+    outline: 3px solid var(--focus-ring-color);
   }
 }
 

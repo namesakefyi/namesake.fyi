@@ -4,9 +4,11 @@
     "label value"
     "bar bar";
   grid-template-columns: 1fr auto;
-  gap: 4px;
+  align-items: flex-end;
+  gap: var(--space-s);
   width: 250px;
   color: var(--text-color);
+  line-height: 1;
 
   .value {
     grid-area: value;
@@ -25,6 +27,9 @@
   .fill {
     background: var(--highlight-background);
     height: 100%;
+    @media (prefers-reduced-motion: no-preference) {
+      transition: transform 0.2s ease-out;
+    }
   }
 
   &:not([aria-valuenow]) {
@@ -34,6 +39,11 @@
       animation: indeterminate 1.5s infinite ease-in-out;
       will-change: transform;
     }
+  }
+
+  .label {
+    font-size: var(--step-0);
+    font-weight: var(--weight-bold);
   }
 }
 

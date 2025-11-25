@@ -2,6 +2,7 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import type { RoughAnnotationType } from "rough-notation/lib/model";
+import { smartquotes } from "~/utils/smartquotes";
 
 dayjs.extend(utc);
 
@@ -24,9 +25,9 @@ const { title, date, description, annotation = "circle" } = Astro.props;
     )
   }
   <h1 data-annotation={annotation}>
-    {title}
+    {smartquotes(title)}
   </h1>
-  {description && <p class="subhead">{description}</p>}
+  {description && <p class="subhead">{smartquotes(description)}</p>}
 </div>
 
 <script>

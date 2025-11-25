@@ -1,0 +1,45 @@
+.form-title-step {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: var(--space-2xl);
+}
+
+.form-title-step-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.form-title-step-heading {
+  font-size: var(--step-5);
+  font-weight: var(--weight-bold);
+  color: var(--text-color);
+  text-wrap: pretty;
+  line-height: var(--line-height-display);
+  letter-spacing: var(--letter-spacing-condensed);
+}
+
+.form-title-step-description {
+  font-size: var(--step-1);
+  text-wrap: pretty;
+}
+
+.form-title-step-time-estimate {
+  font-size: var(--step--1);
+  color: var(--text-color-secondary);
+  font-weight: var(--weight-medium);
+}
+
+.form-title-step-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+}
+
+.form-title-step-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-m);
+}
