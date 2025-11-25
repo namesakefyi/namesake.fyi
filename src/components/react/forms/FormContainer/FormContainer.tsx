@@ -148,15 +148,7 @@ export function FormContainer({
   // Determine what to render based on navigationIndex
   const renderCurrentStep = () => {
     if (navigationIndex === -1) {
-      return (
-        <FormTitleStep
-          title={title}
-          description={description}
-          onStart={goToNextStep}
-        >
-          {children}
-        </FormTitleStep>
-      );
+      return <FormTitleStep onStart={goToNextStep}>{children}</FormTitleStep>;
     }
 
     if (navigationIndex === steps.length) {
@@ -184,6 +176,7 @@ export function FormContainer({
       onNext: goToNextStep,
       onBack: goToPreviousStep,
       formTitle: title,
+      formDescription: description,
       currentStepIndex,
       totalSteps: steps.length,
       isReviewStep,
@@ -192,6 +185,7 @@ export function FormContainer({
       goToNextStep,
       goToPreviousStep,
       title,
+      description,
       currentStepIndex,
       steps.length,
       isReviewStep,

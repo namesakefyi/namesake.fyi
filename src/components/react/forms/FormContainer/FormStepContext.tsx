@@ -5,6 +5,8 @@ export interface FormStepContextValue {
   onBack: () => void;
   /** The title of the form */
   formTitle: string;
+  /** The description of the form */
+  formDescription?: string;
   /** The current step index (1-based for actual form steps, 0 for title/review) */
   currentStepIndex: number;
   /** The total number of actual form steps (excludes title and review) */

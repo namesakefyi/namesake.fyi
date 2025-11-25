@@ -4,7 +4,6 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import sanity from "@sanity/astro";
 import { defineConfig, passthroughImageService } from "astro/config";
-import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
   output: "server",
@@ -35,19 +34,10 @@ export default defineConfig({
     format: "file",
   },
   vite: {
-    plugins: [tsconfigPaths()],
     ssr: {
       external: ["buffer", "path", "fs", "os", "crypto", "async_hooks"].map(
         (i) => `node:${i}`,
       ),
-    },
-    resolve: {
-      // Workaround until fixed: https://github.com/withastro/adapters/pull/436
-      // Use react-dom/server.edge instead of react-dom/server.browser for React 19.
-      // Without this, MessageChannel from node:worker_threads needs to be polyfilled.
-      alias: import.meta.env.PROD && {
-        "react-dom/server": "react-dom/server.edge",
-      },
     },
   },
   devToolbar: {

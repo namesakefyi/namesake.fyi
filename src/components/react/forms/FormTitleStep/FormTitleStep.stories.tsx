@@ -32,18 +32,6 @@ export const Example = (args: FormTitleStepProps) => (
 );
 
 Example.args = {
-  title: "Massachusetts Court Order",
-  onStart: () => console.log("Start clicked"),
-};
-
-export const WithDescription = (args: FormTitleStepProps) => (
-  <FormTitleStep {...args} />
-);
-
-WithDescription.args = {
-  title: "Massachusetts Court Order",
-  description:
-    "File for a court-ordered name change in Massachusetts. This is the first step in the legal name change process.",
   onStart: () => console.log("Start clicked"),
 };
 
@@ -52,9 +40,6 @@ export const WithChildren = (args: FormTitleStepProps) => (
 );
 
 WithChildren.args = {
-  title: "Massachusetts Court Order",
-  description:
-    "File for a court-ordered name change in Massachusetts. This is the first step in the legal name change process.",
   onStart: () => console.log("Start clicked"),
   children: (
     <div>
@@ -69,16 +54,4 @@ WithChildren.args = {
       </ul>
     </div>
   ),
-};
-
-export const LongTitle = (args: FormTitleStepProps) => (
-  <FormTitleStep {...args} />
-);
-
-LongTitle.args = {
-  title:
-    "Application for Social Security Card Name Change and Gender Marker Update",
-  description:
-    "This form helps you apply for a new Social Security card with your updated name and gender marker. The process typically takes 2-4 weeks after submission.",
-  onStart: () => console.log("Start clicked"),
 };

@@ -8,16 +8,6 @@ import "./FormTitleStep.css";
 
 export interface FormTitleStepProps {
   /**
-   * The title of the form.
-   */
-  title: string;
-
-  /**
-   * An optional description to provide more context.
-   */
-  description?: string;
-
-  /**
    * Optional child content to display below the description.
    */
   children?: React.ReactNode;
@@ -28,24 +18,19 @@ export interface FormTitleStepProps {
   onStart: () => void;
 }
 
-export function FormTitleStep({
-  title,
-  description,
-  children,
-  onStart,
-}: FormTitleStepProps) {
-  const { totalSteps } = useFormStep();
+export function FormTitleStep({ children, onStart }: FormTitleStepProps) {
+  const { formTitle, formDescription, totalSteps } = useFormStep();
   const timeEstimate = formatTimeEstimate(totalSteps);
 
   return (
     <section className="form-title-step">
       <header className="form-title-step-header">
         <Heading className="form-title-step-heading">
-          {smartquotes(title)}
+          {smartquotes(formTitle)}
         </Heading>
-        {description && (
+        {formDescription && (
           <p className="form-title-step-description">
-            {smartquotes(description)}
+            {smartquotes(formDescription)}
           </p>
         )}
       </header>

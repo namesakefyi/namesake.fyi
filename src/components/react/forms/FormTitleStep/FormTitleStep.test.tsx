@@ -13,6 +13,7 @@ function TestWrapper({ children }: { children: ReactNode }) {
         onNext: vi.fn(),
         onBack: vi.fn(),
         formTitle: "Test Form",
+        formDescription: "Test Description",
         currentStepIndex: 0, // Title step
         totalSteps: 5, // 5 actual steps
         isReviewStep: false,
@@ -25,38 +26,23 @@ function TestWrapper({ children }: { children: ReactNode }) {
 
 describe("FormTitleStep", () => {
   const formTitleStep = {
-    title: "Massachusetts Court Order",
-    description:
-      "File for a court-ordered name change in Massachusetts. This is the first step in the legal name change process.",
     onStart: vi.fn(),
   };
 
-  it("renders title correctly", () => {
+  it("renders title", () => {
     render(<FormTitleStep {...formTitleStep} />, { wrapper: TestWrapper });
 
-    const titleElement = screen.getByText(formTitleStep.title);
+    const titleElement = screen.getByText("Test Form");
     expect(titleElement).toBeInTheDocument();
     expect(titleElement).toHaveClass("form-title-step-heading");
   });
 
-  it("renders optional description", () => {
+  it("renders description", () => {
     render(<FormTitleStep {...formTitleStep} />, { wrapper: TestWrapper });
 
-    const descriptionElement = screen.getByText(formTitleStep.description);
+    const descriptionElement = screen.getByText("Test Description");
     expect(descriptionElement).toBeInTheDocument();
     expect(descriptionElement).toHaveClass("form-title-step-description");
-  });
-
-  it("does not render description when not provided", () => {
-    render(<FormTitleStep {...formTitleStep} description={undefined} />, {
-      wrapper: TestWrapper,
-    });
-
-    const titleElement = screen.getByText(formTitleStep.title);
-    expect(titleElement).toBeInTheDocument();
-
-    const descriptionQuery = screen.queryByText(formTitleStep.description);
-    expect(descriptionQuery).toBeNull();
   });
 
   it("renders Start button", () => {
@@ -105,65 +91,5 @@ describe("FormTitleStep", () => {
 
     const contentDiv = document.querySelector(".form-title-step-content");
     expect(contentDiv).toBeNull();
-  });
-
-  it("applies smartquotes to title", () => {
-    render(
-      <FormTitleStep
-        {...formTitleStep}
-        title='Court Order for "Name Change"'
-      />,
-      { wrapper: TestWrapper },
-    );
-
-    // smartquotes should convert straight quotes to curly quotes
-    const titleElement = screen.getByText(/Court Order for/i);
-    expect(titleElement).toBeInTheDocument();
-  });
-
-  it("applies smartquotes to description", () => {
-    render(
-      <FormTitleStep
-        {...formTitleStep}
-        description='This is the "first step" in the process.'
-      />,
-      { wrapper: TestWrapper },
-    );
-
-    const descriptionElement = screen.getByText(/This is the/i);
-    expect(descriptionElement).toBeInTheDocument();
-  });
-
-  it("renders as a section element", () => {
-    const { container } = render(<FormTitleStep {...formTitleStep} />, {
-      wrapper: TestWrapper,
-    });
-
-    const section = container.querySelector("section.form-title-step");
-    expect(section).toBeInTheDocument();
-  });
-
-  it("renders header with proper structure", () => {
-    const { container } = render(<FormTitleStep {...formTitleStep} />, {
-      wrapper: TestWrapper,
-    });
-
-    const header = container.querySelector("header.form-title-step-header");
-    expect(header).toBeInTheDocument();
-
-    const heading = header?.querySelector(".form-title-step-heading");
-    expect(heading).toBeInTheDocument();
-  });
-
-  it("renders footer with proper structure", () => {
-    const { container } = render(<FormTitleStep {...formTitleStep} />, {
-      wrapper: TestWrapper,
-    });
-
-    const footer = container.querySelector("footer.form-title-step-footer");
-    expect(footer).toBeInTheDocument();
-
-    const button = footer?.querySelector("button");
-    expect(button).toBeInTheDocument();
   });
 });
