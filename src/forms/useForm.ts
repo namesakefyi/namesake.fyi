@@ -1,11 +1,9 @@
 // import { api } from "@convex/_generated/api";
 // import { useMutation, useQuery } from "convex/react";
 // import { usePostHog } from "posthog-js/react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   type FieldValues,
-  type Path,
-  type PathValue,
   type UseFormProps,
   useForm as useReactHookForm,
 } from "react-hook-form";
@@ -22,7 +20,7 @@ export function useForm<TFieldValues extends FieldValues = FieldValues>(
   const [isSubmitting, setIsSubmitting] = useState(false);
   // const encryptionKey = useEncryptionKey();
 
-  const fieldsList = useMemo(() => fields as string[], [fields]);
+  const _fieldsList = useMemo(() => fields as string[], [fields]);
 
   // const encryptedResponses = useQuery(api.userFormResponses.getByFields, {
   //   fields: fieldsList,
@@ -56,7 +54,7 @@ export function useForm<TFieldValues extends FieldValues = FieldValues>(
   //   );
   // }, [encryptedResponses, encryptionKey, isSubmitting]);
 
-  const onSubmit = form.handleSubmit(async (data) => {
+  const onSubmit = form.handleSubmit(async (_data) => {
     try {
       // if (!encryptionKey) {
       //   throw new Error("No encryption key available.");
@@ -72,7 +70,7 @@ export function useForm<TFieldValues extends FieldValues = FieldValues>(
       //   const encryptedValue = await encryptData(value, encryptionKey);
       //   await save({ field, value: encryptedValue });
       // }
-    } catch (error) {
+    } catch (_error) {
       // posthog.captureException(error);
       // toast.error(
       //   error instanceof Error

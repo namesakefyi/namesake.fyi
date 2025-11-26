@@ -1,9 +1,6 @@
 import {
-  type RemixiconComponentType,
   RiArrowRightLine,
-  RiAuctionLine,
   RiFileTextLine,
-  RiLockLine,
   RiShieldKeyholeLine,
   RiTimerLine,
 } from "@remixicon/react";
