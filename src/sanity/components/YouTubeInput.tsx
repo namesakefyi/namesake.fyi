@@ -4,7 +4,7 @@ import type { StringInputProps } from "sanity";
 import {
   fetchYouTubeVideoDetails,
   type YouTubeOEmbedResponse,
-} from "@/utils/fetchYouTubeVideoDetails";
+} from "../../utils/fetchYouTubeVideoDetails";
 
 export function YouTubeInput(props: StringInputProps) {
   const { value } = props;

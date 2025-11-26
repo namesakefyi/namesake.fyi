@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import {
   fetchYouTubeVideoDetails,
   type YouTubeOEmbedResponse,
-} from "@/utils/fetchYouTubeVideoDetails";
+} from "../../../../utils/fetchYouTubeVideoDetails";
 
 export interface YouTubeProps {
   url: string;
