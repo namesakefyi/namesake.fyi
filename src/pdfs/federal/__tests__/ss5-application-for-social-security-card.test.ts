@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getPdfForm } from "../../utils";
+import { getPdfForm } from "@/pdfs/utils/getPdfForm";
 import ss5Application from "../ss5-application-for-social-security-card";
 
 describe("SS-5 Application for Social Security Card", () => {

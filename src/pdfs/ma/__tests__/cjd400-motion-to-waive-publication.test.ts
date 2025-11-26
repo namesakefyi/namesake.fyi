@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getPdfForm } from "../../utils";
+import { getPdfForm } from "@/pdfs/utils/getPdfForm";
 import motionToWaivePublication from "../cjd400-motion-to-waive-publication";
 
 describe("CJD400 Motion to Waive Publication", () => {

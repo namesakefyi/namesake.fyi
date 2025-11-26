@@ -4,7 +4,8 @@ import {
   type Step,
 } from "@/components/react/forms/FormContainer";
 import type { FieldName, FieldType } from "@/constants/fields";
-import { downloadMergedPdf, loadPdfs } from "@/pdfs/utils";
+import { downloadMergedPdf } from "@/pdfs/utils/downloadMergedPdf";
+import { loadPdfs } from "@/pdfs/utils/loadPdfs";
 import { useForm } from "@/utils/useForm";
 import { AddressStep } from "./_steps/AddressStep";
 import { BirthplaceStep } from "./_steps/BirthplaceStep";

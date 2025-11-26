@@ -5,10 +5,19 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import sanity from "@sanity/astro";
 import { defineConfig, passthroughImageService } from "astro/config";
+import { visualizer } from "rollup-plugin-visualizer";
+
+// https://github.com/withastro/astro/issues/12824
+const alias = import.meta.env.PROD
+  ? {
+      "react-dom/server": "react-dom/server.edge",
+    }
+  : undefined;
 
 export default defineConfig({
   output: "server",
   adapter: cloudflare({
+    cloudflareModules: false,
     imageService: "compile",
   }),
   image: {
@@ -35,15 +44,17 @@ export default defineConfig({
     format: "file",
   },
   vite: {
+    plugins: [
+      visualizer({
+        emitFile: true,
+        filename: "stats.html",
+      }),
+    ],
     resolve: {
       alias: {
         "@": path.resolve("src"),
+        ...alias,
       },
-    },
-    ssr: {
-      external: ["buffer", "path", "fs", "os", "crypto", "async_hooks"].map(
-        (i) => `node:${i}`,
-      ),
     },
   },
   devToolbar: {

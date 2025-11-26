@@ -20,7 +20,7 @@ const { data: form } = await loadQuery<SanityDocument>({
 
 <BaseLayout title={form.title} description={form.description} color="white">
   <MaCourtOrderForm
-    client:load
+    client:only="react"
     title={form.title}
     description={form.description}
   />

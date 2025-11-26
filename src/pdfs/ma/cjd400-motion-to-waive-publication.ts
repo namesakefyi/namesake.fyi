@@ -1,4 +1,4 @@
-import { definePdf } from "@/pdfs/utils";
+import { definePdf } from "@/pdfs/utils/definePdf";
 import { joinNames } from "@/utils/joinNames";
 import pdf from "./cjd400-motion-to-waive-publication.pdf";
 

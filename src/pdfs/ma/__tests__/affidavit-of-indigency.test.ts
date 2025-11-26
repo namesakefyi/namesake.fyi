@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getPdfForm } from "../../utils";
+import { getPdfForm } from "@/pdfs/utils/getPdfForm";
 import affidavitOfIndigency from "../affidavit-of-indigency";
 
 describe("Affidavit of Indigency", () => {

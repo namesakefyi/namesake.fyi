@@ -30,6 +30,7 @@
     "*": "pnpm check:fix"
   },
   "dependencies": {
+    "@astro-community/astro-embed-youtube": "^0.5.9",
     "@astrojs/check": "^0.9.5",
     "@astrojs/cloudflare": "12.6.11",
     "@astrojs/markdoc": "^0.15.9",
@@ -51,7 +52,6 @@
     "@sanity/ui": "^3.1.11",
     "@severo_bo/us-atlas-2023": "^4.0.0",
     "astro": "5.16.0",
-    "astro-embed": "^0.9.2",
     "astro-font": "^1.1.0",
     "astro-github-file-loader": "^1.1.0",
     "astro-portabletext": "^0.12.0",
@@ -111,6 +111,7 @@
     "postcss-clamp": "^4.1.0",
     "postcss-media-minmax": "^5.0.0",
     "postcss-utopia": "^1.1.0",
+    "rollup-plugin-visualizer": "^6.0.5",
     "sharp": "^0.34.5",
     "storybook": "^10.0.8",
     "vitest": "4.0.14",

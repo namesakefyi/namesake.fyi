@@ -38,3 +38,6 @@ pnpm-debug.log*
 # storybook
 *storybook.log
 storybook-static
+
+# rollup stats
+stats.html
