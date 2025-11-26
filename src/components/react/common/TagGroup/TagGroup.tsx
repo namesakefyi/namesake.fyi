@@ -1,6 +1,6 @@
 "use client";
 
-import { RiCloseLine } from "@remixicon/react";
+import { RiCheckLine, RiCloseLine } from "@remixicon/react";
 import {
   Tag as AriaTag,
   TagGroup as AriaTagGroup,
@@ -52,8 +52,9 @@ export function Tag({
   const textValue = typeof children === "string" ? children : undefined;
   return (
     <AriaTag textValue={textValue} {...props}>
-      {({ allowsRemoving }) => (
+      {({ allowsRemoving, isSelected }) => (
         <>
+          {isSelected && <RiCheckLine />}
           {children}
           {allowsRemoving && (
             <Button slot="remove">

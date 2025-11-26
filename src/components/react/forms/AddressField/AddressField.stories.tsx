@@ -14,9 +14,7 @@ export const Example = (args: AddressFieldProps) => <AddressField {...args} />;
 
 Example.args = {
   type: "residence",
-  children: (
-    <div className="border border-dim p-3 rounded-lg text-dim">Children</div>
-  ),
+  children: <div>Children</div>,
 };
 
 export const IncludeCounty = (args: AddressFieldProps) => (

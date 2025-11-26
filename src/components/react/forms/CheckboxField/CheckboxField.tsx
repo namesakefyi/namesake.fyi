@@ -5,6 +5,7 @@ import {
 } from "~/components/react/common/Checkbox";
 import type { FieldName } from "~/constants/fields";
 import { smartquotes } from "~/utils/smartquotes";
+import "./CheckboxField.css";
 
 export interface CheckboxFieldProps extends CheckboxProps {
   children?: React.ReactNode;

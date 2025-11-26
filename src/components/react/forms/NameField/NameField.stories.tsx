@@ -14,7 +14,5 @@ export const Example = (args: NameFieldProps) => <NameField {...args} />;
 
 Example.args = {
   type: "newName",
-  children: (
-    <div className="border border-dim p-3 rounded-lg text-dim">Children</div>
-  ),
+  children: <div>Children</div>,
 };

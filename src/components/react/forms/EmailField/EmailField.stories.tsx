@@ -14,7 +14,5 @@ export const Example = (args: EmailFieldProps) => <EmailField {...args} />;
 
 Example.args = {
   name: "email",
-  children: (
-    <div className="border border-dim p-3 rounded-lg text-dim">Children</div>
-  ),
+  children: <div>Children</div>,
 };

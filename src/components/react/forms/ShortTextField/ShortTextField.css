@@ -1,6 +1,6 @@
 .namesake-short-text-field {
   display: flex;
   flex-direction: column;
-  gap: var(--space-m);
+  gap: var(--space-s);
   width: 100%;
 }

@@ -20,7 +20,5 @@ export const Example = (args: LanguageSelectFieldProps) => (
 Example.args = {
   label: "Language",
   name: "language",
-  children: (
-    <div className="border border-dim p-3 rounded-lg text-dim">Children</div>
-  ),
+  children: <div>Children</div>,
 };

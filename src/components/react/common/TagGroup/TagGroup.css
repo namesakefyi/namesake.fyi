@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  font-size: small;
+  font-size: var(--step-0);
   color: var(--text-color);
 }
 
@@ -18,10 +18,10 @@
   forced-color-adjust: none;
   border-radius: var(--radius-xs);
   padding: var(--space-2xs) var(--space-s);
-  font-size: var(--step--1);
   outline: none;
   cursor: default;
   display: flex;
+  gap: var(--space-2xs);
   align-items: center;
   transition: border-color 200ms;
   white-space: nowrap;
@@ -37,6 +37,10 @@
     border-color: var(--highlight-background);
     background: var(--highlight-background);
     color: var(--highlight-foreground);
+
+    svg:first-child {
+      margin-inline: -0.1em;
+    }
   }
 
   [slot="remove"] {

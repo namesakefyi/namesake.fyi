@@ -25,7 +25,5 @@ Example.args = {
     { label: "Option 2", value: "option-2" },
     { label: "Option 3", value: "option-3" },
   ],
-  children: (
-    <div className="border border-dim p-3 rounded-lg text-dim">Children</div>
-  ),
+  children: <div>Children</div>,
 };

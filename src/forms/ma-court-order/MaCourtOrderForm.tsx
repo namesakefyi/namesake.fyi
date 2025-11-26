@@ -3,40 +3,25 @@ import {
   FormContainer,
   type Step,
 } from "../../components/react/forms/FormContainer";
-import { BirthplaceStep } from "./steps/BirthplaceStep";
-import { ContactInfoStep } from "./steps/ContactInfoStep";
-import { CurrentNameStep } from "./steps/CurrentNameStep";
-import { DateOfBirthStep } from "./steps/DateOfBirthStep";
-import { FeeWaiverStep } from "./steps/FeeWaiverStep";
-import { ImpoundCaseStep } from "./steps/ImpoundCaseStep";
-import { InterpreterStep } from "./steps/InterpreterStep";
-import { MothersMaidenNameStep } from "./steps/MothersMaidenNameStep";
-import { NewNameStep } from "./steps/NewNameStep";
-import { OtherNamesStep } from "./steps/OtherNamesStep";
-import { PreviousNameChangeStep } from "./steps/PreviousNameChangeStep";
-import { PronounsStep } from "./steps/PronounsStep";
-import { ReasonStep } from "./steps/ReasonStep";
-import { ResidentialAddressStep } from "./steps/ResidentialAddressStep";
-import { ReturnDocumentsStep } from "./steps/ReturnDocumentsStep";
-import { WaivePublicationStep } from "./steps/WaivePublicationStep";
+import * as Steps from "./steps";
 
 const STEPS: readonly Step[] = [
-  { id: "new-name", component: NewNameStep },
-  { id: "current-name", component: CurrentNameStep },
-  { id: "reason", component: ReasonStep },
-  { id: "contact-info", component: ContactInfoStep },
-  { id: "birthplace", component: BirthplaceStep },
-  { id: "date-of-birth", component: DateOfBirthStep },
-  { id: "residential-address", component: ResidentialAddressStep },
-  { id: "previous-name-change", component: PreviousNameChangeStep },
-  { id: "other-names", component: OtherNamesStep },
-  { id: "interpreter", component: InterpreterStep },
-  { id: "pronouns", component: PronounsStep },
-  { id: "return-documents", component: ReturnDocumentsStep },
-  { id: "waive-publication", component: WaivePublicationStep },
-  { id: "impound-case", component: ImpoundCaseStep },
-  { id: "fee-waiver", component: FeeWaiverStep },
-  { id: "mothers-maiden-name", component: MothersMaidenNameStep },
+  { id: "new-name", component: Steps.NewNameStep },
+  { id: "current-name", component: Steps.CurrentNameStep },
+  { id: "reason", component: Steps.ReasonStep },
+  { id: "contact-info", component: Steps.ContactInfoStep },
+  { id: "birthplace", component: Steps.BirthplaceStep },
+  { id: "date-of-birth", component: Steps.DateOfBirthStep },
+  { id: "residential-address", component: Steps.ResidentialAddressStep },
+  { id: "previous-name-change", component: Steps.PreviousNameChangeStep },
+  { id: "other-names", component: Steps.OtherNamesStep },
+  { id: "interpreter", component: Steps.InterpreterStep },
+  { id: "pronouns", component: Steps.PronounsStep },
+  { id: "return-documents", component: Steps.ReturnDocumentsStep },
+  { id: "waive-publication", component: Steps.WaivePublicationStep },
+  { id: "impound-case", component: Steps.ImpoundCaseStep },
+  { id: "fee-waiver", component: Steps.FeeWaiverStep },
+  { id: "mothers-maiden-name", component: Steps.MothersMaidenNameStep },
 ];
 
 export function MaCourtOrderForm({

@@ -72,7 +72,7 @@ export function SocialSecurityForm({
   title: string;
   description: string;
 }) {
-  const { onSubmit, isSubmitting, ...form } = useForm<FormData>(FORM_FIELDS);
+  const { onSubmit, ...form } = useForm<FormData>(FORM_FIELDS);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

@@ -35,9 +35,6 @@ export interface FormContainerProps {
 
   /** Submit handler for the final form submission. */
   onSubmit: React.FormEventHandler<HTMLFormElement>;
-
-  /** Whether to warn the user before leaving with unsaved changes. */
-  warnOnExit?: boolean;
 }
 
 export function FormContainer({
@@ -47,7 +44,6 @@ export function FormContainer({
   steps,
   form,
   onSubmit,
-  warnOnExit = true,
 }: FormContainerProps) {
   const formRef = useRef<HTMLFormElement>(null);
 
