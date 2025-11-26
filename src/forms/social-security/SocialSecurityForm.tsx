@@ -2,10 +2,7 @@ import type { FormEvent } from "react";
 import type { FieldName, FieldType } from "~/constants";
 import { useForm } from "~/forms/useForm";
 import { downloadMergedPdf, loadPdfs } from "~/pdfs/utils";
-import {
-  FormContainer,
-  type Step,
-} from "../../components/react/forms/FormContainer";
+import { FormContainer, type Step } from "~/components/react/forms";
 import * as Steps from "./steps";
 
 const FORM_FIELDS: FieldName[] = [
