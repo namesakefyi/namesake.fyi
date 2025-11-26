@@ -143,9 +143,6 @@ importers:
       topojson-client:
         specifier: ^3.1.0
         version: 3.1.0
-      typed-usa-states:
-        specifier: ^2.1.0
-        version: 2.1.0
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -249,6 +246,9 @@ importers:
       postcss-utopia:
         specifier: ^1.1.0
         version: 1.1.0(postcss@8.5.6)
+      rollup-plugin-visualizer:
+        specifier: ^6.0.5
+        version: 6.0.5(rollup@4.53.3)
       sharp:
         specifier: ^0.34.5
         version: 0.34.5
@@ -7629,6 +7629,19 @@ packages:
   robust-predicates@3.0.2:
     resolution: {integrity: sha512-IXgzBWvWQwE6PrDI05OvmXUIruQTcoMDzRsOd5CDvHCVLcLHMTSYvOK5Cm46kWqlV3yAbuSpBZdJ5oP5OUoStg==}
 
+  rollup-plugin-visualizer@6.0.5:
+    resolution: {integrity: sha512-9+HlNgKCVbJDs8tVtjQ43US12eqaiHyyiLMdBwQ7vSZPiHMysGNo2E88TAp1si5wx8NAoYriI2A5kuKfIakmJg==}
+    engines: {node: '>=18'}
+    hasBin: true
+    peerDependencies:
+      rolldown: 1.x || ^1.0.0-beta
+      rollup: 2.x || 3.x || 4.x
+    peerDependenciesMeta:
+      rolldown:
+        optional: true
+      rollup:
+        optional: true
+
   rollup@4.53.3:
     resolution: {integrity: sha512-w8GmOxZfBmKknvdXU1sdM9NHcoQejwF/4mNgj2JuEEdRaHwwF12K7e9eXn1nLZ07ad+du76mkVsyeb2rKGllsA==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
@@ -8223,9 +8236,6 @@ packages:
   type-fest@4.41.0:
     resolution: {integrity: sha512-TeTSQ6H5YHvpqVwBRcnLDCBnDOHWYu7IvGbHT6N8AOymcr9PJGjc1GTtiWZTYg0NCgYwvnYWEkVChQAr9bjfwA==}
     engines: {node: '>=16'}
-
-  typed-usa-states@2.1.0:
-    resolution: {integrity: sha512-9HyajobhSjkrF/vg0f70AVBZUY7t9RqFowyyFtim2HmKQ+LtYh14AmIe+3dTfOH5zYrgSLgOlSR+luH9F0g6dw==}
 
   typedarray-to-buffer@3.1.5:
     resolution: {integrity: sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q==}
@@ -18156,6 +18166,15 @@ snapshots:
 
   robust-predicates@3.0.2: {}
 
+  rollup-plugin-visualizer@6.0.5(rollup@4.53.3):
+    dependencies:
+      open: 8.4.2
+      picomatch: 4.0.3
+      source-map: 0.7.6
+      yargs: 17.7.2
+    optionalDependencies:
+      rollup: 4.53.3
+
   rollup@4.53.3:
     dependencies:
       '@types/estree': 1.0.8
@@ -18992,8 +19011,6 @@ snapshots:
   type-fest@0.8.1: {}
 
   type-fest@4.41.0: {}
-
-  typed-usa-states@2.1.0: {}
 
   typedarray-to-buffer@3.1.5:
     dependencies:

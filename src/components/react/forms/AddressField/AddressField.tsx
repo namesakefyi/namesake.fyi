@@ -1,7 +1,6 @@
 import { type MaskitoOptions, maskitoTransform } from "@maskito/core";
 import { useEffect, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { usaStatesWithCounties } from "typed-usa-states";
 import { ComboBox, ComboBoxItem } from "~/components/react/common/ComboBox";
 import { TextField } from "~/components/react/common/TextField";
 import type { FieldName } from "~/constants/fields";
@@ -58,10 +57,12 @@ export function AddressField({
       return;
     }
 
-    const state = usaStatesWithCounties.find(
-      (state) => state.abbreviation === selectedState,
-    );
-    setCounties(state?.counties ?? []);
+    // TODO: Add API call to get counties for the selected state
+
+    // const state = usaStatesWithCounties.find(
+    //   (state) => state.abbreviation === selectedState,
+    // );
+    // setCounties(state?.counties ?? []);
   }, [includeCounty, selectedState]);
 
   // Input mask: enforce ZIP code format of 12345-1234

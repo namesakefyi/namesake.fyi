@@ -8,6 +8,7 @@
     "dev": "astro dev --open",
     "start": "astro dev",
     "build": "wrangler types && astro check && astro build",
+    "build:only": "astro build",
     "preview": "wrangler types && astro preview",
     "astro": "astro",
     "lint": "biome lint",
@@ -74,7 +75,6 @@
     "sanity": "^4.18.0",
     "styled-components": "^6.1.19",
     "topojson-client": "^3.1.0",
-    "typed-usa-states": "^2.1.0",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
@@ -111,6 +111,7 @@
     "postcss-clamp": "^4.1.0",
     "postcss-media-minmax": "^5.0.0",
     "postcss-utopia": "^1.1.0",
+    "rollup-plugin-visualizer": "^6.0.5",
     "sharp": "^0.34.5",
     "storybook": "^10.0.8",
     "vite-tsconfig-paths": "^5.1.4",

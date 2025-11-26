@@ -5,6 +5,7 @@ import sitemap from "@astrojs/sitemap";
 import sanity from "@sanity/astro";
 import { defineConfig, passthroughImageService } from "astro/config";
 import tsconfigPaths from "vite-tsconfig-paths";
+import { visualizer } from "rollup-plugin-visualizer";
 
 export default defineConfig({
   output: "server",
@@ -49,6 +50,11 @@ export default defineConfig({
               return "astro";
             }
 
+            // Sanity
+            if (id.includes("sanity") || id.includes("@sanity")) {
+              return "sanity";
+            }
+
             // Core component primitives
             if (
               id.includes("@radix-ui") ||
@@ -61,11 +67,6 @@ export default defineConfig({
             // Icons and visual components
             if (id.includes("@maskito") || id.includes("@remixicon")) {
               return "ui-components";
-            }
-
-            // USA states and counties dictionary
-            if (id.includes("typed-usa-states")) {
-              return "usa-states";
             }
 
             // PDF lib
@@ -81,7 +82,13 @@ export default defineConfig({
         },
       },
     },
-    plugins: [tsconfigPaths()],
+    plugins: [
+      tsconfigPaths(),
+      visualizer({
+        emitFile: true,
+        filename: "stats.html",
+      }),
+    ],
     ssr: {
       external: ["buffer", "path", "fs", "os", "crypto", "async_hooks"].map(
         (i) => `node:${i}`,
