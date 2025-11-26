@@ -7,7 +7,6 @@ import {
 } from "react-aria-components";
 import { Text } from "../Content";
 import { FieldError, Label } from "../Form";
-
 import "./CheckboxGroup.css";
 import clsx from "clsx";
 
