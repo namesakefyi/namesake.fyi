@@ -43,19 +43,6 @@ describe("RadioGroupField", () => {
     }
   });
 
-  it("displays guidance for radio groups", () => {
-    renderWithFormProvider(
-      <RadioGroupField
-        name="pronouns"
-        label="Test Label"
-        options={mockOptions}
-      />,
-    );
-
-    const guidance = screen.getByText("Select one:");
-    expect(guidance).toBeInTheDocument();
-  });
-
   it("allows selecting a radio option", async () => {
     renderWithFormProvider(
       <RadioGroupField

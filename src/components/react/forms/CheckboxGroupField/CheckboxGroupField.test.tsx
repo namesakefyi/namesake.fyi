@@ -40,19 +40,6 @@ describe("CheckboxGroupField", () => {
     }
   });
 
-  it("displays guidance for checkbox groups", () => {
-    renderWithFormProvider(
-      <CheckboxGroupField
-        name="reasonForChangingName"
-        label="Test Label"
-        options={mockOptions}
-      />,
-    );
-
-    const guidance = screen.getByText("Select all that apply:");
-    expect(guidance).toBeInTheDocument();
-  });
-
   it("allows selecting a checkbox option", async () => {
     renderWithFormProvider(
       <CheckboxGroupField

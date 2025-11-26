@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormProvider, type UseFormReturn } from "react-hook-form";
+import {
+  FormNavigation,
+  FormReviewStep,
+  FormTitleStep,
+} from "~/components/react/forms";
 import { Form } from "../../common/Form";
-import { FormNavigation } from "../FormNavigation";
-import { FormReviewStep } from "../FormReviewStep";
-import { FormTitleStep } from "../FormTitleStep";
 import { FormStepContext } from "./FormStepContext";
 import "./FormContainer.css";
 

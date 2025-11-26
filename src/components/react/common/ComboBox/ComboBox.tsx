@@ -34,15 +34,25 @@ export function ComboBox<T extends object>({
   autoComplete,
   children,
   className,
+  name,
   ...props
 }: ComboBoxProps<T>) {
   return (
-    <AriaComboBox className={clsx("namesake-combobox", className)} {...props}>
-      {({ isInvalid }) => (
+    <AriaComboBox
+      className={clsx("namesake-combobox", className)}
+      name={name}
+      {...props}
+    >
+      {({ isInvalid, isRequired }) => (
         <>
           <Label>{label}</Label>
           <div className="namesake-combobox-container">
-            <Input placeholder={placeholder} autoComplete={autoComplete} />
+            <Input
+              placeholder={placeholder}
+              autoComplete={autoComplete}
+              required={isRequired}
+              name={name}
+            />
             <FieldButton>
               <RiArrowDownSLine size={20} />
             </FieldButton>

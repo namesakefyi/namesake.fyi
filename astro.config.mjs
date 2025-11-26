@@ -4,6 +4,7 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import sanity from "@sanity/astro";
 import { defineConfig, passthroughImageService } from "astro/config";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
   output: "server",
@@ -34,6 +35,53 @@ export default defineConfig({
     format: "file",
   },
   vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          // Use a supported file pattern for Vite 5/Rollup 4
+          // @doc https://relative-ci.com/documentation/guides/vite-config
+          assetFileNames: "assets/[name].[hash][extname]",
+          chunkFileNames: "assets/[name].[hash].js",
+          entryFileNames: "assets/[name].[hash].js",
+          manualChunks(id) {
+            // Astro
+            if (id.includes("astro") || id.includes("@astrojs")) {
+              return "astro";
+            }
+
+            // Core component primitives
+            if (
+              id.includes("@radix-ui") ||
+              id.includes("react-aria") ||
+              id.includes("react-aria-components")
+            ) {
+              return "react-aria";
+            }
+
+            // Icons and visual components
+            if (id.includes("@maskito") || id.includes("@remixicon")) {
+              return "ui-components";
+            }
+
+            // USA states and counties dictionary
+            if (id.includes("typed-usa-states")) {
+              return "usa-states";
+            }
+
+            // PDF lib
+            if (id.includes("@cantoo/pdf-lib")) {
+              return "pdf";
+            }
+
+            // Analytics
+            if (id.includes("posthog-js")) {
+              return "analytics";
+            }
+          },
+        },
+      },
+    },
+    plugins: [tsconfigPaths()],
     ssr: {
       external: ["buffer", "path", "fs", "os", "crypto", "async_hooks"].map(
         (i) => `node:${i}`,

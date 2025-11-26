@@ -1,6 +1,0 @@
-.form-empty-state {
-  padding: var(--space-2xl);
-  text-align: center;
-  border: 2px dashed var(--border-color);
-  border-radius: var(--radius-l);
-}

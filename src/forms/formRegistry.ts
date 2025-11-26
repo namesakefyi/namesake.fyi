@@ -4,16 +4,16 @@
  */
 
 import type { ComponentType } from "react";
-import { MaCourtOrderForm } from "./ma-court-order/MaCourtOrderForm";
-import { SocialSecurityForm } from "./social-security/SocialSecurityForm";
+import { MaCourtOrderForm } from "../pages/forms/ma-court-order/_Form";
+import { SocialSecurityForm } from "../pages/forms/social-security/_Form";
 
 export interface FormRegistryEntry {
   /** Unique identifier for the form component */
   id: string;
   /** Display name for the CMS dropdown */
   title: string;
-  /** The React component (only available on the frontend) */
-  component?: ComponentType<any>;
+  /** The React component */
+  component: ComponentType<any>;
 }
 
 /**
@@ -30,12 +30,6 @@ export const FORM_REGISTRY: Record<string, FormRegistryEntry> = {
     title: "Social Security",
     component: SocialSecurityForm,
   },
-  // Add more forms here as you build them:
-  // "ny-court-order": {
-  //   id: "ny-court-order",
-  //   title: "New York Court Order",
-  //   component: NyCourtOrderForm,
-  // },
 };
 
 /**
@@ -44,10 +38,3 @@ export const FORM_REGISTRY: Record<string, FormRegistryEntry> = {
  */
 export const FORM_REGISTRY_METADATA: Array<{ id: string; title: string }> =
   Object.values(FORM_REGISTRY).map(({ id, title }) => ({ id, title }));
-
-/**
- * Get a form component by ID
- */
-export function getFormComponent(id: string): ComponentType<any> | undefined {
-  return FORM_REGISTRY[id]?.component;
-}
