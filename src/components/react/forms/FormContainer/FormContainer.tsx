@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormProvider, type UseFormReturn } from "react-hook-form";
 import { Form } from "../../common/Form";
 import { FormNavigation } from "../FormNavigation";
@@ -49,22 +49,24 @@ export function FormContainer({
   onSubmit,
   warnOnExit = true,
 }: FormContainerProps) {
+  const formRef = useRef<HTMLFormElement>(null);
+
   // Navigation index: -1 = title, 0 to steps.length-1 = actual steps, steps.length = review
   const [navigationIndex, setNavigationIndex] = useState(-1);
 
   // Warn before leaving with unsaved changes
-  useEffect(() => {
-    if (!warnOnExit) return;
+  // useEffect(() => {
+  //   if (!warnOnExit) return;
 
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (form.formState.isDirty) {
-        e.preventDefault();
-      }
-    };
+  //   const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+  //     if (form.formState.isDirty) {
+  //       e.preventDefault();
+  //     }
+  //   };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  }, [form.formState.isDirty, warnOnExit]);
+  //   window.addEventListener("beforeunload", handleBeforeUnload);
+  //   return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  // }, [form.formState.isDirty, warnOnExit]);
 
   // Sync step with URL hash
   useEffect(() => {
@@ -124,6 +126,11 @@ export function FormContainer({
     // Can go from title (-1) through all steps (0 to steps.length-1) to review (steps.length)
     if (navigationIndex < steps.length) {
       setNavigationIndex(navigationIndex + 1);
+    }
+
+    // Scroll to top of form container
+    if (formRef.current) {
+      formRef.current.scrollTo({ top: 0 });
     }
   }, [navigationIndex, steps.length]);
 
@@ -201,6 +208,7 @@ export function FormContainer({
           className="form-container"
           onSubmit={handleFormSubmit}
           autoComplete="on"
+          ref={formRef}
         >
           {showNavigation && <FormNavigation />}
           <div className="form-container-content">{renderCurrentStep()}</div>

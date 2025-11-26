@@ -8,8 +8,8 @@ import {
 } from "react-aria-components";
 import { Text } from "../Content";
 import { FieldError, Label } from "../Form";
-
 import "./TextField.css";
+import clsx from "clsx";
 
 export interface TextFieldProps extends AriaTextFieldProps {
   label?: string;
@@ -21,10 +21,14 @@ export function TextField({
   label,
   description,
   errorMessage,
+  className,
   ...props
 }: TextFieldProps) {
   return (
-    <AriaTextField {...props}>
+    <AriaTextField
+      className={clsx("namesake-text-field", className)}
+      {...props}
+    >
       <Label>{label}</Label>
       <Input />
       {description && <Text slot="description">{description}</Text>}

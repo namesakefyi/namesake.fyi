@@ -7,8 +7,8 @@
  */
 export function formatTimeEstimate(
   steps: number,
-  minMinutesPerStep = 0.2,
-  maxMinutesPerStep = 1,
+  minMinutesPerStep = 0.3,
+  maxMinutesPerStep = 0.75,
 ): string {
   const minMinutes = Math.ceil(steps * minMinutesPerStep);
   const maxMinutes = Math.ceil(steps * maxMinutesPerStep);

@@ -1,12 +1,37 @@
-import type { StepComponentProps } from "../../../components/react/forms/FormContainer";
-import { FormStep } from "../../../components/react/forms/FormStep";
+import {
+  ShortTextField,
+  ComboBoxField,
+  type StepComponentProps,
+  FormStep,
+} from "~/components/react/forms";
+import { COUNTRIES } from "~/constants/countries";
+import { BIRTHPLACES } from "~/constants/jurisdictions";
 
 export function BirthplaceStep(_props: StepComponentProps) {
   return (
     <FormStep title="Where were you born?">
-      {/* TODO: Add ShortTextField for birthplaceCity */}
-      {/* TODO: Add ComboBoxField for birthplaceState with BIRTHPLACES options */}
-      {/* TODO: Add conditional ComboBoxField for birthplaceCountry with COUNTRIES options */}
+      <ShortTextField name="birthplaceCity" label="City of birth" />
+      <ComboBoxField
+        name="birthplaceCountry"
+        label="Country"
+        placeholder="Select a country"
+        options={Object.entries(COUNTRIES)
+          .filter(([value]) => value !== "US")
+          .map(([value, label]) => ({
+            label,
+            value,
+          }))}
+      />
+      <ComboBoxField
+        name="birthplaceState"
+        label="State"
+        placeholder="Select a state"
+        options={Object.entries(BIRTHPLACES).map(([value, label]) => ({
+          label,
+          value,
+        }))}
+      />
+      {/* TODO: Add conditional ComboBoxField for birthplaceState when country is US */}
     </FormStep>
   );
 }

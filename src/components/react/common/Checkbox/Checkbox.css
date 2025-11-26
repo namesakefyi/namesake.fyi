@@ -1,4 +1,4 @@
-.react-aria-Checkbox {
+.namesake-checkbox {
   --selected-color: var(--highlight-background);
   --selected-color-pressed: var(--highlight-background);
   --checkmark-color: var(--background-color);
@@ -29,6 +29,9 @@
     fill: none;
     stroke: var(--checkmark-color);
     stroke-width: 2;
+    stroke-dasharray: 22px;
+    stroke-dashoffset: 66;
+    transition: all 200ms ease-out;
   }
 
   &[data-focus-visible] .checkbox {
@@ -75,10 +78,6 @@
   }
 
   &[data-disabled] {
-    color: var(--text-color-disabled);
-
-    .checkbox {
-      border-color: var(--border-color-disabled);
-    }
+    opacity: 0.3;
   }
 }

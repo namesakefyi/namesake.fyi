@@ -6,6 +6,7 @@
   padding-block: var(--space-m);
   position: sticky;
   top: 0;
+  z-index: 20;
 }
 
 .form-progress {
@@ -27,4 +28,5 @@
   flex-shrink: 0;
   padding: 0;
   width: var(--space-2xl);
+  height: var(--space-2xl);
 }

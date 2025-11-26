@@ -31,13 +31,6 @@
   display: inline-block;
   color: var(--text-color);
   margin-bottom: var(--space-2xs);
-  font-size: var(--step--1);
-
-  &:has(~ [data-focused="true"]),
-  &:has(~ [data-focus-within="true"]),
-  &:has(~ [aria-expanded="true"]) {
-    font-weight: var(--weight-bold);
-  }
 }
 
 .react-aria-FieldError {
@@ -45,15 +38,15 @@
   color: var(--invalid-color);
 }
 
-.field-Button {
+.namesake-field-button {
   background: var(--highlight-background);
   color: var(--highlight-foreground);
   forced-color-adjust: none;
-  border-radius: 4px;
+  border-radius: var(--radius-2xs);
   border: none;
-  margin-left: calc(-1 * var(--space-l));
-  width: var(--space-m);
-  height: var(--space-m);
+  margin-left: calc(-1 * var(--space-xl));
+  width: var(--space-l);
+  height: var(--space-l);
   padding: 0;
   font-size: var(--step--1);
   box-sizing: content-box;

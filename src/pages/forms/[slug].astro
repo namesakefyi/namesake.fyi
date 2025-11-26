@@ -32,7 +32,7 @@ if (!form) return Astro.redirect("/404");
     description={form.description}
   />
   <div class="date-updated">
-    Form last edited on {" "}
+    Form last revised on {" "}
     <time datetime={form._updatedAt}
       >{dayjs.utc(form._updatedAt).local().format("LL [at] LT")}</time
     >.

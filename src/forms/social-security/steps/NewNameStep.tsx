@@ -1,5 +1,8 @@
-import type { StepComponentProps } from "../../../components/react/forms/FormContainer";
-import { FormStep } from "../../../components/react/forms/FormStep";
+import {
+  FormStep,
+  NameField,
+  type StepComponentProps,
+} from "~/components/react/forms";
 
 export function NewNameStep(_props: StepComponentProps) {
   return (
@@ -7,7 +10,7 @@ export function NewNameStep(_props: StepComponentProps) {
       title="What is your new name?"
       description="This is the name that will show on your new card."
     >
-      {/* TODO: Add NameField component for newName */}
+      <NameField type="newName" />
     </FormStep>
   );
 }

@@ -27,6 +27,10 @@
       background-color: var(--invalid-color);
     }
   }
+
+  p + p {
+    margin-top: var(--space-s);
+  }
 }
 
 .banner-content {

@@ -1,19 +1,29 @@
 "use client";
 import {
   Checkbox as AriaCheckbox,
-  type CheckboxProps,
+  type CheckboxProps as AriaCheckboxProps,
+  type ValidationResult,
 } from "react-aria-components";
+import { FieldError } from "../Form";
 
 import "./Checkbox.css";
+import clsx from "clsx";
+import { smartquotes } from "~/utils/smartquotes";
+
+export interface CheckboxProps extends AriaCheckboxProps {
+  label?: string;
+  errorMessage?: string | ((validation: ValidationResult) => string);
+}
 
 export function Checkbox({
   children,
+  label,
+  className,
+  errorMessage,
   ...props
-}: Omit<CheckboxProps, "children"> & {
-  children?: React.ReactNode;
-}) {
+}: CheckboxProps) {
   return (
-    <AriaCheckbox {...props}>
+    <AriaCheckbox className={clsx("namesake-checkbox", className)} {...props}>
       {({ isIndeterminate }) => (
         <>
           <div className="checkbox">
@@ -25,7 +35,9 @@ export function Checkbox({
               )}
             </svg>
           </div>
+          {label && smartquotes(label)}
           {children}
+          {errorMessage && <FieldError>{errorMessage}</FieldError>}
         </>
       )}
     </AriaCheckbox>

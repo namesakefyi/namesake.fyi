@@ -1,0 +1,6 @@
+.namesake-pronoun-select-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  width: 100%;
+}

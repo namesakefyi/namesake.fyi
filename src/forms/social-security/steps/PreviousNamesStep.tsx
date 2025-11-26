@@ -1,10 +1,13 @@
-import type { StepComponentProps } from "../../../components/react/forms/FormContainer";
-import { FormStep } from "../../../components/react/forms/FormStep";
+import {
+  FormStep,
+  LongTextField,
+  type StepComponentProps,
+} from "~/components/react/forms";
 
 export function PreviousNamesStep(_props: StepComponentProps) {
   return (
     <FormStep title="What other legal names have you used, if any?">
-      {/* TODO: Add LongTextField for previousLegalNames */}
+      <LongTextField name="previousLegalNames" label="Other names used" />
     </FormStep>
   );
 }

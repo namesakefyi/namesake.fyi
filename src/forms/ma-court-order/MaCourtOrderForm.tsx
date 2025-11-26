@@ -39,17 +39,13 @@ const STEPS: readonly Step[] = [
   { id: "mothers-maiden-name", component: MothersMaidenNameStep },
 ];
 
-export interface MaCourtOrderFormProps {
-  /** Form title from Sanity (optional, falls back to default) */
-  title?: string;
-  /** Form description from Sanity (optional, falls back to default) */
-  description?: string;
-}
-
 export function MaCourtOrderForm({
-  title = "Massachusetts Court Order",
-  description = "File for a court-ordered name change in Massachusetts. This is the first step in the legal name change process.",
-}: MaCourtOrderFormProps = {}) {
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) {
   const form = useForm({
     defaultValues: {
       // TODO: Add form field defaults here

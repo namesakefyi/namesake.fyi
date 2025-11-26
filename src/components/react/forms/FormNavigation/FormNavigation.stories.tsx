@@ -87,3 +87,4 @@ export const LongTitle: Story = () => (
     <FormNavigation />
   </FormStepContext.Provider>
 );
+

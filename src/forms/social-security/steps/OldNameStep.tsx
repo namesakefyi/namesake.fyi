@@ -1,5 +1,8 @@
-import type { StepComponentProps } from "../../../components/react/forms/FormContainer";
-import { FormStep } from "../../../components/react/forms/FormStep";
+import {
+  FormStep,
+  NameField,
+  type StepComponentProps,
+} from "~/components/react/forms";
 
 export function OldNameStep(_props: StepComponentProps) {
   return (
@@ -7,7 +10,7 @@ export function OldNameStep(_props: StepComponentProps) {
       title="What was your name at birth?"
       description="This is the name that appears on your original birth certificate."
     >
-      {/* TODO: Add NameField component for oldName */}
+      <NameField type="oldName" />
     </FormStep>
   );
 }

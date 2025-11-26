@@ -41,7 +41,13 @@ export function FormReviewStep({
           </div>
         )}
       </div>
-      <Button type="submit" variant="primary" icon={RiDownloadLine}>
+      <Button
+        type="submit"
+        variant="primary"
+        icon={RiDownloadLine}
+        size="large"
+        className="form-review-step-button"
+      >
         Finish and Download Forms
       </Button>
     </div>

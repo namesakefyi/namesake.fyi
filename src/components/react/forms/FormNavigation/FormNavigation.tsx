@@ -3,6 +3,7 @@ import { Button } from "../../common/Button";
 import { ProgressBar } from "../../common/ProgressBar";
 import { useFormStep } from "../FormContainer";
 import "./FormNavigation.css";
+import { Fragment } from "react/jsx-runtime";
 
 export function FormNavigation() {
   const {
@@ -25,11 +26,7 @@ export function FormNavigation() {
         <ProgressBar
           label={formTitle}
           value={isReviewStep ? totalSteps : currentStepIndex}
-          valueLabel={
-            isReviewStep
-              ? "Review"
-              : `Step ${currentStepIndex} of ${totalSteps}`
-          }
+          valueLabel={<Fragment />}
           maxValue={isReviewStep ? totalSteps : totalSteps + 1}
           formatOptions={{ style: "decimal" }}
         />

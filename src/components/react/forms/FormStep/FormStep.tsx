@@ -58,8 +58,13 @@ export function FormStep({
           </p>
         )}
       </header>
-      {children}
-      <Button onPress={onNext} variant="primary" endIcon={RiArrowRightLine}>
+      <div className="form-step-content">{children}</div>
+      <Button
+        onPress={onNext}
+        variant="primary"
+        endIcon={RiArrowRightLine}
+        className="form-step-button"
+      >
         Continue
       </Button>
     </section>

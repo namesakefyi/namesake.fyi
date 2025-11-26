@@ -1,5 +1,8 @@
-import type { StepComponentProps } from "../../../components/react/forms/FormContainer";
-import { FormStep } from "../../../components/react/forms/FormStep";
+import {
+  FormStep,
+  type StepComponentProps,
+  YesNoField,
+} from "~/components/react/forms";
 
 export function PreviousSocialSecurityCardStep(_props: StepComponentProps) {
   return (
@@ -7,7 +10,13 @@ export function PreviousSocialSecurityCardStep(_props: StepComponentProps) {
       title="Do you have a previous Social Security card?"
       description="Or, have you ever filed for a Social Security number in the past?"
     >
-      {/* TODO: Add YesNoField for hasPreviousSocialSecurityCard */}
+      <YesNoField
+        name="hasPreviousSocialSecurityCard"
+        label="Have you ever filed for or received a Social Security number card before?"
+        labelHidden
+        yesLabel="Yes, I have a previous Social Security card or have applied for one"
+        noLabel="No, I have never filed for or received a Social Security card before"
+      />
       {/* TODO: Add conditional subsection if hasPreviousSocialSecurityCard is true */}
       {/* Subsection: "What is the name shown on your most recent Social Security card?" */}
       {/* TODO: Add NameField for previousSocialSecurityCardName */}

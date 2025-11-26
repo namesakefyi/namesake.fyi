@@ -38,6 +38,9 @@ importers:
       '@cantoo/pdf-lib':
         specifier: ^2.5.3
         version: 2.5.3
+      '@maskito/core':
+        specifier: ^4.0.1
+        version: 4.0.1
       '@portabletext/types':
         specifier: ^3.0.0
         version: 3.0.0
@@ -153,6 +156,9 @@ importers:
       '@playwright/test':
         specifier: ^1.56.1
         version: 1.56.1
+      '@react-aria/test-utils':
+        specifier: 1.0.0-beta.1
+        version: 1.0.0-beta.1(@testing-library/react@16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.2.3(@types/react@19.2.6))(@types/react@19.2.6)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@testing-library/user-event@14.6.1(@testing-library/dom@10.4.1))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@sanity/cli':
         specifier: ^4.18.0
         version: 4.18.0(@types/node@24.10.1)(react@19.2.0)(sass@1.94.2)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.1)
@@ -2235,6 +2241,9 @@ packages:
       react:
         optional: true
 
+  '@maskito/core@4.0.1':
+    resolution: {integrity: sha512-0ewYXnr8X7as/n57duk1DDqjAKF0m32XbFiAhKdd9OX83eMBzO2+4xgUFxh6WZJ18oSw6y2nWjCTDFAFc5JbhA==}
+
   '@mdx-js/mdx@3.1.1':
     resolution: {integrity: sha512-f6ZO2ifpwAQIpzGWaBQT2TXxPv6z3RBzQKpVftEWN78Vl/YweF1uwussDx8ECAXVtr3Rs89fKyG9YlzUs9DyGQ==}
 
@@ -2770,6 +2779,14 @@ packages:
   '@react-aria/tag@3.7.2':
     resolution: {integrity: sha512-JV679P5r4DftbqyNBRt7Nw9mP7dxaKPfikjyQuvUoEOa06wBLbM/hU9RJUPRvqK+Un6lgBDAmXD9NNf4N2xpdw==}
     peerDependencies:
+      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
+      react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
+
+  '@react-aria/test-utils@1.0.0-beta.1':
+    resolution: {integrity: sha512-A4aBIj16m8ixW02o98lRYlebm3ai2/31UIJQvHFKex6UBbjAi8PpI3Vp/heyTU13J8hl0nrr6Bptc35jxyErWA==}
+    peerDependencies:
+      '@testing-library/react': ^16.0.0
+      '@testing-library/user-event': ^14.0.0
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
       react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
 
@@ -11042,6 +11059,8 @@ snapshots:
       '@types/react': 19.2.6
       react: 19.2.0
 
+  '@maskito/core@4.0.1': {}
+
   '@mdx-js/mdx@3.1.1':
     dependencies:
       '@types/estree': 1.0.8
@@ -11941,6 +11960,14 @@ snapshots:
       '@react-types/button': 3.14.1(react@19.2.0)
       '@react-types/shared': 3.32.1(react@19.2.0)
       '@swc/helpers': 0.5.17
+      react: 19.2.0
+      react-dom: 19.2.0(react@19.2.0)
+
+  '@react-aria/test-utils@1.0.0-beta.1(@testing-library/react@16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.2.3(@types/react@19.2.6))(@types/react@19.2.6)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@testing-library/user-event@14.6.1(@testing-library/dom@10.4.1))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
+    dependencies:
+      '@swc/helpers': 0.5.17
+      '@testing-library/react': 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.2.3(@types/react@19.2.6))(@types/react@19.2.6)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@testing-library/user-event': 14.6.1(@testing-library/dom@10.4.1)
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
 

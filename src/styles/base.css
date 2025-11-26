@@ -66,7 +66,7 @@ body[data-color="brown"]::after {
 
 main {
   flex: 1;
-  padding: var(--space-2xl) var(--space-l);
+  padding-inline: var(--space-l);
   min-width: 0;
   width: 100%;
   max-width: 1200px;

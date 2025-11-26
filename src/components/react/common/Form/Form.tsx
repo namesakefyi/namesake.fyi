@@ -11,9 +11,13 @@ import {
   Label as RACLabel,
 } from "react-aria-components";
 import "./Form.css";
+import type { Ref } from "react";
 
-export function Form(props: FormProps) {
-  return <RACForm {...props} />;
+export function Form({
+  ref,
+  ...props
+}: FormProps & { ref?: Ref<HTMLFormElement> }) {
+  return <RACForm ref={ref} {...props} />;
 }
 
 export function Label(props: LabelProps) {
@@ -25,5 +29,5 @@ export function FieldError(props: FieldErrorProps) {
 }
 
 export function FieldButton(props: ButtonProps) {
-  return <Button {...props} className="field-Button" />;
+  return <Button className="namesake-field-button" {...props} />;
 }

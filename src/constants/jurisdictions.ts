@@ -1,4 +1,4 @@
-import { usaStates } from "typed-usa-states";
+import { usaStates } from "typed-usa-states/dist/states";
 
 /**
  * Jurisdictions, a.k.a. US States and territories.
