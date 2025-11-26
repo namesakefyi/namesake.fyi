@@ -4,8 +4,8 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import sanity from "@sanity/astro";
 import { defineConfig, passthroughImageService } from "astro/config";
-import tsconfigPaths from "vite-tsconfig-paths";
 import { visualizer } from "rollup-plugin-visualizer";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
   output: "server",
