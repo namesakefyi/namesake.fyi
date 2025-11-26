@@ -14,7 +14,6 @@ If you need help with your legal name change or gender marker change, come join 
 | `public`         | Images, fonts, favicons, and app icons.                                 |
 | `src/components` | All of the .astro components that are used and reused across the site.  |
 | `src/constants`  | Shared data for site info and colors.                                   |
-| `src/forms`      | React components for step-by-step guided forms.                         |
 | `src/layouts`    | Shared layout files for wrapping pages.                                 |
 | `src/pages`      | Page-based routing for everything on the site.                          |
 | `src/pdfs`       | All PDF forms along with their schema definitions and tests.            |
