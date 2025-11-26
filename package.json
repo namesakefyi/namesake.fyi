@@ -59,6 +59,7 @@
     "d3-selection": "^3.0.0",
     "dayjs": "^1.11.19",
     "fathom-client": "^3.7.2",
+    "idb": "^8.0.3",
     "language-name-map": "^0.3.0",
     "markdown-it": "^14.1.0",
     "postcss": "^8.5.6",

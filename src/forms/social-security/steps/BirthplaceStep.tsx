@@ -12,6 +12,15 @@ export function BirthplaceStep(_props: StepComponentProps) {
     <FormStep title="Where were you born?">
       <ShortTextField name="birthplaceCity" label="City of birth" />
       <ComboBoxField
+        name="birthplaceState"
+        label="State"
+        placeholder="Select a state"
+        options={Object.entries(BIRTHPLACES).map(([value, label]) => ({
+          label,
+          value,
+        }))}
+      />
+      <ComboBoxField
         name="birthplaceCountry"
         label="Country"
         placeholder="Select a country"
@@ -21,15 +30,6 @@ export function BirthplaceStep(_props: StepComponentProps) {
             label,
             value,
           }))}
-      />
-      <ComboBoxField
-        name="birthplaceState"
-        label="State"
-        placeholder="Select a state"
-        options={Object.entries(BIRTHPLACES).map(([value, label]) => ({
-          label,
-          value,
-        }))}
       />
       {/* TODO: Add conditional ComboBoxField for birthplaceState when country is US */}
     </FormStep>

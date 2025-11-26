@@ -39,14 +39,14 @@
 }
 
 .namesake-field-button {
-  background: var(--highlight-background);
-  color: var(--highlight-foreground);
+  background-color: var(--field-background);
+  color: var(--text-color);
   forced-color-adjust: none;
   border-radius: var(--radius-2xs);
   border: none;
-  margin-left: calc(-1 * var(--space-xl));
-  width: var(--space-l);
-  height: var(--space-l);
+  margin-left: calc(-1 * var(--space-2xl));
+  width: var(--space-xl);
+  height: var(--space-xl);
   padding: 0;
   font-size: var(--step--1);
   box-sizing: content-box;
@@ -56,7 +56,6 @@
 
   &[data-pressed] {
     box-shadow: none;
-    background: var(--highlight-background);
   }
 
   &[data-focus-visible] {

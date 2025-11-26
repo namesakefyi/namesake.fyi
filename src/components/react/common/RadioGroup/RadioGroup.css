@@ -23,8 +23,8 @@
   &:before {
     content: "";
     display: block;
-    width: var(--space-xl);
-    height: var(--space-xl);
+    width: var(--space-2xl);
+    height: var(--space-2xl);
     box-sizing: border-box;
     border: 1px solid var(--border-color);
     background: var(--field-background);
@@ -40,7 +40,7 @@
   &[data-selected] {
     &:before {
       border-color: var(--highlight-background);
-      border-width: var(--space-xs);
+      border-width: var(--space-s);
     }
 
     &[data-pressed]:before {
@@ -66,7 +66,7 @@
 
 .namesake-radio-group .radio-items {
   display: flex;
-  gap: var(--space-xs);
+  gap: var(--space-s);
   align-items: flex-start;
 
   &:not(:first-child) {
