@@ -1,6 +1,6 @@
-import { FormStep, type StepComponentProps } from "~/components/react/forms";
+import { FormStep } from "@/components/react/forms/FormStep";
 
-export function MothersMaidenNameStep(_props: StepComponentProps) {
+export function MothersMaidenNameStep() {
   return (
     <FormStep
       title="What is your mother's maiden name?"

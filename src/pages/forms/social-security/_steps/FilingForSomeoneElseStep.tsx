@@ -1,10 +1,7 @@
-import {
-  FormStep,
-  type StepComponentProps,
-  YesNoField,
-} from "~/components/react/forms";
+import { FormStep } from "@/components/react/forms/FormStep";
+import { YesNoField } from "@/components/react/forms/YesNoField";
 
-export function FilingForSomeoneElseStep(_props: StepComponentProps) {
+export function FilingForSomeoneElseStep() {
   return (
     <FormStep title="Are you filing this form for someone else?">
       <YesNoField

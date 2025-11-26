@@ -1,6 +1,6 @@
-import { FormStep, type StepComponentProps } from "~/components/react/forms";
+import { FormStep } from "@/components/react/forms/FormStep";
 
-export function ImpoundCaseStep(_props: StepComponentProps) {
+export function ImpoundCaseStep() {
   return (
     <FormStep
       title="Would you like to impound your case?"

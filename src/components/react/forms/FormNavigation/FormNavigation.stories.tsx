@@ -1,5 +1,6 @@
 import type { Meta, StoryFn } from "@storybook/react";
-import { FormNavigation, FormStepContext } from "~/components/react/forms";
+import { FormStepContext } from "@/components/react/forms/FormContainer";
+import { FormNavigation } from "@/components/react/forms/FormNavigation";
 
 const meta: Meta<typeof FormNavigation> = {
   component: FormNavigation,

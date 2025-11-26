@@ -2,9 +2,9 @@ import { Controller, useFormContext } from "react-hook-form";
 import {
   TextArea,
   type TextAreaProps,
-} from "~/components/react/common/TextArea";
-import type { FieldName } from "~/constants/fields";
-import { smartquotes } from "~/utils/smartquotes";
+} from "@/components/react/common/TextArea";
+import type { FieldName } from "@/constants/fields";
+import { smartquotes } from "@/utils/smartquotes";
 import "./LongTextField.css";
 
 export interface LongTextFieldProps extends Omit<TextAreaProps, "size"> {

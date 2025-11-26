@@ -1,6 +1,6 @@
-import { FormStep, type StepComponentProps } from "~/components/react/forms";
+import { FormStep } from "@/components/react/forms/FormStep";
 
-export function BirthplaceStep(_props: StepComponentProps) {
+export function BirthplaceStep() {
   return (
     <FormStep title="Where were you born?">
       {/* TODO: Add ComboBoxField components here */}

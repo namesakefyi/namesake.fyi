@@ -1,6 +1,6 @@
 ---
 import type { SanityDocument } from "@sanity/client";
-import { loadQuery } from "~/sanity/lib/loadQuery";
+import { loadQuery } from "@/sanity/lib/loadQuery";
 import SanityImage from "./SanityImage.astro";
 
 const { data: partners } = await loadQuery<SanityDocument[]>({

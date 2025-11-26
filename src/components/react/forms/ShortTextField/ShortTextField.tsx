@@ -2,9 +2,9 @@ import { Controller, useFormContext } from "react-hook-form";
 import {
   TextField,
   type TextFieldProps,
-} from "~/components/react/common/TextField";
-import type { FieldName } from "~/constants/fields";
-import { smartquotes } from "~/utils/smartquotes";
+} from "@/components/react/common/TextField";
+import type { FieldName } from "@/constants/fields";
+import { smartquotes } from "@/utils/smartquotes";
 import "./ShortTextField.css";
 
 export interface ShortTextFieldProps extends Omit<TextFieldProps, "size"> {

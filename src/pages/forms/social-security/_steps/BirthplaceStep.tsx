@@ -1,13 +1,10 @@
-import {
-  ComboBoxField,
-  FormStep,
-  ShortTextField,
-  type StepComponentProps,
-} from "~/components/react/forms";
-import { COUNTRIES } from "~/constants/countries";
-import { BIRTHPLACES } from "~/constants/jurisdictions";
+import { ComboBoxField } from "@/components/react/forms/ComboBoxField";
+import { FormStep } from "@/components/react/forms/FormStep";
+import { ShortTextField } from "@/components/react/forms/ShortTextField";
+import { COUNTRIES } from "@/constants/countries";
+import { BIRTHPLACES } from "@/constants/jurisdictions";
 
-export function BirthplaceStep(_props: StepComponentProps) {
+export function BirthplaceStep() {
   return (
     <FormStep title="Where were you born?">
       <ShortTextField name="birthplaceCity" label="City of birth" />

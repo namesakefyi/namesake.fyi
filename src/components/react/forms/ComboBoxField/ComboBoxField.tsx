@@ -1,7 +1,7 @@
 import { Controller, useFormContext } from "react-hook-form";
-import { ComboBox, ComboBoxItem } from "~/components/react/common/ComboBox";
-import type { FieldName } from "~/constants/fields";
-import { smartquotes } from "~/utils/smartquotes";
+import { ComboBox, ComboBoxItem } from "@/components/react/common/ComboBox";
+import type { FieldName } from "@/constants/fields";
+import { smartquotes } from "@/utils/smartquotes";
 import "./ComboBoxField.css";
 
 export interface ComboBoxFieldProps {

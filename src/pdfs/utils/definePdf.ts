@@ -1,4 +1,4 @@
-import type { PDFDefinition } from "~/constants/forms";
+import type { PDFDefinition } from "@/constants/forms";
 
 /**
  * Define a PDF form.

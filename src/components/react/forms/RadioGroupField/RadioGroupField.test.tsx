@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   renderWithFormProvider,
   screen,
-} from "~/components/react/forms/test-utils";
+} from "@/components/react/forms/test-utils";
 import { RadioGroupField } from "./RadioGroupField";
 
 const mockOptions = [

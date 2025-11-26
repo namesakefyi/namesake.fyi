@@ -1,10 +1,7 @@
-import {
-  FormStep,
-  type StepComponentProps,
-  YesNoField,
-} from "~/components/react/forms";
+import { FormStep } from "@/components/react/forms/FormStep";
+import { YesNoField } from "@/components/react/forms/YesNoField";
 
-export function PreviousSocialSecurityCardStep(_props: StepComponentProps) {
+export function PreviousSocialSecurityCardStep() {
   return (
     <FormStep
       title="Do you have a previous Social Security card?"

@@ -1,22 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormProvider, type UseFormReturn } from "react-hook-form";
-import {
-  FormNavigation,
-  FormReviewStep,
-  FormTitleStep,
-} from "~/components/react/forms";
+import { FormNavigation } from "@/components/react/forms/FormNavigation";
+import { FormReviewStep } from "@/components/react/forms/FormReviewStep";
+import { FormTitleStep } from "@/components/react/forms/FormTitleStep";
 import { Form } from "../../common/Form";
 import { FormStepContext } from "./FormStepContext";
 import "./FormContainer.css";
 
 export interface Step {
   id: string;
-  component: React.ComponentType<StepComponentProps>;
-}
-
-export interface StepComponentProps {
-  onNext: () => void;
-  onBack: () => void;
+  component: React.ComponentType;
 }
 
 export interface FormContainerProps {
@@ -162,7 +155,7 @@ export function FormContainer({
 
     if (navigationIndex >= 0 && navigationIndex < steps.length) {
       const StepComponent = steps[navigationIndex].component;
-      return <StepComponent onNext={goToNextStep} onBack={goToPreviousStep} />;
+      return <StepComponent />;
     }
 
     return null;

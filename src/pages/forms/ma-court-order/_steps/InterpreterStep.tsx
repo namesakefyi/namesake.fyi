@@ -1,6 +1,6 @@
-import { FormStep, type StepComponentProps } from "~/components/react/forms";
+import { FormStep } from "@/components/react/forms/FormStep";
 
-export function InterpreterStep(_props: StepComponentProps) {
+export function InterpreterStep() {
   return (
     <FormStep
       title="If there is a hearing for your name change, do you need an interpreter?"

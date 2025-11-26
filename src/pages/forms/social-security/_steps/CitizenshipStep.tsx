@@ -1,10 +1,7 @@
-import {
-  FormStep,
-  RadioGroupField,
-  type StepComponentProps,
-} from "~/components/react/forms";
+import { FormStep } from "@/components/react/forms/FormStep";
+import { RadioGroupField } from "@/components/react/forms/RadioGroupField";
 
-export function CitizenshipStep(_props: StepComponentProps) {
+export function CitizenshipStep() {
   return (
     <FormStep title="What is your citizenship status?">
       <RadioGroupField

@@ -1,6 +1,6 @@
-import { FormStep, type StepComponentProps } from "~/components/react/forms";
+import { FormStep } from "@/components/react/forms/FormStep";
 
-export function PreviousNameChangeStep(_props: StepComponentProps) {
+export function PreviousNameChangeStep() {
   return (
     <FormStep title="Have you legally changed your name before?">
       {/* TODO: Add YesNoField and conditional subsection */}

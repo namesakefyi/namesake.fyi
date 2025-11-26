@@ -1,6 +1,6 @@
-import { FormStep, type StepComponentProps } from "~/components/react/forms";
+import { FormStep } from "@/components/react/forms/FormStep";
 
-export function OtherNamesStep(_props: StepComponentProps) {
+export function OtherNamesStep() {
   return (
     <FormStep
       title="Have you ever used any other name or alias?"

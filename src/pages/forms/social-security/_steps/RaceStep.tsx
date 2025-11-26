@@ -1,11 +1,8 @@
-import { Banner } from "~/components/react/common/Banner";
-import {
-  CheckboxGroupField,
-  FormStep,
-  type StepComponentProps,
-} from "~/components/react/forms";
+import { Banner } from "@/components/react/common/Banner";
+import { CheckboxGroupField } from "@/components/react/forms/CheckboxGroupField";
+import { FormStep } from "@/components/react/forms/FormStep";
 
-export function RaceStep(_props: StepComponentProps) {
+export function RaceStep() {
   return (
     <FormStep
       title="What is your race?"

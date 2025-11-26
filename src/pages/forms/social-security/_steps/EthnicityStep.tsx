@@ -1,11 +1,8 @@
-import { Banner } from "~/components/react/common/Banner";
-import {
-  FormStep,
-  type StepComponentProps,
-  YesNoField,
-} from "~/components/react/forms";
+import { Banner } from "@/components/react/common/Banner";
+import { FormStep } from "@/components/react/forms/FormStep";
+import { YesNoField } from "@/components/react/forms/YesNoField";
 
-export function EthnicityStep(_props: StepComponentProps) {
+export function EthnicityStep() {
   return (
     <FormStep
       title="What is your ethnicity?"

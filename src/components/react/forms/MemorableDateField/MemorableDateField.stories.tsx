@@ -2,7 +2,7 @@ import type { Meta } from "@storybook/react-vite";
 import {
   MemorableDateField,
   type MemorableDateFieldProps,
-} from "~/components/react/forms";
+} from "@/components/react/forms/MemorableDateField";
 
 const meta: Meta<typeof MemorableDateField> = {
   component: MemorableDateField,

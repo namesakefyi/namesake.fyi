@@ -1,10 +1,7 @@
-import {
-  FormStep,
-  NameField,
-  type StepComponentProps,
-} from "~/components/react/forms";
+import { FormStep } from "@/components/react/forms/FormStep";
+import { NameField } from "@/components/react/forms/NameField";
 
-export function OldNameStep(_props: StepComponentProps) {
+export function OldNameStep() {
   return (
     <FormStep
       title="What was your name at birth?"

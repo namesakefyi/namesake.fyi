@@ -1,10 +1,7 @@
-import {
-  FormStep,
-  MemorableDateField,
-  type StepComponentProps,
-} from "~/components/react/forms";
+import { FormStep } from "@/components/react/forms/FormStep";
+import { MemorableDateField } from "@/components/react/forms/MemorableDateField";
 
-export function DateOfBirthStep(_props: StepComponentProps) {
+export function DateOfBirthStep() {
   return (
     <FormStep title="What is your date of birth?">
       <MemorableDateField name="dateOfBirth" label="Date of birth" />

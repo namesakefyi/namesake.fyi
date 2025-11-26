@@ -1,6 +1,6 @@
-import { FormStep, type StepComponentProps } from "~/components/react/forms";
+import { FormStep } from "@/components/react/forms/FormStep";
 
-export function PronounsStep(_props: StepComponentProps) {
+export function PronounsStep() {
   return (
     <FormStep title="Do you want to share your pronouns with the court staff?">
       {/* TODO: Add YesNoField and conditional PronounSelectField */}

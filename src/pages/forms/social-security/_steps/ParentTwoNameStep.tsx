@@ -1,10 +1,7 @@
-import {
-  FormStep,
-  NameField,
-  type StepComponentProps,
-} from "~/components/react/forms";
+import { FormStep } from "@/components/react/forms/FormStep";
+import { NameField } from "@/components/react/forms/NameField";
 
-export function ParentTwoNameStep(_props: StepComponentProps) {
+export function ParentTwoNameStep() {
   return (
     <FormStep title="What is your father's (or second parent's) name?">
       <NameField type="fathersName" />

@@ -1,5 +1,5 @@
-import type { FormData } from "~/constants/fields";
-import type { PDFDefinition } from "~/constants/forms";
+import type { FormData } from "@/constants/fields";
+import type { PDFDefinition } from "@/constants/forms";
 import { fetchPdf } from "./fetchPdf";
 import { loadPdfLib } from "./loadPdfLib";
 

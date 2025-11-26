@@ -1,6 +1,6 @@
-import { FormStep, type StepComponentProps } from "~/components/react/forms";
+import { FormStep } from "@/components/react/forms/FormStep";
 
-export function WaivePublicationStep(_props: StepComponentProps) {
+export function WaivePublicationStep() {
   return (
     <FormStep
       title="Would you like to skip the newspaper publication step?"

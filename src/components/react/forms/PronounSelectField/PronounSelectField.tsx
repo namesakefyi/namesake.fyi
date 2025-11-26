@@ -1,9 +1,10 @@
 import { useState } from "react";
 import type { Selection } from "react-aria-components";
 import { Controller, useFormContext } from "react-hook-form";
-import { Tag, TagGroup } from "~/components/react/common/TagGroup";
-import { TextField } from "~/components/react/common/TextField";
-import { ALL, COMMON_PRONOUNS } from "~/constants";
+import { Tag, TagGroup } from "@/components/react/common/TagGroup";
+import { TextField } from "@/components/react/common/TextField";
+import { ALL } from "@/constants/all";
+import { COMMON_PRONOUNS } from "@/constants/fields";
 import "./PronounSelectField.css";
 
 export function PronounSelectField() {

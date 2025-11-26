@@ -2,8 +2,8 @@ import { Controller, useFormContext } from "react-hook-form";
 import {
   TextField,
   type TextFieldProps,
-} from "~/components/react/common/TextField";
-import type { FieldName } from "~/constants/fields";
+} from "@/components/react/common/TextField";
+import type { FieldName } from "@/constants/fields";
 import "./EmailField.css";
 
 export interface EmailFieldProps extends Omit<TextFieldProps, "size"> {

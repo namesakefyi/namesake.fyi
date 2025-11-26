@@ -3,8 +3,8 @@ import { Controller, useFormContext } from "react-hook-form";
 import {
   TextField,
   type TextFieldProps,
-} from "~/components/react/common/TextField";
-import type { FieldName } from "~/constants/fields";
+} from "@/components/react/common/TextField";
+import type { FieldName } from "@/constants/fields";
 import "./PhoneField.css";
 
 export interface PhoneFieldProps extends Omit<TextFieldProps, "size"> {

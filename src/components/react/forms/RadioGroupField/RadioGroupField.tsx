@@ -4,9 +4,9 @@ import {
   RadioGroup,
   type RadioGroupProps,
   type RadioProps,
-} from "~/components/react/common/RadioGroup";
-import { type FieldName, PREFER_NOT_TO_ANSWER } from "~/constants/fields";
-import { smartquotes } from "~/utils/smartquotes";
+} from "@/components/react/common/RadioGroup";
+import { type FieldName, PREFER_NOT_TO_ANSWER } from "@/constants/fields";
+import { smartquotes } from "@/utils/smartquotes";
 import "./RadioGroupField.css";
 
 interface RadioOption extends RadioProps {

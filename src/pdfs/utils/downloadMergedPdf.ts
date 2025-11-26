@@ -1,5 +1,5 @@
-import type { FormData } from "~/constants/fields";
-import type { PDFDefinition } from "~/constants/forms";
+import type { FormData } from "@/constants/fields";
+import type { PDFDefinition } from "@/constants/forms";
 import { createCoverPage } from "./createCoverPage";
 import { downloadPdf } from "./downloadPdf";
 import { fillPdf } from "./fillPdf";

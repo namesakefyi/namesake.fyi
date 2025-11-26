@@ -1,6 +1,6 @@
-import { FormStep, type StepComponentProps } from "~/components/react/forms";
+import { FormStep } from "@/components/react/forms/FormStep";
 
-export function ReturnDocumentsStep(_props: StepComponentProps) {
+export function ReturnDocumentsStep() {
   return (
     <FormStep title="Do you want your original documents returned afterwards?">
       {/* TODO: Add YesNoField and conditional Banner */}

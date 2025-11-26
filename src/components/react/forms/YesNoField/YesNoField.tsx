@@ -3,9 +3,9 @@ import {
   Radio,
   RadioGroup,
   type RadioGroupProps,
-} from "~/components/react/common/RadioGroup";
-import { type FieldName, PREFER_NOT_TO_ANSWER } from "~/constants/fields";
-import { smartquotes } from "~/utils/smartquotes";
+} from "@/components/react/common/RadioGroup";
+import { type FieldName, PREFER_NOT_TO_ANSWER } from "@/constants/fields";
+import { smartquotes } from "@/utils/smartquotes";
 import "./YesNoField.css";
 
 type YesNoValue = boolean | typeof PREFER_NOT_TO_ANSWER;

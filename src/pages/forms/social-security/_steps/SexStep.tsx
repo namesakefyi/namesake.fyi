@@ -1,11 +1,8 @@
-import { Banner } from "~/components/react/common/Banner";
-import {
-  FormStep,
-  RadioGroupField,
-  type StepComponentProps,
-} from "~/components/react/forms";
+import { Banner } from "@/components/react/common/Banner";
+import { FormStep } from "@/components/react/forms/FormStep";
+import { RadioGroupField } from "@/components/react/forms/RadioGroupField";
 
-export function SexStep(_props: StepComponentProps) {
+export function SexStep() {
   return (
     <FormStep
       title="What is your sex?"

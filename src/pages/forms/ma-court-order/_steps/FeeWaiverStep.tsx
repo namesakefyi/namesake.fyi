@@ -1,6 +1,6 @@
-import { FormStep, type StepComponentProps } from "~/components/react/forms";
+import { FormStep } from "@/components/react/forms/FormStep";
 
-export function FeeWaiverStep(_props: StepComponentProps) {
+export function FeeWaiverStep() {
   return (
     <FormStep
       title="Do you need to apply for a fee waiver?"

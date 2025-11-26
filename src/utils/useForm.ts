@@ -7,7 +7,7 @@ import {
   type UseFormProps,
   useForm as useReactHookForm,
 } from "react-hook-form";
-import type { FieldName } from "~/constants";
+import type { FieldName } from "@/constants/fields";
 // import { toast } from "sonner";
 // import { useEncryptionKey } from "@/hooks/useEncryptionKey";
 // import { decryptData, encryptData } from "@/utils/encryption";

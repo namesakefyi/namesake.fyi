@@ -1,6 +1,6 @@
-import { FormStep, type StepComponentProps } from "~/components/react/forms";
+import { FormStep } from "@/components/react/forms/FormStep";
 
-export function ReasonStep(_props: StepComponentProps) {
+export function ReasonStep() {
   return (
     <FormStep title="What is the reason you're changing your name?">
       {/* TODO: Add LongTextField and Banner components here */}

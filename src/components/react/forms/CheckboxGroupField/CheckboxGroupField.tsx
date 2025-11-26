@@ -2,13 +2,13 @@ import { Controller, useFormContext } from "react-hook-form";
 import {
   Checkbox,
   type CheckboxProps,
-} from "~/components/react/common/Checkbox";
+} from "@/components/react/common/Checkbox";
 import {
   CheckboxGroup,
   type CheckboxGroupProps,
-} from "~/components/react/common/CheckboxGroup";
-import { type FieldName, PREFER_NOT_TO_ANSWER } from "~/constants/fields";
-import { smartquotes } from "~/utils/smartquotes";
+} from "@/components/react/common/CheckboxGroup";
+import { type FieldName, PREFER_NOT_TO_ANSWER } from "@/constants/fields";
+import { smartquotes } from "@/utils/smartquotes";
 import "./CheckboxGroupField.css";
 
 interface CheckboxOption extends CheckboxProps {

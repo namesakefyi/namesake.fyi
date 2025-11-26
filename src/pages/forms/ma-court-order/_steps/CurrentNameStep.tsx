@@ -1,6 +1,6 @@
-import { FormStep, type StepComponentProps } from "~/components/react/forms";
+import { FormStep } from "@/components/react/forms/FormStep";
 
-export function CurrentNameStep(_props: StepComponentProps) {
+export function CurrentNameStep() {
   return (
     <FormStep
       title="What is your current legal name?"

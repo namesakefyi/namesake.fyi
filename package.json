@@ -111,17 +111,12 @@
     "postcss-clamp": "^4.1.0",
     "postcss-media-minmax": "^5.0.0",
     "postcss-utopia": "^1.1.0",
-    "rollup-plugin-visualizer": "^6.0.5",
     "sharp": "^0.34.5",
     "storybook": "^10.0.8",
-    "vite-tsconfig-paths": "^5.1.4",
     "vitest": "4.0.14",
     "wrangler": "^4.50.0"
   },
   "packageManager": "pnpm@10.23.0",
-  "overrides": {
-    "vite": "6.4.1"
-  },
   "homepage": "https://namesake.fyi",
   "bugs": {
     "url": "https://github.com/namesakefyi/namesake.fyi/issues"

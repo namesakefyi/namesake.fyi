@@ -1,10 +1,7 @@
-import {
-  AddressField,
-  FormStep,
-  type StepComponentProps,
-} from "~/components/react/forms";
+import { AddressField } from "@/components/react/forms/AddressField";
+import { FormStep } from "@/components/react/forms/FormStep";
 
-export function AddressStep(_props: StepComponentProps) {
+export function AddressStep() {
   return (
     <FormStep title="What is your mailing address?">
       <AddressField type="mailing" />

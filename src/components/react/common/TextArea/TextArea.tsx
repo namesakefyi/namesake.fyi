@@ -7,7 +7,7 @@ import {
   Text,
   type ValidationResult,
 } from "react-aria-components";
-import { FieldError, Label } from "~/components/react/common/Form";
+import { FieldError, Label } from "@/components/react/common/Form";
 import "./TextArea.css";
 
 export interface TextAreaProps extends AriaTextFieldProps {
