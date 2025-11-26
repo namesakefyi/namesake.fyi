@@ -1,9 +1,9 @@
 import userEvent from "@testing-library/user-event";
+import { describe, expect, it } from "vitest";
 import {
   renderWithFormProvider,
   screen,
 } from "~/components/react/forms/test-utils";
-import { describe, expect, it } from "vitest";
 import {
   getBooleanValueFromYesNoString,
   getYesNoStringFromBoolean,

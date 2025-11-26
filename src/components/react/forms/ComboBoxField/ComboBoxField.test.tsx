@@ -1,6 +1,6 @@
 import { User } from "@react-aria/test-utils";
-import { renderWithFormProvider, screen } from "../test-utils";
 import { describe, expect, it } from "vitest";
+import { renderWithFormProvider, screen } from "../test-utils";
 import { ComboBoxField } from "./ComboBoxField";
 
 const mockOptions = [

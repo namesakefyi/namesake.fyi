@@ -1,8 +1,8 @@
 import {
-  ShortTextField,
   ComboBoxField,
-  type StepComponentProps,
   FormStep,
+  ShortTextField,
+  type StepComponentProps,
 } from "~/components/react/forms";
 import { COUNTRIES } from "~/constants/countries";
 import { BIRTHPLACES } from "~/constants/jurisdictions";

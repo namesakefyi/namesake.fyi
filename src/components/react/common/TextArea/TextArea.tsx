@@ -1,11 +1,11 @@
 import clsx from "clsx";
 import type { Ref } from "react";
 import {
-  TextField as AriaTextField,
   TextArea as AriaTextArea,
+  TextField as AriaTextField,
   type TextFieldProps as AriaTextFieldProps,
-  type ValidationResult,
   Text,
+  type ValidationResult,
 } from "react-aria-components";
 import { FieldError, Label } from "~/components/react/common/Form";
 import "./TextArea.css";

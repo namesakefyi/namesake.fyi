@@ -1,8 +1,8 @@
 import { User } from "@react-aria/test-utils";
 import userEvent from "@testing-library/user-event";
-import { renderWithFormProvider, screen } from "../test-utils";
 import languageNameMap from "language-name-map/map";
 import { describe, expect, it } from "vitest";
+import { renderWithFormProvider, screen } from "../test-utils";
 import { LanguageSelectField } from "./LanguageSelectField";
 
 describe("LanguageSelectField", () => {

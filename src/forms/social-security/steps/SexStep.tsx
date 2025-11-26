@@ -1,7 +1,7 @@
+import { Banner } from "~/components/react/common/Banner";
 import { RadioGroupField } from "~/components/react/forms";
 import type { StepComponentProps } from "../../../components/react/forms/FormContainer";
 import { FormStep } from "../../../components/react/forms/FormStep";
-import { Banner } from "~/components/react/common/Banner";
 
 export function SexStep(_props: StepComponentProps) {
   return (

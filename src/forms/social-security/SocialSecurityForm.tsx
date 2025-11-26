@@ -1,12 +1,12 @@
+import type { FormEvent } from "react";
+import type { FieldName, FieldType } from "~/constants";
 import { useForm } from "~/forms/useForm";
+import { downloadMergedPdf, loadPdfs } from "~/pdfs/utils";
 import {
   FormContainer,
   type Step,
 } from "../../components/react/forms/FormContainer";
 import * as Steps from "./steps";
-import type { FieldName, FieldType } from "~/constants";
-import type { FormEvent } from "react";
-import { downloadMergedPdf, loadPdfs } from "~/pdfs/utils";
 
 const FORM_FIELDS: FieldName[] = [
   "newFirstName",

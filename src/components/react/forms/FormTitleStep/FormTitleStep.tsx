@@ -1,11 +1,11 @@
 import {
+  type RemixiconComponentType,
   RiArrowRightLine,
   RiAuctionLine,
   RiFileTextLine,
   RiLockLine,
   RiShieldKeyholeLine,
   RiTimerLine,
-  type RemixiconComponentType,
 } from "@remixicon/react";
 import { Heading } from "react-aria-components";
 import { formatTimeEstimate } from "../../../../utils/formatTimeEstimate";

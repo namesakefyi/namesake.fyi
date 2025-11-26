@@ -1,7 +1,7 @@
 import {
   AddressField,
-  type StepComponentProps,
   FormStep,
+  type StepComponentProps,
 } from "~/components/react/forms";
 
 export function AddressStep(_props: StepComponentProps) {

@@ -1,7 +1,7 @@
 import userEvent from "@testing-library/user-event";
-import { renderWithFormProvider, screen } from "../test-utils";
 import { describe, expect, it } from "vitest";
 import { COMMON_PRONOUNS } from "~/constants";
+import { renderWithFormProvider, screen } from "../test-utils";
 import { PronounSelectField } from "./PronounSelectField";
 
 describe("PronounSelectField", () => {

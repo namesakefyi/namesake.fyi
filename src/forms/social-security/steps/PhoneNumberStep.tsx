@@ -1,6 +1,6 @@
 import {
-  PhoneField,
   FormStep,
+  PhoneField,
   type StepComponentProps,
 } from "~/components/react/forms";
 

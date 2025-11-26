@@ -1,6 +1,6 @@
 import userEvent from "@testing-library/user-event";
-import { renderWithFormProvider, screen } from "../test-utils";
 import { describe, expect, it } from "vitest";
+import { renderWithFormProvider, screen } from "../test-utils";
 import { CheckboxGroupField } from "./CheckboxGroupField";
 
 const mockOptions = [
