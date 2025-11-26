@@ -71,9 +71,6 @@ importers:
       astro:
         specifier: 5.16.0
         version: 5.16.0(@types/node@24.10.1)(idb-keyval@6.2.2)(jiti@2.6.1)(rollup@4.53.3)(sass@1.94.2)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.1)
-      astro-font:
-        specifier: ^1.1.0
-        version: 1.1.0
       astro-github-file-loader:
         specifier: ^1.1.0
         version: 1.1.0(@types/node@24.10.1)(idb-keyval@6.2.2)(jiti@2.6.1)(rollup@4.53.3)(sass@1.94.2)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.1)
@@ -4292,9 +4289,6 @@ packages:
   astring@1.9.0:
     resolution: {integrity: sha512-LElXdjswlqjWrPpJFg1Fx4wpkOCxj1TDHlSV4PlaRxHGWko024xICaa97ZkMfs6DRKlCguiAI+rbXv5GWwXIkg==}
     hasBin: true
-
-  astro-font@1.1.0:
-    resolution: {integrity: sha512-hj1A0MkaJTeaArBpf1m9s4Nxu1Bn9h0QiEPeR9Dfjle25pT4CH4higzuadWzCRSvhGO2SzbM11YwZEF+cmLDxg==}
 
   astro-github-file-loader@1.1.0:
     resolution: {integrity: sha512-zRrmC+lEJPkqzbPQTS/g8l55TwXYDbKuJozKj4aAnCrF3KEP6VHkhVGfnzSABOX3XiGj/FpwBfIQdE//AgP9oQ==}
@@ -13780,8 +13774,6 @@ snapshots:
       js-tokens: 9.0.1
 
   astring@1.9.0: {}
-
-  astro-font@1.1.0: {}
 
   astro-github-file-loader@1.1.0(@types/node@24.10.1)(idb-keyval@6.2.2)(jiti@2.6.1)(rollup@4.53.3)(sass@1.94.2)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.1):
     dependencies:
