@@ -14,9 +14,9 @@ If you need help with your legal name change or gender marker change, come join 
 | `public`         | Images, fonts, favicons, and app icons.                                 |
 | `src/components` | All of the .astro components that are used and reused across the site.  |
 | `src/constants`  | Shared data for site info and colors.                                   |
-| `src/forms`      | All PDFs and associated schema definitions.                             |
 | `src/layouts`    | Shared layout files for wrapping pages.                                 |
 | `src/pages`      | Page-based routing for everything on the site.                          |
+| `src/pdfs`       | All PDF forms along with their schema definitions and tests.            |
 | `src/sanity`     | Schemas and components used for Sanity, our CMS.                        |
 | `src/styles`     | Global site styles.                                                     |
 | `src/utils`      | Helper functions and other utilities.                                   |

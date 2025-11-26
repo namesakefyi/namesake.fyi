@@ -1,7 +1,7 @@
 import languageNameMap from "language-name-map/map";
-import { definePdf } from "~/pdfs/utils";
-import { formatDateMMDDYYYY } from "~/utils/formatDateMMDDYYYY";
-import { joinPronouns } from "~/utils/joinPronouns";
+import { definePdf } from "@/pdfs/utils/definePdf";
+import { formatDateMMDDYYYY } from "@/utils/formatDateMMDDYYYY";
+import { joinPronouns } from "@/utils/joinPronouns";
 import pdf from "./cjp27-petition-to-change-name-of-adult.pdf";
 
 export default definePdf({

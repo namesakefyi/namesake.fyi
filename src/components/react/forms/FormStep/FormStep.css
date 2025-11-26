@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--space-2xl);
+  gap: var(--space-xl);
   justify-content: center;
   border: none;
 
@@ -25,14 +25,22 @@
   text-wrap: pretty;
 }
 
+.form-step-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+  width: 100%;
+}
+
 .form-subsection {
   display: flex;
   flex-direction: column;
   gap: var(--space-xl);
-  padding-left: var(--space-l);
-  padding-block: var(--space-2xs);
+  padding-inline-start: var(--space-xl);
+  border: none;
   border-left: 3px solid var(--border-color);
   justify-content: center;
+  width: 100%;
 }
 
 .form-subsection h2 {
@@ -40,4 +48,10 @@
   font-weight: var(--weight-bold);
   color: var(--text-color);
   text-wrap: pretty;
+}
+
+@media (width < 600px) {
+  .form-step-button {
+    width: 100%;
+  }
 }

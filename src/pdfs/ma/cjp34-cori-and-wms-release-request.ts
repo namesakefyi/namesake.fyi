@@ -1,6 +1,6 @@
-import { definePdf } from "~/pdfs/utils";
-import { formatDateMMDDYYYY } from "~/utils/formatDateMMDDYYYY";
-import { joinNames } from "~/utils/joinNames";
+import { definePdf } from "@/pdfs/utils/definePdf";
+import { formatDateMMDDYYYY } from "@/utils/formatDateMMDDYYYY";
+import { joinNames } from "@/utils/joinNames";
 import pdf from "./cjp34-cori-and-wms-release-request.pdf";
 
 export default definePdf({

@@ -1,1 +1,1 @@
-export { FormReviewStep, type FormReviewStepProps } from "./FormReviewStep";
+export * from "./FormReviewStep";

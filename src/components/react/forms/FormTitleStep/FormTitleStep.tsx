@@ -1,10 +1,37 @@
-import { RiArrowRightLine } from "@remixicon/react";
+import {
+  type RemixiconComponentType,
+  RiArrowRightLine,
+  RiFileTextLine,
+  RiShieldKeyholeLine,
+  RiTimerLine,
+} from "@remixicon/react";
 import { Heading } from "react-aria-components";
 import { formatTimeEstimate } from "../../../../utils/formatTimeEstimate";
 import { smartquotes } from "../../../../utils/smartquotes";
 import { Button } from "../../common/Button";
 import { useFormStep } from "../FormContainer/FormStepContext";
 import "./FormTitleStep.css";
+
+function FormTitleStepInfo({ children }: { children: React.ReactNode }) {
+  return <ul className="form-title-step-info">{children}</ul>;
+}
+
+interface FormTitleStepInfoItemProps {
+  icon: RemixiconComponentType;
+  children: React.ReactNode;
+}
+
+function FormTitleStepInfoItem({
+  icon: Icon,
+  children,
+}: FormTitleStepInfoItemProps) {
+  return (
+    <li>
+      <Icon />
+      <span>{children}</span>
+    </li>
+  );
+}
 
 export interface FormTitleStepProps {
   /**
@@ -35,21 +62,30 @@ export function FormTitleStep({ children, onStart }: FormTitleStepProps) {
         )}
       </header>
       {children && <div className="form-title-step-content">{children}</div>}
+      <FormTitleStepInfo>
+        <FormTitleStepInfoItem icon={RiFileTextLine}>
+          {/* TODO: Enumerate forms which this helps fill */}
+          This will help you fill and download <strong>SS-5</strong>
+        </FormTitleStepInfoItem>
+        {timeEstimate && (
+          <FormTitleStepInfoItem icon={RiTimerLine}>
+            Requires about <strong>{timeEstimate}</strong> to complete
+          </FormTitleStepInfoItem>
+        )}
+        <FormTitleStepInfoItem icon={RiShieldKeyholeLine}>
+          Your information is never sent to Namesake
+        </FormTitleStepInfoItem>
+      </FormTitleStepInfo>
       <footer className="form-title-step-footer">
         <Button
           onPress={onStart}
           variant="primary"
           size="large"
           endIcon={RiArrowRightLine}
+          className="form-title-step-button"
         >
           Start
         </Button>
-        {timeEstimate && (
-          <p className="form-title-step-time-estimate">
-            <strong>Estimated time to complete: </strong>
-            {timeEstimate}
-          </p>
-        )}
       </footer>
     </section>
   );

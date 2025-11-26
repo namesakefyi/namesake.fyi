@@ -1,6 +1,5 @@
 import { OlistIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
-import { FORM_REGISTRY_METADATA } from "../../forms/formRegistry";
 
 export const formType = defineType({
   name: "form",
@@ -23,18 +22,16 @@ export const formType = defineType({
       type: "string",
     }),
     defineField({
-      name: "componentId",
-      title: "Form Component",
+      name: "slug",
+      title: "Slug",
+      type: "slug",
       description:
-        "The React component that powers this form's interactive functionality",
-      type: "string",
-      options: {
-        list: FORM_REGISTRY_METADATA.map(({ id, title }) => ({
-          title,
-          value: id,
-        })),
-      },
+        "The URL path for this form (e.g., 'social-security' for /forms/social-security). Must match an existing form page.",
       validation: (Rule) => Rule.required(),
+      options: {
+        source: "title",
+        maxLength: 96,
+      },
     }),
     defineField({
       name: "state",
@@ -48,18 +45,6 @@ export const formType = defineType({
       type: "reference",
       to: [{ type: "category" }],
       validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "slug",
-      title: "Slug",
-      type: "slug",
-      description:
-        "The URL path for this form (e.g., 'court-order-ma' for /forms/court-order-ma)",
-      validation: (Rule) => Rule.required(),
-      options: {
-        source: "title",
-        maxLength: 96,
-      },
     }),
   ],
   preview: {

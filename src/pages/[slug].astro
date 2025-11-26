@@ -1,10 +1,10 @@
 ---
 import type { SanityDocument } from "@sanity/client";
-import TableOfContents from "~/components/TableOfContents.astro";
-import PortableText from "~/components/text/PortableText.astro";
-import ProseLayout from "~/layouts/ProseLayout.astro";
-import { extractHeadings } from "~/sanity/lib/extractHeadings";
-import { loadQuery } from "~/sanity/lib/loadQuery";
+import TableOfContents from "@/components/TableOfContents.astro";
+import PortableText from "@/components/text/PortableText.astro";
+import ProseLayout from "@/layouts/ProseLayout.astro";
+import { extractHeadings } from "@/sanity/lib/extractHeadings";
+import { loadQuery } from "@/sanity/lib/loadQuery";
 
 const { slug } = Astro.params;
 

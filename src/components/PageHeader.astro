@@ -2,7 +2,7 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import type { RoughAnnotationType } from "rough-notation/lib/model";
-import { smartquotes } from "~/utils/smartquotes";
+import { smartquotes } from "@/utils/smartquotes";
 
 dayjs.extend(utc);
 
@@ -33,7 +33,7 @@ const { title, date, description, annotation = "circle" } = Astro.props;
 <script>
   import { annotate } from "rough-notation";
   import type { RoughAnnotationType } from "rough-notation/lib/model";
-  import { annotationConfig } from "~/constants/annotations";
+  import { annotationConfig } from "@/constants/annotations";
 
   const header: HTMLElement | null = document.querySelector(".page-head h1");
   const isForcedColors = window.matchMedia("(forced-colors: active)").matches;
@@ -54,7 +54,7 @@ const { title, date, description, annotation = "circle" } = Astro.props;
 
 <style lang="scss">
   .page-head {
-    padding-block-end: var(--space-2xl);
+    padding-block: var(--space-2xl);
 
     .date {
       font-weight: var(--weight-bold);

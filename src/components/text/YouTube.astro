@@ -1,7 +1,7 @@
 ---
-import { YouTube as YouTubeEmbed } from "astro-embed";
+import { YouTube as YouTubeComponent } from "@/components/react/common/YouTube";
 
 const { url } = Astro.props.node;
 ---
 
-<YouTubeEmbed id={url} />
+<YouTubeComponent url={url} client:only="react" />

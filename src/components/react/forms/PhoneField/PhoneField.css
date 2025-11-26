@@ -1,0 +1,10 @@
+.namesake-phone-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  width: 100%;
+}
+
+.phone-number-input {
+  width: 20ch;
+}

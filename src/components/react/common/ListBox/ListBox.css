@@ -37,7 +37,7 @@
 }
 
 .react-aria-ListBoxItem {
-  padding: 0 var(--space-s);
+  padding: var(--space-2xs) var(--space-s);
   outline: none;
   cursor: pointer;
   color: var(--text-color);

@@ -69,9 +69,7 @@ describe("FormTitleStep", () => {
   it("renders time estimate when totalSteps is provided", () => {
     render(<FormTitleStep {...formTitleStep} />, { wrapper: TestWrapper });
 
-    const timeEstimateElement = screen.getByText(
-      /estimated time to complete:/i,
-    );
+    const timeEstimateElement = screen.getByText(/\d+–\d+ minutes/);
     expect(timeEstimateElement).toBeInTheDocument();
   });
 

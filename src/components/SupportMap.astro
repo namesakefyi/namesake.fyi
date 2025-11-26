@@ -5,8 +5,8 @@ import { geoPath } from "d3-geo";
 import type { Feature } from "geojson";
 import { feature } from "topojson-client";
 import type { GeometryCollection, Topology } from "topojson-specification";
-import { loadQuery } from "~/sanity/lib/loadQuery";
-import { formatStateList } from "~/utils/formatStateList";
+import { loadQuery } from "@/sanity/lib/loadQuery";
+import { formatStateList } from "@/utils/formatStateList";
 
 const { data: states } = await loadQuery<SanityDocument[]>({
   query: `*[_type == "state"]{
@@ -115,7 +115,7 @@ function getFillForSupportLevel(supportLevel: string): string {
           {
             generateHatchPaths(
               MAP_CONFIG.patterns.hatch.width,
-              MAP_CONFIG.patterns.hatch.height
+              MAP_CONFIG.patterns.hatch.height,
             ).map((pathData) => (
               <path
                 d={pathData}
@@ -136,7 +136,7 @@ function getFillForSupportLevel(supportLevel: string): string {
           {
             generateDotPositions(
               MAP_CONFIG.patterns.dots.width,
-              MAP_CONFIG.patterns.dots.height
+              MAP_CONFIG.patterns.dots.height,
             ).map((pos) => (
               <circle
                 cx={pos.cx}
@@ -168,7 +168,7 @@ function getFillForSupportLevel(supportLevel: string): string {
             label: "Full Support",
             fill: "var(--text-color)",
             count: stateFeatures.filter(
-              (f) => f.properties.supportLevel === "full"
+              (f) => f.properties.supportLevel === "full",
             ).length,
           },
           {
@@ -176,7 +176,7 @@ function getFillForSupportLevel(supportLevel: string): string {
             label: "Next Up",
             fill: "url(#hatchmarks)",
             count: stateFeatures.filter(
-              (f) => f.properties.supportLevel === "prioritized"
+              (f) => f.properties.supportLevel === "prioritized",
             ).length,
           },
           {
@@ -184,7 +184,7 @@ function getFillForSupportLevel(supportLevel: string): string {
             label: "No Support Yet",
             fill: "url(#dots)",
             count: stateFeatures.filter(
-              (f) => f.properties.supportLevel === "none"
+              (f) => f.properties.supportLevel === "none",
             ).length,
           },
         ].map((item) => (

@@ -16,7 +16,7 @@ Each `.pdf` file should be accompanied by a `.ts` definition of the same name co
 
 ```ts
 // cjp27-petition-to-change-name-of-adult.ts
-import { definePdf } from "~/utils/pdf";
+import { definePdf } from "@/utils/pdf";
 import pdf from "./cjp27-petition-to-change-name-of-adult.pdf";
 
 export default definePdf({

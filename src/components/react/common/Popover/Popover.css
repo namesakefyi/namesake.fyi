@@ -5,7 +5,10 @@
 
   border-radius: var(--radius-s);
   background: var(--overlay-background);
-  border: 2px solid var(--border-color);
+  border: none;
+  box-shadow:
+    0 0 0 3px var(--border-color),
+    8px 8px 0 0 color-mix(in srgb, var(--border-color) 20%, transparent);
   color: var(--text-color);
   outline: none;
   max-width: 250px;

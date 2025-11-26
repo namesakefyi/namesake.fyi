@@ -1,8 +1,18 @@
-.react-aria-CheckboxGroup {
+.namesake-checkbox-group {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
   color: var(--text-color);
+
+  .checkbox-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    align-items: flex-start;
+
+    &:not(:first-child) {
+      padding-block-start: var(--space-xs);
+    }
+  }
 
   [slot="description"] {
     display: block;

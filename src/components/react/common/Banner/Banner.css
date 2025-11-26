@@ -8,7 +8,8 @@
   .banner-icon {
     background-color: var(--highlight-background);
     color: var(--highlight-foreground);
-    padding: var(--space-s) var(--space-2xs);
+    padding-block: var(--space-s);
+    width: calc(var(--space-2xl) - 1px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -27,10 +28,15 @@
       background-color: var(--invalid-color);
     }
   }
+
+  p + p {
+    margin-top: var(--space-s);
+  }
 }
 
 .banner-content {
   font-size: var(--step-0);
   flex: 1;
-  padding: var(--space-s) var(--space-m);
+  padding: var(--space-s);
+  padding-inline-end: var(--space-m);
 }

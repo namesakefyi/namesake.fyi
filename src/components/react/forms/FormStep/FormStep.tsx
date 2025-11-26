@@ -1,9 +1,9 @@
 import { RiArrowRightLine } from "@remixicon/react";
 import { Heading } from "react-aria-components";
+import { useFormStep } from "@/components/react/forms/FormContainer";
 import { slugify } from "../../../../utils/slugify";
 import { smartquotes } from "../../../../utils/smartquotes";
 import { Button } from "../../common/Button";
-import { useFormStep } from "../FormContainer";
 import "./FormStep.css";
 import clsx from "clsx";
 import { useId } from "react";
@@ -58,8 +58,13 @@ export function FormStep({
           </p>
         )}
       </header>
-      {children}
-      <Button onPress={onNext} variant="primary" endIcon={RiArrowRightLine}>
+      <div className="form-step-content">{children}</div>
+      <Button
+        onPress={onNext}
+        variant="primary"
+        endIcon={RiArrowRightLine}
+        className="form-step-button"
+      >
         Continue
       </Button>
     </section>

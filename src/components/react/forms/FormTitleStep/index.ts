@@ -1,1 +1,1 @@
-export { FormTitleStep, type FormTitleStepProps } from "./FormTitleStep";
+export * from "./FormTitleStep";

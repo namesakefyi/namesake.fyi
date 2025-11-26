@@ -7,8 +7,8 @@ import {
 } from "react-aria-components";
 import { Text } from "../Content";
 import { FieldError, Label } from "../Form";
-
 import "./CheckboxGroup.css";
+import clsx from "clsx";
 
 export interface CheckboxGroupProps
   extends Omit<AriaCheckboxGroupProps, "children"> {
@@ -23,12 +23,16 @@ export function CheckboxGroup({
   description,
   errorMessage,
   children,
+  className,
   ...props
 }: CheckboxGroupProps) {
   return (
-    <AriaCheckboxGroup {...props}>
+    <AriaCheckboxGroup
+      className={clsx("namesake-checkbox-group", className)}
+      {...props}
+    >
       {label && <Label>{label}</Label>}
-      {children}
+      <div className="checkbox-items">{children}</div>
       {description && <Text slot="description">{description}</Text>}
       <FieldError>{errorMessage}</FieldError>
     </AriaCheckboxGroup>

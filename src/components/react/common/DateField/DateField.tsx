@@ -13,6 +13,7 @@ import { Text } from "../Content";
 import { FieldError, Label } from "../Form";
 
 import "./DateField.css";
+import clsx from "clsx";
 
 export interface DateFieldProps<T extends DateValue>
   extends AriaDateFieldProps<T> {
@@ -25,11 +26,15 @@ export function DateField<T extends DateValue>({
   label,
   description,
   errorMessage,
+  className,
   ...props
 }: DateFieldProps<T>) {
   return (
-    <AriaDateField {...props}>
-      <Label>{label}</Label>
+    <AriaDateField
+      className={clsx("namesake-date-field", className)}
+      {...props}
+    >
+      {label && <Label>{label}</Label>}
       <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
       {description && <Text slot="description">{description}</Text>}
       <FieldError>{errorMessage}</FieldError>

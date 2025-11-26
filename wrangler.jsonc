@@ -1,9 +1,9 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "namesake-fyi",
-  "main": "./dist/_worker.js/index.js",
-  "compatibility_date": "2025-08-15",
-  "compatibility_flags": ["nodejs_compat"],
+  "main": "dist/_worker.js/index.js",
+  "compatibility_date": "2025-10-22",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "assets": {
     "binding": "ASSETS",
     "directory": "./dist"

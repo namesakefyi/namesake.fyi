@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getPdfForm } from "../../utils";
+import { getPdfForm } from "@/pdfs/utils/getPdfForm";
 import petitionToChangeNameOfAdult from "../cjp27-petition-to-change-name-of-adult";
 
 describe("CJP27 Petition to Change Name of Adult", () => {

@@ -74,8 +74,11 @@
   --link-color: var(--namesake-black);
   --border-color: var(--namesake-black);
   --border-color-disabled: color-mix(in srgb, var(--namesake-black) 35%, transparent);
-  --field-background: var(--background-color);
   --field-text-color: var(--namesake-black);
+}
+
+body {
+  --field-background: var(--background-color);
   --overlay-background: var(--background-color);
   --button-background: var(--background-color);
   --highlight-background: var(--namesake-black);

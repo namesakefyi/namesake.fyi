@@ -1,12 +1,11 @@
-.react-aria-TextField {
-  display: flex;
-  flex-direction: column;
-  width: fit-content;
+.namesake-text-field {
+  width: 100%;
   color: var(--text-color);
 
   .react-aria-Input,
   .react-aria-TextArea {
-    padding: var(--space-xs);
+    display: block;
+    padding: var(--space-s);
     margin: 0;
     border: 1px solid var(--border-color);
     border-radius: var(--radius-xs);

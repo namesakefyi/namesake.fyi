@@ -1,11 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { loadPdfs } from "../loadPdfs";
 
-vi.mock("~/pdfs", () => ({
+vi.mock("@/pdfs", () => ({
   getPdfDefinition: vi.fn(),
 }));
 
-import { getPdfDefinition } from "~/pdfs";
+import { getPdfDefinition } from "@/pdfs";
 
 describe("loadPdfs", () => {
   beforeEach(() => {

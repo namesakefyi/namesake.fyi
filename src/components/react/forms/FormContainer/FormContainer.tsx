@@ -1,20 +1,15 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormProvider, type UseFormReturn } from "react-hook-form";
+import { FormNavigation } from "@/components/react/forms/FormNavigation";
+import { FormReviewStep } from "@/components/react/forms/FormReviewStep";
+import { FormTitleStep } from "@/components/react/forms/FormTitleStep";
 import { Form } from "../../common/Form";
-import { FormNavigation } from "../FormNavigation";
-import { FormReviewStep } from "../FormReviewStep";
-import { FormTitleStep } from "../FormTitleStep";
 import { FormStepContext } from "./FormStepContext";
 import "./FormContainer.css";
 
 export interface Step {
   id: string;
-  component: React.ComponentType<StepComponentProps>;
-}
-
-export interface StepComponentProps {
-  onNext: () => void;
-  onBack: () => void;
+  component: React.ComponentType;
 }
 
 export interface FormContainerProps {
@@ -35,9 +30,6 @@ export interface FormContainerProps {
 
   /** Submit handler for the final form submission. */
   onSubmit: React.FormEventHandler<HTMLFormElement>;
-
-  /** Whether to warn the user before leaving with unsaved changes. */
-  warnOnExit?: boolean;
 }
 
 export function FormContainer({
@@ -47,24 +39,25 @@ export function FormContainer({
   steps,
   form,
   onSubmit,
-  warnOnExit = true,
 }: FormContainerProps) {
+  const formRef = useRef<HTMLFormElement>(null);
+
   // Navigation index: -1 = title, 0 to steps.length-1 = actual steps, steps.length = review
   const [navigationIndex, setNavigationIndex] = useState(-1);
 
   // Warn before leaving with unsaved changes
-  useEffect(() => {
-    if (!warnOnExit) return;
+  // useEffect(() => {
+  //   if (!warnOnExit) return;
 
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (form.formState.isDirty) {
-        e.preventDefault();
-      }
-    };
+  //   const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+  //     if (form.formState.isDirty) {
+  //       e.preventDefault();
+  //     }
+  //   };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  }, [form.formState.isDirty, warnOnExit]);
+  //   window.addEventListener("beforeunload", handleBeforeUnload);
+  //   return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  // }, [form.formState.isDirty, warnOnExit]);
 
   // Sync step with URL hash
   useEffect(() => {
@@ -125,6 +118,11 @@ export function FormContainer({
     if (navigationIndex < steps.length) {
       setNavigationIndex(navigationIndex + 1);
     }
+
+    // Scroll to top of form container
+    if (formRef.current) {
+      formRef.current.scrollTo({ top: 0 });
+    }
   }, [navigationIndex, steps.length]);
 
   const goToPreviousStep = useCallback(() => {
@@ -157,7 +155,7 @@ export function FormContainer({
 
     if (navigationIndex >= 0 && navigationIndex < steps.length) {
       const StepComponent = steps[navigationIndex].component;
-      return <StepComponent onNext={goToNextStep} onBack={goToPreviousStep} />;
+      return <StepComponent />;
     }
 
     return null;
@@ -201,6 +199,7 @@ export function FormContainer({
           className="form-container"
           onSubmit={handleFormSubmit}
           autoComplete="on"
+          ref={formRef}
         >
           {showNavigation && <FormNavigation />}
           <div className="form-container-content">{renderCurrentStep()}</div>

@@ -1,33 +1,10 @@
 import { Box, Card, Flex, Text } from "@sanity/ui";
 import { useEffect, useState } from "react";
 import type { StringInputProps } from "sanity";
-
-export interface YouTubeOEmbedResponse {
-  title: string;
-  author_name: string;
-  thumbnail_url: string;
-}
-
-export async function fetchYouTubeVideoDetails(
-  url: string,
-): Promise<YouTubeOEmbedResponse | null> {
-  try {
-    const encodedUrl = encodeURIComponent(url);
-    const response = await fetch(
-      `https://www.youtube.com/oembed?url=${encodedUrl}&format=json`,
-    );
-
-    if (!response.ok) {
-      return null;
-    }
-
-    const data: YouTubeOEmbedResponse = await response.json();
-
-    return data;
-  } catch {
-    return null;
-  }
-}
+import {
+  fetchYouTubeVideoDetails,
+  type YouTubeOEmbedResponse,
+} from "../../utils/fetchYouTubeVideoDetails";
 
 export function YouTubeInput(props: StringInputProps) {
   const { value } = props;
