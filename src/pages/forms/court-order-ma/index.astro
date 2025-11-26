@@ -13,7 +13,7 @@ dayjs.extend(localizedFormat);
 const { data: form } = await loadQuery<SanityDocument>({
   query: `*[_type == "form" && slug.current == $slug][0]`,
   params: {
-    slug: "ma-court-order",
+    slug: "court-order-ma",
   },
 });
 ---
