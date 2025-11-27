@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { useForm } from "react-hook-form";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { FormContainer } from "./FormContainer";
 
 const FormContainerWithForm = () => {
@@ -19,6 +19,11 @@ const FormContainerWithForm = () => {
 };
 
 describe("FormContainer", () => {
+  beforeEach(() => {
+    // Mock scrollIntoView and focus for jsdom
+    Element.prototype.scrollIntoView = vi.fn();
+    HTMLElement.prototype.focus = vi.fn();
+  });
   it("renders children content on title step", () => {
     render(<FormContainerWithForm />);
 

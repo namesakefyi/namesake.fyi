@@ -51,7 +51,12 @@ describe("FormStep", () => {
   });
 
   it("does not render description when not provided", () => {
-    render(<FormStep stepConfig={formStep} />, {
+    const stepWithoutDescription: StepConfig = {
+      ...formStep,
+      description: undefined,
+    };
+
+    render(<FormStep stepConfig={stepWithoutDescription} />, {
       wrapper: TestWrapper,
     });
 
@@ -73,7 +78,13 @@ describe("FormStep", () => {
   });
 
   it("omits apostrophes from the id", () => {
-    render(<FormStep {...formStep} stepConfig={formStep} />, {
+    const stepWithApostrophe: StepConfig = {
+      ...formStep,
+      id: "reason",
+      title: "What is the reason you're changing your name?",
+    };
+
+    render(<FormStep stepConfig={stepWithApostrophe} />, {
       wrapper: TestWrapper,
     });
     const form = screen.getByRole("form");
@@ -93,7 +104,12 @@ describe("FormStep", () => {
   });
 
   it("has no accessible description when description is omitted", () => {
-    render(<FormStep stepConfig={formStep} />, {
+    const stepWithoutDescription: StepConfig = {
+      ...formStep,
+      description: undefined,
+    };
+
+    render(<FormStep stepConfig={stepWithoutDescription} />, {
       wrapper: TestWrapper,
     });
 
