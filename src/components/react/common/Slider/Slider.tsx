@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Slider as AriaSlider,
   type SliderProps as AriaSliderProps,

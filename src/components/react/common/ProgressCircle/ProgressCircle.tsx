@@ -1,3 +1,5 @@
+"use client";
+
 import type { ProgressBarProps } from "react-aria-components";
 import { composeRenderProps, ProgressBar } from "react-aria-components";
 import "./ProgressCircle.css";

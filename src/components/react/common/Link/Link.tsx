@@ -1,3 +1,5 @@
+"use client";
+
 import { type LinkProps, Link as RACLink } from "react-aria-components";
 import "./Link.css";
 

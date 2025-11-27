@@ -1,3 +1,5 @@
+"use client";
+
 import { RiArrowDownSLine } from "@remixicon/react";
 import {
   DatePicker as AriaDatePicker,

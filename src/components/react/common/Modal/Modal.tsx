@@ -1,3 +1,5 @@
+"use client";
+
 import {
   type ModalOverlayProps,
   Modal as RACModal,

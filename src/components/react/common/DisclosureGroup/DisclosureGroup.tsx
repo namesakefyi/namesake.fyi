@@ -1,3 +1,5 @@
+"use client";
+
 import {
   type DisclosureGroupProps,
   DisclosureGroup as RACDisclosureGroup,

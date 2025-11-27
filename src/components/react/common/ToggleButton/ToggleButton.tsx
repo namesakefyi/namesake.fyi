@@ -1,3 +1,4 @@
+"use client";
 import {
   ToggleButton as RACToggleButton,
   type ToggleButtonProps,

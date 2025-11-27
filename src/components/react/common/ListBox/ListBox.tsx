@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ListBox as AriaListBox,
   ListBoxItem as AriaListBoxItem,

@@ -1,3 +1,5 @@
+"use client";
+
 import { RiDraggable } from "@remixicon/react";
 import {
   GridList as AriaGridList,

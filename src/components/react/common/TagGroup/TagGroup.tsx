@@ -1,3 +1,5 @@
+"use client";
+
 import { RiCheckLine, RiCloseLine } from "@remixicon/react";
 import {
   Tag as AriaTag,

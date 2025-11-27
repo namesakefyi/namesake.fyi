@@ -1,3 +1,5 @@
+"use client";
+
 import { RiArrowLeftSLine, RiArrowRightSLine } from "@remixicon/react";
 import {
   RangeCalendar as AriaRangeCalendar,
