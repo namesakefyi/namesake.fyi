@@ -31,6 +31,7 @@ export function EmailField({
             label="Email address"
             type="email"
             autoComplete="email"
+            size={32}
             isInvalid={invalid}
             errorMessage={error?.message}
             {...props}

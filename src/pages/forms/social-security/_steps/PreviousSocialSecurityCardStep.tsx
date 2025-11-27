@@ -1,16 +1,31 @@
-import { useFormContext } from "react-hook-form";
+import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep, FormSubsection } from "@/components/react/forms/FormStep";
 import { NameField } from "@/components/react/forms/NameField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
 
-export function PreviousSocialSecurityCardStep() {
-  const form = useFormContext();
-
-  return (
-    <FormStep
-      title="Do you have a previous Social Security card?"
-      description="Or, have you ever filed for a Social Security number in the past?"
-    >
+export const previousSocialSecurityCardStep: StepConfig = {
+  id: "previous-social-security-card",
+  title: "Do you have a previous Social Security card?",
+  description:
+    "Or, have you ever filed for a Social Security number in the past?",
+  fields: [
+    "hasPreviousSocialSecurityCard",
+    "previousSocialSecurityCardFirstName",
+    "previousSocialSecurityCardMiddleName",
+    "previousSocialSecurityCardLastName",
+  ],
+  isFieldVisible: (fieldName, data) => {
+    // Name fields only visible if user has previous card
+    if (
+      fieldName.startsWith("previousSocialSecurityCard") &&
+      fieldName !== "hasPreviousSocialSecurityCard"
+    ) {
+      return data.hasPreviousSocialSecurityCard === true;
+    }
+    return true;
+  },
+  component: ({ stepConfig, form }) => (
+    <FormStep stepConfig={stepConfig}>
       <YesNoField
         name="hasPreviousSocialSecurityCard"
         label="Have you ever filed for or received a Social Security number card before?"
@@ -24,5 +39,5 @@ export function PreviousSocialSecurityCardStep() {
         </FormSubsection>
       )}
     </FormStep>
-  );
-}
+  ),
+};

@@ -1,13 +1,16 @@
 import { Banner } from "@/components/react/common/Banner";
+import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep } from "@/components/react/forms/FormStep";
 import { RadioGroupField } from "@/components/react/forms/RadioGroupField";
 
-export function SexStep() {
-  return (
-    <FormStep
-      title="What is your sex?"
-      description="The Social Security Administration accepts only two options: male or female."
-    >
+export const sexStep: StepConfig = {
+  id: "sex",
+  title: "What is your sex?",
+  description:
+    "The Social Security Administration accepts only two options: male or female.",
+  fields: ["sexAssignedAtBirth"],
+  component: ({ stepConfig }) => (
+    <FormStep stepConfig={stepConfig}>
       <RadioGroupField
         name="sexAssignedAtBirth"
         label="Sex"
@@ -53,5 +56,5 @@ export function SexStep() {
         </p>
       </Banner>
     </FormStep>
-  );
-}
+  ),
+};

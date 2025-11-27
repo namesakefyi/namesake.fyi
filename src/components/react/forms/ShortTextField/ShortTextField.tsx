@@ -7,7 +7,7 @@ import type { FieldName } from "@/constants/fields";
 import { smartquotes } from "@/utils/smartquotes";
 import "./ShortTextField.css";
 
-export interface ShortTextFieldProps extends Omit<TextFieldProps, "size"> {
+export interface ShortTextFieldProps extends TextFieldProps {
   label: string;
   name: FieldName;
   children?: React.ReactNode;

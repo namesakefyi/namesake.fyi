@@ -1,89 +1,49 @@
 import type { FormEvent } from "react";
-import {
-  FormContainer,
-  type Step,
-} from "@/components/react/forms/FormContainer";
-import type { FieldName, FieldType } from "@/constants/fields";
+import { FormContainer } from "@/components/react/forms/FormContainer";
+import { resolveVisibleFields } from "@/components/react/forms/FormContainer/resolveVisibleFields";
+import type { FieldType } from "@/constants/fields";
 import { downloadMergedPdf } from "@/pdfs/utils/downloadMergedPdf";
 import { loadPdfs } from "@/pdfs/utils/loadPdfs";
 import { useForm } from "@/utils/useForm";
-import { AddressStep } from "./_steps/AddressStep";
-import { BirthplaceStep } from "./_steps/BirthplaceStep";
-import { CitizenshipStep } from "./_steps/CitizenshipStep";
-import { DateOfBirthStep } from "./_steps/DateOfBirthStep";
-import { EthnicityStep } from "./_steps/EthnicityStep";
-import { FilingForSomeoneElseStep } from "./_steps/FilingForSomeoneElseStep";
-import { NewNameStep } from "./_steps/NewNameStep";
-import { OldNameStep } from "./_steps/OldNameStep";
-import { ParentOneNameStep } from "./_steps/ParentOneNameStep";
-import { ParentTwoNameStep } from "./_steps/ParentTwoNameStep";
-import { PhoneNumberStep } from "./_steps/PhoneNumberStep";
-import { PreviousNamesStep } from "./_steps/PreviousNamesStep";
-import { PreviousSocialSecurityCardStep } from "./_steps/PreviousSocialSecurityCardStep";
-import { RaceStep } from "./_steps/RaceStep";
-import { SexStep } from "./_steps/SexStep";
+import { addressStep } from "./_steps/AddressStep";
+import { birthplaceStep } from "./_steps/BirthplaceStep";
+import { citizenshipStep } from "./_steps/CitizenshipStep";
+import { dateOfBirthStep } from "./_steps/DateOfBirthStep";
+import { ethnicityStep } from "./_steps/EthnicityStep";
+import { filingForSomeoneElseStep } from "./_steps/FilingForSomeoneElseStep";
+import { newNameStep } from "./_steps/NewNameStep";
+import { oldNameStep } from "./_steps/OldNameStep";
+import { parentOneNameStep } from "./_steps/ParentOneNameStep";
+import { parentTwoNameStep } from "./_steps/ParentTwoNameStep";
+import { phoneNumberStep } from "./_steps/PhoneNumberStep";
+import { previousNamesStep } from "./_steps/PreviousNamesStep";
+import { previousSocialSecurityCardStep } from "./_steps/PreviousSocialSecurityCardStep";
+import { raceStep } from "./_steps/RaceStep";
+import { sexStep } from "./_steps/SexStep";
 
-const FORM_FIELDS: FieldName[] = [
-  "newFirstName",
-  "newMiddleName",
-  "newLastName",
-  "oldFirstName",
-  "oldMiddleName",
-  "oldLastName",
-  "previousLegalNames",
-  "birthplaceCity",
-  "birthplaceState",
-  "birthplaceCountry",
-  "dateOfBirth",
-  "citizenshipStatus",
-  "isHispanicOrLatino",
-  "race",
-  "sexAssignedAtBirth",
-  "mothersFirstName",
-  "mothersMiddleName",
-  "mothersLastName",
-  "fathersFirstName",
-  "fathersMiddleName",
-  "fathersLastName",
-  "hasPreviousSocialSecurityCard",
-  "previousSocialSecurityCardFirstName",
-  "previousSocialSecurityCardMiddleName",
-  "previousSocialSecurityCardLastName",
-  "phoneNumber",
-  "isCurrentlyUnhoused",
-  "mailingStreetAddress",
-  "mailingCity",
-  "mailingState",
-  "mailingZipCode",
-  "isFilingForSomeoneElse",
-  "relationshipToFilingFor",
-  "relationshipToFilingForOther",
+const STEPS = [
+  newNameStep,
+  oldNameStep,
+  previousNamesStep,
+  birthplaceStep,
+  dateOfBirthStep,
+  citizenshipStep,
+  ethnicityStep,
+  raceStep,
+  sexStep,
+  parentOneNameStep,
+  parentTwoNameStep,
+  previousSocialSecurityCardStep,
+  phoneNumberStep,
+  addressStep,
+  filingForSomeoneElseStep,
 ] as const;
+
+const FORM_FIELDS = STEPS.flatMap((step) => step.fields);
 
 type FormData = {
   [K in (typeof FORM_FIELDS)[number]]: FieldType<K>;
 };
-
-const STEPS: readonly Step[] = [
-  { id: "new-name", component: NewNameStep },
-  { id: "old-name", component: OldNameStep },
-  { id: "previous-names", component: PreviousNamesStep },
-  { id: "birthplace", component: BirthplaceStep },
-  { id: "date-of-birth", component: DateOfBirthStep },
-  { id: "citizenship", component: CitizenshipStep },
-  { id: "ethnicity", component: EthnicityStep },
-  { id: "race", component: RaceStep },
-  { id: "sex", component: SexStep },
-  { id: "parent-one", component: ParentOneNameStep },
-  { id: "parent-two", component: ParentTwoNameStep },
-  {
-    id: "previous-social-security-card",
-    component: PreviousSocialSecurityCardStep,
-  },
-  { id: "phone-number", component: PhoneNumberStep },
-  { id: "address", component: AddressStep },
-  { id: "filing-for-someone-else", component: FilingForSomeoneElseStep },
-];
 
 export function SocialSecurityForm({
   title,
@@ -102,6 +62,9 @@ export function SocialSecurityForm({
         { pdfId: "ss5-application-for-social-security-card" },
       ]);
 
+      // Get only the visible fields based on conditional logic
+      const visibleData = resolveVisibleFields(STEPS, form.getValues());
+
       await downloadMergedPdf({
         title: "Social Security Card",
         instructions: [
@@ -115,7 +78,7 @@ export function SocialSecurityForm({
             : "",
         ],
         pdfs,
-        userData: form.getValues(),
+        userData: visibleData,
       });
 
       // Save form to user documents

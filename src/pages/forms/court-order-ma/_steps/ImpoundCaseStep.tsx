@@ -1,17 +1,24 @@
-import { useFormContext } from "react-hook-form";
 import { Banner } from "@/components/react/common/Banner";
+import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep, FormSubsection } from "@/components/react/forms/FormStep";
 import { LongTextField } from "@/components/react/forms/LongTextField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
 
-export function ImpoundCaseStep() {
-  const form = useFormContext();
-
-  return (
-    <FormStep
-      title="Would you like to impound your case?"
-      description="All court actions are public record by default. However, you can apply to impound your case to keep it private."
-    >
+export const impoundCaseStep: StepConfig = {
+  id: "impound-case",
+  title: "Would you like to impound your case?",
+  description:
+    "All court actions are public record by default. However, you can apply to impound your case to keep it private.",
+  fields: ["shouldImpoundCourtRecords", "reasonToImpoundCourtRecords"],
+  isFieldVisible: (fieldName, data) => {
+    // reasonToImpoundCourtRecords only visible if shouldImpoundCourtRecords is true
+    if (fieldName === "reasonToImpoundCourtRecords") {
+      return data.shouldImpoundCourtRecords === true;
+    }
+    return true;
+  },
+  component: ({ stepConfig, form }) => (
+    <FormStep stepConfig={stepConfig}>
       <YesNoField
         name="shouldImpoundCourtRecords"
         label="Impound my case?"
@@ -46,5 +53,5 @@ export function ImpoundCaseStep() {
         </Banner>
       </FormSubsection>
     </FormStep>
-  );
-}
+  ),
+};

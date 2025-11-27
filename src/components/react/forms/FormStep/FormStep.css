@@ -6,6 +6,11 @@
   justify-content: center;
   border: none;
 
+  /* Remove focus outline when programmatically focused */
+  &:focus {
+    outline: none;
+  }
+
   header {
     display: flex;
     flex-direction: column;

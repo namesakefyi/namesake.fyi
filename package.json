@@ -74,7 +74,8 @@
     "sanity": "^4.19.0",
     "styled-components": "^6.1.19",
     "topojson-client": "^3.1.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "ua-parser-js": "^2.0.6"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.7",

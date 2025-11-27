@@ -10,13 +10,13 @@ import type { FieldName } from "@/constants/fields";
 import { getFieldsByNames, saveField } from "@/db/database";
 
 export function useForm<TFieldValues extends FieldValues = FieldValues>(
-  fields: FieldName[],
+  fields: readonly FieldName[],
   options?: Omit<UseFormProps<TFieldValues>, "values" | "defaultValues">,
 ) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fieldsList = useMemo(() => fields as string[], [fields]);
+  const fieldsList = useMemo(() => [...fields] as string[], [fields]);
 
   const form = useReactHookForm<TFieldValues>({
     mode: "onBlur",

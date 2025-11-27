@@ -1,15 +1,23 @@
-import { useFormContext } from "react-hook-form";
 import { ComboBoxField } from "@/components/react/forms/ComboBoxField";
+import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep } from "@/components/react/forms/FormStep";
 import { ShortTextField } from "@/components/react/forms/ShortTextField";
 import { COUNTRIES } from "@/constants/countries";
 import { BIRTHPLACES } from "@/constants/jurisdictions";
 
-export function BirthplaceStep() {
-  const form = useFormContext();
-
-  return (
-    <FormStep title="Where were you born?">
+export const birthplaceStep: StepConfig = {
+  id: "birthplace",
+  title: "Where were you born?",
+  fields: ["birthplaceCity", "birthplaceState", "birthplaceCountry"],
+  isFieldVisible: (fieldName, data) => {
+    // birthplaceCountry is only visible if birthplaceState is "other"
+    if (fieldName === "birthplaceCountry") {
+      return data.birthplaceState === "other";
+    }
+    return true;
+  },
+  component: ({ stepConfig, form }) => (
+    <FormStep stepConfig={stepConfig}>
       <ShortTextField name="birthplaceCity" label="City of birth" />
       <ComboBoxField
         name="birthplaceState"
@@ -34,5 +42,5 @@ export function BirthplaceStep() {
         />
       )}
     </FormStep>
-  );
-}
+  ),
+};

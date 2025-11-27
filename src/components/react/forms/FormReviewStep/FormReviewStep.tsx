@@ -2,7 +2,9 @@ import { Heading } from "react-aria-components";
 import { Button } from "../../common/Button";
 import "./FormReviewStep.css";
 import { RiDownloadLine } from "@remixicon/react";
+import type { StepConfig } from "../FormContainer/FormContainer";
 import { useFormStep } from "../FormContainer/FormStepContext";
+import { FormReviewTable } from "../FormReviewTable";
 
 export interface FormReviewStepProps {
   /**
@@ -17,15 +19,15 @@ export interface FormReviewStepProps {
   description?: string;
 
   /**
-   * Optional child content to display (form data preview will go here).
+   * The step configurations to display in the review table.
    */
-  children?: React.ReactNode;
+  steps: readonly StepConfig[];
 }
 
 export function FormReviewStep({
   title = "Review your information",
   description = "Please review your answers before submitting. Once submitted, completed forms will download automatically.",
-  children,
+  steps,
 }: FormReviewStepProps) {
   const { onSubmit } = useFormStep();
 
@@ -43,11 +45,7 @@ export function FormReviewStep({
         )}
       </header>
       <div className="form-review-step-content">
-        {children || (
-          <div className="form-review-step-placeholder">
-            <p>Form review placeholder</p>
-          </div>
-        )}
+        <FormReviewTable steps={steps} />
       </div>
       <Button
         type="submit"
@@ -56,7 +54,7 @@ export function FormReviewStep({
         size="large"
         className="form-review-step-button"
       >
-        Finish and Download Forms
+        Finish and Download
       </Button>
     </form>
   );
