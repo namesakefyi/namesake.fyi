@@ -11,5 +11,14 @@
     "types": ["./worker-configuration.d.ts", "node"],
     "verbatimModuleSyntax": true
   },
-  "exclude": ["node_modules", "dist", "public"]
+  "exclude": [
+    ".sanity",
+    ".wrangler",
+    "dist",
+    "node_modules",
+    "playwright-report",
+    "public",
+    "storybook-static",
+    "test-results"
+  ]
 }

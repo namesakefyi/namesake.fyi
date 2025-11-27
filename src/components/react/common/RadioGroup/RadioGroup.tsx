@@ -1,4 +1,3 @@
-"use client";
 import {
   Radio as AriaRadio,
   RadioGroup as AriaRadioGroup,

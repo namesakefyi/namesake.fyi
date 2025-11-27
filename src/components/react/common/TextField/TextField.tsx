@@ -1,5 +1,3 @@
-"use client";
-
 import {
   TextField as AriaTextField,
   type TextFieldProps as AriaTextFieldProps,

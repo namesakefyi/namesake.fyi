@@ -1,5 +1,3 @@
-"use client";
-
 import { RiArrowDownSLine } from "@remixicon/react";
 import {
   Select as AriaSelect,
