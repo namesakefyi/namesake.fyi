@@ -96,4 +96,3 @@ describe("getFieldLabel", () => {
     expect(getFieldLabel("unknownField")).toBe("unknownField");
   });
 });
-
