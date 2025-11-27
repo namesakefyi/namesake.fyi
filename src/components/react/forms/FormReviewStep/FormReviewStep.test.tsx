@@ -81,7 +81,7 @@ describe("FormReviewStep", () => {
     render(<FormReviewStep />, { wrapper: TestWrapper });
 
     const button = screen.getByRole("button", {
-      name: /finish and download forms/i,
+      name: /finish and download/i,
     });
     expect(button).toBeInTheDocument();
     expect(button).toHaveAttribute("type", "submit");
@@ -112,7 +112,7 @@ describe("FormReviewStep", () => {
     });
 
     const button = screen.getByRole("button", {
-      name: /finish and download forms/i,
+      name: /finish and download/i,
     });
     expect(button).toBeInTheDocument();
 
@@ -149,7 +149,7 @@ describe("FormReviewStep", () => {
     render(<TestForm />);
 
     const button = screen.getByRole("button", {
-      name: /finish and download forms/i,
+      name: /finish and download/i,
     });
     await user.click(button);
 
