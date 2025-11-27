@@ -29,7 +29,6 @@ export function CheckboxField({
         control={control}
         name={name}
         defaultValue={defaultValue ?? false}
-        shouldUnregister={true}
         render={({ field, fieldState: { invalid, error } }) => (
           <Checkbox
             {...field}

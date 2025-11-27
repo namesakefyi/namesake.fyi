@@ -15,6 +15,7 @@ function TestWrapper({ children }: { children: ReactNode }) {
         currentStepIndex: 2, // Step 2 of actual steps
         totalSteps: 5, // 5 actual steps
         isReviewStep: false,
+        onSubmit: vi.fn(),
       }}
     >
       {children}
@@ -55,15 +56,12 @@ describe("FormStep", () => {
     expect(descriptionQuery).toBeNull();
   });
 
-  it("associates the section with the title", () => {
+  it("associates the form with the title", () => {
     render(<FormStep {...formStep} title="What is your legal name?" />, {
       wrapper: TestWrapper,
     });
-    const section = screen.getByRole("region");
-    expect(section).toHaveAttribute(
-      "aria-labelledby",
-      "what-is-your-legal-name",
-    );
+    const form = screen.getByRole("form");
+    expect(form).toHaveAttribute("aria-labelledby", "what-is-your-legal-name");
     const header = screen.getByRole("heading");
     expect(header).toHaveAttribute("id", "what-is-your-legal-name");
   });
@@ -76,8 +74,8 @@ describe("FormStep", () => {
       />,
       { wrapper: TestWrapper },
     );
-    const section = screen.getByRole("region");
-    expect(section).toHaveAttribute(
+    const form = screen.getByRole("form");
+    expect(form).toHaveAttribute(
       "aria-labelledby",
       "what-is-the-reason-youre-changing-your-name",
     );
@@ -86,10 +84,10 @@ describe("FormStep", () => {
   it("has accessible description when description is provided", () => {
     render(<FormStep {...formStep} />, { wrapper: TestWrapper });
 
-    const section = screen.getByRole("region", {
+    const form = screen.getByRole("form", {
       description: formStep.description,
     });
-    expect(section).toBeInTheDocument();
+    expect(form).toBeInTheDocument();
   });
 
   it("has no accessible description when description is omitted", () => {
@@ -97,11 +95,11 @@ describe("FormStep", () => {
       wrapper: TestWrapper,
     });
 
-    const section = screen.getByRole("region", {
+    const form = screen.getByRole("form", {
       name: formStep.title,
     });
-    expect(section).toBeInTheDocument();
-    expect(section).not.toHaveAccessibleDescription();
+    expect(form).toBeInTheDocument();
+    expect(form).not.toHaveAccessibleDescription();
   });
 });
 

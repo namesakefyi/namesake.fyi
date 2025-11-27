@@ -3,7 +3,6 @@ import { FormProvider, type UseFormReturn } from "react-hook-form";
 import { FormNavigation } from "@/components/react/forms/FormNavigation";
 import { FormReviewStep } from "@/components/react/forms/FormReviewStep";
 import { FormTitleStep } from "@/components/react/forms/FormTitleStep";
-import { Form } from "../../common/Form";
 import { FormStepContext } from "./FormStepContext";
 import "./FormContainer.css";
 
@@ -40,24 +39,14 @@ export function FormContainer({
   form,
   onSubmit,
 }: FormContainerProps) {
-  const formRef = useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
 
   // Navigation index: -1 = title, 0 to steps.length-1 = actual steps, steps.length = review
   const [navigationIndex, setNavigationIndex] = useState(-1);
 
-  // Warn before leaving with unsaved changes
-  // useEffect(() => {
-  //   if (!warnOnExit) return;
-
-  //   const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-  //     if (form.formState.isDirty) {
-  //       e.preventDefault();
-  //     }
-  //   };
-
-  //   window.addEventListener("beforeunload", handleBeforeUnload);
-  //   return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  // }, [form.formState.isDirty, warnOnExit]);
+  const scrollToFormTop = useCallback(() => {
+    formRef.current?.scrollIntoView({ block: "start" });
+  }, []);
 
   // Sync step with URL hash
   useEffect(() => {
@@ -119,29 +108,32 @@ export function FormContainer({
       setNavigationIndex(navigationIndex + 1);
     }
 
-    // Scroll to top of form container
-    if (formRef.current) {
-      formRef.current.scrollTo({ top: 0 });
-    }
-  }, [navigationIndex, steps.length]);
+    scrollToFormTop();
+  }, [navigationIndex, steps.length, scrollToFormTop]);
 
   const goToPreviousStep = useCallback(() => {
     // Can go back from review (steps.length) through all steps to title (-1)
     if (navigationIndex > -1) {
       setNavigationIndex(navigationIndex - 1);
     }
-  }, [navigationIndex]);
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (navigationIndex === steps.length) {
-      // On the review step, trigger the actual form submission
-      onSubmit(e);
-    } else {
-      // Otherwise, just go to the next step
-      goToNextStep();
-    }
-  };
+    scrollToFormTop();
+  }, [navigationIndex, scrollToFormTop]);
+
+  const handleFormSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (navigationIndex === steps.length) {
+        // On the review step, trigger the actual form submission
+        scrollToFormTop();
+        onSubmit(e);
+      } else {
+        // Otherwise, just go to the next step (which handles scrolling)
+        goToNextStep();
+      }
+    },
+    [navigationIndex, steps.length, scrollToFormTop, onSubmit, goToNextStep],
+  );
 
   // Determine what to render based on navigationIndex
   const renderCurrentStep = () => {
@@ -178,6 +170,7 @@ export function FormContainer({
       currentStepIndex,
       totalSteps: steps.length,
       isReviewStep,
+      onSubmit: handleFormSubmit,
     }),
     [
       goToNextStep,
@@ -187,6 +180,7 @@ export function FormContainer({
       currentStepIndex,
       steps.length,
       isReviewStep,
+      handleFormSubmit,
     ],
   );
 
@@ -195,15 +189,10 @@ export function FormContainer({
   return (
     <FormProvider {...form}>
       <FormStepContext.Provider value={stepContextValue}>
-        <Form
-          className="form-container"
-          onSubmit={handleFormSubmit}
-          autoComplete="on"
-          ref={formRef}
-        >
+        <div className="form-container" ref={formRef}>
           {showNavigation && <FormNavigation />}
           <div className="form-container-content">{renderCurrentStep()}</div>
-        </Form>
+        </div>
       </FormStepContext.Provider>
     </FormProvider>
   );

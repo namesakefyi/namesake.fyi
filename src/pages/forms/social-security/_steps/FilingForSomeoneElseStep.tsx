@@ -1,7 +1,12 @@
-import { FormStep } from "@/components/react/forms/FormStep";
+import { useFormContext } from "react-hook-form";
+import { FormStep, FormSubsection } from "@/components/react/forms/FormStep";
+import { RadioGroupField } from "@/components/react/forms/RadioGroupField";
+import { ShortTextField } from "@/components/react/forms/ShortTextField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
 
 export function FilingForSomeoneElseStep() {
+  const form = useFormContext();
+
   return (
     <FormStep title="Are you filing this form for someone else?">
       <YesNoField
@@ -11,11 +16,26 @@ export function FilingForSomeoneElseStep() {
         yesLabel="Yes, I am filing this for someone else"
         noLabel="No, I am filing this for myself"
       />
-      {/* TODO: Add conditional subsection if isFilingForSomeoneElse is true */}
-      {/* Subsection: "What is your relationship to the person you are filing for?" */}
-      {/* TODO: Add RadioGroupField for relationshipToFilingFor */}
-      {/* Options: parent (Natural or Adoptive Parent), legalGuardian (Legal Guardian), other (Other) */}
-      {/* TODO: Add conditional ShortTextField for relationshipToFilingForOther if relationshipToFilingFor is "other" */}
+      {form.watch("isFilingForSomeoneElse") === true && (
+        <FormSubsection title="What is your relationship to the person you are filing for?">
+          <RadioGroupField
+            name="relationshipToFilingFor"
+            label="Relationship"
+            labelHidden
+            options={[
+              { label: "Natural or Adoptive Parent", value: "parent" },
+              { label: "Legal Guardian", value: "legalGuardian" },
+              { label: "Other", value: "other" },
+            ]}
+          />
+          {form.watch("relationshipToFilingFor") === "other" && (
+            <ShortTextField
+              name="relationshipToFilingForOther"
+              label="Specify relationship"
+            />
+          )}
+        </FormSubsection>
+      )}
     </FormStep>
   );
 }

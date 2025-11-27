@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { parseDate } from "@internationalized/date";
 import type { DateValue } from "react-aria-components";
 import { Controller, useFormContext } from "react-hook-form";
 import {
@@ -23,7 +23,6 @@ export function MemorableDateField<T extends DateValue>({
   ...props
 }: MemorableDateFieldProps<T>) {
   const { control } = useFormContext();
-  const [date, setDate] = useState<DateValue | null>(null);
 
   return (
     <div className="namesake-memorable-date-field">
@@ -31,26 +30,30 @@ export function MemorableDateField<T extends DateValue>({
         control={control}
         name={name}
         defaultValue={defaultValue ?? null}
-        shouldUnregister={true}
         render={({
-          field: { onChange, ...field },
+          field: { onChange, value, ...field },
           fieldState: { invalid, error },
-        }) => (
-          <DateField
-            {...field}
-            value={date as T}
-            onChange={(date) => {
-              setDate(date);
-              onChange(date?.toString());
-              props.onChange?.(date);
-            }}
-            label={label}
-            className="w-fit"
-            isInvalid={invalid}
-            errorMessage={error?.message}
-            {...props}
-          />
-        )}
+        }) => {
+          const dateValue =
+            typeof value === "string" && value
+              ? parseDate(value)
+              : (value as T | null);
+
+          return (
+            <DateField
+              {...field}
+              value={dateValue as T}
+              onChange={(date) => {
+                onChange(date?.toString());
+                props.onChange?.(date);
+              }}
+              label={label}
+              isInvalid={invalid}
+              errorMessage={error?.message}
+              {...props}
+            />
+          );
+        }}
       />
       {children}
     </div>

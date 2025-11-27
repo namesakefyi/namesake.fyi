@@ -21,6 +21,10 @@ export const FirstStep: Story = () => (
       currentStepIndex: 1, // First actual step
       totalSteps: 5, // 5 actual steps
       isReviewStep: false,
+      onSubmit: (e) => {
+        e.preventDefault();
+        console.log("Submit clicked");
+      },
     }}
   >
     <FormNavigation />
@@ -36,6 +40,10 @@ export const MiddleStep: Story = () => (
       currentStepIndex: 3, // Third actual step
       totalSteps: 5,
       isReviewStep: false,
+      onSubmit: (e) => {
+        e.preventDefault();
+        console.log("Submit clicked");
+      },
     }}
   >
     <FormNavigation />
@@ -51,6 +59,10 @@ export const LastStep: Story = () => (
       currentStepIndex: 5, // Last actual step
       totalSteps: 5,
       isReviewStep: false,
+      onSubmit: (e) => {
+        e.preventDefault();
+        console.log("Submit clicked");
+      },
     }}
   >
     <FormNavigation />
@@ -66,6 +78,10 @@ export const ReviewStep: Story = () => (
       currentStepIndex: 0,
       totalSteps: 5,
       isReviewStep: true,
+      onSubmit: (e) => {
+        e.preventDefault();
+        console.log("Submit clicked");
+      },
     }}
   >
     <FormNavigation />
@@ -82,6 +98,10 @@ export const LongTitle: Story = () => (
       currentStepIndex: 2,
       totalSteps: 5,
       isReviewStep: false,
+      onSubmit: (e) => {
+        e.preventDefault();
+        console.log("Submit clicked");
+      },
     }}
   >
     <FormNavigation />

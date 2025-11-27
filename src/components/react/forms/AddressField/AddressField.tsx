@@ -75,8 +75,7 @@ export function AddressField({
       <Controller
         control={control}
         name={names[type].street}
-        defaultValue={""}
-        shouldUnregister={true}
+        defaultValue=""
         render={({ field, fieldState: { invalid, error } }) => (
           <TextField
             {...field}
@@ -91,8 +90,7 @@ export function AddressField({
       <Controller
         control={control}
         name={names[type].city}
-        defaultValue={""}
-        shouldUnregister={true}
+        defaultValue=""
         render={({ field, fieldState: { invalid, error } }) => (
           <TextField
             {...field}
@@ -107,8 +105,7 @@ export function AddressField({
       <Controller
         control={control}
         name={names[type].state}
-        defaultValue={""}
-        shouldUnregister={true}
+        defaultValue=""
         render={({ field, fieldState: { invalid, error } }) => (
           <ComboBox
             {...field}
@@ -135,8 +132,7 @@ export function AddressField({
         <Controller
           control={control}
           name={names[type].county}
-          defaultValue={""}
-          shouldUnregister={true}
+          defaultValue=""
           render={({ field, fieldState: { invalid, error } }) => (
             <ComboBox
               {...field}
@@ -162,8 +158,7 @@ export function AddressField({
       <Controller
         control={control}
         name={names[type].zip}
-        defaultValue={""}
-        shouldUnregister={true}
+        defaultValue=""
         render={({ field, fieldState: { invalid, error } }) => (
           <TextField
             {...field}

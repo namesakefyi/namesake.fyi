@@ -1,82 +1,91 @@
-// import { api } from "@convex/_generated/api";
-// import { useMutation, useQuery } from "convex/react";
-// import { usePostHog } from "posthog-js/react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   type FieldValues,
+  type Path,
+  type PathValue,
   type UseFormProps,
   useForm as useReactHookForm,
 } from "react-hook-form";
 import type { FieldName } from "@/constants/fields";
-// import { toast } from "sonner";
-// import { useEncryptionKey } from "@/hooks/useEncryptionKey";
-// import { decryptData, encryptData } from "@/utils/encryption";
+import { getFieldsByNames, saveField } from "@/db/database";
 
 export function useForm<TFieldValues extends FieldValues = FieldValues>(
   fields: FieldName[],
   options?: Omit<UseFormProps<TFieldValues>, "values" | "defaultValues">,
 ) {
-  // const posthog = usePostHog();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // const encryptionKey = useEncryptionKey();
+  const [isLoading, setIsLoading] = useState(true);
 
-  const _fieldsList = useMemo(() => fields as string[], [fields]);
-
-  // const encryptedResponses = useQuery(api.userFormResponses.getByFields, {
-  //   fields: fieldsList,
-  // });
-
-  // const save = useMutation(api.userFormResponses.set);
+  const fieldsList = useMemo(() => fields as string[], [fields]);
 
   const form = useReactHookForm<TFieldValues>({
     mode: "onBlur",
     ...options,
   });
 
-  // useEffect(() => {
-  //   if (!encryptedResponses?.length || !encryptionKey || isSubmitting) return;
+  // Load saved field values from IndexedDB on mount
+  useEffect(() => {
+    const loadSavedData = async () => {
+      try {
+        const savedFields = await getFieldsByNames(fieldsList);
 
-  //   Promise.all(
-  //     encryptedResponses.map(async (response) => {
-  //       try {
-  //         const value = await decryptData(response.value, encryptionKey);
-  //         form.setValue(
-  //           response.field as Path<TFieldValues>,
-  //           value as PathValue<TFieldValues, Path<TFieldValues>>,
-  //           {
-  //             shouldDirty: false,
-  //           },
-  //         );
-  //       } catch (error) {
-  //         posthog.captureException(error);
-  //       }
-  //     }),
-  //   );
-  // }, [encryptedResponses, encryptionKey, isSubmitting]);
+        for (const { field, value } of savedFields) {
+          form.setValue(
+            field as Path<TFieldValues>,
+            value as PathValue<TFieldValues, Path<TFieldValues>>,
+            {
+              shouldDirty: false,
+            },
+          );
+        }
+      } catch (error) {
+        console.error("Error loading saved form data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  const onSubmit = form.handleSubmit(async (_data) => {
+    loadSavedData();
+  }, [fieldsList, form]);
+
+  // Auto-save fields on change
+  useEffect(() => {
+    const subscription = form.watch(async (value, { name }) => {
+      if (!name || isSubmitting || isLoading) return;
+
+      const fieldValue = value[name];
+
+      // Only save non-empty values
+      if (
+        fieldValue !== "" &&
+        fieldValue !== null &&
+        fieldValue !== undefined
+      ) {
+        try {
+          await saveField(name, fieldValue);
+        } catch (error) {
+          console.error(`Error saving field ${name}:`, error);
+        }
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [form, isSubmitting, isLoading]);
+
+  const onSubmit = form.handleSubmit(async (data) => {
     try {
-      // if (!encryptionKey) {
-      //   throw new Error("No encryption key available.");
-      // }
-
       setIsSubmitting(true);
 
-      // const entries = Object.entries(data).filter(
-      //   ([_, value]) => value !== "" && value !== null && value !== undefined,
-      // );
+      const entries = Object.entries(data).filter(
+        ([_, value]) => value !== "" && value !== null && value !== undefined,
+      );
 
-      // for (const [field, value] of entries) {
-      //   const encryptedValue = await encryptData(value, encryptionKey);
-      //   await save({ field, value: encryptedValue });
-      // }
-    } catch (_error) {
-      // posthog.captureException(error);
-      // toast.error(
-      //   error instanceof Error
-      //     ? error.message
-      //     : "An error occurred during submission. Please try again.",
-      // );
+      for (const [field, value] of entries) {
+        await saveField(field, value);
+      }
+    } catch (error) {
+      console.error("Error saving form data:", error);
+      throw error;
     } finally {
       setIsSubmitting(false);
     }
@@ -86,5 +95,6 @@ export function useForm<TFieldValues extends FieldValues = FieldValues>(
     ...form,
     onSubmit,
     isSubmitting,
+    isLoading,
   };
 }
