@@ -39,13 +39,13 @@ export function FormContainer({
   form,
   onSubmit,
 }: FormContainerProps) {
-  const formRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Navigation index: -1 = title, 0 to steps.length-1 = actual steps, steps.length = review
   const [navigationIndex, setNavigationIndex] = useState(-1);
 
   const scrollToFormTop = useCallback(() => {
-    formRef.current?.scrollIntoView({ block: "start" });
+    containerRef.current?.scrollIntoView({ block: "start" });
   }, []);
 
   // Sync step with URL hash
@@ -135,8 +135,8 @@ export function FormContainer({
     [navigationIndex, steps.length, scrollToFormTop, onSubmit, goToNextStep],
   );
 
-  // Determine what to render based on navigationIndex
-  const renderCurrentStep = () => {
+  // Memoize the current step component to prevent unnecessary recreations
+  const currentStepComponent = useMemo(() => {
     if (navigationIndex === -1) {
       return <FormTitleStep onStart={goToNextStep}>{children}</FormTitleStep>;
     }
@@ -151,7 +151,7 @@ export function FormContainer({
     }
 
     return null;
-  };
+  }, [navigationIndex, steps, goToNextStep, children]);
 
   // Calculate the current step index for the context (1-based for actual steps, 0 for title/review)
   const currentStepIndex =
@@ -189,10 +189,10 @@ export function FormContainer({
   return (
     <FormProvider {...form}>
       <FormStepContext.Provider value={stepContextValue}>
-        <div className="form-container" ref={formRef}>
+        <section className="form-container" ref={containerRef}>
           {showNavigation && <FormNavigation />}
-          <div className="form-container-content">{renderCurrentStep()}</div>
-        </div>
+          <div className="form-container-content">{currentStepComponent}</div>
+        </section>
       </FormStepContext.Provider>
     </FormProvider>
   );
