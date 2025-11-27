@@ -1,6 +1,6 @@
 import { ComboBoxField } from "@/components/react/forms/ComboBoxField";
-import { ShortTextField } from "@/components/react/forms/ShortTextField";
 import { FormStep } from "@/components/react/forms/FormStep";
+import { ShortTextField } from "@/components/react/forms/ShortTextField";
 import { JURISDICTIONS } from "@/constants/jurisdictions";
 
 export function BirthplaceStep() {

@@ -1,5 +1,5 @@
-import { NameField } from "@/components/react/forms/NameField";
 import { FormStep } from "@/components/react/forms/FormStep";
+import { NameField } from "@/components/react/forms/NameField";
 
 export function NewNameStep() {
   return (

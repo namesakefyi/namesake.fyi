@@ -1,6 +1,6 @@
 import { EmailField } from "@/components/react/forms/EmailField";
-import { PhoneField } from "@/components/react/forms/PhoneField";
 import { FormStep } from "@/components/react/forms/FormStep";
+import { PhoneField } from "@/components/react/forms/PhoneField";
 
 export function ContactInfoStep() {
   return (

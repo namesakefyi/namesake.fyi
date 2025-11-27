@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
-import { YesNoField } from "@/components/react/forms/YesNoField";
-import { FormStep } from "@/components/react/forms/FormStep";
 import { Banner } from "@/components/react/common/Banner";
+import { FormStep } from "@/components/react/forms/FormStep";
+import { YesNoField } from "@/components/react/forms/YesNoField";
 
 export function ReturnDocumentsStep() {
   const form = useFormContext();
@@ -17,7 +17,8 @@ export function ReturnDocumentsStep() {
       />
       {form.watch("shouldReturnOriginalDocuments") === false && (
         <Banner variant="warning">
-          We strongly recommend getting your original documents back from the court.
+          We strongly recommend getting your original documents back from the
+          court.
         </Banner>
       )}
     </FormStep>

@@ -1,6 +1,6 @@
-import { LongTextField } from "@/components/react/forms/LongTextField";
-import { FormStep } from "@/components/react/forms/FormStep";
 import { Banner } from "@/components/react/common/Banner";
+import { FormStep } from "@/components/react/forms/FormStep";
+import { LongTextField } from "@/components/react/forms/LongTextField";
 
 export function ReasonStep() {
   return (
@@ -15,12 +15,11 @@ export function ReasonStep() {
           into detail. Examples:
         </p>
         <ul>
-          <li>
-            "I want a name which aligns with my gender identity."
-          </li>
+          <li>"I want a name which aligns with my gender identity."</li>
           <li>"This is the name everyone knows me by."</li>
           <li>
-            "This is my preferred name and I wish to obtain proper documentation."
+            "This is my preferred name and I wish to obtain proper
+            documentation."
           </li>
           <li>"I am transgender."</li>
         </ul>

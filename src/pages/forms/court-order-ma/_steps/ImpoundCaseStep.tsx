@@ -1,8 +1,8 @@
 import { useFormContext } from "react-hook-form";
+import { Banner } from "@/components/react/common/Banner";
+import { FormStep, FormSubsection } from "@/components/react/forms/FormStep";
 import { LongTextField } from "@/components/react/forms/LongTextField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
-import { FormStep, FormSubsection } from "@/components/react/forms/FormStep";
-import { Banner } from "@/components/react/common/Banner";
 
 export function ImpoundCaseStep() {
   const form = useFormContext();
@@ -29,8 +29,9 @@ export function ImpoundCaseStep() {
         />
         <Banner>
           <p>
-            <strong>What do I write?</strong> The court is looking for a legal basis
-            to <em>impound</em> (make private) these court records. Recommendations:
+            <strong>What do I write?</strong> The court is looking for a legal
+            basis to <em>impound</em> (make private) these court records.
+            Recommendations:
           </p>
           <ul>
             <li>

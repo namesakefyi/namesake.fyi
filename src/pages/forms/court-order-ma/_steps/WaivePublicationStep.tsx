@@ -1,8 +1,8 @@
 import { useFormContext } from "react-hook-form";
+import { Banner } from "@/components/react/common/Banner";
+import { FormStep, FormSubsection } from "@/components/react/forms/FormStep";
 import { LongTextField } from "@/components/react/forms/LongTextField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
-import { FormStep, FormSubsection } from "@/components/react/forms/FormStep";
-import { Banner } from "@/components/react/common/Banner";
 
 export function WaivePublicationStep() {
   const form = useFormContext();
@@ -29,8 +29,9 @@ export function WaivePublicationStep() {
         />
         <Banner>
           <p>
-            <strong>What do I write?</strong> The court is looking for a legal basis
-            to exempt you from the newspaper publishing requirement. Recommendations:
+            <strong>What do I write?</strong> The court is looking for a legal
+            basis to exempt you from the newspaper publishing requirement.
+            Recommendations:
           </p>
           <ul>
             <li>
@@ -42,9 +43,9 @@ export function WaivePublicationStep() {
               reason, such as evasion of debts or criminal liabilities.
             </li>
             <li>
-              If you are not changing your last name, explicitly mention that "I am
-              not changing my last name" in the motion. (You can still file this
-              form if you are changing your name in its entirety.)
+              If you are not changing your last name, explicitly mention that "I
+              am not changing my last name" in the motion. (You can still file
+              this form if you are changing your name in its entirety.)
             </li>
           </ul>
         </Banner>
