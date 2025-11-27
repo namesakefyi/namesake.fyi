@@ -2,11 +2,11 @@ import { RiAddLine, RiSubtractLine } from "@remixicon/react";
 import {
   NumberField as AriaNumberField,
   type NumberFieldProps as AriaNumberFieldProps,
-  Button,
   Group,
   Input,
   type ValidationResult,
 } from "react-aria-components";
+import { Button } from "../Button";
 import { Text } from "../Content";
 import { FieldError, Label } from "../Form";
 import "./NumberField.css";

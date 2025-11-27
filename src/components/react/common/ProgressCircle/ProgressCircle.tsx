@@ -50,7 +50,6 @@ export function ProgressCircle(props: ProgressCircleProps) {
               strokeDashoffset={
                 100 - (isIndeterminate || percentage == null ? 25 : percentage)
               }
-              strokeLinecap="round"
               style={{
                 rotate: "-90deg",
                 transformOrigin: "center center",
