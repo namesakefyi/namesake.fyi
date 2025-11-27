@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Switch as AriaSwitch,
   type SwitchProps as AriaSwitchProps,

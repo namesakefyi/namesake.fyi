@@ -1,5 +1,3 @@
-"use client";
-
 import { RiCloseLine } from "@remixicon/react";
 import {
   SearchField as AriaSearchField,

@@ -1,5 +1,3 @@
-"use client";
-
 import { RiAddLine, RiSubtractLine } from "@remixicon/react";
 import {
   NumberField as AriaNumberField,

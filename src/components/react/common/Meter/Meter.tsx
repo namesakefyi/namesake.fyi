@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Meter as AriaMeter,
   type MeterProps as AriaMeterProps,

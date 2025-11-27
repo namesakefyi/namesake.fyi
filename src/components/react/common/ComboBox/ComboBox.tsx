@@ -1,5 +1,3 @@
-"use client";
-
 import { RiArrowDownSLine } from "@remixicon/react";
 import {
   ComboBox as AriaComboBox,

@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Checkbox as AriaCheckbox,
   type CheckboxProps as AriaCheckboxProps,
