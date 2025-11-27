@@ -81,6 +81,7 @@ export function AddressField({
             {...field}
             label="Street address"
             autoComplete="street-address"
+            className="namesake-address-field-street"
             maxLength={40}
             isInvalid={invalid}
             errorMessage={error?.message}
