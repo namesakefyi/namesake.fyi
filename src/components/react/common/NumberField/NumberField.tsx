@@ -1,14 +1,12 @@
-"use client";
-
 import { RiAddLine, RiSubtractLine } from "@remixicon/react";
 import {
   NumberField as AriaNumberField,
   type NumberFieldProps as AriaNumberFieldProps,
-  Button,
   Group,
   Input,
   type ValidationResult,
 } from "react-aria-components";
+import { Button } from "../Button";
 import { Text } from "../Content";
 import { FieldError, Label } from "../Form";
 import "./NumberField.css";
@@ -29,13 +27,9 @@ export function NumberField({
     <AriaNumberField {...props}>
       <Label>{label}</Label>
       <Group>
-        <Button slot="decrement">
-          <RiSubtractLine size={18} />
-        </Button>
+        <Button slot="decrement" icon={RiSubtractLine} aria-label="Decrement" />
         <Input />
-        <Button slot="increment">
-          <RiAddLine size={18} />
-        </Button>
+        <Button slot="increment" icon={RiAddLine} aria-label="Increment" />
       </Group>
       {description && <Text slot="description">{description}</Text>}
       <FieldError>{errorMessage}</FieldError>

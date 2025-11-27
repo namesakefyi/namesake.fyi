@@ -1,5 +1,3 @@
-"use client";
-
 import { RiArrowLeftSLine, RiArrowRightSLine } from "@remixicon/react";
 import {
   Calendar as AriaCalendar,
@@ -27,13 +25,13 @@ export function Calendar<T extends DateValue>({
   return (
     <AriaCalendar {...props}>
       <header>
-        <Button slot="previous">
-          <RiArrowLeftSLine size={16} />
-        </Button>
+        <Button
+          slot="previous"
+          icon={RiArrowLeftSLine}
+          aria-label="Previous month"
+        />
         <Heading />
-        <Button slot="next">
-          <RiArrowRightSLine size={16} />
-        </Button>
+        <Button slot="next" icon={RiArrowRightSLine} aria-label="Next month" />
       </header>
       <CalendarGrid>{(date) => <CalendarCell date={date} />}</CalendarGrid>
       {errorMessage && <Text slot="errorMessage">{errorMessage}</Text>}

@@ -1,5 +1,3 @@
-"use client";
-
 import { RiArrowDropRightLine } from "@remixicon/react";
 import {
   Disclosure as AriaDisclosure,

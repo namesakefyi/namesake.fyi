@@ -10,9 +10,9 @@
     box-sizing: border-box;
     overflow: clip;
     position: relative;
-    padding: 4px 4px 4px 8px;
+    padding: var(--space-s) var(--space-2xl) var(--space-s) var(--space-s);
     border: 1px solid var(--border-color);
-    border-radius: 6px;
+    border-radius: var(--radius-s);
     background: var(--field-background);
     white-space: nowrap;
 

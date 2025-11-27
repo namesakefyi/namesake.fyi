@@ -6,11 +6,11 @@
   border-radius: var(--radius-xs);
   appearance: none;
   vertical-align: middle;
-  font-size: var(--step--1);
+  font-size: var(--step-0);
   text-align: center;
   margin: 0;
   outline: none;
-  padding: var(--space-2xs) var(--space-s);
+  padding: var(--space-xs) var(--space-m);
   display: inline-flex;
   align-items: center;
   justify-content: center;

@@ -46,7 +46,7 @@ const config: StorybookConfig = {
     if (!config.resolve) return config;
     config.resolve.alias = {
       ...config.resolve.alias,
-      "~": path.resolve("src"),
+      "@": path.resolve(import.meta.dirname, "../src"),
     };
     return config;
   },

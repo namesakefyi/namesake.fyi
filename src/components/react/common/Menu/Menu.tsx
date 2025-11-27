@@ -1,5 +1,3 @@
-"use client";
-
 import { RiArrowRightSLine } from "@remixicon/react";
 import {
   Menu as AriaMenu,
