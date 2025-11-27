@@ -27,13 +27,9 @@ export function NumberField({
     <AriaNumberField {...props}>
       <Label>{label}</Label>
       <Group>
-        <Button slot="decrement">
-          <RiSubtractLine size={18} />
-        </Button>
+        <Button slot="decrement" icon={RiSubtractLine} aria-label="Decrement" />
         <Input />
-        <Button slot="increment">
-          <RiAddLine size={18} />
-        </Button>
+        <Button slot="increment" icon={RiAddLine} aria-label="Increment" />
       </Group>
       {description && <Text slot="description">{description}</Text>}
       <FieldError>{errorMessage}</FieldError>

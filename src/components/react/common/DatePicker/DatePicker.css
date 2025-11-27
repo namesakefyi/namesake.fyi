@@ -8,7 +8,8 @@
   }
 
   .react-aria-DateInput {
-    padding: var(--space-2xs) var(--space-xl) var(--space-2xs) var(--space-2xs);
+    padding: var(--space-s) var(--space-2xl) var(--space-s) var(--space-s);
+    width: 16ch;
   }
 
   &[data-invalid] {

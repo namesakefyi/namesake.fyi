@@ -34,12 +34,20 @@ export function Button({
     >
       {composeRenderProps(props.children, (children, { isPending }) => (
         <>
-          {!isPending && Icon && <Icon size={iconSize} />}
+          {!isPending && Icon && (
+            <Icon className="namesake-button-start-icon" size={iconSize} />
+          )}
           {isPending && (
-            <ProgressCircle aria-label="Saving..." isIndeterminate />
+            <ProgressCircle
+              aria-label="Saving..."
+              size={size === "large" ? 24 : 20}
+              isIndeterminate
+            />
           )}
           {children}
-          {EndIcon && <EndIcon size={iconSize} />}
+          {EndIcon && (
+            <EndIcon className="namesake-button-end-icon" size={iconSize} />
+          )}
         </>
       ))}
     </RACButton>

@@ -55,7 +55,8 @@
     cursor: pointer;
   }
 
-  svg {
+  .namesake-button-start-icon:has(~ *),
+  .namesake-button-end-icon:has(~ *) {
     margin-inline: -0.2em;
     flex-shrink: 0;
   }

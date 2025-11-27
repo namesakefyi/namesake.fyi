@@ -7,7 +7,7 @@
     margin: 0 -1px;
     z-index: 1;
     font-size: var(--step-0);
-    padding: var(--space-2xs) var(--space-xs);
+    padding: var(--space-s) var(--space-2xl) var(--space-s) var(--space-s);
     outline: none;
     width: 7ch;
     flex: 1;
@@ -15,8 +15,7 @@
 
   .namesake-button {
     font-size: var(--step-0);
-    width: var(--space-2xl);
-    padding: 0;
+    padding-inline: var(--space-s);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -50,7 +49,7 @@
     &[data-focus-within] {
       outline: 1px solid var(--focus-ring-color);
       .react-aria-Input,
-      .react-aria-Button {
+      .namesake-button {
         border-color: var(--focus-ring-color);
       }
     }
@@ -58,13 +57,13 @@
 
   &[data-invalid] {
     .react-aria-Input,
-    .react-aria-Button {
+    .namesake-button {
       border-color: var(--invalid-color);
     }
 
     &:focus-within {
       .react-aria-Input,
-      .react-aria-Button {
+      .namesake-button {
         border-color: var(--focus-ring-color);
       }
     }
@@ -81,7 +80,7 @@
     font-size: var(--step--2);
   }
 
-  .react-aria-Button {
+  .namesake-button {
     &[data-disabled] {
       border-color: var(--border-color-disabled);
       color: var(--text-color-disabled);
