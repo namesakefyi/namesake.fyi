@@ -6,8 +6,9 @@ import {
   RiTimerLine,
 } from "@remixicon/react";
 import { Heading } from "react-aria-components";
-import { formatTimeEstimate } from "../../../../utils/formatTimeEstimate";
-import { smartquotes } from "../../../../utils/smartquotes";
+import { UAParser } from "ua-parser-js";
+import { formatTimeEstimate } from "@/utils/formatTimeEstimate";
+import { smartquotes } from "@/utils/smartquotes";
 import { Button } from "../../common/Button";
 import { useFormStep } from "../FormContainer/FormStepContext";
 import "./FormTitleStep.css";
@@ -19,16 +20,23 @@ function FormTitleStepInfo({ children }: { children: React.ReactNode }) {
 interface FormTitleStepInfoItemProps {
   icon: RemixiconComponentType;
   children: React.ReactNode;
+  description?: string;
 }
 
 function FormTitleStepInfoItem({
   icon: Icon,
   children,
+  description,
 }: FormTitleStepInfoItemProps) {
   return (
     <li>
       <Icon />
-      <span>{children}</span>
+      <span className="form-title-step-info-title">{children}</span>
+      {description && (
+        <p className="form-title-step-info-description">
+          {smartquotes(description)}
+        </p>
+      )}
     </li>
   );
 }
@@ -49,6 +57,8 @@ export function FormTitleStep({ children, onStart }: FormTitleStepProps) {
   const { formTitle, formDescription, totalSteps } = useFormStep();
   const timeEstimate = formatTimeEstimate(totalSteps);
 
+  const { device, browser } = UAParser(navigator.userAgent);
+
   return (
     <section className="form-title-step">
       <header className="form-title-step-header">
@@ -63,17 +73,21 @@ export function FormTitleStep({ children, onStart }: FormTitleStepProps) {
       </header>
       {children && <div className="form-title-step-content">{children}</div>}
       <FormTitleStepInfo>
-        <FormTitleStepInfoItem icon={RiFileTextLine}>
-          {/* TODO: Enumerate forms which this helps fill */}
-          This will help you fill and download <strong>SS-5</strong>
-        </FormTitleStepInfoItem>
         {timeEstimate && (
           <FormTitleStepInfoItem icon={RiTimerLine}>
-            Requires about <strong>{timeEstimate}</strong> to complete
+            Requires about <strong>{timeEstimate}</strong>.
           </FormTitleStepInfoItem>
         )}
-        <FormTitleStepInfoItem icon={RiShieldKeyholeLine}>
-          Your information is never sent to Namesake
+        <FormTitleStepInfoItem icon={RiFileTextLine}>
+          All required forms will be filled and downloaded.
+        </FormTitleStepInfoItem>
+        <FormTitleStepInfoItem
+          icon={RiShieldKeyholeLine}
+          description="For your security, your information is never sent to Namesake."
+        >
+          Your information is stored locally in{" "}
+          <strong>{browser.name ?? "this browser"}</strong> on this{" "}
+          <strong>{device.model ?? "device"}</strong>.
         </FormTitleStepInfoItem>
       </FormTitleStepInfo>
       <footer className="form-title-step-footer">

@@ -1,13 +1,14 @@
-import { useFormContext } from "react-hook-form";
 import { Banner } from "@/components/react/common/Banner";
+import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep } from "@/components/react/forms/FormStep";
 import { RadioGroupField } from "@/components/react/forms/RadioGroupField";
 
-export function CitizenshipStep() {
-  const form = useFormContext();
-
-  return (
-    <FormStep title="What is your citizenship status?">
+export const citizenshipStep: StepConfig = {
+  id: "citizenship",
+  title: "What is your citizenship status?",
+  fields: ["citizenshipStatus"],
+  component: ({ stepConfig, form }) => (
+    <FormStep stepConfig={stepConfig}>
       <RadioGroupField
         name="citizenshipStatus"
         label="Citizenship status"
@@ -39,5 +40,5 @@ export function CitizenshipStep() {
         </Banner>
       )}{" "}
     </FormStep>
-  );
-}
+  ),
+};

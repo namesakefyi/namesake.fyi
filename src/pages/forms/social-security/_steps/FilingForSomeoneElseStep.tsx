@@ -1,14 +1,33 @@
-import { useFormContext } from "react-hook-form";
+import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep, FormSubsection } from "@/components/react/forms/FormStep";
 import { RadioGroupField } from "@/components/react/forms/RadioGroupField";
 import { ShortTextField } from "@/components/react/forms/ShortTextField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
 
-export function FilingForSomeoneElseStep() {
-  const form = useFormContext();
-
-  return (
-    <FormStep title="Are you filing this form for someone else?">
+export const filingForSomeoneElseStep: StepConfig = {
+  id: "filing-for-someone-else",
+  title: "Are you filing this form for someone else?",
+  fields: [
+    "isFilingForSomeoneElse",
+    "relationshipToFilingFor",
+    "relationshipToFilingForOther",
+  ],
+  isFieldVisible: (fieldName, data) => {
+    // relationshipToFilingFor only visible if filing for someone else
+    if (fieldName === "relationshipToFilingFor") {
+      return data.isFilingForSomeoneElse === true;
+    }
+    // relationshipToFilingForOther only visible if filing for someone else AND relationship is "other"
+    if (fieldName === "relationshipToFilingForOther") {
+      return (
+        data.isFilingForSomeoneElse === true &&
+        data.relationshipToFilingFor === "other"
+      );
+    }
+    return true;
+  },
+  component: ({ stepConfig, form }) => (
+    <FormStep stepConfig={stepConfig}>
       <YesNoField
         name="isFilingForSomeoneElse"
         label="Are you filing this form for someone else?"
@@ -38,5 +57,5 @@ export function FilingForSomeoneElseStep() {
         </FormSubsection>
       )}
     </FormStep>
-  );
-}
+  ),
+};

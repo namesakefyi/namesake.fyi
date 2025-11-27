@@ -1,16 +1,16 @@
-import { useFormContext } from "react-hook-form";
 import { Banner } from "@/components/react/common/Banner";
+import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep } from "@/components/react/forms/FormStep";
 import { YesNoField } from "@/components/react/forms/YesNoField";
 
-export function FeeWaiverStep() {
-  const form = useFormContext();
-
-  return (
-    <FormStep
-      title="Do you need to apply for a fee waiver?"
-      description="If you are unable to pay the filing fee, you can file an Affidavit of Indigency—a document proving that you are unable to pay."
-    >
+export const feeWaiverStep: StepConfig = {
+  id: "fee-waiver",
+  title: "Do you need to apply for a fee waiver?",
+  description:
+    "If you are unable to pay the filing fee, you can file an Affidavit of Indigency—a document proving that you are unable to pay.",
+  fields: ["shouldApplyForFeeWaiver"],
+  component: ({ stepConfig, form }) => (
+    <FormStep stepConfig={stepConfig}>
       <YesNoField
         name="shouldApplyForFeeWaiver"
         label="Apply for a fee waiver?"
@@ -41,5 +41,5 @@ export function FeeWaiverStep() {
         </Banner>
       )}
     </FormStep>
-  );
-}
+  ),
+};

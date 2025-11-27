@@ -17,6 +17,7 @@ const meta: Meta<typeof FormTitleStep> = {
           currentStepIndex: 0, // Title step
           totalSteps: 5, // 5 actual steps
           isReviewStep: false,
+          isReviewingMode: false,
           onSubmit: (e) => {
             e.preventDefault();
             console.log("Submit clicked");

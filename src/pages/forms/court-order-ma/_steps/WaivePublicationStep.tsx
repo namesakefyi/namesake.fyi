@@ -1,17 +1,24 @@
-import { useFormContext } from "react-hook-form";
 import { Banner } from "@/components/react/common/Banner";
+import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep, FormSubsection } from "@/components/react/forms/FormStep";
 import { LongTextField } from "@/components/react/forms/LongTextField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
 
-export function WaivePublicationStep() {
-  const form = useFormContext();
-
-  return (
-    <FormStep
-      title="Would you like to waive the newspaper publication requirement?"
-      description="The legal name change process requires publication in a newspaper. However, we can help you file a motion to waive this requirement."
-    >
+export const waivePublicationStep: StepConfig = {
+  id: "waive-publication",
+  title: "Would you like to waive the newspaper publication requirement?",
+  description:
+    "The legal name change process requires publication in a newspaper. However, we can help you file a motion to waive this requirement.",
+  fields: ["shouldWaivePublicationRequirement", "reasonToWaivePublication"],
+  isFieldVisible: (fieldName, data) => {
+    // reasonToWaivePublication only visible if shouldWaivePublicationRequirement is true
+    if (fieldName === "reasonToWaivePublication") {
+      return data.shouldWaivePublicationRequirement === true;
+    }
+    return true;
+  },
+  component: ({ stepConfig, form }) => (
+    <FormStep stepConfig={stepConfig}>
       <YesNoField
         name="shouldWaivePublicationRequirement"
         label="Waive the publication requirement?"
@@ -51,5 +58,5 @@ export function WaivePublicationStep() {
         </Banner>
       </FormSubsection>
     </FormStep>
-  );
-}
+  ),
+};

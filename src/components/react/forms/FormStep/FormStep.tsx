@@ -1,5 +1,6 @@
 import { RiArrowRightLine } from "@remixicon/react";
 import { Heading } from "react-aria-components";
+import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { useFormStep } from "@/components/react/forms/FormContainer";
 import { slugify } from "../../../../utils/slugify";
 import { smartquotes } from "../../../../utils/smartquotes";
@@ -10,16 +11,9 @@ import { useId } from "react";
 
 export interface FormStepProps {
   /**
-   * The question title.
-   * @example "What is your current legal name?"
+   * The step configuration containing title, description, fields, etc.
    */
-  title: string;
-
-  /**
-   * An optional description to provide more context.
-   * @example "This is the name you're leaving behind. Type it exactly as it appears on your ID."
-   */
-  description?: string;
+  stepConfig: StepConfig;
 
   /**
    * The form fields to render.
@@ -32,18 +26,22 @@ export interface FormStepProps {
   className?: string;
 }
 
-export function FormStep({
-  title,
-  description,
-  children,
-  className,
-}: FormStepProps) {
+export function FormStep({ stepConfig, children, className }: FormStepProps) {
+  const { title, description } = stepConfig;
   const titleId = slugify(title);
   const descriptionId = useId();
-  const { onSubmit } = useFormStep();
+  const { onSubmit, isReviewingMode } = useFormStep();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // If in reviewing mode, navigate back to review page
+    if (isReviewingMode) {
+      window.location.hash = "review";
+      return;
+    }
+
+    // Otherwise, proceed with normal flow
     onSubmit(e);
   };
 
@@ -53,6 +51,7 @@ export function FormStep({
       aria-labelledby={titleId}
       aria-describedby={description ? descriptionId : undefined}
       onSubmit={handleSubmit}
+      tabIndex={-1}
     >
       <header>
         <Heading className="form-step-title" id={titleId}>
@@ -71,7 +70,7 @@ export function FormStep({
         endIcon={RiArrowRightLine}
         className="form-step-button"
       >
-        Continue
+        {isReviewingMode ? "Save Changes" : "Continue"}
       </Button>
     </form>
   );

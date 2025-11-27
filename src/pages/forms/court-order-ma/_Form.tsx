@@ -1,89 +1,47 @@
-import {
-  FormContainer,
-  type Step,
-} from "@/components/react/forms/FormContainer";
-import type { FieldName } from "@/constants/fields";
+import { FormContainer } from "@/components/react/forms/FormContainer";
+import type { FieldType } from "@/constants/fields";
 import { useForm } from "@/utils/useForm";
-import { BirthplaceStep } from "./_steps/BirthplaceStep";
-import { ContactInfoStep } from "./_steps/ContactInfoStep";
-import { CurrentNameStep } from "./_steps/CurrentNameStep";
-import { DateOfBirthStep } from "./_steps/DateOfBirthStep";
-import { FeeWaiverStep } from "./_steps/FeeWaiverStep";
-import { ImpoundCaseStep } from "./_steps/ImpoundCaseStep";
-import { InterpreterStep } from "./_steps/InterpreterStep";
-import { MothersMaidenNameStep } from "./_steps/MothersMaidenNameStep";
-import { NewNameStep } from "./_steps/NewNameStep";
-import { OtherNamesStep } from "./_steps/OtherNamesStep";
-import { PreviousNameChangeStep } from "./_steps/PreviousNameChangeStep";
-import { PronounsStep } from "./_steps/PronounsStep";
-import { ReasonStep } from "./_steps/ReasonStep";
-import { ResidentialAddressStep } from "./_steps/ResidentialAddressStep";
-import { ReturnDocumentsStep } from "./_steps/ReturnDocumentsStep";
-import { WaivePublicationStep } from "./_steps/WaivePublicationStep";
+import { addressStep } from "./_steps/AddressStep";
+import { birthplaceStep } from "./_steps/BirthplaceStep";
+import { contactInfoStep } from "./_steps/ContactInfoStep";
+import { currentNameStep } from "./_steps/CurrentNameStep";
+import { dateOfBirthStep } from "./_steps/DateOfBirthStep";
+import { feeWaiverStep } from "./_steps/FeeWaiverStep";
+import { impoundCaseStep } from "./_steps/ImpoundCaseStep";
+import { interpreterStep } from "./_steps/InterpreterStep";
+import { mothersMaidenNameStep } from "./_steps/MothersMaidenNameStep";
+import { newNameStep } from "./_steps/NewNameStep";
+import { otherNamesStep } from "./_steps/OtherNamesStep";
+import { previousNameChangeStep } from "./_steps/PreviousNameChangeStep";
+import { pronounsStep } from "./_steps/PronounsStep";
+import { reasonStep } from "./_steps/ReasonStep";
+import { returnDocumentsStep } from "./_steps/ReturnDocumentsStep";
+import { waivePublicationStep } from "./_steps/WaivePublicationStep";
 
-const FORM_FIELDS: FieldName[] = [
-  "newFirstName",
-  "newMiddleName",
-  "newLastName",
-  "oldFirstName",
-  "oldMiddleName",
-  "oldLastName",
-  "reasonForChangingName",
-  "phoneNumber",
-  "email",
-  "birthplaceCity",
-  "birthplaceState",
-  "birthplaceCountry",
-  "dateOfBirth",
-  "residenceStreetAddress",
-  "residenceCity",
-  "residenceCounty",
-  "residenceState",
-  "residenceZipCode",
-  "isMailingAddressDifferentFromResidence",
-  "mailingStreetAddress",
-  "mailingCity",
-  "mailingCounty",
-  "mailingState",
-  "mailingZipCode",
-  "hasPreviousNameChange",
-  "previousNameFrom",
-  "previousNameTo",
-  "previousNameReason",
-  "hasUsedOtherNameOrAlias",
-  "otherNamesOrAliases",
-  "isInterpreterNeeded",
-  "language",
-  "isOkayToSharePronouns",
-  "pronouns",
-  "otherPronouns",
-  "shouldReturnOriginalDocuments",
-  "shouldWaivePublicationRequirement",
-  "reasonToWaivePublication",
-  "shouldImpoundCourtRecords",
-  "reasonToImpoundCourtRecords",
-  "shouldApplyForFeeWaiver",
-  "mothersMaidenName",
+const STEPS = [
+  newNameStep,
+  currentNameStep,
+  reasonStep,
+  contactInfoStep,
+  birthplaceStep,
+  dateOfBirthStep,
+  addressStep,
+  previousNameChangeStep,
+  otherNamesStep,
+  interpreterStep,
+  pronounsStep,
+  returnDocumentsStep,
+  waivePublicationStep,
+  impoundCaseStep,
+  feeWaiverStep,
+  mothersMaidenNameStep,
 ] as const;
 
-const STEPS: readonly Step[] = [
-  { id: "new-name", component: NewNameStep },
-  { id: "current-name", component: CurrentNameStep },
-  { id: "reason", component: ReasonStep },
-  { id: "contact-info", component: ContactInfoStep },
-  { id: "birthplace", component: BirthplaceStep },
-  { id: "date-of-birth", component: DateOfBirthStep },
-  { id: "residential-address", component: ResidentialAddressStep },
-  { id: "previous-name-change", component: PreviousNameChangeStep },
-  { id: "other-names", component: OtherNamesStep },
-  { id: "interpreter", component: InterpreterStep },
-  { id: "pronouns", component: PronounsStep },
-  { id: "return-documents", component: ReturnDocumentsStep },
-  { id: "waive-publication", component: WaivePublicationStep },
-  { id: "impound-case", component: ImpoundCaseStep },
-  { id: "fee-waiver", component: FeeWaiverStep },
-  { id: "mothers-maiden-name", component: MothersMaidenNameStep },
-];
+const FORM_FIELDS = STEPS.flatMap((step) => step.fields);
+
+type FormData = {
+  [K in (typeof FORM_FIELDS)[number]]: FieldType<K>;
+};
 
 export function MaCourtOrderForm({
   title,
@@ -92,7 +50,7 @@ export function MaCourtOrderForm({
   title: string;
   description: string;
 }) {
-  const { onSubmit, ...form } = useForm(FORM_FIELDS);
+  const { onSubmit, ...form } = useForm<FormData>(FORM_FIELDS);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

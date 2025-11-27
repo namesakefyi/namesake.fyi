@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
+import type { StepConfig } from "../FormContainer";
 import { FormStepContext } from "../FormContainer/FormStepContext";
 import { FormStep, FormSubsection } from "./FormStep";
 
@@ -12,9 +13,10 @@ function TestWrapper({ children }: { children: ReactNode }) {
         onNext: vi.fn(),
         onBack: vi.fn(),
         formTitle: "Test Form",
+        isReviewStep: false,
         currentStepIndex: 2, // Step 2 of actual steps
         totalSteps: 5, // 5 actual steps
-        isReviewStep: false,
+        isReviewingMode: false,
         onSubmit: vi.fn(),
       }}
     >
@@ -24,13 +26,17 @@ function TestWrapper({ children }: { children: ReactNode }) {
 }
 
 describe("FormStep", () => {
-  const formStep = {
+  const formStep: StepConfig = {
+    id: "what-is-your-legal-name",
+    component: () => <div>Test content</div>,
     title: "What is your legal name?",
     description: "Type your name exactly as it appears on your ID.",
+    fields: [],
+    isFieldVisible: () => true,
   };
 
   it("renders title correctly", () => {
-    render(<FormStep {...formStep} />, { wrapper: TestWrapper });
+    render(<FormStep stepConfig={formStep} />, { wrapper: TestWrapper });
 
     const titleElement = screen.getByText(formStep.title);
     expect(titleElement).toBeInTheDocument();
@@ -38,14 +44,14 @@ describe("FormStep", () => {
   });
 
   it("renders optional description", () => {
-    render(<FormStep {...formStep} />, { wrapper: TestWrapper });
+    render(<FormStep stepConfig={formStep} />, { wrapper: TestWrapper });
 
-    const descriptionElement = screen.getByText(formStep.description);
+    const descriptionElement = screen.getByText(formStep.description ?? "");
     expect(descriptionElement).toBeInTheDocument();
   });
 
   it("does not render description when not provided", () => {
-    render(<FormStep {...formStep} description={undefined} />, {
+    render(<FormStep stepConfig={formStep} />, {
       wrapper: TestWrapper,
     });
 
@@ -57,7 +63,7 @@ describe("FormStep", () => {
   });
 
   it("associates the form with the title", () => {
-    render(<FormStep {...formStep} title="What is your legal name?" />, {
+    render(<FormStep stepConfig={formStep} />, {
       wrapper: TestWrapper,
     });
     const form = screen.getByRole("form");
@@ -67,13 +73,9 @@ describe("FormStep", () => {
   });
 
   it("omits apostrophes from the id", () => {
-    render(
-      <FormStep
-        {...formStep}
-        title="What is the reason you're changing your name?"
-      />,
-      { wrapper: TestWrapper },
-    );
+    render(<FormStep {...formStep} stepConfig={formStep} />, {
+      wrapper: TestWrapper,
+    });
     const form = screen.getByRole("form");
     expect(form).toHaveAttribute(
       "aria-labelledby",
@@ -82,7 +84,7 @@ describe("FormStep", () => {
   });
 
   it("has accessible description when description is provided", () => {
-    render(<FormStep {...formStep} />, { wrapper: TestWrapper });
+    render(<FormStep stepConfig={formStep} />, { wrapper: TestWrapper });
 
     const form = screen.getByRole("form", {
       description: formStep.description,
@@ -91,7 +93,7 @@ describe("FormStep", () => {
   });
 
   it("has no accessible description when description is omitted", () => {
-    render(<FormStep {...formStep} description={undefined} />, {
+    render(<FormStep stepConfig={formStep} />, {
       wrapper: TestWrapper,
     });
 

@@ -1,14 +1,31 @@
-import { useFormContext } from "react-hook-form";
+import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep, FormSubsection } from "@/components/react/forms/FormStep";
 import { LongTextField } from "@/components/react/forms/LongTextField";
 import { ShortTextField } from "@/components/react/forms/ShortTextField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
 
-export function PreviousNameChangeStep() {
-  const form = useFormContext();
-
-  return (
-    <FormStep title="Have you legally changed your name before?">
+export const previousNameChangeStep: StepConfig = {
+  id: "previous-name-change",
+  title: "Have you ever changed your name before?",
+  fields: [
+    "hasPreviousNameChange",
+    "previousNameFrom",
+    "previousNameTo",
+    "previousNameReason",
+  ],
+  isFieldVisible: (fieldName, data) => {
+    // Previous name details only visible if hasPreviousNameChange is true
+    if (
+      fieldName === "previousNameFrom" ||
+      fieldName === "previousNameTo" ||
+      fieldName === "previousNameReason"
+    ) {
+      return data.hasPreviousNameChange === true;
+    }
+    return true;
+  },
+  component: ({ stepConfig, form }) => (
+    <FormStep stepConfig={stepConfig}>
       <YesNoField
         name="hasPreviousNameChange"
         label="Have you ever changed your name before?"
@@ -25,5 +42,5 @@ export function PreviousNameChangeStep() {
         <LongTextField name="previousNameReason" label="Reason for change" />
       </FormSubsection>
     </FormStep>
-  );
-}
+  ),
+};

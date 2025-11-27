@@ -55,7 +55,7 @@ export function PhoneField({
             type="tel"
             autoComplete="tel"
             className="phone-number-input"
-            size={16}
+            size={18}
             onChange={(value) => {
               const transformedValue = maskitoTransform(value, maskitoOptions);
               field.onChange(transformedValue);

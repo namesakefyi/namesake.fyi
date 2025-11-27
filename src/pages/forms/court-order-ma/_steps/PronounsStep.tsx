@@ -1,13 +1,21 @@
-import { useFormContext } from "react-hook-form";
+import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep, FormSubsection } from "@/components/react/forms/FormStep";
 import { PronounSelectField } from "@/components/react/forms/PronounSelectField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
 
-export function PronounsStep() {
-  const form = useFormContext();
-
-  return (
-    <FormStep title="Do you want to share your pronouns with the court staff?">
+export const pronounsStep: StepConfig = {
+  id: "pronouns",
+  title: "Do you want to share your pronouns with the court staff?",
+  fields: ["isOkayToSharePronouns", "pronouns", "otherPronouns"],
+  isFieldVisible: (fieldName, data) => {
+    // pronouns and otherPronouns only visible if isOkayToSharePronouns is true
+    if (fieldName === "pronouns" || fieldName === "otherPronouns") {
+      return data.isOkayToSharePronouns === true;
+    }
+    return true;
+  },
+  component: ({ stepConfig, form }) => (
+    <FormStep stepConfig={stepConfig}>
       <YesNoField
         name="isOkayToSharePronouns"
         label="Share my pronouns with the court staff?"
@@ -17,5 +25,5 @@ export function PronounsStep() {
         <PronounSelectField />
       </FormSubsection>
     </FormStep>
-  );
-}
+  ),
+};

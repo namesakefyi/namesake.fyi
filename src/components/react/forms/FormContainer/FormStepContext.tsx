@@ -13,6 +13,8 @@ export interface FormStepContextValue {
   totalSteps: number;
   /** Whether the current step is the review step */
   isReviewStep: boolean;
+  /** Whether the user is in reviewing mode (navigated from review page to edit a field) */
+  isReviewingMode: boolean;
   /** Submit handler for form steps */
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }

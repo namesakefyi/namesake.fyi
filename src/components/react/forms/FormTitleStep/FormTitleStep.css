@@ -38,14 +38,20 @@
   gap: var(--space-xs);
 
   li {
-    display: flex;
-    align-items: center;
-    gap: var(--space-xs);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "icon title" ". description";
+    column-gap: var(--space-xs);
 
     svg {
-      flex-shrink: 0;
+      grid-area: icon;
+      align-self: center;
     }
   }
+}
+
+.form-title-step-info-title {
+  grid-area: title;
 }
 
 .form-title-step-content {
@@ -66,4 +72,12 @@
   .form-title-step-button {
     width: 100%;
   }
+}
+
+.form-title-step-info-description {
+  font-size: var(--step--1);
+  font-weight: var(--weight-medium);
+  padding-block-start: var(--space-2xs);
+  text-wrap: pretty;
+  grid-area: description;
 }

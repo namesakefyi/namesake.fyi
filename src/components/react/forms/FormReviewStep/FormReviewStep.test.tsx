@@ -18,6 +18,7 @@ function TestWrapper({ children }: { children: React.ReactNode }) {
           currentStepIndex: 0,
           totalSteps: 5,
           isReviewStep: true,
+          isReviewingMode: false,
           onSubmit: vi.fn(),
         }}
       >
@@ -29,13 +30,13 @@ function TestWrapper({ children }: { children: React.ReactNode }) {
 
 describe("FormReviewStep", () => {
   it("renders with default title", () => {
-    render(<FormReviewStep />, { wrapper: TestWrapper });
+    render(<FormReviewStep steps={[]} />, { wrapper: TestWrapper });
 
     expect(screen.getByText("Review your information")).toBeInTheDocument();
   });
 
   it("renders with default description", () => {
-    render(<FormReviewStep />, { wrapper: TestWrapper });
+    render(<FormReviewStep steps={[]} />, { wrapper: TestWrapper });
 
     expect(
       screen.getByText(
@@ -45,7 +46,7 @@ describe("FormReviewStep", () => {
   });
 
   it("renders with custom title", () => {
-    render(<FormReviewStep title="Confirm Your Details" />, {
+    render(<FormReviewStep title="Confirm Your Details" steps={[]} />, {
       wrapper: TestWrapper,
     });
 
@@ -55,6 +56,7 @@ describe("FormReviewStep", () => {
   it("renders with custom description", () => {
     render(
       <FormReviewStep
+        steps={[]}
         title="Review"
         description="Please double-check everything."
       />,
@@ -67,9 +69,12 @@ describe("FormReviewStep", () => {
   });
 
   it("does not render description when not provided", () => {
-    render(<FormReviewStep title="Review" description={undefined} />, {
-      wrapper: TestWrapper,
-    });
+    render(
+      <FormReviewStep title="Review" description={undefined} steps={[]} />,
+      {
+        wrapper: TestWrapper,
+      },
+    );
 
     expect(screen.getByText("Review")).toBeInTheDocument();
 
@@ -78,7 +83,7 @@ describe("FormReviewStep", () => {
   });
 
   it("renders submit button", () => {
-    render(<FormReviewStep />, { wrapper: TestWrapper });
+    render(<FormReviewStep steps={[]} />, { wrapper: TestWrapper });
 
     const button = screen.getByRole("button", {
       name: /finish and download/i,
@@ -87,27 +92,8 @@ describe("FormReviewStep", () => {
     expect(button).toHaveAttribute("type", "submit");
   });
 
-  it("renders children when provided", () => {
-    const children = (
-      <div>
-        <h3>Personal Information</h3>
-        <p>Name: John Doe</p>
-      </div>
-    );
-
-    render(<FormReviewStep>{children}</FormReviewStep>, {
-      wrapper: TestWrapper,
-    });
-
-    expect(screen.getByText("Personal Information")).toBeInTheDocument();
-    expect(screen.getByText("Name: John Doe")).toBeInTheDocument();
-    expect(
-      screen.queryByText("Form review placeholder"),
-    ).not.toBeInTheDocument();
-  });
-
   it("renders submit button with icon", () => {
-    render(<FormReviewStep />, {
+    render(<FormReviewStep steps={[]} />, {
       wrapper: TestWrapper,
     });
 
@@ -137,10 +123,11 @@ describe("FormReviewStep", () => {
               currentStepIndex: 0,
               totalSteps: 5,
               isReviewStep: true,
+              isReviewingMode: false,
               onSubmit: handleSubmit,
             }}
           >
-            <FormReviewStep />
+            <FormReviewStep steps={[]} />
           </FormStepContext.Provider>
         </FormProvider>
       );

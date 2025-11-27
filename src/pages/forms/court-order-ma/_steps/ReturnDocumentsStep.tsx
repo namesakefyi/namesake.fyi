@@ -1,13 +1,14 @@
-import { useFormContext } from "react-hook-form";
 import { Banner } from "@/components/react/common/Banner";
+import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep } from "@/components/react/forms/FormStep";
 import { YesNoField } from "@/components/react/forms/YesNoField";
 
-export function ReturnDocumentsStep() {
-  const form = useFormContext();
-
-  return (
-    <FormStep title="Do you want your original documents returned afterwards?">
+export const returnDocumentsStep: StepConfig = {
+  id: "return-documents",
+  title: "Do you want your original documents returned afterwards?",
+  fields: ["shouldReturnOriginalDocuments"],
+  component: ({ stepConfig, form }) => (
+    <FormStep stepConfig={stepConfig}>
       <YesNoField
         name="shouldReturnOriginalDocuments"
         label="Return original documents?"
@@ -22,5 +23,5 @@ export function ReturnDocumentsStep() {
         </Banner>
       )}
     </FormStep>
-  );
-}
+  ),
+};

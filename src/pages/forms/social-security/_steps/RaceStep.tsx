@@ -1,13 +1,15 @@
 import { Banner } from "@/components/react/common/Banner";
 import { CheckboxGroupField } from "@/components/react/forms/CheckboxGroupField";
+import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep } from "@/components/react/forms/FormStep";
 
-export function RaceStep() {
-  return (
-    <FormStep
-      title="What is your race?"
-      description="This response is optional and does not affect your application."
-    >
+export const raceStep: StepConfig = {
+  id: "race",
+  title: "What is your race?",
+  description: "This response is optional.",
+  fields: ["race"],
+  component: ({ stepConfig }) => (
+    <FormStep stepConfig={stepConfig}>
       <CheckboxGroupField
         name="race"
         label="Race"
@@ -48,5 +50,5 @@ export function RaceStep() {
         research and statistical purposes.
       </Banner>
     </FormStep>
-  );
-}
+  ),
+};
