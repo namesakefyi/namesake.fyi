@@ -25,7 +25,6 @@ export function LanguageSelectField({
         control={control}
         name={name}
         defaultValue={defaultValue ?? null}
-        shouldUnregister={true}
         render={({ field, fieldState: { invalid, error } }) => (
           <ComboBox
             {...field}

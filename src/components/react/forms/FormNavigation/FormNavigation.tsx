@@ -1,11 +1,12 @@
 import { RiArrowLeftLine, RiArrowRightLine } from "@remixicon/react";
+import { memo } from "react";
 import { useFormStep } from "@/components/react/forms/FormContainer";
 import { Button } from "../../common/Button";
 import { ProgressBar } from "../../common/ProgressBar";
 import "./FormNavigation.css";
 import { Fragment } from "react/jsx-runtime";
 
-export function FormNavigation() {
+export const FormNavigation = memo(function FormNavigation() {
   const {
     formTitle,
     currentStepIndex,
@@ -50,4 +51,4 @@ export function FormNavigation() {
       </div>
     </nav>
   );
-}
+});

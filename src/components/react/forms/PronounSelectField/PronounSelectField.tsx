@@ -16,7 +16,6 @@ export function PronounSelectField() {
       <Controller
         control={control}
         name="pronouns"
-        shouldUnregister={true}
         render={({ field, fieldState: { error } }) => (
           <TagGroup
             {...field}
@@ -43,7 +42,6 @@ export function PronounSelectField() {
           control={control}
           defaultValue=""
           name="otherPronouns"
-          shouldUnregister={true}
           render={({ field, fieldState: { invalid, error } }) => (
             <TextField
               {...field}

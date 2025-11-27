@@ -2,12 +2,29 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { FormProvider, useForm } from "react-hook-form";
 import { describe, expect, it, vi } from "vitest";
+import { FormStepContext } from "../FormContainer/FormStepContext";
 import { FormReviewStep } from "./FormReviewStep";
 
-// Test wrapper that provides form context
+// Test wrapper that provides form context and FormStepContext
 function TestWrapper({ children }: { children: React.ReactNode }) {
   const form = useForm();
-  return <FormProvider {...form}>{children}</FormProvider>;
+  return (
+    <FormProvider {...form}>
+      <FormStepContext.Provider
+        value={{
+          onNext: vi.fn(),
+          onBack: vi.fn(),
+          formTitle: "Test Form",
+          currentStepIndex: 0,
+          totalSteps: 5,
+          isReviewStep: true,
+          onSubmit: vi.fn(),
+        }}
+      >
+        {children}
+      </FormStepContext.Provider>
+    </FormProvider>
+  );
 }
 
 describe("FormReviewStep", () => {
@@ -112,9 +129,19 @@ describe("FormReviewStep", () => {
       const form = useForm();
       return (
         <FormProvider {...form}>
-          <form onSubmit={handleSubmit}>
+          <FormStepContext.Provider
+            value={{
+              onNext: vi.fn(),
+              onBack: vi.fn(),
+              formTitle: "Test Form",
+              currentStepIndex: 0,
+              totalSteps: 5,
+              isReviewStep: true,
+              onSubmit: handleSubmit,
+            }}
+          >
             <FormReviewStep />
-          </form>
+          </FormStepContext.Provider>
         </FormProvider>
       );
     }

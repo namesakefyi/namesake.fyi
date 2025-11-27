@@ -40,13 +40,19 @@ export function FormStep({
 }: FormStepProps) {
   const titleId = slugify(title);
   const descriptionId = useId();
-  const { onNext } = useFormStep();
+  const { onSubmit } = useFormStep();
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onSubmit(e);
+  };
 
   return (
-    <section
+    <form
       className={clsx("form-step", className)}
       aria-labelledby={titleId}
       aria-describedby={description ? descriptionId : undefined}
+      onSubmit={handleSubmit}
     >
       <header>
         <Heading className="form-step-title" id={titleId}>
@@ -60,14 +66,14 @@ export function FormStep({
       </header>
       <div className="form-step-content">{children}</div>
       <Button
-        onPress={onNext}
+        type="submit"
         variant="primary"
         endIcon={RiArrowRightLine}
         className="form-step-button"
       >
         Continue
       </Button>
-    </section>
+    </form>
   );
 }
 

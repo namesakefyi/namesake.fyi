@@ -1,4 +1,5 @@
 import { FormStep } from "@/components/react/forms/FormStep";
+import { NameField } from "@/components/react/forms/NameField";
 
 export function NewNameStep() {
   return (
@@ -6,8 +7,7 @@ export function NewNameStep() {
       title="What is your new name?"
       description="This is the name you're making official! Type it exactly as you want it to appear."
     >
-      {/* TODO: Add NameField components here */}
-      <p>Form fields will go here...</p>
+      <NameField type="newName" />
     </FormStep>
   );
 }

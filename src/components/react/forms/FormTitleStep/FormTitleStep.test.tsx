@@ -17,6 +17,7 @@ function TestWrapper({ children }: { children: ReactNode }) {
         currentStepIndex: 0, // Title step
         totalSteps: 5, // 5 actual steps
         isReviewStep: false,
+        onSubmit: vi.fn(),
       }}
     >
       {children}

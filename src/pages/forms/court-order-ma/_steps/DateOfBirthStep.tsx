@@ -1,10 +1,10 @@
 import { FormStep } from "@/components/react/forms/FormStep";
+import { MemorableDateField } from "@/components/react/forms/MemorableDateField";
 
 export function DateOfBirthStep() {
   return (
     <FormStep title="What is your date of birth?">
-      {/* TODO: Add MemorableDateField component here */}
-      <p>Form fields will go here...</p>
+      <MemorableDateField name="dateOfBirth" label="Date of birth" />
     </FormStep>
   );
 }

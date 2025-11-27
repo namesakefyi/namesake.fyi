@@ -2,6 +2,12 @@
   color: var(--text-color);
   display: flex;
   flex-direction: column;
+
+  [slot="description"] {
+    display: block;
+    margin-top: var(--space-2xs);
+    font-size: var(--step--1);
+  }
 }
 
 .react-aria-DateInput {
@@ -60,12 +66,6 @@
   .react-aria-FieldError {
     font-size: var(--step--1);
     color: var(--invalid-color);
-  }
-
-  [slot="description"] {
-    display: block;
-    margin-top: var(--space-2xs);
-    font-size: var(--step--2);
   }
 
   &[data-disabled] {

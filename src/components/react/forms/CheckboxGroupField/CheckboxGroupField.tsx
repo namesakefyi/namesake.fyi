@@ -49,7 +49,6 @@ export function CheckboxGroupField({
         control={control}
         name={name}
         defaultValue={[]}
-        shouldUnregister={true}
         render={({ field, fieldState: { error, invalid } }) => {
           const currentValue = field.value || [];
           const isPreferNotToAnswerChecked =

@@ -13,6 +13,8 @@ export interface FormStepContextValue {
   totalSteps: number;
   /** Whether the current step is the review step */
   isReviewStep: boolean;
+  /** Submit handler for form steps */
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 export const FormStepContext = createContext<FormStepContextValue | null>(null);

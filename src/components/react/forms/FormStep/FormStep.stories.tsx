@@ -17,6 +17,10 @@ const meta: Meta<typeof FormStep> = {
           currentStepIndex: 2, // Step 2 of actual steps
           totalSteps: 5, // 5 actual steps
           isReviewStep: false,
+          onSubmit: (e) => {
+            e.preventDefault();
+            console.log("Submit clicked");
+          },
         }}
       >
         <Story />

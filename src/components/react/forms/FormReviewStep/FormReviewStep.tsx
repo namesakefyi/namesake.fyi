@@ -2,6 +2,7 @@ import { Heading } from "react-aria-components";
 import { Button } from "../../common/Button";
 import "./FormReviewStep.css";
 import { RiDownloadLine } from "@remixicon/react";
+import { useFormStep } from "../FormContainer/FormStepContext";
 
 export interface FormReviewStepProps {
   /**
@@ -26,8 +27,15 @@ export function FormReviewStep({
   description = "Please review your answers before submitting. Once submitted, completed forms will download automatically.",
   children,
 }: FormReviewStepProps) {
+  const { onSubmit } = useFormStep();
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onSubmit(e);
+  };
+
   return (
-    <div className="form-review-step">
+    <form className="form-review-step" onSubmit={handleSubmit}>
       <header className="form-review-step-header">
         <Heading className="form-review-step-title">{title}</Heading>
         {description && (
@@ -50,6 +58,6 @@ export function FormReviewStep({
       >
         Finish and Download Forms
       </Button>
-    </div>
+    </form>
   );
 }

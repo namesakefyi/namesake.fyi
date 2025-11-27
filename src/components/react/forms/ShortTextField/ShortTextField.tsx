@@ -28,7 +28,6 @@ export function ShortTextField({
         control={control}
         name={name}
         defaultValue={defaultValue ?? ""}
-        shouldUnregister={true}
         render={({ field, fieldState: { invalid, error } }) => (
           <TextField
             {...field}
