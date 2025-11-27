@@ -57,16 +57,19 @@ export function NameField({ children, type }: NameFieldProps) {
           label="First name"
           name={names[type].first}
           autoComplete="given-name"
+          size={24}
         />
         <ShortTextField
           label="Middle name"
           name={names[type].middle}
           autoComplete="additional-name"
+          size={24}
         />
         <ShortTextField
           label="Last or family name"
           name={names[type].last}
           autoComplete="family-name"
+          size={24}
         />
       </div>
       {children}

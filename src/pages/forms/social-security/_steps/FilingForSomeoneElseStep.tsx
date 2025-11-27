@@ -32,6 +32,7 @@ export function FilingForSomeoneElseStep() {
             <ShortTextField
               name="relationshipToFilingForOther"
               label="Specify relationship"
+              size={34}
             />
           )}
         </FormSubsection>

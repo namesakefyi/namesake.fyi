@@ -83,6 +83,7 @@ export function AddressField({
             autoComplete="street-address"
             className="namesake-address-field-street"
             maxLength={40}
+            size={30}
             isInvalid={invalid}
             errorMessage={error?.message}
           />
@@ -98,6 +99,7 @@ export function AddressField({
             label="City"
             autoComplete="address-level2"
             maxLength={40}
+            size={30}
             isInvalid={invalid}
             errorMessage={error?.message}
           />
@@ -170,6 +172,7 @@ export function AddressField({
               field.onChange(transformedValue);
             }}
             maxLength={10}
+            size={13}
             isInvalid={invalid}
             errorMessage={error?.message}
           />

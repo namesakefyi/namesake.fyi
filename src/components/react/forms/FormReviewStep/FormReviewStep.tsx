@@ -56,7 +56,7 @@ export function FormReviewStep({
         size="large"
         className="form-review-step-button"
       >
-        Finish and Download Forms
+        Finish and Download
       </Button>
     </form>
   );
