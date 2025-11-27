@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { resolveVisibleFields } from "@/components/react/forms/FormContainer/resolveVisibleFields";
 import type { FormData } from "@/constants/fields";
-import { formatFieldValue, getFieldLabel } from "./fieldFormatters";
+import { formatFieldValue, getFieldLabel } from "@/utils/formatReviewFields";
 import "./FormReviewTable.css";
 import { smartquotes } from "@/utils/smartquotes";
 

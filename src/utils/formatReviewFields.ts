@@ -1,3 +1,4 @@
+import { parseDate } from "@internationalized/date";
 import { FIELD_DEFS, type FieldName } from "@/constants/fields";
 
 /**
@@ -9,21 +10,26 @@ export function formatFieldValue(
   fieldName: FieldName,
   value: any,
 ): string | undefined {
-  // Handle empty values - return undefined to trigger warning display
-  if (value === null || value === undefined || value === "") {
-    return undefined;
-  }
-
   // Get the field definition to determine the type
   const fieldDef = FIELD_DEFS.find((def) => def.name === fieldName);
   if (!fieldDef) {
     return String(value);
   }
 
+  // Handle empty values - return undefined to trigger warning display
+  // Exception: boolean fields treat undefined/null as false (unchecked checkbox)
+  if (
+    fieldDef.type !== "boolean" &&
+    (value === null || value === undefined || value === "")
+  ) {
+    return undefined;
+  }
+
   // Format based on type
   switch (fieldDef.type) {
     case "boolean":
-      return value === true ? "Yes" : value === false ? "No" : undefined;
+      // Treat undefined/null as false for boolean fields (single checkboxes default to unchecked)
+      return value === true ? "Yes" : "No";
 
     case "string[]":
       if (Array.isArray(value)) {
@@ -47,33 +53,24 @@ export function formatFieldValue(
   }
 }
 
-/**
- * Formats a phone number for display
- */
 function formatPhoneNumber(phone: string): string | undefined {
   if (!phone) return undefined;
   // Phone is already formatted by the mask, just return as-is
   return phone;
 }
 
-/**
- * Formats a date for display
- */
 function formatDate(date: string): string | undefined {
   if (!date) return undefined;
-  // Assuming date is in ISO format or similar, format it nicely
   try {
-    const dateObj = new Date(date);
-    if (Number.isNaN(dateObj.getTime())) {
-      return date; // Return as-is if not a valid date
-    }
-    return dateObj.toLocaleDateString("en-US", {
+    const calendarDate = parseDate(date);
+    return calendarDate.toDate("UTC").toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
       day: "numeric",
+      timeZone: "UTC",
     });
   } catch {
-    return date;
+    return date; // Return as-is if parsing fails
   }
 }
 
