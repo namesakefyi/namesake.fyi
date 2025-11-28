@@ -12,6 +12,12 @@ import { smartquotes } from "@/utils/smartquotes";
 import { Button } from "../../common/Button";
 import { useFormStep } from "../FormContainer/FormStepContext";
 import "./FormTitleStep.css";
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(localizedFormat);
 
 function FormTitleStepInfo({ children }: { children: React.ReactNode }) {
   return <ul className="form-title-step-info">{children}</ul>;
@@ -51,9 +57,18 @@ export interface FormTitleStepProps {
    * Handler for when the user clicks the start button.
    */
   onStart: () => void;
+
+  /**
+   * The date the form was last updated.
+   */
+  updatedAt: string;
 }
 
-export function FormTitleStep({ children, onStart }: FormTitleStepProps) {
+export function FormTitleStep({
+  children,
+  onStart,
+  updatedAt,
+}: FormTitleStepProps) {
   const { formTitle, formDescription, totalSteps } = useFormStep();
   const timeEstimate = formatTimeEstimate(totalSteps);
 
@@ -101,6 +116,15 @@ export function FormTitleStep({ children, onStart }: FormTitleStepProps) {
           Start
         </Button>
       </footer>
+      {updatedAt && (
+        <div className="form-title-step-date-updated">
+          Form last revised on{" "}
+          <time dateTime={updatedAt}>
+            {dayjs.utc(updatedAt).local().format("LL [at] LT")}
+          </time>
+          .
+        </div>
+      )}
     </section>
   );
 }

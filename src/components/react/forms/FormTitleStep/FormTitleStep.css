@@ -81,3 +81,11 @@
   text-wrap: pretty;
   grid-area: description;
 }
+
+.form-title-step-date-updated {
+  width: 100%;
+  border-top: 1px solid var(--border-color);
+  padding-block: var(--space-s);
+  font-size: var(--step--1);
+  text-wrap: pretty;
+}

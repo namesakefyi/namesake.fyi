@@ -21,6 +21,9 @@ export function AddressField({
   includeCounty = false,
 }: AddressFieldProps) {
   const { control, watch } = useFormContext();
+  const [usaStatesWithCounties, setUsaStatesWithCounties] = useState<
+    typeof import("typed-usa-states/dist/states-with-counties") | null
+  >(null);
   const [counties, setCounties] = useState<string[]>([]);
 
   const names: Record<
@@ -52,18 +55,32 @@ export function AddressField({
   const selectedState = watch(names[type].state);
 
   useEffect(() => {
+    if (includeCounty) {
+      import("typed-usa-states/dist/states-with-counties")
+        .then((module) => {
+          setUsaStatesWithCounties(module);
+        })
+        .catch(() => {
+          setUsaStatesWithCounties(null);
+        });
+    }
+  });
+
+  useEffect(() => {
     if (!includeCounty || !selectedState) {
       setCounties([]);
       return;
     }
 
-    // TODO: Add API call to get counties for the selected state
-
-    // const state = usaStatesWithCounties.find(
-    //   (state) => state.abbreviation === selectedState,
-    // );
-    // setCounties(state?.counties ?? []);
-  }, [includeCounty, selectedState]);
+    if (usaStatesWithCounties) {
+      const state = usaStatesWithCounties.usaStatesWithCounties.find(
+        (state) => state.abbreviation === selectedState,
+      );
+      if (state) {
+        setCounties(state.counties ?? []);
+      }
+    }
+  }, [includeCounty, selectedState, usaStatesWithCounties]);
 
   // Input mask: enforce ZIP code format of 12345-1234
   const maskitoOptions: MaskitoOptions = {

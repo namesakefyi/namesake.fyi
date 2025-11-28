@@ -48,54 +48,49 @@ type FormData = {
 export function SocialSecurityForm({
   title,
   description,
+  updatedAt,
 }: {
   title: string;
   description: string;
+  updatedAt: string;
 }) {
   const { onSubmit, ...form } = useForm<FormData>(FORM_FIELDS);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    try {
-      const pdfs = await loadPdfs([
-        { pdfId: "ss5-application-for-social-security-card" },
-      ]);
+    const pdfs = await loadPdfs([
+      { pdfId: "ss5-application-for-social-security-card" },
+    ]);
 
-      // Get only the visible fields based on conditional logic
-      const visibleData = resolveVisibleFields(STEPS, form.getValues());
+    // Get only the visible fields based on conditional logic
+    const visibleData = resolveVisibleFields(STEPS, form.getValues());
 
-      await downloadMergedPdf({
-        title: "Social Security Card",
-        instructions: [
-          "Please review all documents carefully.",
-          "Fill in your social security number—for security, Namesake never asks for this.",
-          "Make an Appointment with a Social Security Administration Office.",
-          "Remember to bring certified copies of your completed court order, along with other required supporting documents.",
-          form.watch("citizenshipStatus") === "legalAlienNotAllowedToWork" ||
-          form.watch("citizenshipStatus") === "other"
-            ? "You must provide a document from a U.S. Federal, State, or local government agency that explains why you need a Social Security number and that you meet all the requirements for the government benefit."
-            : "",
-        ],
-        pdfs,
-        userData: visibleData,
-      });
+    await downloadMergedPdf({
+      title: "Social Security Card",
+      instructions: [
+        "Please review all documents carefully.",
+        "Fill in your social security number—for security, Namesake never asks for this.",
+        "Make an Appointment with a Social Security Administration Office.",
+        "Remember to bring certified copies of your completed court order, along with other required supporting documents.",
+        form.watch("citizenshipStatus") === "legalAlienNotAllowedToWork" ||
+        form.watch("citizenshipStatus") === "other"
+          ? "You must provide a document from a U.S. Federal, State, or local government agency that explains why you need a Social Security number and that you meet all the requirements for the government benefit."
+          : "",
+      ],
+      pdfs,
+      userData: visibleData,
+    });
 
-      // Save form to user documents
-      // await saveDocuments({ pdfIds: pdfs.map((pdf) => pdf.id) });
-
-      // Save encrypted responses
-      await onSubmit();
-    } catch (_error) {
-      // TODO: Error handling
-      console.error(_error);
-    }
+    // Save encrypted responses
+    await onSubmit();
   };
 
   return (
     <FormContainer
       title={title}
       description={description}
+      updatedAt={updatedAt}
       steps={STEPS}
       form={form}
       onSubmit={handleSubmit}
