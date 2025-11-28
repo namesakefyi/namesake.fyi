@@ -62,6 +62,11 @@ export const FIELD_DEFS = [
     label: "Other names or aliases",
     type: "string",
   },
+  {
+    name: "hasOtherLegalNames",
+    label: "Has other legal names?",
+    type: "boolean",
+  },
   { name: "previousLegalNames", label: "Previous legal names", type: "string" },
   {
     name: "isInterpreterNeeded",

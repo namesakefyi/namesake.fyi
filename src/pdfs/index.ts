@@ -1,7 +1,7 @@
 import type { PDFDefinition, PDFId } from "@/constants/forms";
 
 export async function getPdfDefinition(pdfId: PDFId) {
-  const pdfModules = import.meta.glob("/src/forms/*/!(*.test|utils).ts", {
+  const pdfModules = import.meta.glob("/src/pdfs/*/!(*.test|utils).ts", {
     import: "default",
   });
 

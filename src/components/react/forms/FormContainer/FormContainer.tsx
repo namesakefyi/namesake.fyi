@@ -26,6 +26,9 @@ export interface FormContainerProps {
   /** An optional description to provide more context. */
   description?: string;
 
+  /** The date the form was last updated. */
+  updatedAt: string;
+
   /** Optional child content to display on the title step. */
   children?: React.ReactNode;
 
@@ -35,13 +38,14 @@ export interface FormContainerProps {
   /** The form instance from react-hook-form's useForm hook. */
   form: UseFormReturn<any>;
 
-  /** Submit handler for the final form submission. */
-  onSubmit: React.FormEventHandler<HTMLFormElement>;
+  /** Submit handler for the final form submission. Can be async. */
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void | Promise<void>;
 }
 
 export function FormContainer({
   title,
   description,
+  updatedAt,
   children,
   steps,
   form,
@@ -187,32 +191,36 @@ export function FormContainer({
   }, [navigationIndex, steps, scrollToFormTop]);
 
   const handleFormSubmit = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
+    async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (navigationIndex === steps.length) {
         // On the review step, trigger the actual form submission
-        scrollToFormTop();
-        onSubmit(e);
+        try {
+          await onSubmit(e);
+          // Redirect to success page after successful submission
+          window.location.href = "/forms/done";
+        } catch (error) {
+          // If submission fails, stay on the review page
+          console.error("Form submission failed:", error);
+          // TODO: Show error message to user
+        }
       } else {
         // Otherwise, just go to the next step (which handles scrolling)
         goToNextStep();
         focusStepContent();
       }
     },
-    [
-      navigationIndex,
-      steps.length,
-      scrollToFormTop,
-      onSubmit,
-      goToNextStep,
-      focusStepContent,
-    ],
+    [navigationIndex, steps.length, onSubmit, goToNextStep, focusStepContent],
   );
 
   // Memoize the current step component to prevent unnecessary recreations
   const currentStepComponent = useMemo(() => {
     if (navigationIndex === -1) {
-      return <FormTitleStep onStart={goToNextStep}>{children}</FormTitleStep>;
+      return (
+        <FormTitleStep onStart={goToNextStep} updatedAt={updatedAt}>
+          {children}
+        </FormTitleStep>
+      );
     }
 
     if (navigationIndex === steps.length) {
@@ -226,7 +234,7 @@ export function FormContainer({
     }
 
     return null;
-  }, [navigationIndex, steps, goToNextStep, children, form]);
+  }, [navigationIndex, steps, goToNextStep, children, form, updatedAt]);
 
   // Calculate the current step index for the context (1-based for actual steps, 0 for title/review)
   const currentStepIndex =

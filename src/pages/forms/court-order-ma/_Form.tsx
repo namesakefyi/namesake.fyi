@@ -1,5 +1,8 @@
+import type { FormEvent } from "react";
 import { FormContainer } from "@/components/react/forms/FormContainer";
 import type { FieldType } from "@/constants/fields";
+import { downloadMergedPdf } from "@/pdfs/utils/downloadMergedPdf";
+import { loadPdfs } from "@/pdfs/utils/loadPdfs";
 import { useForm } from "@/utils/useForm";
 import { addressStep } from "./_steps/AddressStep";
 import { birthplaceStep } from "./_steps/BirthplaceStep";
@@ -46,27 +49,55 @@ type FormData = {
 export function MaCourtOrderForm({
   title,
   description,
+  updatedAt,
 }: {
   title: string;
   description: string;
+  updatedAt: string;
 }) {
-  const { onSubmit, ...form } = useForm<FormData>(FORM_FIELDS);
+  const { ...form } = useForm<FormData>(FORM_FIELDS);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Form submitted!");
-    console.log("Form data:", form.getValues());
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-    // Save all form data to IndexedDB
-    await onSubmit();
+    const pdfs = await loadPdfs([
+      { pdfId: "cjp27-petition-to-change-name-of-adult" },
+      { pdfId: "cjp34-cori-and-wms-release-request" },
+      {
+        pdfId: "cjd400-motion-to-waive-publication",
+        include: form.watch("shouldWaivePublicationRequirement") === true,
+      },
+      {
+        pdfId: "cjd400-motion-to-impound-records",
+        include: form.watch("shouldImpoundCourtRecords") === true,
+      },
+      {
+        pdfId: "affidavit-of-indigency",
+        include: form.watch("shouldApplyForFeeWaiver") === true,
+      },
+    ]);
 
-    // TODO: Generate and download PDFs
+    await downloadMergedPdf({
+      title: "Massachusetts Court Order",
+      instructions: [
+        "Do not sign the Petition to Change Name (CJP 27) until in the presence of a notary.",
+        "Review all documents carefully.",
+        "File with the Probate and Family Court in your county.",
+        form.watch("shouldApplyForFeeWaiver") === true
+          ? "Complete the Affidavit of Indigency on your own."
+          : "To pay for filing, bring a credit or debit card, a check made payable to the Commonwealth of Massachusetts, or exact cash.",
+        "Remember to bring all supporting documents to the court.",
+      ],
+      pdfs,
+      userData: form.getValues(),
+    });
   };
 
   return (
     <FormContainer
       title={title}
       description={description}
+      updatedAt={updatedAt}
       steps={STEPS}
       form={form}
       onSubmit={handleSubmit}

@@ -8,9 +8,13 @@ export const pronounsStep: StepConfig = {
   title: "Do you want to share your pronouns with the court staff?",
   fields: ["isOkayToSharePronouns", "pronouns", "otherPronouns"],
   isFieldVisible: (fieldName, data) => {
-    // pronouns and otherPronouns only visible if isOkayToSharePronouns is true
-    if (fieldName === "pronouns" || fieldName === "otherPronouns") {
+    // pronouns only visible if isOkayToSharePronouns is true
+    if (fieldName === "pronouns") {
       return data.isOkayToSharePronouns === true;
+    }
+    // otherPronouns only visible if pronouns includes "other pronouns"
+    if (fieldName === "otherPronouns") {
+      return data.pronouns?.includes("other") === true;
     }
     return true;
   },

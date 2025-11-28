@@ -29,6 +29,7 @@ function TestWrapper({ children }: { children: ReactNode }) {
 describe("FormTitleStep", () => {
   const formTitleStep = {
     onStart: vi.fn(),
+    updatedAt: "2025-01-01",
   };
 
   it("renders title", () => {

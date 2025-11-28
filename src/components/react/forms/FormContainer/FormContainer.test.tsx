@@ -9,6 +9,7 @@ const FormContainerWithForm = () => {
     <FormContainer
       title="Test Title"
       description="Test Description"
+      updatedAt="2025-01-01"
       form={form}
       onSubmit={() => {}}
       steps={[]}
