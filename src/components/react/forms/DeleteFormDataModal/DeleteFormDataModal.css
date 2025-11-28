@@ -1,0 +1,19 @@
+.delete-form-data-modal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+}
+
+.delete-form-data-modal-description {
+  margin: 0;
+  font-size: var(--step-0);
+  line-height: var(--line-height-body);
+  color: var(--text-color-secondary);
+}
+
+.delete-form-data-modal-actions {
+  display: flex;
+  gap: var(--space-s);
+  justify-content: flex-end;
+  margin-top: var(--space-s);
+}

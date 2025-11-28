@@ -1,13 +1,18 @@
 ---
+import { DeleteFormDataModal } from "@/components/react/forms/DeleteFormDataModal";
 import ProseLayout from "@/layouts/ProseLayout.astro";
 ---
 
 <ProseLayout
-  title="Form downloaded!"
+  title="Check your downloads"
   description="Your name change packet has downloaded. Review, print, and follow steps for filing."
   color="green"
   annotation="underline"
 >
-  Questions about filing? <a href="https://namesake.fyi/chat">Chat on Discord</a
-  > or <a href="mailto:hey@namesake.fyi">email us</a> for help.
+  <p>
+    Questions about filing? <a href="https://namesake.fyi/chat"
+      >Chat on Discord</a
+    > or <a href="mailto:hey@namesake.fyi">email us</a> for help.
+  </p>
+  <DeleteFormDataModal client:only="react" />
 </ProseLayout>
