@@ -31,7 +31,7 @@
   border: 2px solid var(--border-color);
   outline: none;
   width: max-content;
-  max-width: 300px;
+  max-width: 480px;
 
   &[data-entering] {
     animation: modal-zoom 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
