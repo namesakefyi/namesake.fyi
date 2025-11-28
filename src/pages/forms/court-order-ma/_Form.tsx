@@ -1,5 +1,8 @@
 import type { FormEvent } from "react";
-import { FormContainer } from "@/components/react/forms/FormContainer";
+import {
+  FormContainer,
+  resolveVisibleFields,
+} from "@/components/react/forms/FormContainer";
 import type { FieldType } from "@/constants/fields";
 import { downloadMergedPdf } from "@/pdfs/utils/downloadMergedPdf";
 import { loadPdfs } from "@/pdfs/utils/loadPdfs";
@@ -77,6 +80,8 @@ export function MaCourtOrderForm({
       },
     ]);
 
+    const visibleData = resolveVisibleFields(STEPS, form.getValues());
+
     await downloadMergedPdf({
       title: "Massachusetts Court Order",
       instructions: [
@@ -89,7 +94,7 @@ export function MaCourtOrderForm({
         "Remember to bring all supporting documents to the court.",
       ],
       pdfs,
-      userData: form.getValues(),
+      userData: visibleData,
     });
   };
 
