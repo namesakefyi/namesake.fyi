@@ -1,10 +1,10 @@
 import { RiDeleteBin2Line } from "@remixicon/react";
 import { useEffect, useState } from "react";
+import { clearAllFields, getAllFields } from "@/db/database";
 import { Button } from "../../common/Button";
 import { Heading } from "../../common/Content";
 import { Dialog, DialogTrigger } from "../../common/Dialog";
 import { Modal } from "../../common/Modal";
-import { clearAllFields, getAllFields } from "@/db/database";
 import "./DeleteFormDataModal.css";
 import { UAParser } from "ua-parser-js";
 import { Banner } from "../../common/Banner";
