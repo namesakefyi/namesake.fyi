@@ -26,7 +26,7 @@ const DefaultBlock = getDefaultComponent();
 
 {
   isHeading ? (
-    <Heading level={level} slug={slug}>
+    <Heading level={level} slug={slug} {...props}>
       <slot />
     </Heading>
   ) : (

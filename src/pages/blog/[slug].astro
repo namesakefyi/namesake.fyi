@@ -27,7 +27,7 @@ const { data: post } = await loadQuery<SanityDocument>({
         ...,
         _type == "internalLink" => {
           ...,
-          "reference": reference->{_type, "slug": slug.current, title}
+          "reference": @.reference->{_type, slug, title}
         }
       }
     },

@@ -1,6 +1,9 @@
 ---
 import { PortableText as PortableTextInternal } from "astro-portabletext";
-import type { PortableTextProps } from "astro-portabletext/types";
+import type {
+  PortableTextProps,
+  SomePortableTextComponents,
+} from "astro-portabletext/types";
 import Block from "./Block.astro";
 import Blockquote from "./Blockquote.astro";
 import Costs from "./Costs.astro";
@@ -19,14 +22,9 @@ interface Props {
 
 const { value } = Astro.props;
 
-const components = {
+const components: SomePortableTextComponents = {
   text: Text,
   block: Block,
-  marks: {
-    link: ExternalLink,
-    internalLink: InternalLink,
-    strong: Strong,
-  },
   type: {
     blockquote: Blockquote,
     costs: Costs,
@@ -34,6 +32,11 @@ const components = {
     youtube: YouTube,
     image: PortableTextImage,
     break: HorizontalRule,
+  },
+  mark: {
+    link: ExternalLink,
+    internalLink: InternalLink,
+    strong: Strong,
   },
 };
 ---

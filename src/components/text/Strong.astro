@@ -1,9 +1,5 @@
 ---
-export interface Props {
-  children: string;
-}
 
-const { children } = Astro.props;
 ---
 
-<strong>{children}</strong>
+<strong><slot /></strong>
