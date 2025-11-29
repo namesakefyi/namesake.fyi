@@ -21,7 +21,16 @@ const { data: post } = await loadQuery<SanityDocument>({
     showDescription,
     image,
     annotation,
-    content,
+    content[]{
+      ...,
+      markDefs[]{
+        ...,
+        _type == "internalLink" => {
+          ...,
+          "reference": reference->{_type, "slug": slug.current, title}
+        }
+      }
+    },
     "authors": authors[]->{
       _id,
       name,

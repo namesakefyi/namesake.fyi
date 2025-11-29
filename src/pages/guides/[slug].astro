@@ -17,7 +17,19 @@ const { slug } = Astro.params;
 if (!slug) return Astro.redirect("/404");
 
 const { data: guide } = await loadQuery<SanityDocument>({
-  query: `*[_type == "guide" && slug.current == $slug][0]`,
+  query: `*[_type == "guide" && slug.current == $slug][0]{
+    ...,
+    content[]{
+      ...,
+      markDefs[]{
+        ...,
+        _type == "internalLink" => {
+          ...,
+          "reference": reference->{_type, "slug": slug.current, title}
+        }
+      }
+    }
+  }`,
   params: {
     slug,
   },

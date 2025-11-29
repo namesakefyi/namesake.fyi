@@ -13,24 +13,17 @@ export interface Props {
 const { children, value } = Astro.props;
 const { reference } = value;
 
-// Determine the correct URL and title
-let href = "#";
-let title = "";
+const urlPrefixes: Record<string, string> = {
+  post: "/blog",
+  page: "",
+  guide: "/guides",
+  form: "/forms",
+};
 
-if (!reference) {
-  // Handle broken links gracefully
-  href = "#";
-  title = "Broken link";
-} else {
-  // Determine the correct URL based on the document type
-  if (reference._type === "post") {
-    href = `/blog/${reference.slug}`;
-  } else if (reference._type === "page") {
-    href = `/${reference.slug}`;
-  }
-
-  title = reference.title || "";
-}
+const href = reference
+  ? `${urlPrefixes[reference._type] ?? ""}/${reference.slug}`
+  : "#";
+const title = reference?.title || (reference ? "" : "Broken link");
 ---
 
 <a href={href} title={title}>{children}</a>
