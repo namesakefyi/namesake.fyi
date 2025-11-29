@@ -16,7 +16,16 @@ const { data: page } = await loadQuery<SanityDocument>({
     title,
     slug,
     description,
-    content,
+    content[]{
+      ...,
+      markDefs[]{
+        ...,
+        _type == "internalLink" => {
+          ...,
+          "reference": @.reference->{_type, slug, title}
+        }
+      }
+    },
     ogImage,
     annotation,
     color

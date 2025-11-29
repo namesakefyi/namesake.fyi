@@ -1,36 +1,40 @@
 ---
-export interface Props {
-  children: string;
-  value: {
-    reference: {
-      _type: string;
-      slug: string;
-      title: string;
-    };
-  };
+import { sanityClient } from "sanity:client";
+
+const { node } = Astro.props;
+const { markDef } = node;
+
+// Check if reference is already resolved (from page query)
+let destination =
+  markDef.reference &&
+  typeof markDef.reference === "object" &&
+  "_type" in markDef.reference
+    ? markDef.reference
+    : null;
+
+// If not resolved, fetch it
+if (!destination) {
+  const ref = markDef.reference?._ref || markDef._ref;
+  console.log("Fetching ref:", ref);
+
+  destination =
+    ref &&
+    (await sanityClient.fetch("*[_id == $ref]{_type, slug, title}[0]", {
+      ref: ref,
+    }));
 }
 
-const { children, value } = Astro.props;
-const { reference } = value;
+const urlPrefixes: Record<string, string> = {
+  post: "/blog",
+  page: "",
+  guide: "/guides",
+  form: "/forms",
+};
 
-// Determine the correct URL and title
-let href = "#";
-let title = "";
-
-if (!reference) {
-  // Handle broken links gracefully
-  href = "#";
-  title = "Broken link";
-} else {
-  // Determine the correct URL based on the document type
-  if (reference._type === "post") {
-    href = `/blog/${reference.slug}`;
-  } else if (reference._type === "page") {
-    href = `/${reference.slug}`;
-  }
-
-  title = reference.title || "";
-}
+const href = destination
+  ? `${urlPrefixes[destination._type] ?? ""}/${destination.slug.current}`
+  : "#";
+const title = destination?.title || (destination ? "" : "Broken link");
 ---
 
-<a href={href} title={title}>{children}</a>
+<a href={href} title={title}><slot /></a>
