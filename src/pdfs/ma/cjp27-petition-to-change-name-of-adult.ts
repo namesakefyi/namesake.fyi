@@ -7,7 +7,7 @@ import pdf from "./cjp27-petition-to-change-name-of-adult.pdf";
 export default definePdf({
   id: "cjp27-petition-to-change-name-of-adult",
   title: "Petition to Change Name of Adult",
-  code: "CJP 27",
+  code: "CJP-27",
   jurisdiction: "MA",
   pdfPath: pdf,
   fields: (data) => ({

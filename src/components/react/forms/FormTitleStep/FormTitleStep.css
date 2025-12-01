@@ -9,24 +9,31 @@
 .form-title-step-header {
   display: flex;
   flex-direction: column;
-  gap: var(--space-s);
 }
 
 .form-title-step-heading {
   font-size: var(--step-5);
   font-weight: var(--weight-bold);
   color: var(--text-color);
-  text-wrap: pretty;
   line-height: var(--line-height-display);
   letter-spacing: var(--letter-spacing-condensed);
+  display: inline;
+  text-wrap: balance;
+  margin-inline-start: -0.06em;
+
+  @media (width < 700px) {
+    font-size: var(--step-5);
+  }
 }
 
 .form-title-step-description {
-  font-size: var(--step-1);
-  text-wrap: pretty;
+  margin-block-start: var(--space-l);
+  font-size: var(--step-2);
+  line-height: var(--line-height-display);
+  text-wrap: balance;
 }
 
-.form-title-step-info {
+.form-info {
   font-size: var(--step-0);
   color: var(--text-color-secondary);
   font-weight: var(--weight-medium);
@@ -35,29 +42,25 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: var(--space-l);
 
-  li {
+  > li {
     display: grid;
     grid-template-columns: auto 1fr;
     grid-template-areas: "icon title" ". description";
     column-gap: var(--space-xs);
+    row-gap: var(--space-2xs);
 
     svg {
       grid-area: icon;
-      align-self: center;
+      align-self: flex-start;
+      height: 1lh;
     }
   }
 }
 
-.form-title-step-info-title {
+.form-info-title {
   grid-area: title;
-}
-
-.form-title-step-content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-m);
 }
 
 .form-title-step-footer {
@@ -74,12 +77,17 @@
   }
 }
 
-.form-title-step-info-description {
+.form-info-description {
   font-size: var(--step--1);
   font-weight: var(--weight-medium);
-  padding-block-start: var(--space-2xs);
   text-wrap: pretty;
   grid-area: description;
+}
+
+.form-info-pdf-list {
+  list-style-type: disc;
+  padding-inline-start: var(--space-m);
+  margin: 0;
 }
 
 .form-title-step-date-updated {

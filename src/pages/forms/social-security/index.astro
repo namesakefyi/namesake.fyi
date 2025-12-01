@@ -2,6 +2,7 @@
 import type { SanityDocument } from "@sanity/client";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { loadQuery } from "@/sanity/lib/loadQuery";
+import { getFormPdfMetadata } from "@/utils/getFormPdfMetadata";
 import { SocialSecurityForm } from "./_Form";
 
 const { data: form } = await loadQuery<SanityDocument>({
@@ -10,13 +11,16 @@ const { data: form } = await loadQuery<SanityDocument>({
     slug: "social-security",
   },
 });
+
+const pdfs = await getFormPdfMetadata("social-security");
 ---
 
 <BaseLayout title={form.title} description={form.description} color="white">
   <SocialSecurityForm
-    client:only="react"
+    client:load
     title={form.title}
     description={form.description}
     updatedAt={form._updatedAt}
+    pdfs={pdfs}
   />
 </BaseLayout>

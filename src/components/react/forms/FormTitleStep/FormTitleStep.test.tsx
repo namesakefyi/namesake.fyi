@@ -28,6 +28,9 @@ function TestWrapper({ children }: { children: ReactNode }) {
 
 describe("FormTitleStep", () => {
   const formTitleStep = {
+    title: "Test Form",
+    pdfs: [],
+    totalSteps: 5,
     onStart: vi.fn(),
     updatedAt: "2025-01-01",
   };

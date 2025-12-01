@@ -13,9 +13,7 @@ const FormContainerWithForm = () => {
       form={form}
       onSubmit={() => {}}
       steps={[]}
-    >
-      <div>Test Content</div>
-    </FormContainer>
+    />
   );
 };
 
@@ -24,11 +22,6 @@ describe("FormContainer", () => {
     // Mock scrollIntoView and focus for jsdom
     Element.prototype.scrollIntoView = vi.fn();
     HTMLElement.prototype.focus = vi.fn();
-  });
-  it("renders children content on title step", () => {
-    render(<FormContainerWithForm />);
-
-    expect(screen.getByText("Test Content")).toBeInTheDocument();
   });
 
   it("renders title on title step", () => {
