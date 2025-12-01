@@ -13,7 +13,7 @@ export interface StepConfig {
   title: string;
   description?: string;
   fields: readonly FieldName[];
-  isFieldVisible?: (fieldName: FieldName, data: Partial<FormData>) => boolean;
+  isFieldVisible?: (fieldName: FieldName, data: FormData) => boolean;
   component: React.ComponentType<{
     stepConfig: StepConfig;
     form: UseFormReturn<any>;
