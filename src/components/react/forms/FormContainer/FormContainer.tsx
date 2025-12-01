@@ -55,18 +55,11 @@ export function FormContainer({
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Navigation index: -1 = title step, 0 to steps.length-1 = actual steps, steps.length = review
-  const [navigationIndex, setNavigationIndex] = useState(() => {
-    // Start at title step if no hash, otherwise hash handler will set the correct index
-    if (typeof window === "undefined") return -1;
-    return window.location.hash ? 0 : -1;
-  });
+  // Always initialize to -1 for SSR consistency, then sync from hash in useEffect
+  const [navigationIndex, setNavigationIndex] = useState(-1);
 
   // Track reviewing mode state
-  const [isReviewingMode, setIsReviewingMode] = useState(() => {
-    if (typeof window === "undefined") return false;
-    const hash = window.location.hash.slice(1);
-    return hash.includes("?reviewing=true");
-  });
+  const [isReviewingMode, setIsReviewingMode] = useState(false);
 
   const scrollToFormTop = useCallback(() => {
     containerRef.current?.scrollIntoView({ block: "start" });
