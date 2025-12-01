@@ -1,69 +1,63 @@
-import type { FormData } from "./fields";
-import type { Jurisdiction } from "./jurisdictions";
+import type { StepConfig } from "@/components/react/forms/FormContainer";
+import { courtOrderMaConfig } from "@/pages/forms/court-order-ma/config";
+import { socialSecurityConfig } from "@/pages/forms/social-security/config";
+import type { FieldName, FormData } from "./fields";
+import type { PDFId } from "./pdf";
 
-export type PDFFields = Record<string, string | boolean | undefined>;
-
-export const PDF_IDS = [
-  "affidavit-of-indigency",
-  "cjp27-petition-to-change-name-of-adult",
-  "cjp34-cori-and-wms-release-request",
-  "cjd400-motion-to-waive-publication",
-  "cjd400-motion-to-impound-records",
-  "ss5-application-for-social-security-card",
-] as const;
-
-export type PDFId = (typeof PDF_IDS)[number];
-
-export interface PDFDefinition {
-  /**
-   * The unique identifier for the PDF definition.
-   * @example "cjp27-petition-to-change-name-of-adult"
-   * @url https://github.com/namesakefyi/namesake/tree/main/src/forms/README.md
-   */
-  id: PDFId;
-
-  /**
-   * The title of the form. Do not include the form code or state.
-   * @example "Petition to Change Name of Adult"
-   */
-  title: string;
-
-  /**
-   * The form code, if one exists.
-   * @optional
-   * @example "CJP 27"
-   */
-  code?: string;
-
-  /**
-   * The jurisdiction of the form.
-   * @example "MA"
-   */
-  jurisdiction?: Jurisdiction;
-
-  /**
-   * The path to the PDF file, imported as a module.
-   */
-  pdfPath: string;
-
-  /**
-   * A function that transforms the user data into a set of fields for the PDF.
-   *
-   * PDF field names may be in a variety of formats, from camelCase
-   * to snake_case to a "Plain String" label. It's recommended to
-   * rename fields into a consistent format matching our own schema
-   * for ease of readability and testing.
-   *
-   * @url https://github.com/namesakefyi/namesake/tree/main/src/forms/README.md
-   *
-   * @example
-   * ```ts
-   * fields: (data) => ({
-   *   firstNameField: data.newFirstName,
-   *   middle_name_field: data.newMiddleName,
-   *   "Last Name Field": data.newLastName,
-   * })
-   * ```
-   */
-  fields: (data: Partial<FormData>) => PDFFields;
+/**
+ * Configuration for a PDF within a form.
+ */
+export interface FormPdfConfig {
+  /** The PDF identifier */
+  pdfId: PDFId;
+  /** Optional predicate to determine if this PDF should be included based on form data */
+  include?: (data: Partial<FormData>) => boolean;
 }
+
+/**
+ * Function that generates instructions based on form data.
+ */
+export type FormInstructionsFn = (data: Partial<FormData>) => string[];
+
+/**
+ * Complete configuration for a form.
+ */
+export interface FormConfig {
+  /** Form identifier matching the URL slug */
+  slug: string;
+  /** Form steps configuration */
+  steps: readonly StepConfig[];
+  /** Flattened array of all field names from steps */
+  fields: readonly FieldName[];
+  /** PDFs included in this form */
+  pdfs: readonly FormPdfConfig[];
+  /** Title for the downloaded PDF package */
+  downloadTitle: string;
+  /** Static instructions or function that generates instructions from form data */
+  instructions: string[] | FormInstructionsFn;
+}
+
+/**
+ * Registry of all form configurations.
+ */
+export const FORM_CONFIGS = {
+  "court-order-ma": courtOrderMaConfig,
+  "social-security": socialSecurityConfig,
+} as const;
+
+/**
+ * Get a form configuration by slug.
+ */
+export function getFormConfig(slug: string): FormConfig | undefined {
+  return FORM_CONFIGS[slug as FormSlug];
+}
+
+/**
+ * Type representing all valid form slugs.
+ */
+export type FormSlug = keyof typeof FORM_CONFIGS;
+
+/**
+ * Array of all form slugs.
+ */
+export const FORM_SLUGS = Object.keys(FORM_CONFIGS) as FormSlug[];

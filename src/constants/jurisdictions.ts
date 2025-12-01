@@ -68,9 +68,3 @@ export const JURISDICTIONS = usaStates.reduce(
   {} as Record<string, string>,
 );
 export type Jurisdiction = keyof typeof JURISDICTIONS;
-
-export const BIRTHPLACES: Record<Jurisdiction | "other", string> = {
-  ...JURISDICTIONS,
-  other: "Outside the US",
-};
-export type Birthplace = keyof typeof BIRTHPLACES;

@@ -5,7 +5,7 @@ import pdf from "./cjd400-motion-to-waive-publication.pdf";
 export default definePdf({
   id: "cjd400-motion-to-impound-records",
   title: "Motion to Impound Records",
-  code: "CJD 400",
+  code: "CJD-400",
   jurisdiction: "MA",
   pdfPath: pdf,
   fields: (data) => ({

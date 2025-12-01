@@ -1,5 +1,5 @@
 import { definePdf } from "@/pdfs/utils/definePdf";
-import { formatBirthplaceStateOrCountry } from "@/utils/formatBirthplaceStateOrCountry";
+import { formatBirthplaceCountryOrState } from "@/utils/formatBirthplaceCountryOrState";
 import { formatDateMMDDYYYY } from "@/utils/formatDateMMDDYYYY";
 import pdf from "./ss5-application-for-social-security-card.pdf";
 
@@ -22,9 +22,9 @@ export default definePdf({
 
     // Field 3: Birthplace
     birthplaceCity: data.birthplaceCity,
-    birthplaceState: formatBirthplaceStateOrCountry(
-      data.birthplaceState,
+    birthplaceState: formatBirthplaceCountryOrState(
       data.birthplaceCountry,
+      data.birthplaceState,
     ),
 
     // Field 4: Date of Birth

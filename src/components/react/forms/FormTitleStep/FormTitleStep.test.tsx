@@ -28,6 +28,9 @@ function TestWrapper({ children }: { children: ReactNode }) {
 
 describe("FormTitleStep", () => {
   const formTitleStep = {
+    title: "Test Form",
+    pdfs: [],
+    totalSteps: 5,
     onStart: vi.fn(),
     updatedAt: "2025-01-01",
   };
@@ -38,14 +41,6 @@ describe("FormTitleStep", () => {
     const titleElement = screen.getByText("Test Form");
     expect(titleElement).toBeInTheDocument();
     expect(titleElement).toHaveClass("form-title-step-heading");
-  });
-
-  it("renders description", () => {
-    render(<FormTitleStep {...formTitleStep} />, { wrapper: TestWrapper });
-
-    const descriptionElement = screen.getByText("Test Description");
-    expect(descriptionElement).toBeInTheDocument();
-    expect(descriptionElement).toHaveClass("form-title-step-description");
   });
 
   it("renders Start button", () => {
@@ -74,17 +69,6 @@ describe("FormTitleStep", () => {
 
     const timeEstimateElement = screen.getByText(/\d+–\d+ minutes/);
     expect(timeEstimateElement).toBeInTheDocument();
-  });
-
-  it("renders children when provided", () => {
-    const children = <div>Test child content</div>;
-
-    render(<FormTitleStep {...formTitleStep}>{children}</FormTitleStep>, {
-      wrapper: TestWrapper,
-    });
-
-    const childElement = screen.getByText("Test child content");
-    expect(childElement).toBeInTheDocument();
   });
 
   it("does not render children when not provided", () => {
