@@ -1,15 +1,15 @@
 import { COUNTRIES } from "@/constants/countries";
-import { BIRTHPLACES } from "@/constants/jurisdictions";
+import { JURISDICTIONS } from "@/constants/jurisdictions";
 
 export const formatBirthplaceStateOrCountry = (
-  birthplaceState?: string,
   birthplaceCountry?: string,
+  birthplaceState?: string,
 ) => {
-  if (birthplaceState === "other" && birthplaceCountry) {
+  if (birthplaceCountry && birthplaceCountry !== "US") {
     return COUNTRIES[birthplaceCountry];
   }
-  if (birthplaceState && birthplaceState !== "other") {
-    return BIRTHPLACES[birthplaceState];
+  if (birthplaceState) {
+    return JURISDICTIONS[birthplaceState];
   }
   return "";
 };
