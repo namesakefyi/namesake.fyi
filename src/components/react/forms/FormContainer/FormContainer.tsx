@@ -90,7 +90,6 @@ export function FormContainer({
       // If no hash, go to title step
       if (!hash) {
         setNavigationIndex(-1);
-        scrollToFormTop();
         return;
       }
 
@@ -100,7 +99,6 @@ export function FormContainer({
       // Check if it's the review step
       if (stepId === "review") {
         setNavigationIndex(steps.length);
-        scrollToFormTop();
         return;
       }
 
@@ -108,7 +106,6 @@ export function FormContainer({
       const stepIndex = steps.findIndex((step) => step.id === stepId);
       if (stepIndex !== -1) {
         setNavigationIndex(stepIndex);
-        scrollToFormTop();
         focusStepContent();
       }
     };
@@ -118,7 +115,7 @@ export function FormContainer({
 
     window.addEventListener("hashchange", handleHashChange);
     return () => window.removeEventListener("hashchange", handleHashChange);
-  }, [steps, scrollToFormTop, focusStepContent]);
+  }, [steps, focusStepContent]);
 
   // Update hash when navigation changes
   useEffect(() => {
