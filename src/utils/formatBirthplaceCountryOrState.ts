@@ -1,7 +1,7 @@
 import { COUNTRIES } from "@/constants/countries";
 import { JURISDICTIONS } from "@/constants/jurisdictions";
 
-export const formatBirthplaceStateOrCountry = (
+export const formatBirthplaceCountryOrState = (
   birthplaceCountry?: string,
   birthplaceState?: string,
 ) => {

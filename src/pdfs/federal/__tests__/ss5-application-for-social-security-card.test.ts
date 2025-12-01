@@ -231,8 +231,8 @@ describe("SS-5 Application for Social Security Card", () => {
     const dataWithForeignBirthplace = {
       ...testData,
       birthplaceCity: "Toronto",
-      birthplaceState: "other",
       birthplaceCountry: "CA",
+      birthplaceState: undefined,
     };
 
     const form = await getPdfForm({

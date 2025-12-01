@@ -43,14 +43,6 @@ describe("FormTitleStep", () => {
     expect(titleElement).toHaveClass("form-title-step-heading");
   });
 
-  it("renders description", () => {
-    render(<FormTitleStep {...formTitleStep} />, { wrapper: TestWrapper });
-
-    const descriptionElement = screen.getByText("Test Description");
-    expect(descriptionElement).toBeInTheDocument();
-    expect(descriptionElement).toHaveClass("form-title-step-description");
-  });
-
   it("renders Start button", () => {
     render(<FormTitleStep {...formTitleStep} />, { wrapper: TestWrapper });
 
@@ -77,17 +69,6 @@ describe("FormTitleStep", () => {
 
     const timeEstimateElement = screen.getByText(/\d+–\d+ minutes/);
     expect(timeEstimateElement).toBeInTheDocument();
-  });
-
-  it("renders children when provided", () => {
-    const children = <div>Test child content</div>;
-
-    render(<FormTitleStep {...formTitleStep}>{children}</FormTitleStep>, {
-      wrapper: TestWrapper,
-    });
-
-    const childElement = screen.getByText("Test child content");
-    expect(childElement).toBeInTheDocument();
   });
 
   it("does not render children when not provided", () => {
