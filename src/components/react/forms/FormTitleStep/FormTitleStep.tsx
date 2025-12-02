@@ -7,7 +7,7 @@ import {
   RiTimerLine,
 } from "@remixicon/react";
 import { useEffect, useState } from "react";
-import { UAParser } from "ua-parser-js";
+import { UAParser, type IBrowser, type IDevice } from "ua-parser-js";
 import { formatTimeEstimate } from "@/utils/formatTimeEstimate";
 import type { FormPdfMetadata } from "@/utils/getFormPdfMetadata";
 import { smartquotes } from "@/utils/smartquotes";
@@ -16,6 +16,8 @@ import "./FormTitleStep.css";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { Heading } from "../../common/Content/Content";
+import { formatBrowser } from "@/utils/formatBrowser";
+import { formatDevice } from "@/utils/formatDevice";
 
 dayjs.extend(utc);
 
@@ -85,12 +87,14 @@ export function FormTitleStep({
   totalSteps,
   updatedAt,
 }: FormTitleStepProps) {
-  const [userAgent, setUserAgent] = useState<UAParser.IResult | null>(null);
+  const [device, setDevice] = useState<IDevice | null>(null);
+  const [browser, setBrowser] = useState<IBrowser | null>(null);
   const timeEstimate = formatTimeEstimate(totalSteps);
 
   useEffect(() => {
     if (typeof navigator !== "undefined") {
-      setUserAgent(UAParser(navigator.userAgent));
+      setDevice(UAParser(navigator.userAgent).device);
+      setBrowser(UAParser(navigator.userAgent).browser);
     }
   }, []);
 
@@ -140,8 +144,8 @@ export function FormTitleStep({
         <FormInfoItem icon={RiShieldKeyholeLine}>
           <FormInfoItemTitle>
             Responses are securely stored in{" "}
-            <strong>{userAgent?.browser.name ?? "this browser"}</strong> on{" "}
-            <strong>this {userAgent?.device.model ?? "device"}</strong>.
+            <strong>{formatBrowser(browser)}</strong> on{" "}
+            <strong>{formatDevice(device)}</strong>.
           </FormInfoItemTitle>
           <FormInfoItemDescription>
             For security, your information never leaves this device.
