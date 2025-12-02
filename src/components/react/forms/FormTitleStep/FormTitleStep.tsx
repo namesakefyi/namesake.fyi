@@ -1,5 +1,6 @@
 import {
   type RemixiconComponentType,
+  RiArrowLeftLine,
   RiArrowRightLine,
   RiFileCheckLine,
   RiShieldKeyholeLine,
@@ -96,6 +97,9 @@ export function FormTitleStep({
   return (
     <section className="form-title-step">
       <header className="form-title-step-header">
+        <a href="/forms" className="form-title-step-back-link">
+          <RiArrowLeftLine /> All forms
+        </a>
         <Heading className="form-title-step-heading">
           {smartquotes(title)}
         </Heading>

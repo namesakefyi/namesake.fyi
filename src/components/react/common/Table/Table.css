@@ -1,4 +1,4 @@
-.react-aria-Table {
+.namesake-table {
   border: 1px solid var(--border-color);
   background: var(--field-background);
   outline: none;
@@ -18,12 +18,11 @@
     outline-offset: -1px;
   }
 
-  .react-aria-Column {
+  .namesake-table-column {
     .column-header {
       display: flex;
       align-items: center;
       font-weight: bold;
-      font-size: var(--step--1);
     }
 
     .sort-indicator {
@@ -38,27 +37,26 @@
     }
   }
 
-  .react-aria-Column,
-  .react-aria-Cell {
+  .namesake-table-column,
+  .namesake-table-cell {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  .react-aria-TableHeader {
+  .namesake-table-header {
     color: var(--text-color);
 
-    & tr:last-child .react-aria-Column {
+    & tr:last-child .namesake-table-column {
       border-bottom: 1px solid var(--border-color);
       cursor: default;
     }
   }
 
-  .react-aria-Row {
+  .namesake-table-row {
     outline: none;
     cursor: default;
     color: var(--text-color);
-    font-size: var(--step--1);
     position: relative;
     transform: scale(1);
 
@@ -103,8 +101,8 @@
     }
   }
 
-  .react-aria-Cell,
-  .react-aria-Column {
+  .namesake-table-cell,
+  .namesake-table-column {
     padding: var(--space-2xs) var(--space-xs);
     text-align: left;
     outline: none;
@@ -122,7 +120,7 @@
     }
   }
 
-  .react-aria-Cell {
+  .namesake-table-cell {
     transform: translateZ(0);
   }
 
@@ -134,7 +132,6 @@
 .react-aria-TableBody {
   &[data-empty] {
     text-align: center;
-    font-style: italic;
   }
 }
 
@@ -145,7 +142,7 @@
   border: 1px solid var(--border-color);
   background: var(--field-background);
 
-  .react-aria-Table {
+  .namesake-table {
     border: none;
   }
 
@@ -210,13 +207,13 @@
   transform: translateZ(0);
 }
 
-.react-aria-Table[data-drop-target] {
+.namesake-table[data-drop-target] {
   outline: 3px solid var(--highlight-background);
   outline-offset: -1px;
   background: var(--highlight-overlay);
 }
 
-.react-aria-Row[data-drop-target] {
+.namesake-table-row[data-drop-target] {
   outline: 3px solid var(--highlight-background);
   background: var(--highlight-overlay);
 }
@@ -226,7 +223,7 @@
   transform: translateZ(0);
 }
 
-.react-aria-Cell img {
+.namesake-table-cell img {
   height: 30px;
   width: 30px;
   object-fit: cover;
