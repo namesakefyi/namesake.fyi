@@ -2,7 +2,7 @@
   background: var(--background-color);
   display: flex;
   align-items: center;
-  gap: var(--space-l);
+  gap: var(--space-m);
   padding-block: var(--space-m);
   position: sticky;
   top: 0;
@@ -21,7 +21,7 @@
 .form-navigation-buttons {
   display: flex;
   align-items: center;
-  gap: var(--space-s);
+  gap: var(--space-xs);
 }
 
 .form-navigation-button {

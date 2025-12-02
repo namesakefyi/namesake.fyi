@@ -7,7 +7,7 @@ import {
   RiTimerLine,
 } from "@remixicon/react";
 import { useEffect, useState } from "react";
-import { UAParser, type IBrowser, type IDevice } from "ua-parser-js";
+import { type IBrowser, type IDevice, UAParser } from "ua-parser-js";
 import { formatTimeEstimate } from "@/utils/formatTimeEstimate";
 import type { FormPdfMetadata } from "@/utils/getFormPdfMetadata";
 import { smartquotes } from "@/utils/smartquotes";
@@ -15,9 +15,9 @@ import { Button } from "../../common/Button";
 import "./FormTitleStep.css";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { Heading } from "../../common/Content/Content";
 import { formatBrowser } from "@/utils/formatBrowser";
 import { formatDevice } from "@/utils/formatDevice";
+import { Heading } from "../../common/Content/Content";
 
 dayjs.extend(utc);
 

@@ -1,5 +1,4 @@
 import { type MaskitoOptions, maskitoTransform } from "@maskito/core";
-import { useEffect, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { ComboBox, ComboBoxItem } from "@/components/react/common/ComboBox";
 import { TextField } from "@/components/react/common/TextField";
@@ -20,11 +19,7 @@ export function AddressField({
   type,
   includeCounty = false,
 }: AddressFieldProps) {
-  const { control, watch } = useFormContext();
-  const [usaStatesWithCounties, setUsaStatesWithCounties] = useState<
-    typeof import("typed-usa-states/dist/states-with-counties") | null
-  >(null);
-  const [counties, setCounties] = useState<string[]>([]);
+  const { control } = useFormContext();
 
   const names: Record<
     AddressType,
@@ -51,36 +46,6 @@ export function AddressField({
       county: "mailingCounty",
     },
   };
-
-  const selectedState = watch(names[type].state);
-
-  useEffect(() => {
-    if (includeCounty) {
-      import("typed-usa-states/dist/states-with-counties")
-        .then((module) => {
-          setUsaStatesWithCounties(module);
-        })
-        .catch(() => {
-          setUsaStatesWithCounties(null);
-        });
-    }
-  });
-
-  useEffect(() => {
-    if (!includeCounty || !selectedState) {
-      setCounties([]);
-      return;
-    }
-
-    if (usaStatesWithCounties) {
-      const state = usaStatesWithCounties.usaStatesWithCounties.find(
-        (state) => state.abbreviation === selectedState,
-      );
-      if (state) {
-        setCounties(state.counties ?? []);
-      }
-    }
-  }, [includeCounty, selectedState, usaStatesWithCounties]);
 
   // Input mask: enforce ZIP code format of 12345-1234
   const maskitoOptions: MaskitoOptions = {
@@ -148,30 +113,18 @@ export function AddressField({
           </ComboBox>
         )}
       />
-      {includeCounty && counties.length > 0 && (
+      {includeCounty && (
         <Controller
           control={control}
           name={names[type].county}
           defaultValue=""
           render={({ field, fieldState: { invalid, error } }) => (
-            <ComboBox
+            <TextField
               {...field}
               label="County"
-              placeholder="Select county"
-              selectedKey={field.value}
-              onSelectionChange={(key) => {
-                field.onChange(key);
-              }}
               isInvalid={invalid}
               errorMessage={error?.message}
-              menuTrigger="focus"
-            >
-              {counties.map((county) => (
-                <ComboBoxItem key={county} id={county}>
-                  {county}
-                </ComboBoxItem>
-              ))}
-            </ComboBox>
+            />
           )}
         />
       )}

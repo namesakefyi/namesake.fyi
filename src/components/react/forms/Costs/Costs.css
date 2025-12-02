@@ -1,0 +1,37 @@
+.namesake-costs {
+  border: 1px solid var(--border-color);
+  border-spacing: 0;
+  width: 100%;
+  max-width: 400px;
+  margin-block: var(--space-l);
+  table-layout: fixed;
+
+  th,
+  td {
+    padding: var(--space-2xs) var(--space-l);
+    width: 100px;
+  }
+
+  tbody tr:not(:last-child) td {
+    border-bottom: 1px dotted var(--text-color);
+  }
+
+  tfoot td {
+    font-size: var(--step-1);
+    padding-block: var(--space-s);
+    border-top: 1px solid var(--text-color);
+    font-weight: var(--weight-bold);
+  }
+
+  th:first-child,
+  td:first-child {
+    text-align: left;
+    padding-inline-end: var(--space-l);
+  }
+
+  th:last-child,
+  td:last-child {
+    text-align: right;
+  }
+}
+

@@ -1,7 +1,11 @@
 import { Banner } from "@/components/react/common/Banner";
-import type { StepConfig } from "@/components/react/forms/FormContainer";
+import {
+  useFormStep,
+  type StepConfig,
+} from "@/components/react/forms/FormContainer";
 import { FormStep } from "@/components/react/forms/FormStep";
 import { YesNoField } from "@/components/react/forms/YesNoField";
+import { Costs } from "@/components/react/forms/Costs";
 
 export const feeWaiverStep: StepConfig = {
   id: "fee-waiver",
@@ -9,37 +13,38 @@ export const feeWaiverStep: StepConfig = {
   description:
     "If you are unable to pay the filing fee, you can file an Affidavit of Indigency—a document proving that you are unable to pay.",
   fields: ["shouldApplyForFeeWaiver"],
-  component: ({ stepConfig, form }) => (
-    <FormStep stepConfig={stepConfig}>
-      <YesNoField
-        name="shouldApplyForFeeWaiver"
-        label="Apply for a fee waiver?"
-        labelHidden
-        yesLabel="Yes, help me waive filing fees"
-        noLabel="No, I will pay the filing fee"
-      />
-      {form.watch("shouldApplyForFeeWaiver") === true ? (
-        <Banner>
-          Your download will include an Affidavit of Indigency.{" "}
-          <strong>
-            There are additional fields in the download you have to fill out.
-          </strong>{" "}
-          Additionally, you can{" "}
-          <a
-            href="https://www.masstpc.org/what-we-do/ida-network/ida-financial-assistance/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            request financial assistance through the Massachusetts Transgender
-            Political Coalition.
-          </a>
-        </Banner>
-      ) : (
-        <Banner>
-          {/* TODO: Add QuestCostsTable component when available */}
-          <p>Filing fees apply. See court costs for details.</p>
-        </Banner>
-      )}
-    </FormStep>
-  ),
+  component: ({ stepConfig, form }) => {
+    const { costs } = useFormStep();
+
+    return (
+      <FormStep stepConfig={stepConfig}>
+        <YesNoField
+          name="shouldApplyForFeeWaiver"
+          label="Apply for a fee waiver?"
+          labelHidden
+          yesLabel="Yes, help me waive filing fees"
+          noLabel="No, I will pay the filing fee"
+        />
+        {form.watch("shouldApplyForFeeWaiver") === true ? (
+          <Banner>
+            Your download will include an Affidavit of Indigency.{" "}
+            <strong>
+              There are additional fields in the download you have to fill out.
+            </strong>{" "}
+            Additionally, you can{" "}
+            <a
+              href="https://www.masstpc.org/what-we-do/ida-network/ida-financial-assistance/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              request financial assistance through the Massachusetts Transgender
+              Political Coalition.
+            </a>
+          </Banner>
+        ) : (
+          <Costs costs={costs ?? []} />
+        )}
+      </FormStep>
+    );
+  },
 };

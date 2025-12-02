@@ -7,7 +7,7 @@ export const addressStep: StepConfig = {
   id: "address",
   title: "What is your residential address?",
   description:
-    "You must reside in the same county where you file your name change. We'll help you find where to file.",
+    "You must file your name change in the county where you live. We'll help you find where to file.",
   fields: [
     "isCurrentlyUnhoused",
     "residenceStreetAddress",
