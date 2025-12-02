@@ -7,6 +7,8 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { loadQuery } from "@/sanity/lib/loadQuery";
 import { formatTimeEstimate } from "@/utils/formatTimeEstimate";
 import { getFormPdfMetadata } from "@/utils/getFormPdfMetadata";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 
 const { params } = Astro.props;
 
@@ -14,6 +16,7 @@ const { data: forms } = await loadQuery<SanityDocument[]>({
   query: `*[_type == "form" && defined(slug)]{
     title,
     slug,
+    _updatedAt,
   } | order(publishDate desc)`,
   params,
 });
@@ -33,9 +36,12 @@ const formsWithPdfs = await Promise.all(
       pdfs,
       stepCount,
       timeEstimate,
+      updatedAt: form._updatedAt,
     };
   }),
 );
+
+dayjs.extend(utc);
 ---
 
 <BaseLayout
@@ -64,6 +70,7 @@ const formsWithPdfs = await Promise.all(
                 <RiTimerLine />
                 {form.timeEstimate}
               </li>
+              <li>Updated {dayjs.utc(form.updatedAt).format("MMM D, YYYY")}</li>
             </ul>
           </div>
         ))

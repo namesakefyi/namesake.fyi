@@ -1,15 +1,22 @@
 ---
-import type { SanityDocument } from "@sanity/client";
 import PageHeader from "@/components/PageHeader.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { loadQuery } from "@/sanity/lib/loadQuery";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import { GuidesTable, type Guide } from "./_components/GuidesTable";
+
+dayjs.extend(utc);
 
 const { params } = Astro.props;
 
-const { data: guides } = await loadQuery<SanityDocument[]>({
+const { data: guides } = await loadQuery<Guide[]>({
   query: `*[_type == "guide" && defined(slug)]{
     title,
     slug,
+    "state": state->name,
+    "category": category->name,
+    _updatedAt,
   } | order(publishDate desc)`,
   params,
 });
@@ -25,45 +32,12 @@ const { data: guides } = await loadQuery<SanityDocument[]>({
     description="Step-by-step name change guides for identity documents."
   />
   <div class="guides">
-    {
-      guides.length ? (
-        guides.map((guide) => (
-          <a class="guide" href={`/guides/${guide.slug.current}`}>
-            {guide.title}
-          </a>
-        ))
-      ) : (
-        <p>No guides found.</p>
-      )
-    }
+    <GuidesTable client:load guides={guides} />
   </div>
 </BaseLayout>
 
 <style>
   .guides {
-    display: grid;
-    gap: var(--space-m);
-
-    @media (width > 600px) {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    @media (width > 1000px) {
-      grid-template-columns: 1fr 1fr 1fr;
-    }
-  }
-
-  .guide {
-    border: 0.5px solid var(--text-color);
-    padding: var(--space-m);
-    text-decoration: none;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-
-    &:hover,
-    &:focus {
-      text-decoration: underline;
-    }
+    padding-block-end: var(--space-2xl);
   }
 </style>

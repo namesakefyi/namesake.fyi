@@ -22,25 +22,29 @@ import {
 } from "react-aria-components";
 import { Checkbox } from "../Checkbox";
 import "./Table.css";
+import clsx from "clsx";
 
-export function Table(props: TableProps) {
-  return <AriaTable {...props} />;
+export function Table({ className, ...props }: TableProps) {
+  return <AriaTable className={clsx("namesake-table", className)} {...props} />;
 }
 
 export function Column(
   props: Omit<ColumnProps, "children"> & { children?: React.ReactNode },
 ) {
   return (
-    <AriaColumn {...props}>
+    <AriaColumn
+      className={clsx("namesake-table-column", props.className)}
+      {...props}
+    >
       {({ allowsSorting, sortDirection }) => (
         <div className="column-header">
           {props.children}
           {allowsSorting && (
             <span aria-hidden="true" className="sort-indicator">
               {sortDirection === "ascending" ? (
-                <RiArrowUpSLine size={14} />
+                <RiArrowUpSLine />
               ) : (
-                <RiArrowDownSLine size={14} />
+                <RiArrowDownSLine />
               )}
             </span>
           )}
@@ -53,13 +57,17 @@ export function Column(
 export function TableHeader<T extends object>({
   columns,
   children,
-  ...otherProps
+  className,
+  ...props
 }: TableHeaderProps<T>) {
   const { selectionBehavior, selectionMode, allowsDragging } =
     useTableOptions();
 
   return (
-    <AriaTableHeader {...otherProps}>
+    <AriaTableHeader
+      className={clsx("namesake-table-header", className)}
+      {...props}
+    >
       {/* Add extra columns for drag and drop and selection. */}
       {allowsDragging && <AriaColumn />}
       {selectionBehavior === "toggle" && (
@@ -76,12 +84,17 @@ export function Row<T extends object>({
   id,
   columns,
   children,
-  ...otherProps
+  className,
+  ...props
 }: RowProps<T>) {
   const { selectionBehavior, allowsDragging } = useTableOptions();
 
   return (
-    <AriaRow id={id} {...otherProps}>
+    <AriaRow
+      id={id}
+      className={clsx("namesake-table-row", className)}
+      {...props}
+    >
       {allowsDragging && (
         <Cell>
           <Button slot="drag">
@@ -103,6 +116,8 @@ export function TableBody<T extends object>(props: TableBodyProps<T>) {
   return <AriaTableBody {...props} />;
 }
 
-export function Cell(props: CellProps) {
-  return <AriaCell {...props} />;
+export function Cell({ className, ...props }: CellProps) {
+  return (
+    <AriaCell className={clsx("namesake-table-cell", className)} {...props} />
+  );
 }
