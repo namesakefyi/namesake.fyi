@@ -1,5 +1,5 @@
 import { formatCurrency } from "@/utils/formatCurrency";
-import { formatTotalCosts, type Cost } from "@/utils/formatTotalCosts";
+import { type Cost, formatTotalCosts } from "@/utils/formatTotalCosts";
 import "./Costs.css";
 
 interface CostsProps {
@@ -41,4 +41,3 @@ export function Costs({ costs }: CostsProps) {
     </table>
   );
 }
-

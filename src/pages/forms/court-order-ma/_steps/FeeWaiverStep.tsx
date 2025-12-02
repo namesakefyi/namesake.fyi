@@ -1,11 +1,11 @@
 import { Banner } from "@/components/react/common/Banner";
+import { Costs } from "@/components/react/forms/Costs";
 import {
-  useFormStep,
   type StepConfig,
+  useFormStep,
 } from "@/components/react/forms/FormContainer";
 import { FormStep } from "@/components/react/forms/FormStep";
 import { YesNoField } from "@/components/react/forms/YesNoField";
-import { Costs } from "@/components/react/forms/Costs";
 
 export const feeWaiverStep: StepConfig = {
   id: "fee-waiver",

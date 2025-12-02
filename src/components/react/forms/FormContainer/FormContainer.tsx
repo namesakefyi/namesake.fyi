@@ -4,8 +4,8 @@ import { FormNavigation } from "@/components/react/forms/FormNavigation";
 import { FormReviewStep } from "@/components/react/forms/FormReviewStep";
 import { FormTitleStep } from "@/components/react/forms/FormTitleStep/FormTitleStep";
 import type { FieldName, FormData } from "@/constants/fields";
-import type { FormPdfMetadata } from "@/utils/getFormPdfMetadata";
 import type { Cost } from "@/utils/formatTotalCosts";
+import type { FormPdfMetadata } from "@/utils/getFormPdfMetadata";
 import { FormStepContext } from "./FormStepContext";
 import "./FormContainer.css";
 
