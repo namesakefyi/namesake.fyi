@@ -3,7 +3,7 @@
   align-items: flex-start;
   flex-direction: column;
   gap: var(--space-2xl);
-  padding-block:  var(--space-xl) var(--space-2xl);
+  padding-block: var(--space-xl) var(--space-2xl);
 }
 
 .form-title-step-back-link {
