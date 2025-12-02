@@ -5,7 +5,6 @@ import { MemorableDateField } from "@/components/react/forms/MemorableDateField"
 export const dateOfBirthStep: StepConfig = {
   id: "date-of-birth",
   title: "What is your date of birth?",
-  description: "This is your date of birth.",
   fields: ["dateOfBirth"],
   component: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>

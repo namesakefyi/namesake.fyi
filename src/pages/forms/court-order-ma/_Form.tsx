@@ -1,6 +1,7 @@
 import { FormContainer } from "@/components/react/forms/FormContainer";
 import type { FieldType } from "@/constants/fields";
 import { createFormSubmitHandler } from "@/utils/createFormSubmitHandler";
+import type { Cost } from "@/utils/formatTotalCosts";
 import type { FormPdfMetadata } from "@/utils/getFormPdfMetadata";
 import { useForm } from "@/utils/useForm";
 import { courtOrderMaConfig } from "./config";
@@ -14,11 +15,13 @@ export function MaCourtOrderForm({
   description,
   updatedAt,
   pdfs,
+  costs,
 }: {
   title: string;
   description: string;
   updatedAt?: string;
   pdfs?: FormPdfMetadata[];
+  costs?: Cost[];
 }) {
   const { ...form } = useForm<FormData>(courtOrderMaConfig.fields);
 
@@ -33,6 +36,7 @@ export function MaCourtOrderForm({
       onSubmit={handleSubmit}
       updatedAt={updatedAt}
       pdfs={pdfs}
+      costs={costs}
     />
   );
 }

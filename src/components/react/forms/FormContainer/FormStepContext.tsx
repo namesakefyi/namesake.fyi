@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+import type { Cost } from "@/utils/formatTotalCosts";
 
 export interface FormStepContextValue {
   onNext: () => void;
@@ -17,6 +18,8 @@ export interface FormStepContextValue {
   isReviewingMode: boolean;
   /** Submit handler for form steps */
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  /** The costs associated with this form */
+  costs?: Cost[];
 }
 
 export const FormStepContext = createContext<FormStepContextValue | null>(null);

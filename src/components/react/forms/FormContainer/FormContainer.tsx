@@ -4,6 +4,7 @@ import { FormNavigation } from "@/components/react/forms/FormNavigation";
 import { FormReviewStep } from "@/components/react/forms/FormReviewStep";
 import { FormTitleStep } from "@/components/react/forms/FormTitleStep/FormTitleStep";
 import type { FieldName, FormData } from "@/constants/fields";
+import type { Cost } from "@/utils/formatTotalCosts";
 import type { FormPdfMetadata } from "@/utils/getFormPdfMetadata";
 import { FormStepContext } from "./FormStepContext";
 import "./FormContainer.css";
@@ -41,6 +42,9 @@ export interface FormContainerProps {
 
   /** The PDF metadata for forms that will be generated. */
   pdfs?: FormPdfMetadata[];
+
+  /** The costs associated with this form. */
+  costs?: Cost[];
 }
 
 export function FormContainer({
@@ -51,6 +55,7 @@ export function FormContainer({
   onSubmit,
   updatedAt,
   pdfs,
+  costs,
 }: FormContainerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -271,6 +276,7 @@ export function FormContainer({
       isReviewStep,
       isReviewingMode,
       onSubmit: handleFormSubmit,
+      costs,
     }),
     [
       goToNextStep,
@@ -282,6 +288,7 @@ export function FormContainer({
       isReviewStep,
       isReviewingMode,
       handleFormSubmit,
+      costs,
     ],
   );
 

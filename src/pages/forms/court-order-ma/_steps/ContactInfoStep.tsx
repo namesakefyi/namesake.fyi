@@ -6,7 +6,8 @@ import { PhoneField } from "@/components/react/forms/PhoneField";
 export const contactInfoStep: StepConfig = {
   id: "contact-info",
   title: "What is your contact information?",
-  description: "The court uses this to communicate with you about your status.",
+  description:
+    "The court uses this to communicate with you about your filing status.",
   fields: ["phoneNumber", "email"],
   component: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>

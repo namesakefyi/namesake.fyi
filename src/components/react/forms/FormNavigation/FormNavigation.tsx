@@ -23,15 +23,6 @@ export const FormNavigation = memo(function FormNavigation() {
 
   return (
     <nav className="form-navigation">
-      <div className="form-progress">
-        <ProgressBar
-          label={formTitle}
-          value={isReviewStep ? totalSteps : currentStepIndex}
-          valueLabel={<Fragment />}
-          maxValue={isReviewStep ? totalSteps : totalSteps + 1}
-          formatOptions={{ style: "decimal" }}
-        />
-      </div>
       <div className="form-navigation-buttons">
         <Button
           onPress={onBack}
@@ -47,6 +38,15 @@ export const FormNavigation = memo(function FormNavigation() {
           aria-label="Next step"
           className="form-navigation-button"
           isDisabled={isReviewStep}
+        />
+      </div>
+      <div className="form-progress">
+        <ProgressBar
+          label={formTitle}
+          value={isReviewStep ? totalSteps : currentStepIndex}
+          valueLabel={<Fragment />}
+          maxValue={isReviewStep ? totalSteps : totalSteps + 1}
+          formatOptions={{ style: "decimal" }}
         />
       </div>
     </nav>

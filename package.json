@@ -74,7 +74,6 @@
     "sanity": "^4.19.0",
     "styled-components": "^6.1.19",
     "topojson-client": "^3.1.0",
-    "typed-usa-states": "^2.1.0",
     "typescript": "^5.9.3",
     "ua-parser-js": "^2.0.6"
   },
