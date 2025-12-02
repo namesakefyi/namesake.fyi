@@ -1,6 +1,7 @@
 ---
 import type { SanityAssetDocument } from "@sanity/client";
 import type { RoughAnnotationType } from "rough-notation/lib/model";
+import type { BreadcrumbItem } from "@/components/Breadcrumbs.astro";
 import PageHeader from "@/components/PageHeader.astro";
 import type { NamesakeColor } from "@/constants/colors";
 import { urlForImage } from "@/sanity/lib/urlForImage";
@@ -17,6 +18,7 @@ interface Props {
   ogAlt?: string;
   annotation?: RoughAnnotationType;
   color?: NamesakeColor;
+  breadcrumbs?: BreadcrumbItem[];
 }
 
 const {
@@ -29,6 +31,7 @@ const {
   ogAlt,
   annotation,
   color,
+  breadcrumbs,
 } = Astro.props;
 
 // Convert Sanity asset to URL for BaseLayout
@@ -58,6 +61,7 @@ const headerDescription =
       date={date}
       description={headerDescription}
       annotation={annotation}
+      breadcrumbs={breadcrumbs}
     />
     <slot name="after-header" />
     <section class="toc">

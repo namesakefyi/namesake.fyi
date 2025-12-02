@@ -8,6 +8,7 @@ import PortableText from "@/components/text/PortableText.astro";
 import ProseLayout from "@/layouts/ProseLayout.astro";
 import { extractHeadings } from "@/sanity/lib/extractHeadings";
 import { loadQuery } from "@/sanity/lib/loadQuery";
+import type { BreadcrumbItem } from "@/components/Breadcrumbs.astro";
 
 dayjs.extend(utc);
 dayjs.extend(localizedFormat);
@@ -38,9 +39,20 @@ const { data: guide } = await loadQuery<SanityDocument>({
 if (!guide) return Astro.redirect("/404");
 
 const headings = extractHeadings(guide.content);
+
+const breadcrumbs: BreadcrumbItem[] = [
+  { label: "Namesake", href: "/" },
+  { label: "Guides", href: "/guides" },
+];
 ---
 
-<ProseLayout title={guide.title} description={guide.description} color="white">
+<ProseLayout
+  title={guide.title}
+  description={guide.description}
+  annotation="box"
+  breadcrumbs={breadcrumbs}
+  color="white"
+>
   <TableOfContents headings={headings} slot="toc" />
   <PortableText value={guide.content} />
   <div class="date-updated">

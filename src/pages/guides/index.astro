@@ -1,10 +1,10 @@
 ---
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import PageHeader from "@/components/PageHeader.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { loadQuery } from "@/sanity/lib/loadQuery";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import { GuidesTable, type Guide } from "./_components/GuidesTable";
+import { type Guide, GuidesTable } from "./_components/GuidesTable";
 
 dayjs.extend(utc);
 
