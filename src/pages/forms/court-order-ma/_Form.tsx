@@ -1,3 +1,4 @@
+import { PortableText, type PortableTextProps } from "@portabletext/react";
 import { RiMegaphoneLine } from "@remixicon/react";
 import { Banner } from "@/components/react/common/Banner";
 import { FormContainer } from "@/components/react/forms/FormContainer";
@@ -7,7 +8,6 @@ import type { Cost } from "@/utils/formatTotalCosts";
 import type { FormPdfMetadata } from "@/utils/getFormPdfMetadata";
 import { useForm } from "@/utils/useForm";
 import { courtOrderMaConfig } from "./config";
-import { PortableText, type PortableTextProps } from "@portabletext/react";
 
 type FormData = {
   [K in (typeof courtOrderMaConfig.fields)[number]]: FieldType<K>;
