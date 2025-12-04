@@ -5,7 +5,6 @@ import { contactInfoStep } from "./_steps/ContactInfoStep";
 import { currentNameStep } from "./_steps/CurrentNameStep";
 import { dateOfBirthStep } from "./_steps/DateOfBirthStep";
 import { feeWaiverStep } from "./_steps/FeeWaiverStep";
-import { impoundCaseStep } from "./_steps/ImpoundCaseStep";
 import { interpreterStep } from "./_steps/InterpreterStep";
 import { mothersMaidenNameStep } from "./_steps/MothersMaidenNameStep";
 import { newNameStep } from "./_steps/NewNameStep";
@@ -14,7 +13,6 @@ import { previousNameChangeStep } from "./_steps/PreviousNameChangeStep";
 import { pronounsStep } from "./_steps/PronounsStep";
 import { reasonStep } from "./_steps/ReasonStep";
 import { returnDocumentsStep } from "./_steps/ReturnDocumentsStep";
-import { waivePublicationStep } from "./_steps/WaivePublicationStep";
 
 const STEPS = [
   newNameStep,
@@ -29,8 +27,6 @@ const STEPS = [
   interpreterStep,
   pronounsStep,
   returnDocumentsStep,
-  waivePublicationStep,
-  impoundCaseStep,
   feeWaiverStep,
   mothersMaidenNameStep,
 ] as const;
@@ -44,14 +40,6 @@ export const courtOrderMaConfig = {
   pdfs: [
     { pdfId: "cjp27-petition-to-change-name-of-adult" },
     { pdfId: "cjp34-cori-and-wms-release-request" },
-    {
-      pdfId: "cjd400-motion-to-waive-publication",
-      include: (data) => data.shouldWaivePublicationRequirement === true,
-    },
-    {
-      pdfId: "cjd400-motion-to-impound-records",
-      include: (data) => data.shouldImpoundCourtRecords === true,
-    },
     {
       pdfId: "affidavit-of-indigency",
       include: (data) => data.shouldApplyForFeeWaiver === true,

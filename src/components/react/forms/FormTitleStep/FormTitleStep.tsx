@@ -59,6 +59,11 @@ export interface FormTitleStepProps {
   description?: string;
 
   /**
+   * Child content.
+   */
+  children?: React.ReactNode;
+
+  /**
    * Handler for when the user clicks the start button.
    */
   onStart: () => void;
@@ -82,6 +87,7 @@ export interface FormTitleStepProps {
 export function FormTitleStep({
   title,
   description,
+  children,
   onStart,
   pdfs,
   totalSteps,
@@ -113,6 +119,7 @@ export function FormTitleStep({
           </p>
         )}
       </header>
+      {children}
       <FormInfo>
         <FormInfoItem icon={RiFileCheckLine}>
           <FormInfoItemTitle>

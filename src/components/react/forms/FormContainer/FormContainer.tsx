@@ -28,6 +28,9 @@ export interface FormContainerProps {
   /** An optional description to provide more context. */
   description?: string;
 
+  /** Children to display on the title step. */
+  children?: React.ReactNode;
+
   /** The form steps to render. */
   steps: readonly StepConfig[];
 
@@ -50,6 +53,7 @@ export interface FormContainerProps {
 export function FormContainer({
   title,
   description,
+  children,
   steps,
   form,
   onSubmit,
@@ -240,7 +244,9 @@ export function FormContainer({
               window.location.hash = steps[0].id;
             }
           }}
-        />
+        >
+          {children}
+        </FormTitleStep>
       );
     }
 
@@ -255,7 +261,16 @@ export function FormContainer({
     }
 
     return null;
-  }, [navigationIndex, steps, form, pdfs, updatedAt, title, description]);
+  }, [
+    navigationIndex,
+    steps,
+    form,
+    pdfs,
+    updatedAt,
+    title,
+    description,
+    children,
+  ]);
 
   // Calculate the current step index for the context (1-based for actual steps, 0 for title/review)
   const currentStepIndex =
