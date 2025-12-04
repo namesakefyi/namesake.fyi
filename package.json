@@ -42,6 +42,7 @@
     "@cantoo/pdf-lib": "^2.5.3",
     "@internationalized/date": "^3.10.0",
     "@maskito/core": "^4.0.1",
+    "@portabletext/react": "^5.0.0",
     "@portabletext/types": "^3.0.0",
     "@remixicon/react": "^4.7.0",
     "@sanity/astro": "^3.2.10",

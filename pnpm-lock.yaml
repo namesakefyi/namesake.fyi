@@ -44,6 +44,9 @@ importers:
       '@maskito/core':
         specifier: ^4.0.1
         version: 4.0.1
+      '@portabletext/react':
+        specifier: ^5.0.0
+        version: 5.0.0(react@19.2.0)
       '@portabletext/types':
         specifier: ^3.0.0
         version: 3.0.0

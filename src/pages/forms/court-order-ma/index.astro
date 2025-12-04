@@ -9,6 +9,7 @@ const { data: form } = await loadQuery<SanityDocument>({
   query: `*[_type == "form" && slug.current == $slug][0]{
     title,
     description,
+    banner,
     _updatedAt,
     state,
     category,
@@ -27,6 +28,7 @@ const pdfs = await getFormPdfMetadata("court-order-ma");
     client:load
     title={form.title}
     description={form.description}
+    banner={form.banner}
     updatedAt={form._updatedAt}
     pdfs={pdfs}
     costs={form.costs}
