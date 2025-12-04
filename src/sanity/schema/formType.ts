@@ -1,5 +1,6 @@
 import { OlistIcon } from "@sanity/icons";
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
+import { externalLink, internalLink } from "./annotations";
 
 export const formType = defineType({
   name: "form",
@@ -20,6 +21,25 @@ export const formType = defineType({
       description:
         "A brief, high-level summary of what role this form serves within the name change process.",
       type: "string",
+    }),
+    defineField({
+      name: "banner",
+      title: "Banner",
+      description: "A banner message to display on the form title step.",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "block",
+          styles: [{ title: "Normal", value: "normal" }],
+          marks: {
+            decorators: [{ title: "Bold", value: "strong" }],
+            annotations: [
+              defineArrayMember(externalLink),
+              defineArrayMember(internalLink),
+            ],
+          },
+        }),
+      ],
     }),
     defineField({
       name: "slug",

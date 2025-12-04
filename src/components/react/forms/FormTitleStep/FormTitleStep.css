@@ -46,7 +46,7 @@
 }
 
 .form-title-step-description {
-  margin-block-start: var(--space-l);
+  margin-block-start: var(--space-m);
   font-size: var(--step-2);
   line-height: var(--line-height-display);
   text-wrap: balance;
