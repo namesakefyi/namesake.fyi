@@ -13,7 +13,9 @@
   text-decoration: none;
   color: var(--text-color);
   font-size: var(--step-0);
-  padding-block-end: var(--space-s);
+  padding-inline-end: var(--space-2xs);
+  margin-inline-start: calc(-1 * var(--space-2xs));
+  margin-block-end: var(--space-s);
 
   @media (hover: hover) {
     &:hover {
@@ -24,6 +26,7 @@
 
 .form-title-step-header {
   display: flex;
+  align-items: flex-start;
   flex-direction: column;
 }
 
