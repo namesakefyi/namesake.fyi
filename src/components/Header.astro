@@ -4,10 +4,10 @@ import Logo from "./Logo.astro";
 const { pathname } = Astro.url;
 
 const navLinks = [
-  { href: "/guides", ariaCurrent: "guides", label: "Guides" },
-  { href: "/forms", ariaCurrent: "forms", label: "Forms" },
-  { href: "/blog", ariaCurrent: "blog", label: "Blog" },
-  { href: "/donate", ariaCurrent: "donate", label: "Donate" },
+  { href: "/guides", label: "Guides" },
+  { href: "/forms", label: "Forms" },
+  { href: "/blog", label: "Blog" },
+  { href: "/donate", label: "Donate" },
 ];
 ---
 
@@ -16,11 +16,11 @@ const navLinks = [
   <nav aria-label="Site">
     <ul role="list">
       {
-        navLinks.map(({ href, ariaCurrent, label }) => (
+        navLinks.map(({ href, label }) => (
           <li>
             <a
               href={href}
-              aria-current={ariaCurrent === pathname ? "page" : "false"}
+              aria-current={pathname.startsWith(href) ? "page" : "false"}
             >
               {label}
             </a>
@@ -44,23 +44,31 @@ const navLinks = [
   header {
     top: 0;
     display: flex;
+    flex-wrap: wrap;
     align-items: baseline;
     justify-content: space-between;
     padding: var(--space-l);
+    gap: var(--space-l);
     width: 100%;
     max-width: 1200px;
     margin-inline: auto;
+
+    @media (width > 520px) {
+      flex-direction: row;
+    }
   }
 
   #logo {
-    transform: translateY(2px);
+    transform: translateY(1px);
   }
 
   ul {
     list-style: none;
     display: flex;
+    flex-wrap: wrap;
     padding: unset;
     margin: unset;
+    margin-inline-start: calc(var(--space-s) * -1);
 
     a {
       padding: var(--space-xs) var(--space-s);
