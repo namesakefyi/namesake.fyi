@@ -12,13 +12,26 @@ const { pathname } = Astro.url;
     <ul role="list">
       <li>
         <a
+          href="/guides"
+          aria-current={pathname.slice(1).startsWith("guides")
+            ? "page"
+            : "false"}>Guides</a>
+      </li>
+      <li>
+        <a
+          href="/forms"
+          aria-current={pathname.slice(1).startsWith("forms")
+            ? "page"
+            : "false"}>Forms</a>
+      </li>
+      <li>
+        <a
           href="/blog"
           aria-current={pathname.slice(1).startsWith("blog") ? "page" : "false"}
           >Blog</a
         >
       </li>
       <li><a href="/donate">Donate</a></li>
-      <li><a href={urls.app}>Sign In</a></li>
     </ul>
   </nav>
 </header>
