@@ -1,6 +1,6 @@
 ---
-import Logo from "./Logo.astro";
 import siteInfo from "@/constants/site-info";
+import Logo from "./Logo.astro";
 
 const { pathname } = Astro.url;
 
@@ -53,10 +53,6 @@ const navLinks = [
     width: 100%;
     max-width: 1200px;
     margin-inline: auto;
-
-    @media (width > 520px) {
-      flex-direction: row;
-    }
   }
 
   #logo {
