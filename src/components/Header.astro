@@ -1,37 +1,32 @@
 ---
-import siteInfo from "@/constants/site-info";
 import Logo from "./Logo.astro";
 
-const { urls } = siteInfo;
 const { pathname } = Astro.url;
+
+const navLinks = [
+  { href: "/guides", ariaCurrent: "guides", label: "Guides" },
+  { href: "/forms", ariaCurrent: "forms", label: "Forms" },
+  { href: "/blog", ariaCurrent: "blog", label: "Blog" },
+  { href: "/donate", ariaCurrent: "donate", label: "Donate" },
+];
 ---
 
 <header>
   <a href="/" aria-label="Home" id="logo"><Logo /></a>
   <nav aria-label="Site">
     <ul role="list">
-      <li>
-        <a
-          href="/guides"
-          aria-current={pathname.slice(1).startsWith("guides")
-            ? "page"
-            : "false"}>Guides</a>
-      </li>
-      <li>
-        <a
-          href="/forms"
-          aria-current={pathname.slice(1).startsWith("forms")
-            ? "page"
-            : "false"}>Forms</a>
-      </li>
-      <li>
-        <a
-          href="/blog"
-          aria-current={pathname.slice(1).startsWith("blog") ? "page" : "false"}
-          >Blog</a
-        >
-      </li>
-      <li><a href="/donate">Donate</a></li>
+      {
+        navLinks.map(({ href, ariaCurrent, label }) => (
+          <li>
+            <a
+              href={href}
+              aria-current={ariaCurrent === pathname ? "page" : "false"}
+            >
+              {label}
+            </a>
+          </li>
+        ))
+      }
     </ul>
   </nav>
 </header>
