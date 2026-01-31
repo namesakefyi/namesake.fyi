@@ -1,13 +1,14 @@
 ---
 import Logo from "./Logo.astro";
+import siteInfo from "@/constants/site-info";
 
 const { pathname } = Astro.url;
 
 const navLinks = [
-  { href: "/guides", label: "Guides" },
-  { href: "/forms", label: "Forms" },
-  { href: "/blog", label: "Blog" },
-  { href: "/donate", label: "Donate" },
+  { href: siteInfo.urls.guides, label: "Guides" },
+  { href: siteInfo.urls.forms, label: "Forms" },
+  { href: siteInfo.urls.blog, label: "Blog" },
+  { href: siteInfo.urls.donate, label: "Donate" },
 ];
 ---
 

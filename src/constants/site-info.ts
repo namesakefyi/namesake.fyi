@@ -41,6 +41,7 @@ export type SiteInfo = {
   urls: {
     guides: string;
     forms: string;
+    blog: string;
     chat: string;
     status: string;
     donate: string;
@@ -61,6 +62,7 @@ const siteInfo: SiteInfo = {
   urls: {
     guides: "/guides",
     forms: "/forms",
+    blog: "/blog",
     chat: "/chat",
     status: "/status",
     donate: "/donate",
