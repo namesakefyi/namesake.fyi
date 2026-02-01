@@ -4,7 +4,8 @@
 
 This repository contains the source code for the [namesake.fyi](https://namesake.fyi) website and blog, built with [Astro](https://astro.build) with content managed via [Sanity](https://www.sanity.io/) and hosted via [Cloudflare](https://cloudflare.com).
 
-If you need help with your legal name change or gender marker change, come join us in [Discord](https://namesake.fyi/chat)!
+> [!NOTE]
+> If you need help with your legal name change or gender marker change, come join us in [Discord](https://namesake.fyi/chat)!
 
 ## Directory Structure
 
