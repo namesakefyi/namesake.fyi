@@ -58,9 +58,9 @@ dayjs.extend(utc);
       formsWithPdfs.length ? (
         formsWithPdfs.map((form) => (
           <div class="form">
-            <h3>
+            <h2>
               <a href={`/forms/${form.slug.current}`}>{form.title}</a>
-            </h3>
+            </h2>
             <ul class="form-metadata">
               <li>
                 <RiFileCheckLine />{" "}
@@ -119,7 +119,7 @@ dayjs.extend(utc);
         5px 5px 0 -2px var(--border-color);
     }
 
-    h3 {
+    h2 {
       font-size: var(--step-1);
       line-height: var(--line-height-display);
 
