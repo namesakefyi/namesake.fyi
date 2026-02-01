@@ -39,7 +39,9 @@ export type SiteInfo = {
     alt: string;
   };
   urls: {
-    app: string;
+    guides: string;
+    forms: string;
+    blog: string;
     chat: string;
     status: string;
     donate: string;
@@ -58,7 +60,9 @@ const siteInfo: SiteInfo = {
     url: "https://superbloom.design/",
   },
   urls: {
-    app: "https://app.namesake.fyi",
+    guides: "/guides",
+    forms: "/forms",
+    blog: "/blog",
     chat: "/chat",
     status: "/status",
     donate: "/donate",
