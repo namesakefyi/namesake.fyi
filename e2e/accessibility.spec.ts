@@ -7,6 +7,8 @@ const paths = [
   "/about",
   "/blog",
   "/brand-assets",
+  "/forms",
+  "/guides",
   "/press",
   "/privacy",
   "/terms",

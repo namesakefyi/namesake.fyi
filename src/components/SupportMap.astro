@@ -238,8 +238,34 @@ function getFillForSupportLevel(supportLevel: string): string {
   updatePatternScales();
   window.addEventListener("resize", updatePatternScales);
 
+  function positionTooltip(event: MouseEvent) {
+    const tooltipNode = tooltip.node() as HTMLElement;
+    const containerNode = container.node() as HTMLElement;
+    const tooltipRect = tooltipNode.getBoundingClientRect();
+    const containerRect = containerNode.getBoundingClientRect();
+
+    const containerX = event.clientX - containerRect.left;
+    const containerY = event.clientY - containerRect.top;
+
+    let left = containerX + 16;
+    let top = containerY + 16;
+
+    if (left < 0) left = 16;
+    if (top < 0) top = 16;
+    if (left + tooltipRect.width > containerRect.width) {
+      left = containerRect.width - tooltipRect.width - 16;
+    }
+
+    tooltip.style("top", top + "px").style("left", left + "px");
+  }
+
+  function clearHoverState() {
+    states.attr("data-hovered", null);
+    tooltip.attr("data-visible", null);
+  }
+
   states
-    .on("mouseover", function () {
+    .on("mouseenter", function (event: MouseEvent) {
       const element = this as SVGPathElement;
       const stateName = element.getAttribute("data-name") || "";
       const supportLevel = element.getAttribute("data-support") || "none";
@@ -252,6 +278,7 @@ function getFillForSupportLevel(supportLevel: string): string {
       const supportText =
         textMap[supportLevel as keyof typeof textMap] || "No Support Yet";
 
+      states.attr("data-hovered", null);
       const hoveredState = d3.select(this);
       hoveredState.attr("data-hovered", "true");
 
@@ -261,31 +288,19 @@ function getFillForSupportLevel(supportLevel: string): string {
       tooltip
         .attr("data-visible", "true")
         .html(`<strong>${stateName}</strong><br/>${supportText}`);
+      positionTooltip(event);
     })
     .on("mousemove", function (event: MouseEvent) {
-      const tooltipNode = tooltip.node() as HTMLElement;
-      const containerNode = container.node() as HTMLElement;
-      const tooltipRect = tooltipNode.getBoundingClientRect();
-      const containerRect = containerNode.getBoundingClientRect();
-
-      const containerX = event.clientX - containerRect.left;
-      const containerY = event.clientY - containerRect.top;
-
-      let left = containerX + 16;
-      let top = containerY + 16;
-
-      if (left < 0) left = 16;
-      if (top < 0) top = 16;
-      if (left + tooltipRect.width > containerRect.width) {
-        left = containerRect.width - tooltipRect.width - 16;
-      }
-
-      tooltip.style("top", top + "px").style("left", left + "px");
+      positionTooltip(event);
     })
-    .on("mouseout", function () {
-      states.attr("data-hovered", null);
+    .on("mouseleave", function () {
+      d3.select(this).attr("data-hovered", null);
       tooltip.attr("data-visible", null);
     });
+
+  svg.on("mouseleave", function () {
+    clearHoverState();
+  });
 
   legendItems
     .on("mouseover", function () {

@@ -21,9 +21,10 @@ const linkGroups: LinkGroup[] = [
   {
     title: "About",
     links: [
-      { href: "/blog", label: "Blog" },
+      { href: siteInfo.urls.blog, label: "Blog" },
       { href: "/press", label: "Press" },
       { href: "/brand-assets", label: "Brand" },
+      { href: siteInfo.urls.donate, label: "Donate" },
     ],
   },
   {
@@ -37,8 +38,9 @@ const linkGroups: LinkGroup[] = [
   {
     title: "Resources",
     links: [
+      { href: siteInfo.urls.guides, label: "Guides" },
+      { href: siteInfo.urls.forms, label: "Forms" },
       { href: siteInfo.urls.chat, label: "Chat" },
-      { href: siteInfo.urls.donate, label: "Donate" },
       { href: siteInfo.urls.status, label: "Status" },
     ],
   },
