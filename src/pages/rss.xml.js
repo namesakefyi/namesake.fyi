@@ -1,12 +1,17 @@
-import { getCollection } from "astro:content";
 import rss from "@astrojs/rss";
-import MarkdownIt from "markdown-it";
 import sanitizeHtml from "sanitize-html";
-
-const parser = new MarkdownIt();
+import { loadQuery } from "@/sanity/lib/loadQuery";
 
 export async function GET(context) {
-  const posts = await getCollection("posts");
+  const { data: posts } = await loadQuery({
+    query: `*[_type == "post" && defined(slug) && publishDate <= now()]{
+      title,
+      slug,
+      publishDate,
+      description,
+      "contentText": pt::text(content)
+    } | order(publishDate desc)`,
+  });
 
   return await rss({
     title: "Namesake",
@@ -15,17 +20,11 @@ export async function GET(context) {
     trailingSlash: false,
     stylesheet: "/rss/pretty-feed-v3.xsl",
     items: posts.map((post) => ({
-      title: post.data.title,
-      pubDate: post.data.publishDate,
-      description: post.data.description,
-      link: `/blog/${post.id}`,
-      content: sanitizeHtml(parser.render(post.body), {
-        allowedTags: sanitizeHtml.defaults.allowedTags.concat([
-          "img",
-          "figure",
-          "figcaption",
-        ]),
-      }),
+      title: post.title,
+      pubDate: post.publishDate,
+      description: post.description,
+      link: `/blog/${post.slug.current}`,
+      content: sanitizeHtml(post.contentText || post.description || ""),
     })),
   });
 }

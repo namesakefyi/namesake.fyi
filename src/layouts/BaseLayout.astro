@@ -68,6 +68,12 @@ const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Namesake`;
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Namesake"
+      href={new URL("rss.xml", Astro.site)}
+    />
   </head>
   <body data-color={color}>
     <Header />
