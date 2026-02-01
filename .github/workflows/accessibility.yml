@@ -21,6 +21,9 @@ on:
         "package.json",
       ]
 
+permissions:
+  contents: read
+
 jobs:
   test:
     name: Playwright
