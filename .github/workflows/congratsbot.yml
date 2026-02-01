@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   congrats:
     uses: namesakefyi/congratsbot/.github/workflows/congratsbot.yml@main
