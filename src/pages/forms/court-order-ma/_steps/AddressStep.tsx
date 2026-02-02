@@ -1,3 +1,4 @@
+import { Banner } from "@/components/react/common/Banner";
 import { AddressField } from "@/components/react/forms/AddressField";
 import { CheckboxField } from "@/components/react/forms/CheckboxField";
 import type { StepConfig } from "@/components/react/forms/FormContainer";
@@ -58,6 +59,16 @@ export const addressStep: StepConfig = {
         name="isCurrentlyUnhoused"
         label="I am currently unhoused or without permanent housing"
       />
+      {form.watch("isCurrentlyUnhoused") === true && (
+        <Banner variant="info">
+          We recommend reaching out to the{" "}
+          <a href="https://www.masstpc.org/homelessness/">
+            Massachusetts Transgender Political Coalition
+          </a>
+          . MTPC may be able to provide an address to use for your name change
+          application and help you find housing.
+        </Banner>
+      )}
       {form.watch("isCurrentlyUnhoused") !== true && (
         <>
           <AddressField type="residence" includeCounty />
