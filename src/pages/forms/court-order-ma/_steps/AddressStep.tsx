@@ -65,8 +65,8 @@ export const addressStep: StepConfig = {
           <a href="https://www.masstpc.org/homelessness/">
             Massachusetts Transgender Political Coalition
           </a>
-          . MTPC may be able to provide an address to use for your name change
-          application and help you find housing.
+          . MTPC can provide an address to use for your name change application
+          and connect you with housing resources.
         </Banner>
       )}
       {form.watch("isCurrentlyUnhoused") !== true && (
