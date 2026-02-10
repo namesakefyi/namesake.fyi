@@ -38,7 +38,7 @@
     "@astrojs/react": "^4.4.2",
     "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.7.0",
-    "@axe-core/playwright": "^4.11.0",
+    "@axe-core/playwright": "^4.11.1",
     "@cantoo/pdf-lib": "^2.5.3",
     "@internationalized/date": "^3.10.0",
     "@maskito/core": "^4.0.1",
@@ -80,7 +80,7 @@
   "devDependencies": {
     "@biomejs/biome": "^2.3.8",
     "@csstools/postcss-logical-viewport-units": "^4.0.0",
-    "@playwright/test": "^1.58.1",
+    "@playwright/test": "^1.58.2",
     "@react-aria/test-utils": "1.0.0-beta.2",
     "@sanity/cli": "^4.20.3",
     "@storybook/addon-links": "^10.2.6",
