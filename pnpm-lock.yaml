@@ -42,8 +42,8 @@ importers:
         specifier: ^3.10.0
         version: 3.10.0
       '@maskito/core':
-        specifier: ^4.0.1
-        version: 4.0.1
+        specifier: ^5.1.0
+        version: 5.1.0
       '@portabletext/react':
         specifier: ^5.0.0
         version: 5.0.0(react@19.2.4)
@@ -2445,8 +2445,8 @@ packages:
       react:
         optional: true
 
-  '@maskito/core@4.0.1':
-    resolution: {integrity: sha512-0ewYXnr8X7as/n57duk1DDqjAKF0m32XbFiAhKdd9OX83eMBzO2+4xgUFxh6WZJ18oSw6y2nWjCTDFAFc5JbhA==}
+  '@maskito/core@5.1.0':
+    resolution: {integrity: sha512-IWAs2JguYwBGWS7BAMNwT9xR2f0fC4BasLXwpFMsSd3JxKx32dhbNbnSIw99aJOmBr40Wv5j0/779M3akZeuzA==}
 
   '@mdx-js/mdx@3.1.1':
     resolution: {integrity: sha512-f6ZO2ifpwAQIpzGWaBQT2TXxPv6z3RBzQKpVftEWN78Vl/YweF1uwussDx8ECAXVtr3Rs89fKyG9YlzUs9DyGQ==}
@@ -11603,7 +11603,7 @@ snapshots:
       '@types/react': 19.2.11
       react: 19.2.4
 
-  '@maskito/core@4.0.1': {}
+  '@maskito/core@5.1.0': {}
 
   '@mdx-js/mdx@3.1.1':
     dependencies:
