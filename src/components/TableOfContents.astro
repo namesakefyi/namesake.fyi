@@ -1,5 +1,6 @@
 ---
 import type { MarkdownHeading } from "astro";
+import { smartquotes } from "@/utils/smartquotes";
 
 interface Props {
   headings?: MarkdownHeading[];
@@ -22,7 +23,7 @@ const showTOC = headings && headings.length > 0;
           <ul>
             {headings.map(({ depth, slug, text }) => (
               <li style={"--depth: " + depth}>
-                <a href={`#${slug}`}>{text}</a>
+                <a href={`#${slug}`}>{smartquotes(text)}</a>
               </li>
             ))}
           </ul>
@@ -164,6 +165,6 @@ const showTOC = headings && headings.length > 0;
   }
 
   a {
-    text-decoration: 1px solid transparent;
+    text-decoration: none;
   }
 </style>
