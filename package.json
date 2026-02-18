@@ -119,7 +119,7 @@
     "sharp": "^0.34.5",
     "storybook": "^10.2.9",
     "vitest": "4.0.18",
-    "wrangler": "^4.65.0"
+    "wrangler": "^4.66.0"
   },
   "packageManager": "pnpm@10.23.0",
   "homepage": "https://namesake.fyi",
