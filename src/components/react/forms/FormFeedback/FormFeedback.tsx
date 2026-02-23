@@ -9,11 +9,7 @@ import { Button } from "@/components/react/common/Button";
 import { FieldError, Form } from "@/components/react/common/Form";
 import { Radio, RadioGroup } from "@/components/react/common/RadioGroup";
 import { TextArea } from "@/components/react/common/TextArea";
-import {
-  FORM_FEEDBACK_SENTIMENT,
-  type FormFeedbackSentiment,
-  type FormSlug,
-} from "@/constants/forms";
+import type { FormFeedbackSentiment, FormSlug } from "@/constants/forms";
 import "./FormFeedback.css";
 
 interface FormFeedbackProps {

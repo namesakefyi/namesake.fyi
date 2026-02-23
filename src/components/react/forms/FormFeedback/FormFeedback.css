@@ -18,7 +18,6 @@
   font-weight: var(--weight-bold);
 }
 
-/* RadioGroup styled to look like a ToggleButtonGroup */
 .form-feedback-sentiment {
   width: 100%;
 
@@ -30,42 +29,42 @@
       margin-block-end: var(--space-2xs);
     }
   }
-}
 
-.form-feedback-sentiment-option {
-  flex: 1;
-  justify-content: center;
-  border: 1px solid var(--border-color);
-  padding: var(--space-xs) var(--space-m);
-  gap: var(--space-xs);
-  cursor: pointer;
-  margin-inline-start: -1px;
-  z-index: 1;
+  .form-feedback-sentiment-option {
+    flex: 1;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+    padding: var(--space-xs) var(--space-m);
+    gap: var(--space-xs);
+    cursor: pointer;
+    margin-inline-start: -1px;
+    z-index: 1;
 
-  &::before {
-    display: none;
-  }
+    &::before {
+      display: none;
+    }
 
-  &:first-child {
-    border-top-left-radius: var(--radius-xs);
-    border-bottom-left-radius: var(--radius-xs);
-  }
+    &:first-child {
+      border-top-left-radius: var(--radius-xs);
+      border-bottom-left-radius: var(--radius-xs);
+    }
 
-  &:last-child {
-    border-top-right-radius: var(--radius-xs);
-    border-bottom-right-radius: var(--radius-xs);
-  }
+    &:last-child {
+      border-top-right-radius: var(--radius-xs);
+      border-bottom-right-radius: var(--radius-xs);
+    }
 
-  &[data-selected] {
-    background: var(--highlight-background);
-    border-color: var(--highlight-background);
-    color: var(--highlight-foreground);
-    z-index: 2;
-  }
+    &[data-selected] {
+      background: var(--highlight-background);
+      border-color: var(--highlight-background);
+      color: var(--highlight-foreground);
+      z-index: 2;
+    }
 
-  &[data-focus-visible] {
-    outline: 3px solid var(--focus-ring-color);
-    outline-offset: 2px;
-    z-index: 3;
+    &[data-focus-visible] {
+      outline: 3px solid var(--focus-ring-color);
+      outline-offset: 2px;
+      z-index: 3;
+    }
   }
 }
