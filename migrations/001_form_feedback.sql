@@ -5,5 +5,8 @@ CREATE TABLE form_feedback (
   comment TEXT,
   ip TEXT,
   user_agent TEXT,
+  country TEXT,
+  region TEXT,
+  city TEXT,
   submitted_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );

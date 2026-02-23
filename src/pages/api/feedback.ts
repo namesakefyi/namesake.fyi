@@ -44,6 +44,15 @@ export const POST: APIRoute = async ({ request, locals }) => {
     null;
   const userAgent = request.headers.get("User-Agent") ?? null;
 
+  const cf = (
+    request as Request & {
+      cf?: { country?: string; region?: string; city?: string };
+    }
+  ).cf;
+  const country = cf?.country ?? null;
+  const region = cf?.region ?? null;
+  const city = cf?.city ?? null;
+
   const env = locals.runtime?.env;
   const db = env?.DB as D1Database | undefined;
 
@@ -57,9 +66,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
   await db
     .prepare(
-      "INSERT INTO form_feedback (form_slug, sentiment, comment, ip, user_agent) VALUES (?, ?, ?, ?, ?)",
+      "INSERT INTO form_feedback (form_slug, sentiment, comment, ip, user_agent, country, region, city) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
     )
-    .bind(form_slug, sentiment, commentValue, ip, userAgent)
+    .bind(form_slug, sentiment, commentValue, ip, userAgent, country, region, city)
     .run();
 
   const resendApiKey = env?.RESEND_API_KEY as string | undefined;

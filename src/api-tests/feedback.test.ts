@@ -15,12 +15,21 @@ const makeDb = () =>
     }),
   }) as unknown as D1Database;
 
-const makeRequest = (body: unknown, headers: Record<string, string> = {}) =>
-  new Request("http://localhost/api/feedback", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", ...headers },
-    body: JSON.stringify(body),
-  });
+type CfGeo = { country?: string; region?: string; city?: string };
+
+const makeRequest = (
+  body: unknown,
+  headers: Record<string, string> = {},
+  cf?: CfGeo,
+) =>
+  Object.assign(
+    new Request("http://localhost/api/feedback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...headers },
+      body: JSON.stringify(body),
+    }),
+    { cf },
+  );
 
 const makeLocals = (db: D1Database = makeDb()) => ({
   runtime: { env: { DB: db } },
@@ -119,6 +128,7 @@ describe("POST /api/feedback", () => {
         request: makeRequest(
           { ...validBody, comment: "Great form!" },
           { "CF-Connecting-IP": "1.2.3.4", "User-Agent": "TestBrowser/1.0" },
+          { country: "US", region: "Massachusetts", city: "Boston" },
         ),
         locals: makeLocals(db),
       } as any);
@@ -129,6 +139,9 @@ describe("POST /api/feedback", () => {
         "Great form!",
         "1.2.3.4",
         "TestBrowser/1.0",
+        "US",
+        "Massachusetts",
+        "Boston",
       );
     });
 
