@@ -108,17 +108,14 @@ jobs:
           name: coverage-main
           path: coverage-main
 
-      - name: Check for main coverage summary
-        id: check-main
-        run: |
-          if [ -f coverage-main/coverage-summary.json ]; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Report coverage
-        if: always()
+      - name: Report coverage and comparison
+        if: always() && steps.download-main.outcome == 'success'
         uses: davelosert/vitest-coverage-report-action@v2.8.3
         with:
-          json-summary-compare-path: ${{ steps.check-main.outputs.exists == 'true' && 'coverage-main/coverage-summary.json' || '' }}
+          json-summary-compare-path: coverage-main/coverage-summary.json
+
+        # Fallback to report branch coverage without comparison
+        # if coverage from main is not available
+      - name: Report coverage
+        if: always() && steps.download-main.outcome != 'success'
+        uses: davelosert/vitest-coverage-report-action@v2.8.3
