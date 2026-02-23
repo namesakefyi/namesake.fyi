@@ -5,28 +5,6 @@
   gap: var(--space-s);
 }
 
-.namesake-form [role="alert"] {
-  border: 2px solid var(--invalid-color);
-  background: var(--overlay-background);
-  border-radius: 6px;
-  padding: 12px;
-  max-width: 250px;
-  outline: none;
-
-  &:focus {
-    outline: 3px solid var(--focus-ring-color);
-    outline-offset: 2px;
-  }
-
-  h3 {
-    margin-top: 0;
-  }
-
-  p {
-    margin-bottom: 0;
-  }
-}
-
 .namesake-label {
   display: inline-block;
   color: var(--text-color);

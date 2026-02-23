@@ -6,11 +6,12 @@ import {
 } from "@remixicon/react";
 import { useActionState } from "react";
 import { Button } from "@/components/react/common/Button";
-import { FieldError, Form } from "@/components/react/common/Form";
+import { Form } from "@/components/react/common/Form";
 import { Radio, RadioGroup } from "@/components/react/common/RadioGroup";
 import { TextArea } from "@/components/react/common/TextArea";
 import type { FormFeedbackSentiment, FormSlug } from "@/constants/forms";
 import "./FormFeedback.css";
+import { Banner } from "../../common/Banner";
 
 interface FormFeedbackProps {
   formSlug: FormSlug;
@@ -46,7 +47,7 @@ export function FormFeedback({ formSlug }: FormFeedbackProps) {
 
   if (state === "success") {
     return (
-      <div className="form-feedback not-content">
+      <div className="form-feedback">
         <div className="form-feedback-success">
           <RiCheckLine size={32} aria-hidden />
           <div role="alert">Thank you for your feedback!</div>
@@ -56,7 +57,7 @@ export function FormFeedback({ formSlug }: FormFeedbackProps) {
   }
 
   return (
-    <Form className="form-feedback not-content" action={submitAction}>
+    <Form className="form-feedback" action={submitAction}>
       <RadioGroup
         name="sentiment"
         isRequired
@@ -80,7 +81,7 @@ export function FormFeedback({ formSlug }: FormFeedbackProps) {
         maxLength={1000}
       />
       {state === "error" && (
-        <FieldError>Something went wrong. Please try again.</FieldError>
+        <Banner variant="error">Something went wrong. Please try again.</Banner>
       )}
       <Button
         type="submit"
