@@ -68,12 +68,23 @@ export const POST: APIRoute = async ({ request, locals }) => {
     .prepare(
       "INSERT INTO form_feedback (form_slug, sentiment, comment, ip, user_agent, country, region, city) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
     )
-    .bind(form_slug, sentiment, commentValue, ip, userAgent, country, region, city)
+    .bind(
+      form_slug,
+      sentiment,
+      commentValue,
+      ip,
+      userAgent,
+      country,
+      region,
+      city,
+    )
     .run();
 
   const resendApiKey = env?.RESEND_API_KEY as string | undefined;
   if (resendApiKey) {
     const sentimentLabel = FORM_FEEDBACK_SENTIMENT[sentiment];
+    const location = [city, region, country].filter(Boolean).join(", ");
+
     try {
       const emailRes = await fetch("https://api.resend.com/emails", {
         method: "POST",
@@ -85,7 +96,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
           from: "noreply@namesake.fyi",
           to: "hey@namesake.fyi",
           subject: `${sentimentLabel} feedback on ${form_slug}`,
-          html: `<p>A user submitted <strong>${sentimentLabel}</strong> feedback on <a href="https://namesake.fyi/forms/${form_slug}">${form_slug}</a>.</p><p>${commentValue ?? "<em>No comment</em>"}</p>`,
+          html: `<p>A user ${location ? `in <strong>${location}</strong>` : ""} submitted <strong>${sentimentLabel}</strong> feedback on <a href="https://namesake.fyi/forms/${form_slug}">${form_slug}</a>.</p><p>${commentValue ?? "<em>No comment</em>"}</p>`,
         }),
       });
       if (!emailRes.ok) {
