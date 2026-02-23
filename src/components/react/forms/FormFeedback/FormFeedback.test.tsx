@@ -32,9 +32,7 @@ describe("FormFeedback", () => {
     expect(
       screen.getByRole("textbox", { name: /please share any other feedback/i }),
     ).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: /submit/i }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /submit/i })).toBeInTheDocument();
   });
 
   it("allows selecting a sentiment option", async () => {
