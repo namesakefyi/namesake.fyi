@@ -91,6 +91,11 @@ export function FormFeedback({ formSlug }: FormFeedbackProps) {
       >
         Submit
       </Button>
+      <small>
+        Feedback is privately shared with the Namesake team to help us improve.
+        We collect basic device information like your IP address to help prevent
+        spam and abuse.
+      </small>
     </Form>
   );
 }
