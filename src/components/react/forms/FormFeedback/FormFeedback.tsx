@@ -71,11 +71,11 @@ export function FormFeedback({ formSlug }: FormFeedbackProps) {
       >
         <Radio value="positive" className="form-feedback-sentiment-option">
           <RiThumbUpFill size={20} aria-hidden />
-          {FORM_FEEDBACK_SENTIMENT.positive}
+          Easy
         </Radio>
         <Radio value="negative" className="form-feedback-sentiment-option">
           <RiThumbDownFill size={20} aria-hidden />
-          {FORM_FEEDBACK_SENTIMENT.negative}
+          Some problems
         </Radio>
       </RadioGroup>
       <TextArea

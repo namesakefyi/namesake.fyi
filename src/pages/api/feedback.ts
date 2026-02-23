@@ -101,9 +101,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: "feedback@namesake.fyi",
-          to: "team@namesake.fyi",
-          subject: `New form feedback: ${form_slug}`,
+          from: "noreply@namesake.fyi",
+          to: "hey@namesake.fyi",
+          subject: `New form feedback: ${form_slug} (${sentimentLabel})`,
           text: `Form: ${form_slug}\nRating: ${sentimentLabel}\n\n${commentTrimmed ?? "No comment"}`,
         }),
       });

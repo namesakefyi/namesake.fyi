@@ -67,8 +67,8 @@ export const FORM_SLUGS = Object.keys(FORM_CONFIGS) as FormSlug[];
  * Sentiment rating options for form feedback.
  */
 export const FORM_FEEDBACK_SENTIMENT = {
-  positive: "Easy",
-  negative: "Some problems",
+  positive: "Positive",
+  negative: "Negative",
 } as const;
 
 export type FormFeedbackSentiment = keyof typeof FORM_FEEDBACK_SENTIMENT;
