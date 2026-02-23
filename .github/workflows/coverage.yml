@@ -109,7 +109,7 @@ jobs:
           path: coverage-main
 
       - name: Report coverage and comparison
-        if: always() && steps.download-main.outcome == 'success'
+        if: always() && hashFiles('coverage-main/coverage-summary.json') != ''
         uses: davelosert/vitest-coverage-report-action@v2.8.3
         with:
           json-summary-compare-path: coverage-main/coverage-summary.json
@@ -117,5 +117,5 @@ jobs:
         # Fallback to report branch coverage without comparison
         # if coverage from main is not available
       - name: Report coverage
-        if: always() && steps.download-main.outcome != 'success'
+        if: always() && hashFiles('coverage-main/coverage-summary.json') == ''
         uses: davelosert/vitest-coverage-report-action@v2.8.3
