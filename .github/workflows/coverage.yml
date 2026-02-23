@@ -8,9 +8,7 @@ on:
       - ".husky/**"
       - ".storybook/**"
       - ".vscode/**"
-      - "docs/**"
       - "public/**"
-      - "CHANGELOG.md"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -103,13 +101,24 @@ jobs:
           path: coverage
 
       - name: Download coverage (main)
+        id: download-main
+        continue-on-error: true
         uses: actions/download-artifact@v7
         with:
           name: coverage-main
           path: coverage-main
 
+      - name: Check for main coverage summary
+        id: check-main
+        run: |
+          if [ -f coverage-main/coverage-summary.json ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Report coverage
         if: always()
         uses: davelosert/vitest-coverage-report-action@v2.8.3
         with:
-          json-summary-compare-path: coverage-main/coverage-summary.json
+          json-summary-compare-path: ${{ steps.check-main.outputs.exists == 'true' && 'coverage-main/coverage-summary.json' || '' }}
