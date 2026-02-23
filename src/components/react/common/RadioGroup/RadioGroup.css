@@ -64,13 +64,13 @@
   }
 }
 
-.namesake-radio-group .radio-items {
+.namesake-radio-group :where(.radio-items) {
   display: flex;
   gap: var(--space-s);
   align-items: flex-start;
 }
 
-.namesake-radio-group[data-orientation="vertical"] .radio-items {
+.namesake-radio-group[data-orientation="vertical"] :where(.radio-items) {
   flex-direction: column;
 
   &:not(:first-child) {
@@ -78,6 +78,6 @@
   }
 }
 
-.namesake-radio-group[data-orientation="horizontal"] .radio-items {
+.namesake-radio-group[data-orientation="horizontal"] :where(.radio-items) {
   flex-direction: row;
 }
