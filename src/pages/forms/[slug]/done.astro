@@ -1,6 +1,16 @@
 ---
 import { DeleteFormDataModal } from "@/components/react/forms/DeleteFormDataModal";
+import { FormFeedback } from "@/components/react/forms/FormFeedback/FormFeedback";
+import { FORM_SLUGS, type FormSlug } from "@/constants/forms";
 import ProseLayout from "@/layouts/ProseLayout.astro";
+
+const { slug } = Astro.params;
+
+if (!slug || !(FORM_SLUGS as readonly string[]).includes(slug)) {
+  return Astro.redirect("/forms/done");
+}
+
+const formSlug = slug as FormSlug;
 ---
 
 <ProseLayout
@@ -14,5 +24,6 @@ import ProseLayout from "@/layouts/ProseLayout.astro";
       >Chat on Discord</a
     > or <a href="mailto:hey@namesake.fyi">email us</a> for help.
   </p>
+  <FormFeedback client:load formSlug={formSlug} />
   <DeleteFormDataModal client:only="react" />
 </ProseLayout>

@@ -42,6 +42,7 @@ export function MaCourtOrderForm({
       updatedAt={updatedAt}
       pdfs={pdfs}
       costs={costs}
+      slug="court-order-ma"
     >
       {banner && (
         <Banner icon={RiMegaphoneLine}>

@@ -37,6 +37,7 @@ export function SocialSecurityForm({
       onSubmit={handleSubmit}
       updatedAt={updatedAt}
       pdfs={pdfs}
+      slug={socialSecurityConfig.slug}
     />
   );
 }

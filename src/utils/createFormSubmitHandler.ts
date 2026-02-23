@@ -1,4 +1,4 @@
-import type { FormEvent } from "react";
+import type React from "react";
 import type { UseFormReturn } from "react-hook-form";
 import { resolveVisibleFields } from "@/components/react/forms/FormContainer/resolveVisibleFields";
 import type { FormData } from "@/constants/fields";
@@ -19,7 +19,7 @@ export function createFormSubmitHandler<TFormData extends FormData>(
   form: UseFormReturn<TFormData>,
   onSubmit?: () => Promise<void>,
 ) {
-  return async (event: FormEvent<HTMLFormElement>) => {
+  return async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = form.getValues();

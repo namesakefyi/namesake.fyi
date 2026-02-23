@@ -4,6 +4,7 @@ import { FormNavigation } from "@/components/react/forms/FormNavigation";
 import { FormReviewStep } from "@/components/react/forms/FormReviewStep";
 import { FormTitleStep } from "@/components/react/forms/FormTitleStep/FormTitleStep";
 import type { FieldName, FormData } from "@/constants/fields";
+import { type FormSlug, getFormDonePath } from "@/constants/forms";
 import type { Cost } from "@/utils/formatTotalCosts";
 import type { FormPdfMetadata } from "@/utils/getFormPdfMetadata";
 import { FormStepContext } from "./FormStepContext";
@@ -38,7 +39,7 @@ export interface FormContainerProps {
   form: UseFormReturn<any>;
 
   /** Submit handler for the final form submission. Can be async. */
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void | Promise<void>;
+  onSubmit: (e: React.SubmitEvent<HTMLFormElement>) => void | Promise<void>;
 
   /** The date the form was last updated. */
   updatedAt?: string;
@@ -48,6 +49,9 @@ export interface FormContainerProps {
 
   /** The costs associated with this form. */
   costs?: Cost[];
+
+  /** The form slug, used to construct the post-completion redirect URL. */
+  slug: FormSlug;
 }
 
 export function FormContainer({
@@ -60,6 +64,7 @@ export function FormContainer({
   updatedAt,
   pdfs,
   costs,
+  slug,
 }: FormContainerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -203,15 +208,15 @@ export function FormContainer({
   }, [navigationIndex, steps, scrollToFormTop]);
 
   const handleFormSubmit = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
+    async (e: React.SubmitEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (navigationIndex === steps.length) {
         // On the review step, trigger the actual form submission
         try {
           await onSubmit(e);
-          // Redirect to success page after successful submission
+          // Redirect to the form's feedback/done page after successful submission
           if (typeof window !== "undefined") {
-            window.location.href = "/forms/done";
+            window.location.href = getFormDonePath(slug);
           }
         } catch (error) {
           // If submission fails, stay on the review page
@@ -224,7 +229,14 @@ export function FormContainer({
         focusStepContent();
       }
     },
-    [navigationIndex, steps.length, onSubmit, goToNextStep, focusStepContent],
+    [
+      navigationIndex,
+      steps.length,
+      onSubmit,
+      goToNextStep,
+      focusStepContent,
+      slug,
+    ],
   );
 
   // Memoize the current step component to prevent unnecessary recreations

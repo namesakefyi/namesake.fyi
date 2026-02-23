@@ -31,7 +31,7 @@ export function FormReviewStep({
 }: FormReviewStepProps) {
   const { onSubmit } = useFormStep();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit(e);
   };

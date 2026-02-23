@@ -17,7 +17,7 @@ export interface FormStepContextValue {
   /** Whether the user is in reviewing mode (navigated from review page to edit a field) */
   isReviewingMode: boolean;
   /** Submit handler for form steps */
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  onSubmit: (e: React.SubmitEvent<HTMLFormElement>) => void;
   /** The costs associated with this form */
   costs?: Cost[];
 }

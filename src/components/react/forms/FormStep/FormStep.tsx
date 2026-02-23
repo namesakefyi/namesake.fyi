@@ -32,7 +32,7 @@ export function FormStep({ stepConfig, children, className }: FormStepProps) {
   const descriptionId = useId();
   const { onSubmit, isReviewingMode } = useFormStep();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // If in reviewing mode, navigate back to review page

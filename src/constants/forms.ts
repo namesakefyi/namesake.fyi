@@ -5,6 +5,12 @@ import type { FieldName, FormData } from "./fields";
 import type { PDFId } from "./pdf";
 
 /**
+ * Type representing all valid form slugs.
+ * Update this union whenever a new form is added to FORM_CONFIGS.
+ */
+export type FormSlug = "court-order-ma" | "social-security";
+
+/**
  * Configuration for a PDF within a form.
  */
 export interface FormPdfConfig {
@@ -24,7 +30,7 @@ export type FormInstructionsFn = (data: Partial<FormData>) => string[];
  */
 export interface FormConfig {
   /** Form identifier matching the URL slug */
-  slug: string;
+  slug: FormSlug;
   /** Form steps configuration */
   steps: readonly StepConfig[];
   /** Flattened array of all field names from steps */
@@ -40,24 +46,36 @@ export interface FormConfig {
 /**
  * Registry of all form configurations.
  */
-export const FORM_CONFIGS = {
+export const FORM_CONFIGS: Record<FormSlug, FormConfig> = {
   "court-order-ma": courtOrderMaConfig,
   "social-security": socialSecurityConfig,
-} as const;
+};
 
 /**
  * Get a form configuration by slug.
  */
-export function getFormConfig(slug: string): FormConfig | undefined {
-  return FORM_CONFIGS[slug as FormSlug];
+export function getFormConfig(slug: FormSlug): FormConfig | undefined {
+  return FORM_CONFIGS[slug];
 }
-
-/**
- * Type representing all valid form slugs.
- */
-export type FormSlug = keyof typeof FORM_CONFIGS;
 
 /**
  * Array of all form slugs.
  */
 export const FORM_SLUGS = Object.keys(FORM_CONFIGS) as FormSlug[];
+
+/**
+ * Sentiment rating options for form feedback.
+ */
+export const FORM_FEEDBACK_SENTIMENT = {
+  positive: "Easy",
+  negative: "Some problems",
+} as const;
+
+export type FormFeedbackSentiment = keyof typeof FORM_FEEDBACK_SENTIMENT;
+
+/**
+ * Returns the URL path for the post-completion feedback page for a given form.
+ */
+export function getFormDonePath(slug: FormSlug): string {
+  return `/forms/${slug}/done`;
+}
