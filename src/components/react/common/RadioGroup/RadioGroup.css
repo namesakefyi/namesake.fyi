@@ -68,14 +68,14 @@
   display: flex;
   gap: var(--space-s);
   align-items: flex-start;
-
-  &:not(:first-child) {
-    padding-block-start: var(--space-xs);
-  }
 }
 
 .namesake-radio-group[data-orientation="vertical"] .radio-items {
   flex-direction: column;
+
+  &:not(:first-child) {
+    padding-block-start: var(--space-xs);
+  }
 }
 
 .namesake-radio-group[data-orientation="horizontal"] .radio-items {

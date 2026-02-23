@@ -5,31 +5,67 @@
   margin-block: var(--space-xl);
   border: 1px solid var(--border-color);
   padding: var(--space-l);
+  border-radius: var(--radius-m);
 }
 
 .form-feedback-success {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  text-align: center;
   gap: var(--space-s);
-  margin-block: var(--space-xl);
   font-weight: var(--weight-bold);
 }
 
-.form-feedback-rating {
+/* RadioGroup styled to look like a ToggleButtonGroup */
+.form-feedback-sentiment {
   width: 100%;
+
+  .radio-items {
+    gap: 0;
+    width: 100%;
+
+    &:not(:last-child) {
+      margin-block-end: var(--space-2xs);
+    }
+  }
 }
 
-.form-feedback-rating-buttons {
-  display: flex;
-  width: 100%;
+.form-feedback-sentiment-option {
+  flex: 1;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  padding: var(--space-xs) var(--space-m);
+  gap: var(--space-xs);
+  cursor: pointer;
+  margin-inline-start: -1px;
+  z-index: 1;
 
-  button {
-    display: flex;
-    flex: 1;
-    gap: var(--space-xs);
+  &::before {
+    display: none;
+  }
 
-    svg {
-      flex-shrink: 0;
-    }
+  &:first-child {
+    border-top-left-radius: var(--radius-xs);
+    border-bottom-left-radius: var(--radius-xs);
+  }
+
+  &:last-child {
+    border-top-right-radius: var(--radius-xs);
+    border-bottom-right-radius: var(--radius-xs);
+  }
+
+  &[data-selected] {
+    background: var(--highlight-background);
+    border-color: var(--highlight-background);
+    color: var(--highlight-foreground);
+    z-index: 2;
+  }
+
+  &[data-focus-visible] {
+    outline: 3px solid var(--focus-ring-color);
+    outline-offset: 2px;
+    z-index: 3;
   }
 }

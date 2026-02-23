@@ -4,12 +4,11 @@ import {
   RiThumbDownFill,
   RiThumbUpFill,
 } from "@remixicon/react";
-import { useActionState, useState } from "react";
+import { useActionState } from "react";
 import { Button } from "@/components/react/common/Button";
-import { FieldError, Form, Label } from "@/components/react/common/Form";
+import { FieldError, Form } from "@/components/react/common/Form";
+import { Radio, RadioGroup } from "@/components/react/common/RadioGroup";
 import { TextArea } from "@/components/react/common/TextArea";
-import { ToggleButton } from "@/components/react/common/ToggleButton";
-import { ToggleButtonGroup } from "@/components/react/common/ToggleButtonGroup";
 import {
   FORM_FEEDBACK_SENTIMENT,
   type FormFeedbackSentiment,
@@ -24,14 +23,9 @@ interface FormFeedbackProps {
 type SubmitState = "idle" | "success" | "error";
 
 export function FormFeedback({ formSlug }: FormFeedbackProps) {
-  const [sentiment, setSentiment] = useState<FormFeedbackSentiment | null>(
-    null,
-  );
-
   const [state, submitAction, isPending] = useActionState(
     async (_prev: SubmitState, formData: FormData) => {
-      if (!sentiment) return "idle";
-
+      const sentiment = formData.get("sentiment") as FormFeedbackSentiment;
       const comment = formData.get("comment") as string | null;
 
       try {
@@ -56,40 +50,39 @@ export function FormFeedback({ formSlug }: FormFeedbackProps) {
 
   if (state === "success") {
     return (
-      <div className="form-feedback-success">
-        <RiCheckLine size={24} aria-hidden />
-        <p>Thank you for your feedback!</p>
+      <div className="form-feedback not-content">
+        <div className="form-feedback-success">
+          <RiCheckLine size={32} aria-hidden />
+          <div role="alert">Thank you for your feedback!</div>
+        </div>
       </div>
     );
   }
 
   return (
-    <Form className="form-feedback" action={submitAction}>
-      <div className="form-feedback-rating">
-        <Label id="form-rating-label">
-          How easy was it to complete this form?
-        </Label>
-        <ToggleButtonGroup
-          selectionMode="single"
-          selectedKeys={sentiment ? new Set([sentiment]) : new Set()}
-          onSelectionChange={(keys) => {
-            const key = [...keys][0] as FormFeedbackSentiment | undefined;
-            setSentiment(key ?? null);
-          }}
-          aria-labelledby="form-rating-label"
-          className="form-feedback-rating-buttons"
-        >
-          <ToggleButton id="positive">
-            <RiThumbUpFill size={20} aria-hidden />
-            {FORM_FEEDBACK_SENTIMENT.positive}
-          </ToggleButton>
-          <ToggleButton id="negative">
-            <RiThumbDownFill size={20} aria-hidden />
-            {FORM_FEEDBACK_SENTIMENT.negative}
-          </ToggleButton>
-        </ToggleButtonGroup>
-      </div>
-      <TextArea name="comment" label="Please share any other feedback." />
+    <Form className="form-feedback not-content" action={submitAction}>
+      <RadioGroup
+        name="sentiment"
+        isRequired
+        label="How easy was it to complete this form?"
+        orientation="horizontal"
+        className="form-feedback-sentiment"
+        errorMessage="Please select a rating."
+      >
+        <Radio value="positive" className="form-feedback-sentiment-option">
+          <RiThumbUpFill size={20} aria-hidden />
+          {FORM_FEEDBACK_SENTIMENT.positive}
+        </Radio>
+        <Radio value="negative" className="form-feedback-sentiment-option">
+          <RiThumbDownFill size={20} aria-hidden />
+          {FORM_FEEDBACK_SENTIMENT.negative}
+        </Radio>
+      </RadioGroup>
+      <TextArea
+        name="comment"
+        label="Please share any other feedback."
+        maxLength={1000}
+      />
       {state === "error" && (
         <FieldError>Something went wrong. Please try again.</FieldError>
       )}
@@ -98,7 +91,6 @@ export function FormFeedback({ formSlug }: FormFeedbackProps) {
         variant="primary"
         endIcon={RiArrowRightLine}
         isPending={isPending}
-        isDisabled={!sentiment || isPending}
       >
         Submit
       </Button>

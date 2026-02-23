@@ -38,10 +38,17 @@ export const POST: APIRoute = async ({ request, locals }) => {
     );
   }
 
-  const commentValue =
+  const commentTrimmed =
     typeof comment === "string" && comment.trim() !== ""
       ? comment.trim()
       : null;
+
+  if (commentTrimmed && commentTrimmed.length > 1000) {
+    return Response.json(
+      { error: "Comment must be 1000 characters or fewer" },
+      { status: 400 },
+    );
+  }
 
   const ip =
     request.headers.get("CF-Connecting-IP") ??
@@ -56,6 +63,19 @@ export const POST: APIRoute = async ({ request, locals }) => {
     return Response.json({ error: "Database unavailable" }, { status: 503 });
   }
 
+  if (ip) {
+    const recent = await db
+      .prepare(
+        "SELECT COUNT(*) as count FROM form_feedback WHERE ip = ? AND submitted_at > datetime('now', '-1 hour')",
+      )
+      .bind(ip)
+      .first<{ count: number }>();
+
+    if (recent && recent.count >= 5) {
+      return Response.json({ error: "Too many submissions" }, { status: 429 });
+    }
+  }
+
   await db
     .prepare(
       "INSERT INTO form_feedback (form_slug, sentiment, comment, ip, user_agent) VALUES (?, ?, ?, ?, ?)",
@@ -63,7 +83,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     .bind(
       form_slug as FormSlug,
       sentiment as FormFeedbackSentiment,
-      commentValue,
+      commentTrimmed,
       ip,
       userAgent,
     )
@@ -84,7 +104,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
           from: "feedback@namesake.fyi",
           to: "team@namesake.fyi",
           subject: `New form feedback: ${form_slug}`,
-          text: `Form: ${form_slug}\nRating: ${sentimentLabel}\n\n${commentValue ?? "No comment"}`,
+          text: `Form: ${form_slug}\nRating: ${sentimentLabel}\n\n${commentTrimmed ?? "No comment"}`,
         }),
       });
     } catch {
