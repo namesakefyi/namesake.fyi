@@ -20,7 +20,7 @@ permissions:
 
 jobs:
   test-coverage-branch:
-    name: Test Coverage (Branch)
+    name: Test Coverage (${{ github.head_ref }})
     runs-on: ubuntu-latest
 
     steps:
@@ -52,7 +52,7 @@ jobs:
           overwrite: true
 
   test-coverage-main:
-    name: Test Coverage (Main)
+    name: Test Coverage (main)
     runs-on: ubuntu-latest
 
     steps:
@@ -94,7 +94,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v5
 
-      - name: Download coverage (branch)
+      - name: Download coverage (${{ github.head_ref }})
         uses: actions/download-artifact@v7
         with:
           name: coverage-branch
