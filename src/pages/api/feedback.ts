@@ -103,8 +103,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
         body: JSON.stringify({
           from: "noreply@namesake.fyi",
           to: "hey@namesake.fyi",
-          subject: `New form feedback: ${form_slug} (${sentimentLabel})`,
-          text: `Form: ${form_slug}\nRating: ${sentimentLabel}\n\n${commentTrimmed ?? "No comment"}`,
+          subject: `${sentimentLabel} feedback on ${form_slug}`,
+          html: `<p>A user submitted <strong>${sentimentLabel}</strong> feedback on <a href="https://namesake.fyi/forms/${form_slug}">${form_slug}</a>.</p><p>${commentTrimmed ?? "<em>No comment</em>"}</p>`,
         }),
       });
       if (!emailRes.ok) {
