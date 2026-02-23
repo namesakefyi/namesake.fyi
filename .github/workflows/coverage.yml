@@ -1,0 +1,109 @@
+name: Coverage
+
+on:
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - ".changeset/**"
+      - ".husky/**"
+      - ".storybook/**"
+      - ".vscode/**"
+      - "docs/**"
+      - "public/**"
+      - "CHANGELOG.md"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  test-coverage:
+    name: Test Coverage
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        branch:
+          - ${{ github.head_ref }}
+          - main
+
+    env:
+      artifact_name: ${{ matrix.branch }}
+
+    outputs:
+      artifact_main: ${{ steps.sanitize.outputs.artifact_main }}
+      artifact_branch: ${{ steps.sanitize.outputs.artifact_branch }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ matrix.branch }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Test coverage
+        run: npx vitest --coverage.enabled true
+
+        # https://github.com/actions/upload-artifact/issues/22#issuecomment-873445944
+      - name: Sanitize name for artifact upload
+        id: sanitize
+        run: |
+          name=${{ matrix.branch }}
+          name=$(echo -n "$name" | sed -e 's/[ \t:\/\\"<>|*?]/-/g' -e 's/--*/-/g')
+          if [ "${{ matrix.branch }}" == "main" ]; then
+            echo "artifact_main=${name}" >> $GITHUB_OUTPUT
+          else
+            echo "artifact_branch=${name}" >> $GITHUB_OUTPUT
+          fi
+          echo "artifact_name=${name}" >> $GITHUB_ENV
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.artifact_name }}
+          path: coverage
+          overwrite: true
+
+  report-coverage:
+    needs: test-coverage
+    name: Report Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Download coverage (${{ needs.test-coverage.outputs.artifact_branch }})
+        uses: actions/download-artifact@v5
+        with:
+          name: ${{ needs.test-coverage.outputs.artifact_branch }}
+          path: coverage
+
+      - name: Download coverage (main)
+        uses: actions/download-artifact@v5
+        with:
+          name: ${{ needs.test-coverage.outputs.artifact_main }}
+          path: coverage-main
+
+      - name: Report coverage
+        if: always()
+        uses: davelosert/vitest-coverage-report-action@v2.8.3
+        with:
+          json-summary-compare-path: coverage-main/coverage-summary.json

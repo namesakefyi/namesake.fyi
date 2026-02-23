@@ -101,7 +101,7 @@
     "@types/react-dom": "^19.2.3",
     "@types/topojson-client": "^3.1.5",
     "@types/topojson-specification": "^1.0.5",
-    "@vitest/coverage-v8": "4.0.15",
+    "@vitest/coverage-v8": "4.0.18",
     "@vueless/storybook-dark-mode": "^10.0.7",
     "autoprefixer": "^10.4.22",
     "baseline-browser-mapping": "^2.9.19",
