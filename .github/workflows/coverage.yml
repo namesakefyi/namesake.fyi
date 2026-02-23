@@ -97,13 +97,13 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Download coverage (branch)
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@v7
         with:
           name: coverage-branch
           path: coverage
 
       - name: Download coverage (main)
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@v7
         with:
           name: coverage-main
           path: coverage-main
