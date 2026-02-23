@@ -94,7 +94,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const sentimentLabel =
       FORM_FEEDBACK_SENTIMENT[sentiment as FormFeedbackSentiment];
     try {
-      await fetch("https://api.resend.com/emails", {
+      const emailRes = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${resendApiKey}`,
@@ -107,8 +107,12 @@ export const POST: APIRoute = async ({ request, locals }) => {
           text: `Form: ${form_slug}\nRating: ${sentimentLabel}\n\n${commentTrimmed ?? "No comment"}`,
         }),
       });
-    } catch {
-      // Best-effort: don't fail the request if email fails
+      if (!emailRes.ok) {
+        const errorBody = await emailRes.text();
+        console.error(`Resend error ${emailRes.status}: ${errorBody}`);
+      }
+    } catch (err) {
+      console.error("Resend fetch failed:", err);
     }
   }
 
