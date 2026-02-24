@@ -23,14 +23,16 @@ describe("FormFeedback", () => {
     render(<FormFeedback formSlug="court-order-ma" />);
 
     expect(
-      screen.getByRole("radiogroup", { name: /how easy was it/i }),
+      screen.getByRole("radiogroup", {
+        name: /was it easy to complete this form/i,
+      }),
     ).toBeInTheDocument();
     expect(screen.getByRole("radio", { name: /easy/i })).toBeInTheDocument();
     expect(
-      screen.getByRole("radio", { name: /some problems/i }),
+      screen.getByRole("radio", { name: /problems/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("textbox", { name: /please share any other feedback/i }),
+      screen.getByRole("textbox", { name: /please share any feedback/i }),
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /submit/i })).toBeInTheDocument();
   });
@@ -40,7 +42,7 @@ describe("FormFeedback", () => {
     render(<FormFeedback formSlug="court-order-ma" />);
 
     const positive = screen.getByRole("radio", { name: /easy/i });
-    const negative = screen.getByRole("radio", { name: /some problems/i });
+    const negative = screen.getByRole("radio", { name: /problems/i });
 
     await user.click(positive);
     expect(positive).toBeChecked();
@@ -112,7 +114,7 @@ describe("FormFeedback", () => {
     const user = userEvent.setup();
     render(<FormFeedback formSlug="court-order-ma" />);
 
-    await user.click(screen.getByRole("radio", { name: /some problems/i }));
+    await user.click(screen.getByRole("radio", { name: /problems/i }));
     vi.mocked(fetch).mockResolvedValueOnce(errorResponse());
     await user.click(screen.getByRole("button", { name: /submit/i }));
 

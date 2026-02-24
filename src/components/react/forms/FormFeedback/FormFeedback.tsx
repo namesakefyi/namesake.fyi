@@ -61,23 +61,31 @@ export function FormFeedback({ formSlug }: FormFeedbackProps) {
       <RadioGroup
         name="sentiment"
         isRequired
-        label="How easy was it to complete this form?"
+        label="Was it easy to complete this form?"
         orientation="horizontal"
         className="form-feedback-sentiment"
         errorMessage="Please select a rating."
       >
-        <Radio value="positive" className="form-feedback-sentiment-option">
+        <Radio
+          value="positive"
+          className="form-feedback-sentiment-option"
+          aria-label="It was easy"
+        >
           <RiThumbUpFill size={20} aria-hidden />
-          Easy
+          <span aria-hidden="true">Easy</span>
         </Radio>
-        <Radio value="negative" className="form-feedback-sentiment-option">
+        <Radio
+          value="negative"
+          className="form-feedback-sentiment-option"
+          aria-label="I had some problems"
+        >
           <RiThumbDownFill size={20} aria-hidden />
-          Some problems
+          <span aria-hidden="true">Hmm&hellip;</span>
         </Radio>
       </RadioGroup>
       <TextArea
         name="comment"
-        label="Please share any other feedback."
+        label="Please share any feedback."
         maxLength={1000}
       />
       {state === "error" && (
@@ -91,11 +99,6 @@ export function FormFeedback({ formSlug }: FormFeedbackProps) {
       >
         Submit
       </Button>
-      <small>
-        Feedback is privately shared with the Namesake team to help us improve.
-        We collect basic device information like your IP address to help prevent
-        spam and abuse.
-      </small>
     </Form>
   );
 }
