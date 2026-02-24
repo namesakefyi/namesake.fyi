@@ -96,7 +96,6 @@ describe("useForm", () => {
         expect(result.current.isLoading).toBe(false);
       });
     });
-
   });
 
   describe("auto-save on change", () => {
@@ -145,7 +144,9 @@ describe("useForm", () => {
     });
 
     it("logs an error when saveField throws during auto-save", async () => {
-      vi.mocked(database.saveField).mockRejectedValue(new Error("Write failed"));
+      vi.mocked(database.saveField).mockRejectedValue(
+        new Error("Write failed"),
+      );
 
       const { result } = renderHook(() => useForm(["oldFirstName"]));
 
@@ -229,7 +230,9 @@ describe("useForm", () => {
     });
 
     it("logs and re-throws when saveField throws during submit", async () => {
-      vi.mocked(database.saveField).mockRejectedValue(new Error("Write failed"));
+      vi.mocked(database.saveField).mockRejectedValue(
+        new Error("Write failed"),
+      );
 
       const { result } = renderHook(() => useForm(["oldFirstName"]));
 
