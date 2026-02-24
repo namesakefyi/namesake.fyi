@@ -27,6 +27,7 @@ export default getViteConfig({
         "**/*.config.?(c|m)[jt]s?(x)",
         "**/*.stories.tsx",
         "src/components/**/index.ts",
+        "src/pdfs/index.ts",
       ],
       thresholds: {
         statements: 70,
