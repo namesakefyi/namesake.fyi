@@ -6,6 +6,7 @@ import {
   RiInformation2Line,
 } from "@remixicon/react";
 import "./Banner.css";
+import clsx from "clsx";
 
 export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -24,6 +25,7 @@ export function Banner({
   children,
   icon,
   variant = "info",
+  className,
   ...props
 }: BannerProps) {
   const Icon = icon ?? variantToIcon[variant];
@@ -31,7 +33,12 @@ export function Banner({
     variant === "error" || variant === "warning" ? "alert" : "status";
 
   return (
-    <div role={role} className="banner" data-variant={variant} {...props}>
+    <div
+      role={role}
+      className={clsx("banner", className)}
+      data-variant={variant}
+      {...props}
+    >
       <div className="banner-icon">
         <Icon size={24} />
       </div>

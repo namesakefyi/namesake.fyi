@@ -1,0 +1,121 @@
+name: Coverage
+
+on:
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - ".changeset/**"
+      - ".husky/**"
+      - ".storybook/**"
+      - ".vscode/**"
+      - "public/**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  test-coverage-branch:
+    name: Test Coverage (${{ github.head_ref }})
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Test coverage
+        run: npx vitest --coverage.enabled true
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-branch
+          path: coverage
+          overwrite: true
+
+  test-coverage-main:
+    name: Test Coverage (main)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Test coverage
+        run: npx vitest --coverage.enabled true
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-main
+          path: coverage
+          overwrite: true
+
+  report-coverage:
+    needs: [test-coverage-branch, test-coverage-main]
+    name: Report Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Download coverage (${{ github.head_ref }})
+        uses: actions/download-artifact@v7
+        with:
+          name: coverage-branch
+          path: coverage
+
+      - name: Download coverage (main)
+        id: download-main
+        continue-on-error: true
+        uses: actions/download-artifact@v7
+        with:
+          name: coverage-main
+          path: coverage-main
+
+      - name: Report coverage and comparison
+        if: always() && hashFiles('coverage-main/coverage-summary.json') != ''
+        uses: davelosert/vitest-coverage-report-action@v2.8.3
+        with:
+          json-summary-compare-path: coverage-main/coverage-summary.json
+
+        # Fallback to report branch coverage without comparison
+        # if coverage from main is not available
+      - name: Report coverage
+        if: always() && hashFiles('coverage-main/coverage-summary.json') == ''
+        uses: davelosert/vitest-coverage-report-action@v2.8.3

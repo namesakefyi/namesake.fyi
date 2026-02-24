@@ -56,6 +56,10 @@ describe("formatFieldValue", () => {
     it("returns undefined for null", () => {
       expect(formatFieldValue("pronouns", null)).toBeUndefined();
     });
+
+    it("returns undefined when value is not an array", () => {
+      expect(formatFieldValue("pronouns", "they/them")).toBeUndefined();
+    });
   });
 
   describe("phone number formatting", () => {
@@ -68,6 +72,11 @@ describe("formatFieldValue", () => {
     it("returns undefined for empty phone number", () => {
       expect(formatFieldValue("phoneNumber", "")).toBeUndefined();
     });
+
+    it("returns undefined for a falsy non-empty phone value", () => {
+      // 0 bypasses the === "" early return but is still falsy inside formatPhoneNumber
+      expect(formatFieldValue("phoneNumber", 0)).toBeUndefined();
+    });
   });
 
   describe("date formatting", () => {
@@ -78,6 +87,22 @@ describe("formatFieldValue", () => {
 
     it("returns undefined for empty date", () => {
       expect(formatFieldValue("dateOfBirth", "")).toBeUndefined();
+    });
+
+    it("returns undefined for a falsy non-empty date value", () => {
+      // false bypasses the === "" early return but is still falsy inside formatDate
+      expect(formatFieldValue("dateOfBirth", false)).toBeUndefined();
+    });
+
+    it("returns the raw value when the date string cannot be parsed", () => {
+      expect(formatFieldValue("dateOfBirth", "not-a-date")).toBe("not-a-date");
+    });
+  });
+
+  describe("unknown field name", () => {
+    it("coerces the value to a string", () => {
+      // @ts-expect-error - testing with invalid field name
+      expect(formatFieldValue("unknownField", 42)).toBe("42");
     });
   });
 });
