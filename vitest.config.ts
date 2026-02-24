@@ -1,6 +1,6 @@
 /// <reference types="vitest/config" />
 import { getViteConfig } from "astro/config";
-import { configDefaults } from "vitest/config";
+import { configDefaults, coverageConfigDefaults } from "vitest/config";
 
 export default getViteConfig({
   // @ts-expect-error - Might be fixed after upgrading to Astro v6
@@ -10,5 +10,31 @@ export default getViteConfig({
     exclude: [...configDefaults.exclude, "e2e/**"],
     setupFiles: ["./src/vitest.setup.ts"],
     environment: "jsdom",
+    coverage: {
+      reporter: ["text", "json-summary", "json"],
+      reportOnFailure: true,
+      include: [
+        "src/components/**/*.{ts,tsx}",
+        "src/db/**/*.{ts,tsx}",
+        "src/pdfs/**/*.{ts,tsx}",
+        "src/utils/**/*.{ts,tsx}",
+      ],
+      exclude: [
+        ...coverageConfigDefaults.exclude,
+        "**/*.css",
+        "**/*.pdf",
+        "**/*.astro",
+        "**/*.config.?(c|m)[jt]s?(x)",
+        "**/*.stories.tsx",
+        "src/components/**/index.ts",
+        "src/pdfs/index.ts",
+      ],
+      thresholds: {
+        lines: 85,
+        statements: 85,
+        functions: 80,
+        branches: 75,
+      },
+    },
   },
 });

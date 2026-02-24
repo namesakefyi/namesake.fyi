@@ -27,8 +27,8 @@ pnpm-debug.log*
 .idea/
 
 # tests
-artifacts
-coverage
+artifacts/
+coverage/
 /test-results/
 /playwright-report/
 /blob-report/

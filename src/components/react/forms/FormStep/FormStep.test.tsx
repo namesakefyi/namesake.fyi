@@ -1,28 +1,34 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import type { ReactNode } from "react";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import type { StepConfig } from "../FormContainer";
 import { FormStepContext } from "../FormContainer/FormStepContext";
 import { FormStep, FormSubsection } from "./FormStep";
 
-// Test wrapper that provides FormStepContext
-function TestWrapper({ children }: { children: ReactNode }) {
-  return (
-    <FormStepContext.Provider
-      value={{
-        onNext: vi.fn(),
-        onBack: vi.fn(),
-        formTitle: "Test Form",
-        isReviewStep: false,
-        currentStepIndex: 2, // Step 2 of actual steps
-        totalSteps: 5, // 5 actual steps
-        isReviewingMode: false,
-        onSubmit: vi.fn(),
-      }}
-    >
+const defaultContextValue = {
+  onNext: vi.fn(),
+  onBack: vi.fn(),
+  formTitle: "Test Form",
+  isReviewStep: false,
+  currentStepIndex: 2,
+  totalSteps: 5,
+  isReviewingMode: false,
+  onSubmit: vi.fn(),
+};
+
+function makeWrapper(
+  overrides: Partial<typeof defaultContextValue> = {},
+): ({ children }: { children: ReactNode }) => ReactNode {
+  return ({ children }) => (
+    <FormStepContext.Provider value={{ ...defaultContextValue, ...overrides }}>
       {children}
     </FormStepContext.Provider>
   );
+}
+
+// Default wrapper for tests that don't need context customisation
+function TestWrapper({ children }: { children: ReactNode }) {
+  return makeWrapper()({ children });
 }
 
 describe("FormStep", () => {
@@ -118,6 +124,43 @@ describe("FormStep", () => {
     });
     expect(form).toBeInTheDocument();
     expect(form).not.toHaveAccessibleDescription();
+  });
+
+  describe("form submission", () => {
+    afterEach(() => {
+      window.location.hash = "";
+    });
+
+    it("calls onSubmit when not in reviewing mode", () => {
+      const onSubmit = vi.fn();
+      render(<FormStep stepConfig={formStep} />, {
+        wrapper: makeWrapper({ onSubmit, isReviewingMode: false }),
+      });
+
+      fireEvent.submit(screen.getByRole("form"));
+
+      expect(onSubmit).toHaveBeenCalledOnce();
+    });
+
+    it("sets window.location.hash to review when in reviewing mode", () => {
+      const onSubmit = vi.fn();
+      render(<FormStep stepConfig={formStep} />, {
+        wrapper: makeWrapper({ onSubmit, isReviewingMode: true }),
+      });
+
+      fireEvent.submit(screen.getByRole("form"));
+
+      expect(window.location.hash).toBe("#review");
+      expect(onSubmit).not.toHaveBeenCalled();
+    });
+
+    it("prevents the default form submission", () => {
+      render(<FormStep stepConfig={formStep} />, { wrapper: TestWrapper });
+      const form = screen.getByRole("form");
+      const event = fireEvent.submit(form);
+
+      expect(event).toBe(false); // fireEvent returns false when preventDefault was called
+    });
   });
 });
 
