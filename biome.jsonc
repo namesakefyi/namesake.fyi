@@ -10,7 +10,8 @@
       "!**/.vscode",
       "!**/src/styles/theme.css",
       "!.astro",
-      "!worker-configuration.d.ts"
+      "!worker-configuration.d.ts",
+      "!**/coverage"
     ]
   },
   "vcs": {
