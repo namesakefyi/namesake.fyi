@@ -1,9 +1,9 @@
-import type { StepConfig } from "@/components/react/forms/FormContainer";
-import { FormStep, FormSubsection } from "@/components/react/forms/FormStep";
+import { FormStep, FormSubsection, useFieldVisible } from "@/components/react/forms/FormStep";
 import { PronounSelectField } from "@/components/react/forms/PronounSelectField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
+import type { Step } from "@/forms/types";
 
-export const pronounsStep: StepConfig = {
+export const pronounsStep: Step = {
   id: "pronouns",
   title: "Do you want to share your pronouns with the court staff?",
   fields: ["isOkayToSharePronouns", "pronouns", "otherPronouns"],
@@ -18,16 +18,19 @@ export const pronounsStep: StepConfig = {
     }
     return true;
   },
-  component: ({ stepConfig, form }) => (
-    <FormStep stepConfig={stepConfig}>
-      <YesNoField
-        name="isOkayToSharePronouns"
-        label="Share my pronouns with the court staff?"
-        labelHidden
-      />
-      <FormSubsection isVisible={form.watch("isOkayToSharePronouns") === true}>
-        <PronounSelectField />
-      </FormSubsection>
-    </FormStep>
-  ),
+  component: ({ stepConfig }) => {
+    const pronounsVisible = useFieldVisible(stepConfig, "pronouns");
+    return (
+      <FormStep stepConfig={stepConfig}>
+        <YesNoField
+          name="isOkayToSharePronouns"
+          label="Share my pronouns with the court staff?"
+          labelHidden
+        />
+        <FormSubsection isVisible={pronounsVisible}>
+          <PronounSelectField />
+        </FormSubsection>
+      </FormStep>
+    );
+  },
 };

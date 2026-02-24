@@ -1,7 +1,26 @@
 import { render, screen } from "@testing-library/react";
 import { useForm } from "react-hook-form";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vitest";
+import { createFormMachine, step } from "@/forms/createFormMachine";
+import type { Step } from "@/forms/types";
 import { FormContainer } from "./FormContainer";
+import * as db from "@/db/database";
+
+vi.mock("@/db/database", () => ({
+  getFormProgress: vi.fn().mockResolvedValue(undefined),
+  saveFormProgress: vi.fn().mockResolvedValue(undefined),
+  clearFormProgress: vi.fn().mockResolvedValue(undefined),
+}));
+
+const emptyStep: Step = {
+  id: "empty",
+  title: "Empty Step",
+  fields: [],
+  component: () => <div>Step content</div>,
+};
+
+const emptyFlow = [step(emptyStep)];
+const emptyMachine = createFormMachine({ id: "test", steps: emptyFlow });
 
 const FormContainerWithForm = () => {
   const form = useForm();
@@ -12,33 +31,48 @@ const FormContainerWithForm = () => {
       updatedAt="2025-01-01"
       form={form}
       onSubmit={() => {}}
-      steps={[]}
+      steps={emptyFlow}
+      machine={emptyMachine}
     />
   );
 };
 
 describe("FormContainer", () => {
-  beforeEach(() => {
-    // Mock scrollIntoView and focus for jsdom
+  beforeAll(() => {
+    if (typeof globalThis.indexedDB === "undefined") {
+      Object.defineProperty(globalThis, "indexedDB", { value: {} });
+    }
     Element.prototype.scrollIntoView = vi.fn();
-    HTMLElement.prototype.focus = vi.fn();
   });
 
-  it("renders title on title step", () => {
+  it("renders title on title step", async () => {
     render(<FormContainerWithForm />);
 
-    expect(screen.getByText("Test Title")).toBeInTheDocument();
+    expect(await screen.findByText("Test Title")).toBeInTheDocument();
   });
 
-  it("renders description on title step", () => {
+  it("renders description on title step", async () => {
     render(<FormContainerWithForm />);
 
-    expect(screen.getByText("Test Description")).toBeInTheDocument();
+    expect(await screen.findByText("Test Description")).toBeInTheDocument();
   });
 
-  it("renders start button on title step", () => {
+  it("renders start button on title step", async () => {
     render(<FormContainerWithForm />);
 
-    expect(screen.getByRole("button", { name: "Start" })).toBeInTheDocument();
+    expect(
+      await screen.findByRole("button", { name: "Start" }),
+    ).toBeInTheDocument();
+  });
+
+  it("renders a loading spinner while saved progress is being fetched", () => {
+    vi.mocked(db.getFormProgress).mockReturnValue(new Promise(() => {}));
+
+    render(<FormContainerWithForm />);
+
+    expect(
+      screen.getByRole("progressbar", { name: "Loading form" }),
+    ).toBeInTheDocument();
+    expect(screen.queryByText("Test Title")).not.toBeInTheDocument();
   });
 });

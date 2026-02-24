@@ -1,0 +1,61 @@
+.form-complete-step {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2xl);
+  padding-block: var(--space-xl) var(--space-2xl);
+}
+
+.form-complete-step-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.form-complete-step-heading {
+  font-size: var(--step-5);
+  font-weight: var(--weight-bold);
+  color: var(--text-color);
+  line-height: var(--line-height-display);
+  letter-spacing: var(--letter-spacing-condensed);
+  text-wrap: balance;
+  margin-inline-start: -0.06em;
+}
+
+.form-complete-step-description {
+  font-size: var(--step-1);
+  line-height: var(--line-height-display);
+  text-wrap: pretty;
+}
+
+.form-complete-step-settings {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-complete-step-setting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-l);
+  padding-block: var(--space-l);
+  border-top: 1px solid var(--border-color);
+}
+
+.form-complete-step-setting:last-child {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.form-complete-step-setting-label,
+.form-complete-step-setting > p {
+  flex: 1;
+  font-size: var(--step-0);
+  color: var(--text-color-secondary);
+  line-height: var(--line-height-body);
+}
+
+.form-complete-step-setting > .namesake-button,
+.form-complete-step-setting > form {
+  flex-shrink: 0;
+}

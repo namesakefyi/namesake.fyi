@@ -9,7 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { type IBrowser, type IDevice, UAParser } from "ua-parser-js";
 import { formatTimeEstimate } from "@/utils/formatTimeEstimate";
-import type { FormPdfMetadata } from "@/utils/getFormPdfMetadata";
+import type { FormPdfMetadata } from "@/forms/getFormPdfMetadata";
 import { smartquotes } from "@/utils/smartquotes";
 import { Button } from "../../common/Button";
 import "./FormTitleStep.css";

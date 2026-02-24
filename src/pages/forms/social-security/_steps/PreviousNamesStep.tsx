@@ -1,9 +1,9 @@
-import type { StepConfig } from "@/components/react/forms/FormContainer";
-import { FormStep, FormSubsection } from "@/components/react/forms/FormStep";
+import { FormStep, FormSubsection, useFieldVisible } from "@/components/react/forms/FormStep";
 import { LongTextField } from "@/components/react/forms/LongTextField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
+import type { Step } from "@/forms/types";
 
-export const previousNamesStep: StepConfig = {
+export const previousNamesStep: Step = {
   id: "previous-names",
   title: "Have you used any other legal names?",
   fields: ["hasOtherLegalNames", "previousLegalNames"],
@@ -14,20 +14,21 @@ export const previousNamesStep: StepConfig = {
     }
     return true;
   },
-  component: ({ stepConfig, form }) => (
-    <FormStep stepConfig={stepConfig}>
-      <YesNoField
-        name="hasOtherLegalNames"
-        label="Have you used any other legal names?"
-        labelHidden
-        yesLabel="Yes"
-        noLabel="No, I've never changed my name before"
-      />
-      {form.watch("hasOtherLegalNames") === true && (
-        <FormSubsection>
+  component: ({ stepConfig }) => {
+    const previousNamesVisible = useFieldVisible(stepConfig, "previousLegalNames");
+    return (
+      <FormStep stepConfig={stepConfig}>
+        <YesNoField
+          name="hasOtherLegalNames"
+          label="Have you used any other legal names?"
+          labelHidden
+          yesLabel="Yes"
+          noLabel="No, I've never changed my name before"
+        />
+        <FormSubsection isVisible={previousNamesVisible}>
           <LongTextField name="previousLegalNames" label="Other names used" />
         </FormSubsection>
-      )}
-    </FormStep>
-  ),
+      </FormStep>
+    );
+  },
 };

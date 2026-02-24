@@ -16,9 +16,10 @@ function TestWrapper({ children }: { children: ReactNode }) {
         formDescription: "Test Description",
         currentStepIndex: 0, // Title step
         totalSteps: 5, // 5 actual steps
-        isReviewStep: false,
-        isReviewingMode: false,
+        phase: "title" as const,
         onSubmit: vi.fn(),
+        onEditStep: vi.fn(),
+        submitError: null,
       }}
     >
       {children}

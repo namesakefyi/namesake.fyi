@@ -1,4 +1,4 @@
-import type { FormEvent } from "react";
+import type { SubmitEvent } from "react";
 import type { UseFormReturn } from "react-hook-form";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { resolveVisibleFields } from "@/components/react/forms/FormContainer/resolveVisibleFields";
@@ -6,7 +6,7 @@ import type { FormData } from "@/constants/fields";
 import type { FormConfig } from "@/constants/forms";
 import { downloadMergedPdf } from "@/pdfs/utils/downloadMergedPdf";
 import { loadPdfs } from "@/pdfs/utils/loadPdfs";
-import { createFormSubmitHandler } from "../createFormSubmitHandler";
+import { createFormSubmitHandler } from "../../forms/createFormSubmitHandler";
 
 vi.mock("@/components/react/forms/FormContainer/resolveVisibleFields", () => ({
   resolveVisibleFields: vi.fn(),
@@ -29,7 +29,7 @@ function makeForm(data = mockFormData) {
 function makeEvent() {
   return {
     preventDefault: vi.fn(),
-  } as unknown as FormEvent<HTMLFormElement>;
+  } as unknown as SubmitEvent<HTMLFormElement>;
 }
 
 function makeConfig(overrides: Partial<FormConfig> = {}): FormConfig {
@@ -137,23 +137,5 @@ describe("createFormSubmitHandler", () => {
       pdfs: mockPdfs,
       userData: mockVisibleData,
     });
-  });
-
-  it("calls the onSubmit callback after PDF generation", async () => {
-    const onSubmit = vi.fn().mockResolvedValue(undefined);
-
-    await createFormSubmitHandler(
-      makeConfig(),
-      makeForm(),
-      onSubmit,
-    )(makeEvent());
-
-    expect(onSubmit).toHaveBeenCalledOnce();
-  });
-
-  it("does not require an onSubmit callback", async () => {
-    await expect(
-      createFormSubmitHandler(makeConfig(), makeForm())(makeEvent()),
-    ).resolves.not.toThrow();
   });
 });

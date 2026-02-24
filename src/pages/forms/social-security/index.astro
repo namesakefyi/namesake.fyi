@@ -2,7 +2,7 @@
 import type { SanityDocument } from "@sanity/client";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { loadQuery } from "@/sanity/lib/loadQuery";
-import { getFormPdfMetadata } from "@/utils/getFormPdfMetadata";
+import { getFormPdfMetadata } from "@/forms/getFormPdfMetadata";
 import { SocialSecurityForm } from "./_Form";
 
 const { data: form } = await loadQuery<SanityDocument>({

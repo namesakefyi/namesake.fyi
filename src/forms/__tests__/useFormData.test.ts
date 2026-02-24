@@ -1,14 +1,14 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import * as database from "@/db/database";
-import { useForm } from "../useForm";
+import { useFormData } from "../useFormData";
 
 vi.mock("@/db/database", () => ({
   getFieldsByNames: vi.fn(),
   saveField: vi.fn(),
 }));
 
-describe("useForm", () => {
+describe("useFormData", () => {
   beforeEach(() => {
     vi.mocked(database.getFieldsByNames).mockResolvedValue([]);
     vi.mocked(database.saveField).mockResolvedValue(undefined);
@@ -21,35 +21,30 @@ describe("useForm", () => {
   });
 
   describe("initial state", () => {
-    it("starts with isLoading true and isSubmitting false", async () => {
-      const { result } = renderHook(() => useForm(["oldFirstName"]));
+    it("starts with isLoading true", async () => {
+      const { result } = renderHook(() => useFormData(["oldFirstName"]));
 
       expect(result.current.isLoading).toBe(true);
-      expect(result.current.isSubmitting).toBe(false);
 
-      // Flush pending async effects to prevent act() warnings on teardown
       await act(async () => {});
     });
 
     it("exposes react-hook-form methods alongside custom properties", async () => {
-      const { result } = renderHook(() => useForm(["oldFirstName"]));
+      const { result } = renderHook(() => useFormData(["oldFirstName"]));
 
       expect(result.current).toHaveProperty("register");
       expect(result.current).toHaveProperty("handleSubmit");
       expect(result.current).toHaveProperty("getValues");
       expect(result.current).toHaveProperty("setValue");
-      expect(result.current).toHaveProperty("onSubmit");
-      expect(result.current).toHaveProperty("isSubmitting");
       expect(result.current).toHaveProperty("isLoading");
 
-      // Flush pending async effects to prevent act() warnings on teardown
       await act(async () => {});
     });
   });
 
   describe("loading saved data", () => {
     it("sets isLoading to false after loading completes", async () => {
-      const { result } = renderHook(() => useForm(["oldFirstName"]));
+      const { result } = renderHook(() => useFormData(["oldFirstName"]));
 
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false);
@@ -58,7 +53,7 @@ describe("useForm", () => {
 
     it("calls getFieldsByNames with the provided field names", async () => {
       const { result } = renderHook(() =>
-        useForm(["oldFirstName", "oldLastName"]),
+        useFormData(["oldFirstName", "oldLastName"]),
       );
 
       await waitFor(() => expect(result.current.isLoading).toBe(false));
@@ -76,7 +71,7 @@ describe("useForm", () => {
       ]);
 
       const { result } = renderHook(() =>
-        useForm(["oldFirstName", "oldLastName"]),
+        useFormData(["oldFirstName", "oldLastName"]),
       );
 
       await waitFor(() => expect(result.current.isLoading).toBe(false));
@@ -90,7 +85,7 @@ describe("useForm", () => {
         new Error("DB unavailable"),
       );
 
-      const { result } = renderHook(() => useForm(["oldFirstName"]));
+      const { result } = renderHook(() => useFormData(["oldFirstName"]));
 
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false);
@@ -100,7 +95,7 @@ describe("useForm", () => {
 
   describe("auto-save on change", () => {
     it("saves a field when its value changes after loading", async () => {
-      const { result } = renderHook(() => useForm(["oldFirstName"]));
+      const { result } = renderHook(() => useFormData(["oldFirstName"]));
 
       await waitFor(() => expect(result.current.isLoading).toBe(false));
 
@@ -114,7 +109,7 @@ describe("useForm", () => {
     });
 
     it("does not save when value is an empty string", async () => {
-      const { result } = renderHook(() => useForm(["oldFirstName"]));
+      const { result } = renderHook(() => useFormData(["oldFirstName"]));
 
       await waitFor(() => expect(result.current.isLoading).toBe(false));
       vi.clearAllMocks();
@@ -129,7 +124,7 @@ describe("useForm", () => {
     });
 
     it("does not save when value is null", async () => {
-      const { result } = renderHook(() => useForm(["oldFirstName"]));
+      const { result } = renderHook(() => useFormData(["oldFirstName"]));
 
       await waitFor(() => expect(result.current.isLoading).toBe(false));
       vi.clearAllMocks();
@@ -148,7 +143,7 @@ describe("useForm", () => {
         new Error("Write failed"),
       );
 
-      const { result } = renderHook(() => useForm(["oldFirstName"]));
+      const { result } = renderHook(() => useFormData(["oldFirstName"]));
 
       await waitFor(() => expect(result.current.isLoading).toBe(false));
       vi.clearAllMocks();
@@ -167,7 +162,7 @@ describe("useForm", () => {
     });
 
     it("does not save when value is undefined", async () => {
-      const { result } = renderHook(() => useForm(["oldFirstName"]));
+      const { result } = renderHook(() => useFormData(["oldFirstName"]));
 
       await waitFor(() => expect(result.current.isLoading).toBe(false));
       vi.clearAllMocks();
@@ -179,94 +174,6 @@ describe("useForm", () => {
       await new Promise((resolve) => setTimeout(resolve, 10));
 
       expect(database.saveField).not.toHaveBeenCalled();
-    });
-  });
-
-  describe("onSubmit", () => {
-    it("saves all non-empty fields on submit", async () => {
-      const { result } = renderHook(() =>
-        useForm(["oldFirstName", "oldLastName"]),
-      );
-
-      await waitFor(() => expect(result.current.isLoading).toBe(false));
-
-      await act(async () => {
-        result.current.setValue("oldFirstName", "Jane");
-        result.current.setValue("oldLastName", "Doe");
-      });
-
-      vi.clearAllMocks();
-
-      await act(async () => {
-        await result.current.onSubmit();
-      });
-
-      expect(database.saveField).toHaveBeenCalledWith("oldFirstName", "Jane");
-      expect(database.saveField).toHaveBeenCalledWith("oldLastName", "Doe");
-    });
-
-    it("skips empty and nullish field values on submit", async () => {
-      const { result } = renderHook(() =>
-        useForm(["oldFirstName", "oldLastName"]),
-      );
-
-      await waitFor(() => expect(result.current.isLoading).toBe(false));
-
-      await act(async () => {
-        result.current.setValue("oldFirstName", "Jane");
-      });
-
-      vi.clearAllMocks();
-
-      await act(async () => {
-        await result.current.onSubmit();
-      });
-
-      expect(database.saveField).toHaveBeenCalledWith("oldFirstName", "Jane");
-      expect(database.saveField).not.toHaveBeenCalledWith(
-        "oldLastName",
-        expect.anything(),
-      );
-    });
-
-    it("logs and re-throws when saveField throws during submit", async () => {
-      vi.mocked(database.saveField).mockRejectedValue(
-        new Error("Write failed"),
-      );
-
-      const { result } = renderHook(() => useForm(["oldFirstName"]));
-
-      await waitFor(() => expect(result.current.isLoading).toBe(false));
-
-      await act(async () => {
-        result.current.setValue("oldFirstName", "Jane");
-      });
-
-      vi.clearAllMocks();
-      vi.spyOn(console, "error").mockImplementation(() => {});
-
-      await act(async () => {
-        await expect(result.current.onSubmit()).rejects.toThrow("Write failed");
-      });
-
-      expect(console.error).toHaveBeenCalledWith(
-        "Error saving form data:",
-        expect.any(Error),
-      );
-      expect(result.current.isSubmitting).toBe(false);
-    });
-
-    it("sets isSubmitting to false after submission completes", async () => {
-      const { result } = renderHook(() => useForm(["oldFirstName"]));
-
-      await waitFor(() => expect(result.current.isLoading).toBe(false));
-
-      await act(async () => {
-        result.current.setValue("oldFirstName", "Jane");
-        await result.current.onSubmit();
-      });
-
-      expect(result.current.isSubmitting).toBe(false);
     });
   });
 });

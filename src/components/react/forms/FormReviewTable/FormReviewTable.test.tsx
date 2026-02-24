@@ -1,9 +1,22 @@
 import { render, screen } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { describe, expect, it } from "vitest";
-import type { StepConfig } from "@/components/react/forms/FormContainer";
+import { describe, expect, it, vi } from "vitest";
+import { FormStepContext } from "@/components/react/forms/FormContainer/FormStepContext";
+import type { Step } from "@/forms/types";
 import { FormReviewTable } from "./FormReviewTable";
+
+const defaultContextValue = {
+  onNext: vi.fn(),
+  onBack: vi.fn(),
+  formTitle: "Test Form",
+  phase: "review" as const,
+  currentStepIndex: 0,
+  totalSteps: 2,
+  onSubmit: vi.fn(),
+  onEditStep: vi.fn(),
+  submitError: null,
+};
 
 function FormWrapper({
   children,
@@ -13,7 +26,13 @@ function FormWrapper({
   defaultValues?: Record<string, unknown>;
 }) {
   const form = useForm({ defaultValues });
-  return <FormProvider {...form}>{children}</FormProvider>;
+  return (
+    <FormProvider {...form}>
+      <FormStepContext.Provider value={defaultContextValue}>
+        {children}
+      </FormStepContext.Provider>
+    </FormProvider>
+  );
 }
 
 function renderWithValues(
@@ -23,14 +42,14 @@ function renderWithValues(
   return render(<FormWrapper defaultValues={defaultValues}>{ui}</FormWrapper>);
 }
 
-const nameStep: StepConfig = {
+const nameStep: Step = {
   id: "legal-name",
   title: "Legal Name",
   component: () => null,
   fields: ["oldFirstName", "oldLastName"],
 };
 
-const contactStep: StepConfig = {
+const contactStep: Step = {
   id: "contact",
   title: "Contact",
   component: () => null,
@@ -56,7 +75,6 @@ describe("FormReviewTable", () => {
   it("shows a 'Missing!' marker for fields with no value", () => {
     renderWithValues(<FormReviewTable steps={[nameStep]} />, {
       oldFirstName: "Sylvia",
-      // oldLastName intentionally omitted
     });
 
     const definitions = screen.getAllByRole("definition");
@@ -64,13 +82,13 @@ describe("FormReviewTable", () => {
     expect(definitions[1]).toHaveTextContent("Missing!");
   });
 
-  it("renders a Change link pointing to the step's review URL", () => {
+  it("renders a Change button for each step section", () => {
     renderWithValues(<FormReviewTable steps={[nameStep]} />, {
       oldFirstName: "Sylvia",
     });
 
-    const changeLink = screen.getByRole("link", { name: "Change" });
-    expect(changeLink).toHaveAttribute("href", "#legal-name?reviewing=true");
+    const changeButton = screen.getByRole("button", { name: "Change" });
+    expect(changeButton).toBeInTheDocument();
   });
 
   it("renders a section per step when multiple steps have visible fields", () => {
@@ -79,17 +97,34 @@ describe("FormReviewTable", () => {
       phoneNumber: "(555) 867-5309",
     });
 
-    const changeLinks = screen.getAllByRole("link", { name: "Change" });
-    expect(changeLinks).toHaveLength(2);
-    expect(changeLinks[0]).toHaveAttribute(
-      "href",
-      "#legal-name?reviewing=true",
-    );
-    expect(changeLinks[1]).toHaveAttribute("href", "#contact?reviewing=true");
+    const changeButtons = screen.getAllByRole("button", { name: "Change" });
+    expect(changeButtons).toHaveLength(2);
+  });
+
+  it("calls onEditStep with the step ID when Change is clicked", () => {
+    const onEditStep = vi.fn();
+
+    function Wrapper({ children }: { children: ReactNode }) {
+      const form = useForm({ defaultValues: { oldFirstName: "Sylvia" } });
+      return (
+        <FormProvider {...form}>
+          <FormStepContext.Provider
+            value={{ ...defaultContextValue, onEditStep }}
+          >
+            {children}
+          </FormStepContext.Provider>
+        </FormProvider>
+      );
+    }
+
+    render(<FormReviewTable steps={[nameStep]} />, { wrapper: Wrapper });
+
+    screen.getByRole("button", { name: "Change" }).click();
+    expect(onEditStep).toHaveBeenCalledWith("legal-name");
   });
 
   it("skips steps where all fields are hidden by isFieldVisible", () => {
-    const hiddenStep: StepConfig = {
+    const hiddenStep: Step = {
       ...nameStep,
       id: "hidden-step",
       isFieldVisible: () => false,
@@ -100,14 +135,12 @@ describe("FormReviewTable", () => {
       phoneNumber: "(555) 867-5309",
     });
 
-    // Only the contact step section should be rendered
-    const changeLinks = screen.getAllByRole("link", { name: "Change" });
-    expect(changeLinks).toHaveLength(1);
-    expect(changeLinks[0]).toHaveAttribute("href", "#contact?reviewing=true");
+    const changeButtons = screen.getAllByRole("button", { name: "Change" });
+    expect(changeButtons).toHaveLength(1);
   });
 
   it("renders no sections when all steps have no visible fields", () => {
-    const emptyStep: StepConfig = {
+    const emptyStep: Step = {
       ...nameStep,
       isFieldVisible: () => false,
     };
@@ -121,7 +154,7 @@ describe("FormReviewTable", () => {
   });
 
   it("only includes fields that are visible within a step", () => {
-    const partialStep: StepConfig = {
+    const partialStep: Step = {
       ...nameStep,
       isFieldVisible: (fieldName) => fieldName === "oldFirstName",
     };

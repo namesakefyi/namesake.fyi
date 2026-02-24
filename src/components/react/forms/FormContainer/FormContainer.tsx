@@ -1,25 +1,17 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { FormProvider, type UseFormReturn } from "react-hook-form";
+import { FormCompleteStep } from "@/components/react/forms/FormCompleteStep";
 import { FormNavigation } from "@/components/react/forms/FormNavigation";
 import { FormReviewStep } from "@/components/react/forms/FormReviewStep";
 import { FormTitleStep } from "@/components/react/forms/FormTitleStep/FormTitleStep";
-import type { FieldName, FormData } from "@/constants/fields";
+import { ProgressCircle } from "@/components/react/common/ProgressCircle";
+import type { FormMachine } from "@/forms/createFormMachine";
+import type { Step } from "@/forms/types";
 import type { Cost } from "@/utils/formatTotalCosts";
-import type { FormPdfMetadata } from "@/utils/getFormPdfMetadata";
+import type { FormPdfMetadata } from "@/forms/getFormPdfMetadata";
+import { useFormState } from "@/forms/useFormState";
 import { FormStepContext } from "./FormStepContext";
 import "./FormContainer.css";
-
-export interface StepConfig {
-  id: string;
-  title: string;
-  description?: string;
-  fields: readonly FieldName[];
-  isFieldVisible?: (fieldName: FieldName, data: FormData) => boolean;
-  component: React.ComponentType<{
-    stepConfig: StepConfig;
-    form: UseFormReturn<any>;
-  }>;
-}
 
 export interface FormContainerProps {
   /** The title of the form. */
@@ -31,14 +23,17 @@ export interface FormContainerProps {
   /** Children to display on the title step. */
   children?: React.ReactNode;
 
-  /** The form steps to render. */
-  steps: readonly StepConfig[];
+  /** Ordered steps, including optional guards for conditional inclusion. */
+  steps: readonly Step[];
+
+  /** The XState machine for this form, created by createFormMachine. */
+  machine: FormMachine;
 
   /** The form instance from react-hook-form's useForm hook. */
   form: UseFormReturn<any>;
 
   /** Submit handler for the final form submission. Can be async. */
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void | Promise<void>;
+  onSubmit: (e: React.SubmitEvent<HTMLFormElement>) => void | Promise<void>;
 
   /** The date the form was last updated. */
   updatedAt?: string;
@@ -55,29 +50,34 @@ export function FormContainer({
   description,
   children,
   steps,
+  machine,
   form,
   onSubmit,
   updatedAt,
   pdfs,
   costs,
 }: FormContainerProps) {
+  const formSlug = machine.id;
+  const {
+    isLoading,
+    phase,
+    send,
+    activeStep,
+    currentStepIndex,
+    totalSteps,
+    goNext,
+    goBack,
+  } = useFormState(machine, steps, form.getValues);
+
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // Navigation index: -1 = title step, 0 to steps.length-1 = actual steps, steps.length = review
-  // Always initialize to -1 for SSR consistency, then sync from hash in useEffect
-  const [navigationIndex, setNavigationIndex] = useState(-1);
-
-  // Track reviewing mode state
-  const [isReviewingMode, setIsReviewingMode] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const scrollToFormTop = useCallback(() => {
     containerRef.current?.scrollIntoView({ block: "start" });
   }, []);
 
   const focusStepContent = useCallback(() => {
-    // Small delay to ensure DOM has updated after step change
     requestAnimationFrame(() => {
-      // Focus on the form element for screen reader accessibility
       const stepForm = containerRef.current?.querySelector(
         ".form-step",
       ) as HTMLElement | null;
@@ -88,226 +88,141 @@ export function FormContainer({
     });
   }, []);
 
-  // Sync step with URL hash
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.slice(1); // Remove #
-
-      // Update reviewing mode based on hash
-      setIsReviewingMode(hash.includes("?reviewing=true"));
-
-      // If no hash, go to title step
-      if (!hash) {
-        setNavigationIndex(-1);
-        return;
-      }
-
-      // Parse hash to separate step ID from query params (e.g., "new-name?reviewing=true")
-      const [stepId] = hash.split("?");
-
-      // Check if it's the review step
-      if (stepId === "review") {
-        setNavigationIndex(steps.length);
-        return;
-      }
-
-      // Find the step in the actual steps array
-      const stepIndex = steps.findIndex((step) => step.id === stepId);
-      if (stepIndex !== -1) {
-        setNavigationIndex(stepIndex);
-        focusStepContent();
-      }
-    };
-
-    // Set initial step from hash
-    handleHashChange();
-
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
-  }, [steps, focusStepContent]);
-
-  // Update hash when navigation changes
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    let targetHash = "";
-
-    if (navigationIndex === -1) {
-      // Title step - no hash
-      targetHash = "";
-    } else if (navigationIndex === steps.length) {
-      // Review step
-      targetHash = "#review";
-    } else if (navigationIndex >= 0 && navigationIndex < steps.length) {
-      // Actual step - preserve reviewing query param if present
-      const currentHash = window.location.hash.slice(1);
-      const hasReviewingParam = currentHash.includes("?reviewing=true");
-      targetHash = `#${steps[navigationIndex].id}${hasReviewingParam ? "?reviewing=true" : ""}`;
-    }
-
-    const currentPath = window.location.pathname + window.location.search;
-    const targetUrl = currentPath + targetHash;
-
-    if (window.location.href !== window.location.origin + targetUrl) {
-      window.history.pushState(null, "", targetUrl);
-    }
-  }, [navigationIndex, steps]);
-
-  const goToNextStep = useCallback(() => {
-    // Can go through all steps (0 to steps.length-1) to review (steps.length)
-    if (navigationIndex < steps.length) {
-      setNavigationIndex(navigationIndex + 1);
-    }
-
-    // Clear reviewing mode when using navigation buttons
-    if (typeof window !== "undefined") {
-      const hash = window.location.hash.slice(1);
-      if (hash.includes("?reviewing=true")) {
-        const nextStepId =
-          navigationIndex + 1 < steps.length
-            ? steps[navigationIndex + 1].id
-            : "review";
-        window.history.replaceState(
-          null,
-          "",
-          `${window.location.pathname}${window.location.search}#${nextStepId}`,
-        );
-      }
-    }
-
+  const onStart = useCallback(() => {
+    send({ type: "START" });
     scrollToFormTop();
-  }, [navigationIndex, steps, scrollToFormTop]);
+    focusStepContent();
+  }, [send, scrollToFormTop, focusStepContent]);
 
-  const goToPreviousStep = useCallback(() => {
-    // Can go back from review (steps.length) through all steps to title step (-1)
-    if (navigationIndex > -1) {
-      setNavigationIndex(navigationIndex - 1);
-    }
-
-    // Clear reviewing mode when using navigation buttons
-    if (typeof window !== "undefined") {
-      const hash = window.location.hash.slice(1);
-      if (hash.includes("?reviewing=true")) {
-        const prevStepId =
-          navigationIndex - 1 >= 0
-            ? (steps[navigationIndex - 1]?.id ?? steps[0].id)
-            : "";
-        const targetUrl = prevStepId
-          ? `${window.location.pathname}${window.location.search}#${prevStepId}`
-          : `${window.location.pathname}${window.location.search}`;
-        window.history.replaceState(null, "", targetUrl);
-      }
-    }
-
+  const onNext = useCallback(() => {
+    goNext();
     scrollToFormTop();
-  }, [navigationIndex, steps, scrollToFormTop]);
+    focusStepContent();
+  }, [goNext, scrollToFormTop, focusStepContent]);
 
-  const handleFormSubmit = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      if (navigationIndex === steps.length) {
-        // On the review step, trigger the actual form submission
-        try {
-          await onSubmit(e);
-          // Redirect to success page after successful submission
-          if (typeof window !== "undefined") {
-            window.location.href = "/forms/done";
-          }
-        } catch (error) {
-          // If submission fails, stay on the review page
-          console.error("Form submission failed:", error);
-          // TODO: Show error message to user
-        }
-      } else {
-        // Otherwise, just go to the next step (which handles scrolling)
-        goToNextStep();
-        focusStepContent();
-      }
+  const onBack = useCallback(() => {
+    goBack();
+    scrollToFormTop();
+    focusStepContent();
+  }, [goBack, scrollToFormTop, focusStepContent]);
+
+  const onEditStep = useCallback(
+    (stepId: string) => {
+      send({ type: "EDIT_STEP", stepId });
+      scrollToFormTop();
+      focusStepContent();
     },
-    [navigationIndex, steps.length, onSubmit, goToNextStep, focusStepContent],
+    [send, scrollToFormTop, focusStepContent],
   );
 
-  // Memoize the current step component to prevent unnecessary recreations
+  const handleFormSubmit = useCallback(
+    async (e: React.SubmitEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      switch (phase) {
+        case "editing":
+          send({ type: "SAVE_EDIT" });
+          scrollToFormTop();
+          focusStepContent();
+          return;
+        case "review":
+          setSubmitError(null);
+          send({ type: "SUBMIT" });
+          try {
+            await onSubmit(e);
+            send({ type: "SUBMIT_DONE" });
+            scrollToFormTop();
+          } catch (error) {
+            console.error("Form submission failed:", error);
+            send({ type: "SUBMIT_ERROR" });
+            setSubmitError(
+              "Something went wrong while generating your download. Please try again.",
+            );
+          }
+          return;
+        default:
+          onNext();
+      }
+    },
+    [phase, send, onSubmit, onNext, scrollToFormTop, focusStepContent],
+  );
+
   const currentStepComponent = useMemo(() => {
-    if (navigationIndex === -1) {
-      // Title step
-      return (
-        <FormTitleStep
-          title={title}
-          description={description}
-          pdfs={pdfs ?? []}
-          updatedAt={updatedAt ?? ""}
-          totalSteps={steps.length}
-          onStart={() => {
-            // Navigate to first step
-            if (typeof window !== "undefined" && steps.length > 0) {
-              window.location.hash = steps[0].id;
-            }
-          }}
-        >
-          {children}
-        </FormTitleStep>
-      );
+    switch (phase) {
+      case "title":
+        return (
+          <FormTitleStep
+            title={title}
+            description={description}
+            pdfs={pdfs ?? []}
+            updatedAt={updatedAt ?? ""}
+            totalSteps={totalSteps}
+            onStart={onStart}
+          >
+            {children}
+          </FormTitleStep>
+        );
+      case "filling":
+      case "editing": {
+        if (!activeStep) return null;
+        const StepComponent = activeStep.component;
+        return <StepComponent stepConfig={activeStep} />;
+      }
+      case "review":
+      case "submitting":
+        return <FormReviewStep steps={steps} />;
+      case "complete":
+        return (
+          <FormCompleteStep
+            title={title}
+            formSlug={formSlug}
+            onRedownload={onSubmit}
+          />
+        );
+      default:
+        return null;
     }
-
-    if (navigationIndex === steps.length) {
-      return <FormReviewStep steps={steps} />;
-    }
-
-    if (navigationIndex >= 0 && navigationIndex < steps.length) {
-      const StepComponent = steps[navigationIndex].component;
-      const stepConfig = steps[navigationIndex];
-      return <StepComponent stepConfig={stepConfig} form={form} />;
-    }
-
-    return null;
   }, [
-    navigationIndex,
+    phase,
     steps,
-    form,
+    activeStep,
     pdfs,
     updatedAt,
     title,
     description,
     children,
+    totalSteps,
+    onStart,
+    onSubmit,
+    formSlug,
   ]);
 
-  // Calculate the current step index for the context (1-based for actual steps, 0 for title/review)
-  const currentStepIndex =
-    navigationIndex >= 0 && navigationIndex < steps.length
-      ? navigationIndex + 1
-      : 0;
+  const showNavigation = !["title", "complete"].includes(phase);
 
-  const isReviewStep = navigationIndex === steps.length;
+  const stepContextValue = {
+    onNext,
+    onBack,
+    formTitle: title,
+    formDescription: description,
+    currentStepIndex,
+    totalSteps,
+    phase,
+    onSubmit: handleFormSubmit,
+    onEditStep,
+    submitError,
+    costs,
+  };
 
-  const stepContextValue = useMemo(
-    () => ({
-      onNext: goToNextStep,
-      onBack: goToPreviousStep,
-      formTitle: title,
-      formDescription: description,
-      currentStepIndex,
-      totalSteps: steps.length,
-      isReviewStep,
-      isReviewingMode,
-      onSubmit: handleFormSubmit,
-      costs,
-    }),
-    [
-      goToNextStep,
-      goToPreviousStep,
-      title,
-      description,
-      currentStepIndex,
-      steps.length,
-      isReviewStep,
-      isReviewingMode,
-      handleFormSubmit,
-      costs,
-    ],
-  );
-
-  const showNavigation = navigationIndex !== -1; // Hide navigation on title step
+  if (isLoading) {
+    return (
+      <section
+        className="form-container form-container-loading"
+        ref={containerRef}
+      >
+        <ProgressCircle isIndeterminate aria-label="Loading form" size={40} />
+      </section>
+    );
+  }
 
   return (
     <FormProvider {...form}>
