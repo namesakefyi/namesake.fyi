@@ -19,7 +19,9 @@ describe("formatDateMMDDYYYY", () => {
   it("returns empty string and logs when toLocaleDateString throws", () => {
     vi.spyOn(console, "error").mockImplementation(() => {});
     vi.spyOn(Date.prototype, "toLocaleDateString").mockImplementationOnce(
-      () => { throw new Error("locale error"); },
+      () => {
+        throw new Error("locale error");
+      },
     );
 
     expect(formatDateMMDDYYYY("2021-01-01")).toBe("");

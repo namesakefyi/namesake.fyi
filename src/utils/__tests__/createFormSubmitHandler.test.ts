@@ -8,10 +8,9 @@ import { downloadMergedPdf } from "@/pdfs/utils/downloadMergedPdf";
 import { loadPdfs } from "@/pdfs/utils/loadPdfs";
 import { createFormSubmitHandler } from "../createFormSubmitHandler";
 
-vi.mock(
-  "@/components/react/forms/FormContainer/resolveVisibleFields",
-  () => ({ resolveVisibleFields: vi.fn() }),
-);
+vi.mock("@/components/react/forms/FormContainer/resolveVisibleFields", () => ({
+  resolveVisibleFields: vi.fn(),
+}));
 vi.mock("@/pdfs/utils/downloadMergedPdf", () => ({
   downloadMergedPdf: vi.fn(),
 }));
@@ -33,9 +32,7 @@ function makeEvent() {
   } as unknown as FormEvent<HTMLFormElement>;
 }
 
-function makeConfig(
-  overrides: Partial<FormConfig> = {},
-): FormConfig {
+function makeConfig(overrides: Partial<FormConfig> = {}): FormConfig {
   return {
     slug: "court-order-ma",
     steps: [{ fields: ["oldFirstName"] }],
@@ -145,9 +142,11 @@ describe("createFormSubmitHandler", () => {
   it("calls the onSubmit callback after PDF generation", async () => {
     const onSubmit = vi.fn().mockResolvedValue(undefined);
 
-    await createFormSubmitHandler(makeConfig(), makeForm(), onSubmit)(
-      makeEvent(),
-    );
+    await createFormSubmitHandler(
+      makeConfig(),
+      makeForm(),
+      onSubmit,
+    )(makeEvent());
 
     expect(onSubmit).toHaveBeenCalledOnce();
   });
