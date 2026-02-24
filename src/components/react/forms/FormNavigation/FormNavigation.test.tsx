@@ -69,9 +69,7 @@ describe("FormNavigation", () => {
       const onNext = vi.fn();
       render(<FormNavigation />, { wrapper: makeWrapper({ onNext }) });
 
-      await userEvent.click(
-        screen.getByRole("button", { name: "Next step" }),
-      );
+      await userEvent.click(screen.getByRole("button", { name: "Next step" }));
 
       expect(onNext).toHaveBeenCalledOnce();
     });
@@ -81,9 +79,7 @@ describe("FormNavigation", () => {
         wrapper: makeWrapper({ isReviewStep: true }),
       });
 
-      expect(
-        screen.getByRole("button", { name: "Next step" }),
-      ).toBeDisabled();
+      expect(screen.getByRole("button", { name: "Next step" })).toBeDisabled();
     });
 
     it("enables the next step button on regular steps", () => {

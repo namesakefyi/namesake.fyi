@@ -50,8 +50,13 @@ describe("Costs", () => {
   it("renders the formatted amount for each cost", () => {
     render(<Costs costs={[filingFee]} />);
     // Scope to the cost row (not the footer total row)
-    const costRow = screen.getByRole("cell", { name: "Court filing fee" }).closest("tr")!;
-    expect(within(costRow).getByRole("cell", { name: "$150" })).toBeInTheDocument();
+    const costRow = screen
+      .getByRole("cell", { name: "Court filing fee" })
+      .closest("tr");
+    expect(costRow).not.toBeNull();
+    expect(
+      within(costRow as HTMLElement).getByRole("cell", { name: "$150" }),
+    ).toBeInTheDocument();
   });
 
   it("appends '(optional)' to the title when required is notRequired", () => {
@@ -87,9 +92,7 @@ describe("Costs", () => {
   it("renders a cost range in the footer when optional costs exist", () => {
     render(<Costs costs={[filingFee, optionalFee]} />);
     // Required: $150, total with optional: $225 → range
-    expect(
-      screen.getByRole("cell", { name: "$150–$225" }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("cell", { name: "$150–$225" })).toBeInTheDocument();
   });
 
   it("renders the Total label in the footer", () => {
