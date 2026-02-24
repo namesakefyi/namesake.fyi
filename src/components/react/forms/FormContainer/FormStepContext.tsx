@@ -11,7 +11,7 @@ export interface FormStepContextValue {
   formDescription?: string;
   /** The current step index (1-based for actual form steps, 0 for title/review) */
   currentStepIndex: number;
-  /** The total number of visible form steps (excludes title and review) */
+  /** The total number of form steps (excludes skipped steps) */
   totalSteps: number;
   /** The current top-level machine state */
   phase: FormPhase;

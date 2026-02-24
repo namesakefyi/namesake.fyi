@@ -1,5 +1,5 @@
 import { RiDownloadLine, RiRestartLine } from "@remixicon/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { clearFormProgress } from "@/db/database";
 import { Button } from "../../common/Button";
 import { Heading } from "../../common/Content/Content";
@@ -18,6 +18,14 @@ export function FormCompleteStep({
   onRedownload,
 }: FormCompleteStepProps) {
   const [isDownloading, setIsDownloading] = useState(false);
+
+  useEffect(() => {
+    const previous = document.body.dataset.color;
+    document.body.dataset.color = "green";
+    return () => {
+      document.body.dataset.color = previous ?? "";
+    };
+  }, []);
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,7 +47,7 @@ export function FormCompleteStep({
   return (
     <section className="form-complete-step">
       <header className="form-complete-step-header">
-        <Heading className="form-complete-step-heading">Form complete!</Heading>
+        <Heading level={1} className="form-complete-step-heading">Form complete!</Heading>
         <p className="form-complete-step-description">
           Your <strong>{title}</strong> name change packet has downloaded.
           Review, print, and follow the steps for filing. If you have questions,
