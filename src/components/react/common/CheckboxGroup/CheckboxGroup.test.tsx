@@ -56,7 +56,9 @@ describe("CheckboxGroup", () => {
   describe("selection", () => {
     it("pre-selects checkboxes from defaultValue", () => {
       renderGroup({ defaultValue: ["court-order", "passport"] });
-      expect(screen.getByRole("checkbox", { name: "Court Order" })).toBeChecked();
+      expect(
+        screen.getByRole("checkbox", { name: "Court Order" }),
+      ).toBeChecked();
       expect(
         screen.getByRole("checkbox", { name: "Social Security" }),
       ).not.toBeChecked();
@@ -66,15 +68,21 @@ describe("CheckboxGroup", () => {
     it("calls onChange with the updated selection when a checkbox is clicked", async () => {
       const onChange = vi.fn();
       renderGroup({ onChange });
-      await userEvent.click(screen.getByRole("checkbox", { name: "Court Order" }));
+      await userEvent.click(
+        screen.getByRole("checkbox", { name: "Court Order" }),
+      );
       expect(onChange).toHaveBeenCalledWith(["court-order"]);
     });
 
     it("allows multiple checkboxes to be checked independently", async () => {
       renderGroup();
-      await userEvent.click(screen.getByRole("checkbox", { name: "Court Order" }));
+      await userEvent.click(
+        screen.getByRole("checkbox", { name: "Court Order" }),
+      );
       await userEvent.click(screen.getByRole("checkbox", { name: "Passport" }));
-      expect(screen.getByRole("checkbox", { name: "Court Order" })).toBeChecked();
+      expect(
+        screen.getByRole("checkbox", { name: "Court Order" }),
+      ).toBeChecked();
       expect(
         screen.getByRole("checkbox", { name: "Social Security" }),
       ).not.toBeChecked();
@@ -83,7 +91,9 @@ describe("CheckboxGroup", () => {
 
     it("unchecks a checked checkbox when clicked again", async () => {
       renderGroup({ defaultValue: ["court-order"] });
-      await userEvent.click(screen.getByRole("checkbox", { name: "Court Order" }));
+      await userEvent.click(
+        screen.getByRole("checkbox", { name: "Court Order" }),
+      );
       expect(
         screen.getByRole("checkbox", { name: "Court Order" }),
       ).not.toBeChecked();
@@ -100,7 +110,9 @@ describe("CheckboxGroup", () => {
 
     it("does not change selection when the group is disabled", async () => {
       renderGroup({ isDisabled: true });
-      await userEvent.click(screen.getByRole("checkbox", { name: "Court Order" }));
+      await userEvent.click(
+        screen.getByRole("checkbox", { name: "Court Order" }),
+      );
       expect(
         screen.getByRole("checkbox", { name: "Court Order" }),
       ).not.toBeChecked();

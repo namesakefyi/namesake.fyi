@@ -25,13 +25,17 @@ describe("Popover", () => {
 
     it("renders content after the trigger is clicked", async () => {
       renderPopover();
-      await userEvent.click(screen.getByRole("button", { name: "Open popover" }));
+      await userEvent.click(
+        screen.getByRole("button", { name: "Open popover" }),
+      );
       expect(screen.getByText("Popover content")).toBeInTheDocument();
     });
 
     it("closes when Escape is pressed", async () => {
       renderPopover();
-      await userEvent.click(screen.getByRole("button", { name: "Open popover" }));
+      await userEvent.click(
+        screen.getByRole("button", { name: "Open popover" }),
+      );
       expect(screen.getByText("Popover content")).toBeInTheDocument();
       await userEvent.keyboard("{Escape}");
       expect(screen.queryByText("Popover content")).not.toBeInTheDocument();
@@ -39,7 +43,9 @@ describe("Popover", () => {
 
     it("closes when clicking outside the popover", async () => {
       renderPopover();
-      await userEvent.click(screen.getByRole("button", { name: "Open popover" }));
+      await userEvent.click(
+        screen.getByRole("button", { name: "Open popover" }),
+      );
       expect(screen.getByText("Popover content")).toBeInTheDocument();
       await userEvent.click(document.body);
       expect(screen.queryByText("Popover content")).not.toBeInTheDocument();
@@ -92,7 +98,9 @@ describe("Popover", () => {
       );
       await userEvent.click(screen.getByRole("button", { name: "Open" }));
       expect(screen.getByText("Help text")).toBeInTheDocument();
-      expect(screen.getByRole("link", { name: "Learn more" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("link", { name: "Learn more" }),
+      ).toBeInTheDocument();
     });
   });
 });

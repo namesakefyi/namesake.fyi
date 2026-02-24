@@ -1,6 +1,6 @@
+import { RiArrowLeftLine, RiArrowRightLine } from "@remixicon/react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { RiArrowLeftLine, RiArrowRightLine } from "@remixicon/react";
 import { describe, expect, it, vi } from "vitest";
 import { Button } from "./Button";
 
@@ -32,7 +32,9 @@ describe("Button", () => {
     });
 
     it("renders a start icon", () => {
-      const { container } = render(<Button icon={RiArrowLeftLine}>Back</Button>);
+      const { container } = render(
+        <Button icon={RiArrowLeftLine}>Back</Button>,
+      );
       expect(
         container.querySelector(".namesake-button-start-icon"),
       ).toBeInTheDocument();

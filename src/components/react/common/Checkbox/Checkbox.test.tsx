@@ -31,7 +31,10 @@ describe("Checkbox", () => {
 
     it("marks the checkbox as invalid when isInvalid is true", () => {
       render(<Checkbox label="Save progress" isInvalid />);
-      expect(screen.getByRole("checkbox")).toHaveAttribute("aria-invalid", "true");
+      expect(screen.getByRole("checkbox")).toHaveAttribute(
+        "aria-invalid",
+        "true",
+      );
     });
   });
 

@@ -35,9 +35,7 @@ describe("Tabs", () => {
     it("renders all tab buttons", async () => {
       await renderTabs();
       expect(screen.getByRole("tab", { name: "Overview" })).toBeInTheDocument();
-      expect(
-        screen.getByRole("tab", { name: "Settings" }),
-      ).toBeInTheDocument();
+      expect(screen.getByRole("tab", { name: "Settings" })).toBeInTheDocument();
       expect(screen.getByRole("tab", { name: "History" })).toBeInTheDocument();
     });
 
@@ -62,7 +60,9 @@ describe("Tabs", () => {
 
     it("shows the first panel's content by default", async () => {
       await renderTabs();
-      expect(screen.getByRole("tabpanel")).toHaveTextContent("Overview content");
+      expect(screen.getByRole("tabpanel")).toHaveTextContent(
+        "Overview content",
+      );
     });
 
     it("pre-selects a tab from defaultSelectedKey", async () => {
@@ -83,7 +83,9 @@ describe("Tabs", () => {
         "aria-selected",
         "true",
       );
-      expect(screen.getByRole("tabpanel")).toHaveTextContent("Settings content");
+      expect(screen.getByRole("tabpanel")).toHaveTextContent(
+        "Settings content",
+      );
     });
 
     it("calls onSelectionChange when a tab is clicked", async () => {

@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react";
 import { User } from "@react-aria/test-utils";
+import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { GridList, GridListItem } from "./GridList";
 
@@ -32,9 +32,9 @@ describe("GridList", () => {
     it("renders all items as rows", () => {
       const tester = renderGridList();
       expect(tester.rows).toHaveLength(3);
-      expect(tester.findRow({ rowIndexOrText: "Court Order" })).toHaveTextContent(
-        "Court Order",
-      );
+      expect(
+        tester.findRow({ rowIndexOrText: "Court Order" }),
+      ).toHaveTextContent("Court Order");
       expect(
         tester.findRow({ rowIndexOrText: "Social Security" }),
       ).toHaveTextContent("Social Security");

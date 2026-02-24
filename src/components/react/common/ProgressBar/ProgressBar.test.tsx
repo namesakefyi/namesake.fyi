@@ -38,9 +38,7 @@ describe("ProgressBar", () => {
     });
 
     it("reflects custom minValue and maxValue", () => {
-      render(
-        <ProgressBar label="Steps" value={2} minValue={0} maxValue={5} />,
-      );
+      render(<ProgressBar label="Steps" value={2} minValue={0} maxValue={5} />);
       const bar = screen.getByRole("progressbar");
       expect(bar).toHaveAttribute("aria-valuemin", "0");
       expect(bar).toHaveAttribute("aria-valuemax", "5");
@@ -76,9 +74,7 @@ describe("ProgressBar", () => {
 
     it("computes the transform correctly for a custom maxValue", () => {
       // value=2 on a 0–5 scale → 40% → translateX(-60%)
-      render(
-        <ProgressBar label="Steps" value={2} minValue={0} maxValue={5} />,
-      );
+      render(<ProgressBar label="Steps" value={2} minValue={0} maxValue={5} />);
       const fill = document.querySelector(".fill") as HTMLElement;
       expect(fill.style.transform).toBe("translateX(-60%)");
     });

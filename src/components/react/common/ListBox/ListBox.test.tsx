@@ -46,7 +46,9 @@ describe("ListBox", () => {
   describe("single selection", () => {
     it("selects an item when clicked", async () => {
       renderListBox();
-      await userEvent.click(screen.getByRole("option", { name: "Court Order" }));
+      await userEvent.click(
+        screen.getByRole("option", { name: "Court Order" }),
+      );
       expect(
         screen.getByRole("option", { name: "Court Order" }),
       ).toHaveAttribute("aria-selected", "true");
@@ -96,9 +98,10 @@ describe("ListBox", () => {
       expect(
         screen.getByRole("option", { name: "Social Security" }),
       ).toHaveAttribute("aria-selected", "false");
-      expect(
-        screen.getByRole("option", { name: "Passport" }),
-      ).toHaveAttribute("aria-selected", "true");
+      expect(screen.getByRole("option", { name: "Passport" })).toHaveAttribute(
+        "aria-selected",
+        "true",
+      );
     });
 
     it("pre-selects multiple items from defaultSelectedKeys", () => {
@@ -112,9 +115,10 @@ describe("ListBox", () => {
       expect(
         screen.getByRole("option", { name: "Social Security" }),
       ).toHaveAttribute("aria-selected", "false");
-      expect(
-        screen.getByRole("option", { name: "Passport" }),
-      ).toHaveAttribute("aria-selected", "true");
+      expect(screen.getByRole("option", { name: "Passport" })).toHaveAttribute(
+        "aria-selected",
+        "true",
+      );
     });
 
     it("deselects an item when clicked a second time", async () => {
@@ -188,9 +192,7 @@ describe("ListBox", () => {
       expect(
         screen.getByRole("group", { name: "Federal" }),
       ).toBeInTheDocument();
-      expect(
-        screen.getByRole("group", { name: "State" }),
-      ).toBeInTheDocument();
+      expect(screen.getByRole("group", { name: "State" })).toBeInTheDocument();
     });
   });
 });

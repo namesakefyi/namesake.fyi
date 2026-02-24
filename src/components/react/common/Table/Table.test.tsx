@@ -78,10 +78,9 @@ describe("Table", () => {
           </TableBody>
         </Table>,
       );
-      expect(screen.getByRole("columnheader", { name: "Name" })).toHaveAttribute(
-        "aria-sort",
-        "ascending",
-      );
+      expect(
+        screen.getByRole("columnheader", { name: "Name" }),
+      ).toHaveAttribute("aria-sort", "ascending");
     });
 
     it("calls onSortChange when a sortable column header is clicked", async () => {
@@ -138,9 +137,10 @@ describe("Table", () => {
       renderSelectableTable();
       const [, firstRowCheckbox] = screen.getAllByRole("checkbox");
       await userEvent.click(firstRowCheckbox);
-      expect(
-        screen.getByRole("row", { name: /Court Order/ }),
-      ).toHaveAttribute("aria-selected", "true");
+      expect(screen.getByRole("row", { name: /Court Order/ })).toHaveAttribute(
+        "aria-selected",
+        "true",
+      );
     });
 
     it("selects all rows when the header checkbox is clicked", async () => {
