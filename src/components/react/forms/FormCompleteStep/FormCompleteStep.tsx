@@ -47,7 +47,9 @@ export function FormCompleteStep({
   return (
     <section className="form-complete-step">
       <header className="form-complete-step-header">
-        <Heading level={1} className="form-complete-step-heading">Form complete!</Heading>
+        <Heading level={1} className="form-complete-step-heading">
+          Form complete!
+        </Heading>
         <p className="form-complete-step-description">
           Your <strong>{title}</strong> name change packet has downloaded.
           Review, print, and follow the steps for filing. If you have questions,
