@@ -1,4 +1,8 @@
-import { FormStep, FormSubsection, useFieldVisible } from "@/components/react/forms/FormStep";
+import {
+  FormStep,
+  FormSubsection,
+  useFieldVisible,
+} from "@/components/react/forms/FormStep";
 import { NameField } from "@/components/react/forms/NameField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
 import type { Step } from "@/forms/types";
@@ -25,7 +29,10 @@ export const previousSocialSecurityCardStep: Step = {
     return true;
   },
   component: ({ stepConfig }) => {
-    const previousCardVisible = useFieldVisible(stepConfig, "previousSocialSecurityCardFirstName");
+    const previousCardVisible = useFieldVisible(
+      stepConfig,
+      "previousSocialSecurityCardFirstName",
+    );
     return (
       <FormStep stepConfig={stepConfig}>
         <YesNoField

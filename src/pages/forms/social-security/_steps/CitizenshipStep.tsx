@@ -20,8 +20,14 @@ export const citizenshipStep: Step = {
           label="Citizenship status"
           options={[
             { label: "U.S. Citizen", value: "usCitizen" },
-            { label: "Legal Alien Allowed To Work", value: "legalAlienAllowedToWork" },
-            { label: "Legal Alien Not Allowed To Work", value: "legalAlienNotAllowedToWork" },
+            {
+              label: "Legal Alien Allowed To Work",
+              value: "legalAlienAllowedToWork",
+            },
+            {
+              label: "Legal Alien Not Allowed To Work",
+              value: "legalAlienNotAllowedToWork",
+            },
             { label: "Other", value: "other" },
           ]}
         />

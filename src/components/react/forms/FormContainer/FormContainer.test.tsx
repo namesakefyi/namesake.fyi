@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { useForm } from "react-hook-form";
 import { beforeAll, describe, expect, it, vi } from "vitest";
+import * as db from "@/db/database";
 import { createFormMachine, step } from "@/forms/createFormMachine";
 import type { Step } from "@/forms/types";
 import { FormContainer } from "./FormContainer";
-import * as db from "@/db/database";
 
 vi.mock("@/db/database", () => ({
   getFormProgress: vi.fn().mockResolvedValue(undefined),

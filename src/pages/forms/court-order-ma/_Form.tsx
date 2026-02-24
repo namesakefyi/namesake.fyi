@@ -4,9 +4,9 @@ import { Banner } from "@/components/react/common/Banner";
 import { FormContainer } from "@/components/react/forms/FormContainer";
 import type { FieldType } from "@/constants/fields";
 import { createFormSubmitHandler } from "@/forms/createFormSubmitHandler";
-import type { Cost } from "@/utils/formatTotalCosts";
 import type { FormPdfMetadata } from "@/forms/getFormPdfMetadata";
 import { useFormData } from "@/forms/useFormData";
+import type { Cost } from "@/utils/formatTotalCosts";
 import { courtOrderMaConfig } from "./config";
 
 type FormData = {

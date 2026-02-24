@@ -1,4 +1,8 @@
-import { FormStep, FormSubsection, useFieldVisible } from "@/components/react/forms/FormStep";
+import {
+  FormStep,
+  FormSubsection,
+  useFieldVisible,
+} from "@/components/react/forms/FormStep";
 import { LongTextField } from "@/components/react/forms/LongTextField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
 import type { Step } from "@/forms/types";
@@ -15,7 +19,10 @@ export const previousNamesStep: Step = {
     return true;
   },
   component: ({ stepConfig }) => {
-    const previousNamesVisible = useFieldVisible(stepConfig, "previousLegalNames");
+    const previousNamesVisible = useFieldVisible(
+      stepConfig,
+      "previousLegalNames",
+    );
     return (
       <FormStep stepConfig={stepConfig}>
         <YesNoField

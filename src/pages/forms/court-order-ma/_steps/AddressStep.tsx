@@ -1,7 +1,11 @@
 import { Banner } from "@/components/react/common/Banner";
 import { AddressField } from "@/components/react/forms/AddressField";
 import { CheckboxField } from "@/components/react/forms/CheckboxField";
-import { FormStep, FormSubsection, useFieldVisible } from "@/components/react/forms/FormStep";
+import {
+  FormStep,
+  FormSubsection,
+  useFieldVisible,
+} from "@/components/react/forms/FormStep";
 import type { Step } from "@/forms/types";
 
 export const addressStep: Step = {
@@ -54,7 +58,10 @@ export const addressStep: Step = {
     return true;
   },
   component: ({ stepConfig }) => {
-    const residenceVisible = useFieldVisible(stepConfig, "residenceStreetAddress");
+    const residenceVisible = useFieldVisible(
+      stepConfig,
+      "residenceStreetAddress",
+    );
     const mailingVisible = useFieldVisible(stepConfig, "mailingStreetAddress");
     return (
       <FormStep stepConfig={stepConfig}>

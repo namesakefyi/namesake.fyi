@@ -18,10 +18,15 @@ import { useId } from "react";
  * Using this hook in step components ensures that rendering and the review/PDF
  * resolution both derive from the same single predicate on the Step config.
  */
-export function useFieldVisible(stepConfig: Step, fieldName: FieldName): boolean {
+export function useFieldVisible(
+  stepConfig: Step,
+  fieldName: FieldName,
+): boolean {
   const form = useFormContext();
   const data = form.watch() as FormData;
-  return stepConfig.isFieldVisible ? stepConfig.isFieldVisible(fieldName, data) : true;
+  return stepConfig.isFieldVisible
+    ? stepConfig.isFieldVisible(fieldName, data)
+    : true;
 }
 
 export interface FormStepProps {

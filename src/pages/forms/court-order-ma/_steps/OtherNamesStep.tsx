@@ -1,5 +1,9 @@
 import { Banner } from "@/components/react/common/Banner";
-import { FormStep, FormSubsection, useFieldVisible } from "@/components/react/forms/FormStep";
+import {
+  FormStep,
+  FormSubsection,
+  useFieldVisible,
+} from "@/components/react/forms/FormStep";
 import { LongTextField } from "@/components/react/forms/LongTextField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
 import type { Step } from "@/forms/types";
@@ -18,7 +22,10 @@ export const otherNamesStep: Step = {
     return true;
   },
   component: ({ stepConfig }) => {
-    const otherNamesVisible = useFieldVisible(stepConfig, "otherNamesOrAliases");
+    const otherNamesVisible = useFieldVisible(
+      stepConfig,
+      "otherNamesOrAliases",
+    );
     return (
       <FormStep stepConfig={stepConfig}>
         <YesNoField

@@ -136,8 +136,10 @@ describe("useFormState", () => {
       expect(result.current.phase).toBe("review");
     });
 
-      it("falls back to title when getFormProgress rejects", async () => {
-      vi.mocked(db.getFormProgress).mockRejectedValueOnce(new Error("DB error"));
+    it("falls back to title when getFormProgress rejects", async () => {
+      vi.mocked(db.getFormProgress).mockRejectedValueOnce(
+        new Error("DB error"),
+      );
 
       const { result } = renderHook(() =>
         useFormState(machine, flow, getFormData),

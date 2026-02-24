@@ -1,15 +1,15 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { FormProvider, type UseFormReturn } from "react-hook-form";
+import { ProgressCircle } from "@/components/react/common/ProgressCircle";
 import { FormCompleteStep } from "@/components/react/forms/FormCompleteStep";
 import { FormNavigation } from "@/components/react/forms/FormNavigation";
 import { FormReviewStep } from "@/components/react/forms/FormReviewStep";
 import { FormTitleStep } from "@/components/react/forms/FormTitleStep/FormTitleStep";
-import { ProgressCircle } from "@/components/react/common/ProgressCircle";
 import type { FormMachine } from "@/forms/createFormMachine";
-import type { Step } from "@/forms/types";
-import type { Cost } from "@/utils/formatTotalCosts";
 import type { FormPdfMetadata } from "@/forms/getFormPdfMetadata";
+import type { Step } from "@/forms/types";
 import { useFormState } from "@/forms/useFormState";
+import type { Cost } from "@/utils/formatTotalCosts";
 import { FormStepContext } from "./FormStepContext";
 import "./FormContainer.css";
 

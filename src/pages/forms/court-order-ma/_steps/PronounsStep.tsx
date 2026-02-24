@@ -1,4 +1,8 @@
-import { FormStep, FormSubsection, useFieldVisible } from "@/components/react/forms/FormStep";
+import {
+  FormStep,
+  FormSubsection,
+  useFieldVisible,
+} from "@/components/react/forms/FormStep";
 import { PronounSelectField } from "@/components/react/forms/PronounSelectField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
 import type { Step } from "@/forms/types";

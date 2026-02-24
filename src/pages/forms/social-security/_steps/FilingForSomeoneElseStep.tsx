@@ -1,4 +1,8 @@
-import { FormStep, FormSubsection, useFieldVisible } from "@/components/react/forms/FormStep";
+import {
+  FormStep,
+  FormSubsection,
+  useFieldVisible,
+} from "@/components/react/forms/FormStep";
 import { RadioGroupField } from "@/components/react/forms/RadioGroupField";
 import { ShortTextField } from "@/components/react/forms/ShortTextField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
@@ -27,8 +31,14 @@ export const filingForSomeoneElseStep: Step = {
     return true;
   },
   component: ({ stepConfig }) => {
-    const relationshipVisible = useFieldVisible(stepConfig, "relationshipToFilingFor");
-    const relationshipOtherVisible = useFieldVisible(stepConfig, "relationshipToFilingForOther");
+    const relationshipVisible = useFieldVisible(
+      stepConfig,
+      "relationshipToFilingFor",
+    );
+    const relationshipOtherVisible = useFieldVisible(
+      stepConfig,
+      "relationshipToFilingForOther",
+    );
     return (
       <FormStep stepConfig={stepConfig}>
         <YesNoField

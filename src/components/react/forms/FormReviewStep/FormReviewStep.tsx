@@ -67,9 +67,7 @@ export function FormReviewStep({
       >
         Finish and Download
       </Button>
-      {submitError && (
-        <Banner variant="error">{submitError}</Banner>
-      )}
+      {submitError && <Banner variant="error">{submitError}</Banner>}
     </form>
   );
 }
