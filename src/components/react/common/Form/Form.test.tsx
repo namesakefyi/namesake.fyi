@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createRef } from "react";
 import { describe, expect, it, vi } from "vitest";
-import { FieldButton, FieldError, Form, Label } from "./Form";
+import { FieldButton, Form, Label } from "./Form";
 
 describe("Form", () => {
   it("renders a form element", () => {
