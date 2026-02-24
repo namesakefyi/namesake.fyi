@@ -6,7 +6,6 @@
   border: 1px solid var(--border-color);
   padding: var(--space-l);
   border-radius: var(--radius-m);
-  align-items: stretch;
 }
 
 .form-feedback-success {
@@ -20,7 +19,6 @@
 }
 
 .form-feedback-sentiment {
-  width: 100%;
 
   .radio-items {
     gap: 0;
