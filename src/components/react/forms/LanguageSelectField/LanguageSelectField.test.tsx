@@ -1,9 +1,19 @@
 import { User } from "@react-aria/test-utils";
 import userEvent from "@testing-library/user-event";
 import languageNameMap from "language-name-map/map";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { renderWithFormProvider, screen } from "../test-utils";
 import { LanguageSelectField } from "./LanguageSelectField";
+
+vi.mock("language-name-map/map", () => ({
+  default: {
+    en: { name: "English", native: "English" },
+    fr: { name: "French", native: "Français" },
+    de: { name: "German", native: "Deutsch" },
+    es: { name: "Spanish", native: "Español" },
+    zh: { name: "Chinese", native: "中文" },
+  },
+}));
 
 describe("LanguageSelectField", () => {
   const testUtilUser = new User({ interactionType: "mouse" });
