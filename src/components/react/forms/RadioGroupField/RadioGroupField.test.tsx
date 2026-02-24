@@ -61,6 +61,37 @@ describe("RadioGroupField", () => {
     expect(selectedRadio.checked).toBe(true);
   });
 
+  it("shows a visible label when labelHidden is not set", () => {
+    renderWithFormProvider(
+      <RadioGroupField
+        name="pronouns"
+        label="Select an option"
+        options={mockOptions}
+      />,
+    );
+
+    expect(screen.getByText("Select an option")).toBeInTheDocument();
+    expect(
+      screen.getByRole("radiogroup", { name: "Select an option" }),
+    ).not.toHaveAttribute("aria-label");
+  });
+
+  it("hides the visible label and sets aria-label when labelHidden is true", () => {
+    renderWithFormProvider(
+      <RadioGroupField
+        name="pronouns"
+        label="Select an option"
+        options={mockOptions}
+        labelHidden
+      />,
+    );
+
+    expect(screen.queryByText("Select an option")).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("radiogroup", { name: "Select an option" }),
+    ).toBeInTheDocument();
+  });
+
   it("supports optional children", () => {
     renderWithFormProvider(
       <RadioGroupField name="pronouns" label="Test Label" options={mockOptions}>

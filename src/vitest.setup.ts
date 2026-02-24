@@ -3,6 +3,13 @@ import fs from "node:fs";
 import path from "node:path";
 import { afterEach, beforeEach, vi } from "vitest";
 
+// jsdom does not implement the Web Animations API used by react-aria-components'
+// SelectionIndicator. Provide a minimal stub so affected components render
+// without throwing during tests.
+if (!Element.prototype.getAnimations) {
+  Element.prototype.getAnimations = () => [];
+}
+
 // Mock fetch for PDF tests
 const originalFetch = global.fetch;
 
