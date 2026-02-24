@@ -23,7 +23,7 @@ export default getViteConfig({
         ...coverageConfigDefaults.exclude,
         "**/*.css",
         "**/*.pdf",
-        "**/*.astro", // Ignore Astro components for now
+        "**/*.astro",
         "**/*.config.?(c|m)[jt]s?(x)",
         "**/*.stories.tsx",
         "src/components/**/index.ts",
