@@ -24,34 +24,19 @@
   text-wrap: balance;
 }
 
-.form-complete-step-settings {
+.form-complete-step-content {
   display: flex;
   flex-direction: column;
-  width: 100%;
-}
-
-.form-complete-step-setting {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-start;
   gap: var(--space-l);
-  padding-block: var(--space-l);
-  border-top: 1px solid var(--border-color);
+  width: 100%;
+  max-width: 720px;
+  margin-inline-end: auto;
 }
 
-.form-complete-step-setting:last-child {
-  border-bottom: 1px solid var(--border-color);
-}
-
-.form-complete-step-setting-label,
-.form-complete-step-setting > p {
-  flex: 1;
-  font-size: var(--step-0);
-  color: var(--text-color-secondary);
-  line-height: var(--line-height-body);
-}
-
-.form-complete-step-setting > .namesake-button,
-.form-complete-step-setting > form {
-  flex-shrink: 0;
+.form-complete-actions {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-s);
 }

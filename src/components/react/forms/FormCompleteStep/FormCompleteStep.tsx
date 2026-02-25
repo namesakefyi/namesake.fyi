@@ -4,6 +4,7 @@ import { clearFormProgress } from "@/db/database";
 import { Button } from "../../common/Button";
 import { Heading } from "../../common/Content/Content";
 import { DeleteFormDataModal } from "../DeleteFormDataModal";
+import { FormFeedback } from "../FormFeedback/FormFeedback";
 import "./FormCompleteStep.css";
 
 export interface FormCompleteStepProps {
@@ -51,16 +52,15 @@ export function FormCompleteStep({
           Form complete!
         </Heading>
         <p className="form-complete-step-description">
-          Your <strong>{title}</strong> name change packet has downloaded.
-          Review, print, and follow the steps for filing. If you have questions,
-          email us at <a href="mailto:hey@namesake.fyi">hey@namesake.fyi</a>.
+          You&rsquo;re on your way. Check your downloads for your{" "}
+          <strong>{title}</strong> name change packet. Review, print, and follow
+          steps for filing.
         </p>
       </header>
-      <div className="form-complete-step-settings">
-        <div className="form-complete-step-setting">
-          <p className="form-complete-step-setting-label">
-            Get another copy of your completed forms.
-          </p>
+      <div className="form-complete-step-content">
+        <FormFeedback formSlug={formSlug} />
+        <DeleteFormDataModal />
+        <div className="form-complete-actions">
           <form onSubmit={handleSubmit}>
             <Button
               type="submit"
@@ -69,24 +69,17 @@ export function FormCompleteStep({
               isPending={isDownloading}
               isDisabled={isDownloading}
             >
-              Redownload
+              Redownload form
             </Button>
           </form>
-        </div>
-        <div className="form-complete-step-setting">
-          <p className="form-complete-step-setting-label">
-            Go back to the start of the form. Your responses will be preserved.
-          </p>
+
           <Button
             variant="secondary"
             icon={RiRestartLine}
             onPress={handleRestart}
           >
-            Restart
+            Restart form
           </Button>
-        </div>
-        <div className="form-complete-step-setting">
-          <DeleteFormDataModal />
         </div>
       </div>
     </section>

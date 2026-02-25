@@ -6,6 +6,11 @@ import type { FieldName, FormData } from "./fields";
 import type { PDFId } from "./pdf";
 
 /**
+ * Type representing all valid form slugs.
+ * Update this union whenever a new form is added to FORM_CONFIGS.
+ */
+
+/**
  * Configuration for a PDF within a form.
  */
 export interface FormPdfConfig {
@@ -43,24 +48,29 @@ export interface FormConfig {
 /**
  * Registry of all form configurations.
  */
-export const FORM_CONFIGS = {
+export const FORM_CONFIGS: Record<string, FormConfig> = {
   "court-order-ma": courtOrderMaConfig,
   "social-security": socialSecurityConfig,
-} as const;
+};
 
 /**
  * Get a form configuration by slug.
  */
 export function getFormConfig(slug: string): FormConfig | undefined {
-  return FORM_CONFIGS[slug as FormSlug];
+  return FORM_CONFIGS[slug];
 }
-
-/**
- * Type representing all valid form slugs.
- */
-export type FormSlug = keyof typeof FORM_CONFIGS;
 
 /**
  * Array of all form slugs.
  */
-export const FORM_SLUGS = Object.keys(FORM_CONFIGS) as FormSlug[];
+export const FORM_SLUGS = Object.keys(FORM_CONFIGS);
+
+/**
+ * Sentiment rating options for form feedback.
+ */
+export const FORM_FEEDBACK_SENTIMENT = {
+  positive: "Positive",
+  negative: "Negative",
+} as const;
+
+export type FormFeedbackSentiment = keyof typeof FORM_FEEDBACK_SENTIMENT;

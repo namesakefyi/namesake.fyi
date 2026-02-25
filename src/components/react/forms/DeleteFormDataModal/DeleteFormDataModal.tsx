@@ -47,7 +47,7 @@ export function DeleteFormDataModal() {
   const hasData = responseCount !== null && responseCount > 0;
 
   return (
-    <>
+    <div className="delete-form-data-container">
       {responseCount === null ? (
         <p>Loading...</p>
       ) : hasData ? (
@@ -106,6 +106,6 @@ export function DeleteFormDataModal() {
           </Modal>
         </DialogTrigger>
       )}
-    </>
+    </div>
   );
 }

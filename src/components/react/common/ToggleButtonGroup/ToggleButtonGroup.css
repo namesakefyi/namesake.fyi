@@ -1,4 +1,4 @@
-.react-aria-ToggleButtonGroup {
+.namesake-toggle-button-group {
   display: flex;
 
   > button {
@@ -16,7 +16,7 @@
   }
 }
 
-.react-aria-ToggleButtonGroup[data-orientation="horizontal"] {
+.namesake-toggle-button-group[data-orientation="horizontal"] {
   flex-direction: row;
 
   > button {
@@ -33,7 +33,7 @@
   }
 }
 
-.react-aria-ToggleButtonGroup[data-orientation="vertical"] {
+.namesake-toggle-button-group[data-orientation="vertical"] {
   flex-direction: column;
   width: fit-content;
 

@@ -12,6 +12,10 @@ vi.mock("../DeleteFormDataModal", () => ({
   DeleteFormDataModal: () => <div data-testid="delete-modal" />,
 }));
 
+vi.mock("../FormFeedback/FormFeedback", () => ({
+  FormFeedback: () => <div data-testid="form-feedback" />,
+}));
+
 describe("FormCompleteStep", () => {
   const defaultProps = {
     title: "Massachusetts Court Order",
@@ -49,6 +53,11 @@ describe("FormCompleteStep", () => {
     it("renders the delete data modal", () => {
       render(<FormCompleteStep {...defaultProps} />);
       expect(screen.getByTestId("delete-modal")).toBeInTheDocument();
+    });
+
+    it("renders the form feedback", () => {
+      render(<FormCompleteStep {...defaultProps} />);
+      expect(screen.getByTestId("form-feedback")).toBeInTheDocument();
     });
   });
 
