@@ -124,4 +124,49 @@ describe("FormFeedback", () => {
       );
     });
   });
+
+  it("shows a generic error when fetch throws a network error", async () => {
+    const user = userEvent.setup();
+    render(<FormFeedback formSlug="court-order-ma" />);
+
+    await user.click(screen.getByRole("radio", { name: /easy/i }));
+    vi.mocked(fetch).mockRejectedValueOnce(new Error("Network error"));
+    await user.click(screen.getByRole("button", { name: /submit/i }));
+
+    await waitFor(() => {
+      expect(screen.getByRole("alert")).toHaveTextContent(
+        /something went wrong/i,
+      );
+    });
+  });
+
+  describe("share button", () => {
+    beforeEach(() => {
+      vi.stubGlobal("navigator", {
+        ...navigator,
+        share: vi.fn().mockResolvedValue(undefined),
+      });
+    });
+
+    it("calls navigator.share with the current page title and URL", async () => {
+      const user = userEvent.setup();
+      render(<FormFeedback formSlug="court-order-ma" />);
+
+      await user.click(screen.getByRole("radio", { name: /easy/i }));
+      await user.click(screen.getByRole("button", { name: /submit/i }));
+
+      await waitFor(() =>
+        expect(
+          screen.getByRole("button", { name: /share/i }),
+        ).toBeInTheDocument(),
+      );
+
+      await user.click(screen.getByRole("button", { name: /share/i }));
+
+      expect(navigator.share).toHaveBeenCalledWith({
+        title: document.title,
+        url: window.location.href,
+      });
+    });
+  });
 });

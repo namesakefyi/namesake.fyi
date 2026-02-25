@@ -12,6 +12,17 @@
 .form-feedback-success {
   display: flex;
   flex-direction: column;
+  gap: var(--space-m);
+}
+
+.form-feedback-success-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.form-feedback-success-actions {
+  display: flex;
   gap: var(--space-s);
 }
 
@@ -24,6 +35,7 @@
 
 .form-feedback-sentiment {
   .radio-items {
+    flex-direction: column;
     gap: var(--space-s);
     width: 100%;
 
@@ -32,18 +44,26 @@
     }
   }
 
+  @media (width > 520px) {
+    .radio-items {
+      flex-direction: row;
+    }
+  }
+
   .form-feedback-sentiment-option {
+    width: 100%;
     justify-content: center;
     border: 1px solid var(--border-color);
-    padding: var(--space-xs) var(--space-m);
-    gap: var(--space-s);
+    padding: var(--space-s) var(--space-m);
+    gap: var(--space-2xs);
+    flex-direction: column;
     cursor: pointer;
-    margin-inline-start: -1px;
-    z-index: 1;
     border-radius: var(--radius-xs);
+    text-align: center;
 
     svg {
       flex-shrink: 0;
+      margin-top: 4px;
     }
 
     &::before {
@@ -54,13 +74,11 @@
       background: var(--highlight-background);
       border-color: var(--highlight-background);
       color: var(--highlight-foreground);
-      z-index: 2;
     }
 
     &[data-focus-visible] {
       outline: 3px solid var(--focus-ring-color);
       outline-offset: 2px;
-      z-index: 3;
     }
   }
 }

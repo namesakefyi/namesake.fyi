@@ -123,6 +123,29 @@ describe("FormCompleteStep", () => {
     });
   });
 
+  describe("redownload error handling", () => {
+    it("logs the error and re-enables the button if onRedownload throws", async () => {
+      const user = userEvent.setup();
+      const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+      const error = new Error("Download failed");
+      const onRedownload = vi.fn().mockRejectedValueOnce(error);
+
+      render(
+        <FormCompleteStep {...defaultProps} onRedownload={onRedownload} />,
+      );
+      await user.click(screen.getByRole("button", { name: /redownload/i }));
+
+      await waitFor(() => {
+        expect(errorSpy).toHaveBeenCalledWith("Re-download failed:", error);
+        expect(
+          screen.getByRole("button", { name: /redownload/i }),
+        ).not.toBeDisabled();
+      });
+
+      errorSpy.mockRestore();
+    });
+  });
+
   describe("restart", () => {
     it("clears form progress and reloads the page", async () => {
       const user = userEvent.setup();

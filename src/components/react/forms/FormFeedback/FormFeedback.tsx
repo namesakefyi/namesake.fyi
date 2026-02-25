@@ -1,8 +1,10 @@
 import {
   RiArrowRightLine,
+  RiHandHeartLine,
   RiHeart3Line,
-  RiThumbDownFill,
-  RiThumbUpFill,
+  RiShareForwardLine,
+  RiThumbDownLine,
+  RiThumbUpLine,
 } from "@remixicon/react";
 import { useActionState } from "react";
 import { Button } from "@/components/react/common/Button";
@@ -56,21 +58,38 @@ export function FormFeedback({ formSlug }: FormFeedbackProps) {
     }
   }, "idle");
 
+  const canShare = "share" in navigator;
+
+  const handleShare = () => {
+    navigator.share({
+      title: document.title,
+      url: window.location.href,
+    });
+  };
+
   if (state === "success") {
     return (
       <div className="form-feedback">
-        <div className="form-feedback-success">
+        <div className="form-feedback-success" role="alert">
           <RiHeart3Line size={32} aria-hidden />
-          <div role="alert">
+          <div className="form-feedback-success-content">
             <strong>Thank you for your feedback!</strong>
             <p>
-              Good luck submitting your name change paperwork. If this form
-              helped you, consider{" "}
-              <a href="https://namesake.fyi/donate">
-                donating to support our work
-              </a>
-              .
+              Good luck submitting your paperwork. If this form helped you,
+              consider sharing it with others or donating to support our work.
             </p>
+          </div>
+          <div className="form-feedback-success-actions">
+            {canShare && (
+              <Button variant="secondary" onClick={handleShare}>
+                <RiShareForwardLine aria-hidden />
+                Share
+              </Button>
+            )}
+            <a href="https://namesake.fyi/donate" className="namesake-button">
+              <RiHandHeartLine aria-hidden />
+              Donate
+            </a>
           </div>
         </div>
       </div>
@@ -91,11 +110,11 @@ export function FormFeedback({ formSlug }: FormFeedbackProps) {
         label="Was it easy to complete this form?"
       >
         <Radio value="positive" className="form-feedback-sentiment-option">
-          <RiThumbUpFill size={24} aria-hidden />
+          <RiThumbUpLine size={24} aria-hidden />
           It was easy
         </Radio>
         <Radio value="negative" className="form-feedback-sentiment-option">
-          <RiThumbDownFill size={24} aria-hidden />
+          <RiThumbDownLine size={24} aria-hidden />
           Had some problems
         </Radio>
       </RadioGroup>
