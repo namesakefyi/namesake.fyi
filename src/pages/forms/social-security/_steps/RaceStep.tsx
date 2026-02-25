@@ -1,9 +1,9 @@
 import { Banner } from "@/components/react/common/Banner";
 import { CheckboxGroupField } from "@/components/react/forms/CheckboxGroupField";
-import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep } from "@/components/react/forms/FormStep";
+import type { Step } from "@/forms/types";
 
-export const raceStep: StepConfig = {
+export const raceStep: Step = {
   id: "race",
   title: "What is your race?",
   description: "This response is optional.",

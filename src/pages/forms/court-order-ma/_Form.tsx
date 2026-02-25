@@ -3,10 +3,10 @@ import { RiMegaphoneLine } from "@remixicon/react";
 import { Banner } from "@/components/react/common/Banner";
 import { FormContainer } from "@/components/react/forms/FormContainer";
 import type { FieldType } from "@/constants/fields";
-import { createFormSubmitHandler } from "@/utils/createFormSubmitHandler";
+import { createFormSubmitHandler } from "@/forms/createFormSubmitHandler";
+import type { FormPdfMetadata } from "@/forms/getFormPdfMetadata";
+import { useFormData } from "@/forms/useFormData";
 import type { Cost } from "@/utils/formatTotalCosts";
-import type { FormPdfMetadata } from "@/utils/getFormPdfMetadata";
-import { useForm } from "@/utils/useForm";
 import { courtOrderMaConfig } from "./config";
 
 type FormData = {
@@ -28,7 +28,7 @@ export function MaCourtOrderForm({
   pdfs?: FormPdfMetadata[];
   costs?: Cost[];
 }) {
-  const { ...form } = useForm<FormData>(courtOrderMaConfig.fields);
+  const form = useFormData<FormData>(courtOrderMaConfig.fields);
 
   const handleSubmit = createFormSubmitHandler(courtOrderMaConfig, form);
 
@@ -37,12 +37,12 @@ export function MaCourtOrderForm({
       title={title}
       description={description}
       steps={courtOrderMaConfig.steps}
+      machine={courtOrderMaConfig.machine}
       form={form}
       onSubmit={handleSubmit}
       updatedAt={updatedAt}
       pdfs={pdfs}
       costs={costs}
-      slug={courtOrderMaConfig.slug}
     >
       {banner && (
         <Banner icon={RiMegaphoneLine}>

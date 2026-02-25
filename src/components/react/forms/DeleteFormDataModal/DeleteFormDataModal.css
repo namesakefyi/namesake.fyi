@@ -1,3 +1,13 @@
+.delete-form-data-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-m);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-m);
+  padding: var(--space-l);
+}
+
 .delete-form-data-modal {
   display: flex;
   flex-direction: column;

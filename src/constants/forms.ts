@@ -1,4 +1,5 @@
-import type { StepConfig } from "@/components/react/forms/FormContainer";
+import type { FormMachine } from "@/forms/createFormMachine";
+import type { Step } from "@/forms/types";
 import { courtOrderMaConfig } from "@/pages/forms/court-order-ma/config";
 import { socialSecurityConfig } from "@/pages/forms/social-security/config";
 import type { FieldName, FormData } from "./fields";
@@ -8,7 +9,6 @@ import type { PDFId } from "./pdf";
  * Type representing all valid form slugs.
  * Update this union whenever a new form is added to FORM_CONFIGS.
  */
-export type FormSlug = "court-order-ma" | "social-security";
 
 /**
  * Configuration for a PDF within a form.
@@ -30,10 +30,12 @@ export type FormInstructionsFn = (data: Partial<FormData>) => string[];
  */
 export interface FormConfig {
   /** Form identifier matching the URL slug */
-  slug: FormSlug;
-  /** Form steps configuration */
-  steps: readonly StepConfig[];
-  /** Flattened array of all field names from steps */
+  slug: string;
+  /** Ordered steps, including optional guards for conditional inclusion. */
+  steps: readonly Step[];
+  /** The XState machine for this form, created from steps. */
+  machine: FormMachine;
+  /** Flattened array of all field names, derived from steps. */
   fields: readonly FieldName[];
   /** PDFs included in this form */
   pdfs: readonly FormPdfConfig[];
@@ -46,7 +48,7 @@ export interface FormConfig {
 /**
  * Registry of all form configurations.
  */
-export const FORM_CONFIGS: Record<FormSlug, FormConfig> = {
+export const FORM_CONFIGS: Record<string, FormConfig> = {
   "court-order-ma": courtOrderMaConfig,
   "social-security": socialSecurityConfig,
 };
@@ -54,14 +56,14 @@ export const FORM_CONFIGS: Record<FormSlug, FormConfig> = {
 /**
  * Get a form configuration by slug.
  */
-export function getFormConfig(slug: FormSlug): FormConfig | undefined {
+export function getFormConfig(slug: string): FormConfig | undefined {
   return FORM_CONFIGS[slug];
 }
 
 /**
  * Array of all form slugs.
  */
-export const FORM_SLUGS = Object.keys(FORM_CONFIGS) as FormSlug[];
+export const FORM_SLUGS = Object.keys(FORM_CONFIGS);
 
 /**
  * Sentiment rating options for form feedback.
@@ -72,10 +74,3 @@ export const FORM_FEEDBACK_SENTIMENT = {
 } as const;
 
 export type FormFeedbackSentiment = keyof typeof FORM_FEEDBACK_SENTIMENT;
-
-/**
- * Returns the URL path for the post-completion feedback page for a given form.
- */
-export function getFormDonePath(slug: FormSlug): string {
-  return `/forms/${slug}/done`;
-}

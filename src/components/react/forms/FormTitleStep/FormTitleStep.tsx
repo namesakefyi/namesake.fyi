@@ -8,8 +8,8 @@ import {
 } from "@remixicon/react";
 import { useEffect, useState } from "react";
 import { type IBrowser, type IDevice, UAParser } from "ua-parser-js";
+import type { FormPdfMetadata } from "@/forms/getFormPdfMetadata";
 import { formatTimeEstimate } from "@/utils/formatTimeEstimate";
-import type { FormPdfMetadata } from "@/utils/getFormPdfMetadata";
 import { smartquotes } from "@/utils/smartquotes";
 import { Button } from "../../common/Button";
 import "./FormTitleStep.css";

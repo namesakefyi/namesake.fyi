@@ -1,5 +1,5 @@
 import type { FormData } from "@/constants/fields";
-import type { StepConfig } from "./FormContainer";
+import type { Step } from "@/forms/types";
 
 /**
  * Resolves which fields should be visible (shown in review and passed to PDF)
@@ -10,20 +10,23 @@ import type { StepConfig } from "./FormContainer";
  * were never displayed.
  */
 export function resolveVisibleFields(
-  steps: readonly StepConfig[],
+  steps: readonly Step[],
   formData: FormData,
 ): Partial<FormData> {
   const visibleFields: Record<string, FormData[keyof FormData]> = {};
 
   for (const step of steps) {
+    // If the step has a guard that excludes it, skip all its fields
+    if (step.guard && !step.guard(formData)) {
+      continue;
+    }
+
     for (const fieldName of step.fields) {
-      // Check if the field should be visible
       const isVisible = step.isFieldVisible
         ? step.isFieldVisible(fieldName, formData)
         : true;
 
       if (isVisible) {
-        // Add the field to the visible fields object
         visibleFields[fieldName] = formData[fieldName];
       }
     }

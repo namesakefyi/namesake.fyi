@@ -1,10 +1,14 @@
-import type { StepConfig } from "@/components/react/forms/FormContainer";
-import { FormStep, FormSubsection } from "@/components/react/forms/FormStep";
+import {
+  FormStep,
+  FormSubsection,
+  useFieldVisible,
+} from "@/components/react/forms/FormStep";
 import { RadioGroupField } from "@/components/react/forms/RadioGroupField";
 import { ShortTextField } from "@/components/react/forms/ShortTextField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
+import type { Step } from "@/forms/types";
 
-export const filingForSomeoneElseStep: StepConfig = {
+export const filingForSomeoneElseStep: Step = {
   id: "filing-for-someone-else",
   title: "Are you filing this form for someone else?",
   fields: [
@@ -26,17 +30,28 @@ export const filingForSomeoneElseStep: StepConfig = {
     }
     return true;
   },
-  component: ({ stepConfig, form }) => (
-    <FormStep stepConfig={stepConfig}>
-      <YesNoField
-        name="isFilingForSomeoneElse"
-        label="Are you filing this form for someone else?"
-        labelHidden
-        yesLabel="Yes, I am filing this for someone else"
-        noLabel="No, I am filing this for myself"
-      />
-      {form.watch("isFilingForSomeoneElse") === true && (
-        <FormSubsection title="What is your relationship to the person you are filing for?">
+  component: ({ stepConfig }) => {
+    const relationshipVisible = useFieldVisible(
+      stepConfig,
+      "relationshipToFilingFor",
+    );
+    const relationshipOtherVisible = useFieldVisible(
+      stepConfig,
+      "relationshipToFilingForOther",
+    );
+    return (
+      <FormStep stepConfig={stepConfig}>
+        <YesNoField
+          name="isFilingForSomeoneElse"
+          label="Are you filing this form for someone else?"
+          labelHidden
+          yesLabel="Yes, I am filing this for someone else"
+          noLabel="No, I am filing this for myself"
+        />
+        <FormSubsection
+          title="What is your relationship to the person you are filing for?"
+          isVisible={relationshipVisible}
+        >
           <RadioGroupField
             name="relationshipToFilingFor"
             label="Relationship"
@@ -47,7 +62,7 @@ export const filingForSomeoneElseStep: StepConfig = {
               { label: "Other", value: "other" },
             ]}
           />
-          {form.watch("relationshipToFilingFor") === "other" && (
+          {relationshipOtherVisible && (
             <ShortTextField
               name="relationshipToFilingForOther"
               label="Specify relationship"
@@ -55,7 +70,7 @@ export const filingForSomeoneElseStep: StepConfig = {
             />
           )}
         </FormSubsection>
-      )}
-    </FormStep>
-  ),
+      </FormStep>
+    );
+  },
 };

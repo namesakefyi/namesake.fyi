@@ -7,19 +7,15 @@ import "./FormNavigation.css";
 import { Fragment } from "react/jsx-runtime";
 
 export const FormNavigation = memo(function FormNavigation() {
-  const {
-    formTitle,
-    currentStepIndex,
-    totalSteps,
-    isReviewStep,
-    onNext,
-    onBack,
-  } = useFormStep();
+  const { formTitle, currentStepIndex, totalSteps, phase, onNext, onBack } =
+    useFormStep();
 
-  // Don't show navigation on title step (when currentStepIndex === 0 and not review)
-  if (currentStepIndex === 0 && !isReviewStep) {
-    return null;
-  }
+  const disableBack = ["editing"].includes(phase);
+  const disableNext = ["review", "editing", "submitting"].includes(phase);
+
+  const progressBarValue = ["review", "editing", "submitting"].includes(phase)
+    ? totalSteps + 1
+    : currentStepIndex;
 
   return (
     <nav className="form-navigation">
@@ -30,6 +26,7 @@ export const FormNavigation = memo(function FormNavigation() {
           icon={RiArrowLeftLine}
           aria-label="Previous step"
           className="form-navigation-button"
+          isDisabled={disableBack}
         />
         <Button
           onPress={onNext}
@@ -37,15 +34,15 @@ export const FormNavigation = memo(function FormNavigation() {
           icon={RiArrowRightLine}
           aria-label="Next step"
           className="form-navigation-button"
-          isDisabled={isReviewStep}
+          isDisabled={disableNext}
         />
       </div>
       <div className="form-progress">
         <ProgressBar
           label={formTitle}
-          value={isReviewStep ? totalSteps : currentStepIndex}
+          value={progressBarValue}
           valueLabel={<Fragment />}
-          maxValue={isReviewStep ? totalSteps : totalSteps + 1}
+          maxValue={totalSteps + 1}
           formatOptions={{ style: "decimal" }}
         />
       </div>

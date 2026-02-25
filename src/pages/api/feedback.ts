@@ -4,12 +4,11 @@ import {
   FORM_FEEDBACK_SENTIMENT,
   FORM_SLUGS,
   type FormFeedbackSentiment,
-  type FormSlug,
 } from "@/constants/forms";
 import { isRateLimited } from "@/utils/rateLimitByIp";
 
 const FeedbackSchema = z.object({
-  form_slug: z.enum(FORM_SLUGS as [FormSlug, ...FormSlug[]]),
+  form_slug: z.enum(FORM_SLUGS as [string, ...string[]]),
   sentiment: z.enum(
     Object.keys(FORM_FEEDBACK_SENTIMENT) as [
       FormFeedbackSentiment,

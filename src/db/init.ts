@@ -1,9 +1,10 @@
 import { openDB } from "idb";
-import type { FormFieldRecord, NamesakeDB } from "./types";
+import type { FormFieldRecord, FormProgressRecord, NamesakeDB } from "./types";
 
 const DB_NAME = "namesake";
-const DB_VERSION = 1;
-const STORE_NAME = "formFields";
+const DB_VERSION = 2;
+const FORM_DATA_STORE = "formData";
+const FORM_PROGRESS_STORE = "formProgress";
 
 let dbInstance: NamesakeDB | null = null;
 
@@ -13,15 +14,21 @@ export async function getDB(): Promise<NamesakeDB> {
   }
 
   dbInstance = await openDB<{
-    formFields: {
+    formData: {
       key: string;
       value: FormFieldRecord;
     };
+    formProgress: {
+      key: string;
+      value: FormProgressRecord;
+    };
   }>(DB_NAME, DB_VERSION, {
-    upgrade(db) {
-      // Create the formFields object store if it doesn't exist
-      if (!db.objectStoreNames.contains(STORE_NAME)) {
-        db.createObjectStore(STORE_NAME, { keyPath: "field" });
+    upgrade(db, oldVersion) {
+      if (oldVersion < 1) {
+        db.createObjectStore(FORM_DATA_STORE, { keyPath: "field" });
+      }
+      if (oldVersion < 2) {
+        db.createObjectStore(FORM_PROGRESS_STORE, { keyPath: "formSlug" });
       }
     },
   });
@@ -29,4 +36,4 @@ export async function getDB(): Promise<NamesakeDB> {
   return dbInstance;
 }
 
-export { STORE_NAME };
+export { FORM_DATA_STORE, FORM_PROGRESS_STORE };

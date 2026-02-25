@@ -1,13 +1,14 @@
 import { useFormContext } from "react-hook-form";
-import type { StepConfig } from "@/components/react/forms/FormContainer";
+import { useFormStep } from "@/components/react/forms/FormContainer";
 import { resolveVisibleFields } from "@/components/react/forms/FormContainer/resolveVisibleFields";
 import type { FormData } from "@/constants/fields";
+import type { Step } from "@/forms/types";
 import { formatFieldValue, getFieldLabel } from "@/utils/formatReviewFields";
 import "./FormReviewTable.css";
 import { smartquotes } from "@/utils/smartquotes";
 
 export interface FormReviewTableProps {
-  steps: readonly StepConfig[];
+  steps: readonly Step[];
 }
 
 interface ReviewField {
@@ -18,29 +19,25 @@ interface ReviewField {
 
 interface ReviewSection {
   stepId: string;
-  changeUrl: string;
   fields: ReviewField[];
 }
 
 export function FormReviewTable({ steps }: FormReviewTableProps) {
   const form = useFormContext();
+  const { onEditStep } = useFormStep();
   const formData = form.getValues() as FormData;
 
-  // Get only the visible fields based on conditional logic
   const visibleFields = resolveVisibleFields(steps, formData);
 
-  // Build grouped sections
   const sections: ReviewSection[] = [];
 
-  steps.forEach((step) => {
-    // Get fields for this step that are visible
+  for (const step of steps) {
     const stepFields = step.fields.filter(
       (fieldName) => fieldName in visibleFields,
     );
 
-    // Skip steps with no visible fields
     if (stepFields.length === 0) {
-      return;
+      continue;
     }
 
     const fields = stepFields.map((fieldName) => ({
@@ -49,12 +46,8 @@ export function FormReviewTable({ steps }: FormReviewTableProps) {
       value: formatFieldValue(fieldName, formData[fieldName]),
     }));
 
-    sections.push({
-      stepId: step.id,
-      changeUrl: `#${step.id}?reviewing=true`,
-      fields,
-    });
-  });
+    sections.push({ stepId: step.id, fields });
+  }
 
   return (
     <div className="form-review-sections">
@@ -75,9 +68,13 @@ export function FormReviewTable({ steps }: FormReviewTableProps) {
             ))}
           </dl>
           <div className="form-review-section-action">
-            <a href={section.changeUrl} className="form-review-change-link">
+            <button
+              type="button"
+              className="form-review-change-link"
+              onClick={() => onEditStep(section.stepId)}
+            >
               Change
-            </a>
+            </button>
           </div>
         </section>
       ))}

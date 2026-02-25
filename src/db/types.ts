@@ -7,9 +7,19 @@ export interface FormFieldRecord {
   updatedAt: number;
 }
 
+export interface FormProgressRecord {
+  formSlug: string;
+  machineState: unknown;
+  updatedAt: number;
+}
+
 export type NamesakeDB = IDBPDatabase<{
-  formFields: {
+  formData: {
     key: string;
     value: FormFieldRecord;
+  };
+  formProgress: {
+    key: string;
+    value: FormProgressRecord;
   };
 }>;

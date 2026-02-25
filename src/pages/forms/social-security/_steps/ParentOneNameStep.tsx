@@ -1,8 +1,8 @@
-import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep } from "@/components/react/forms/FormStep";
 import { NameField } from "@/components/react/forms/NameField";
+import type { Step } from "@/forms/types";
 
-export const parentOneNameStep: StepConfig = {
+export const parentOneNameStep: Step = {
   id: "parent-one",
   title: "What is your mother's (or first parent's) name?",
   description:

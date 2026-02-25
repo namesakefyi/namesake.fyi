@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+import type { FormPhase } from "@/forms/types";
 import type { Cost } from "@/utils/formatTotalCosts";
 
 export interface FormStepContextValue {
@@ -10,14 +11,16 @@ export interface FormStepContextValue {
   formDescription?: string;
   /** The current step index (1-based for actual form steps, 0 for title/review) */
   currentStepIndex: number;
-  /** The total number of actual form steps (excludes title and review) */
+  /** The total number of form steps (excludes skipped steps) */
   totalSteps: number;
-  /** Whether the current step is the review step */
-  isReviewStep: boolean;
-  /** Whether the user is in reviewing mode (navigated from review page to edit a field) */
-  isReviewingMode: boolean;
+  /** The current top-level machine state */
+  phase: FormPhase;
   /** Submit handler for form steps */
   onSubmit: (e: React.SubmitEvent<HTMLFormElement>) => void;
+  /** Navigate to a step from the review screen for editing */
+  onEditStep: (stepId: string) => void;
+  /** Error message from the most recent failed submission attempt, if any */
+  submitError: string | null;
   /** The costs associated with this form */
   costs?: Cost[];
 }

@@ -1,6 +1,6 @@
 import {
   RiArrowRightLine,
-  RiCheckLine,
+  RiHeart3Line,
   RiThumbDownFill,
   RiThumbUpFill,
 } from "@remixicon/react";
@@ -9,12 +9,12 @@ import { Button } from "@/components/react/common/Button";
 import { Form } from "@/components/react/common/Form";
 import { Radio, RadioGroup } from "@/components/react/common/RadioGroup";
 import { TextArea } from "@/components/react/common/TextArea";
-import type { FormFeedbackSentiment, FormSlug } from "@/constants/forms";
+import type { FormFeedbackSentiment } from "@/constants/forms";
 import "./FormFeedback.css";
 import { Banner } from "../../common/Banner";
 
 interface FormFeedbackProps {
-  formSlug: FormSlug;
+  formSlug: string;
 }
 
 type SubmitState = "idle" | "success" | "error";
@@ -49,7 +49,7 @@ export function FormFeedback({ formSlug }: FormFeedbackProps) {
     return (
       <div className="form-feedback">
         <div className="form-feedback-success">
-          <RiCheckLine size={32} aria-hidden />
+          <RiHeart3Line size={32} aria-hidden />
           <div role="alert">Thank you for your feedback!</div>
         </div>
       </div>

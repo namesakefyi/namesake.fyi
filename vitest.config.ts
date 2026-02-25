@@ -16,6 +16,7 @@ export default getViteConfig({
       include: [
         "src/components/**/*.{ts,tsx}",
         "src/db/**/*.{ts,tsx}",
+        "src/forms/**/*.ts",
         "src/pdfs/**/*.{ts,tsx}",
         "src/utils/**/*.{ts,tsx}",
       ],
@@ -33,7 +34,7 @@ export default getViteConfig({
         lines: 85,
         statements: 85,
         functions: 85,
-        branches: 75,
+        branches: 85,
       },
     },
   },
