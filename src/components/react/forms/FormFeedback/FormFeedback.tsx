@@ -2,7 +2,9 @@ import {
   RiArrowRightLine,
   RiHeart3Line,
   RiThumbDownFill,
+  RiThumbDownLine,
   RiThumbUpFill,
+  RiThumbUpLine,
 } from "@remixicon/react";
 import { useActionState } from "react";
 import { Button } from "@/components/react/common/Button";
@@ -91,11 +93,11 @@ export function FormFeedback({ formSlug }: FormFeedbackProps) {
         label="Was it easy to complete this form?"
       >
         <Radio value="positive" className="form-feedback-sentiment-option">
-          <RiThumbUpFill size={24} aria-hidden />
+          <RiThumbUpLine size={24} aria-hidden />
           It was easy
         </Radio>
         <Radio value="negative" className="form-feedback-sentiment-option">
-          <RiThumbDownFill size={24} aria-hidden />
+          <RiThumbDownLine size={24} aria-hidden />
           Had some problems
         </Radio>
       </RadioGroup>

@@ -72,7 +72,6 @@ export function FormCompleteStep({
               Redownload form
             </Button>
           </form>
-
           <Button
             variant="secondary"
             icon={RiRestartLine}

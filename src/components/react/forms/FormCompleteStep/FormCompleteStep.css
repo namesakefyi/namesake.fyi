@@ -37,6 +37,20 @@
 .form-complete-actions {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-s);
+  justify-content: flex-start;
+  gap: var(--space-m);
+  width: 100%;
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  @media (width < 600px) {
+    flex-direction: column;
+    align-items: stretch;
+
+    button {
+      width: 100%;
+    }
+  }
 }
