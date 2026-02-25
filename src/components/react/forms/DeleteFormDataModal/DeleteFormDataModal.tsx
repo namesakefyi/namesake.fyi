@@ -98,7 +98,7 @@ export function DeleteFormDataModal() {
                     onPress={handleDelete}
                     isPending={isDeleting}
                   >
-                    {isDeleting ? "Deleting..." : "Delete all data"}
+                    {isDeleting ? "Deleting..." : "Clear all data"}
                   </Button>
                 </div>
               </div>
