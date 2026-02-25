@@ -12,16 +12,19 @@
 .form-feedback-success {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
   gap: var(--space-s);
+}
+
+.form-feedback-title {
+  font-size: var(--step-1);
   font-weight: var(--weight-bold);
+  color: var(--text-color);
+  text-wrap: pretty;
 }
 
 .form-feedback-sentiment {
   .radio-items {
-    gap: 0;
+    gap: var(--space-s);
     width: 100%;
 
     &:not(:last-child) {
@@ -30,14 +33,14 @@
   }
 
   .form-feedback-sentiment-option {
-    flex: 1;
     justify-content: center;
     border: 1px solid var(--border-color);
     padding: var(--space-xs) var(--space-m);
-    gap: var(--space-xs);
+    gap: var(--space-s);
     cursor: pointer;
     margin-inline-start: -1px;
     z-index: 1;
+    border-radius: var(--radius-xs);
 
     svg {
       flex-shrink: 0;
@@ -45,16 +48,6 @@
 
     &::before {
       display: none;
-    }
-
-    &:first-child {
-      border-top-left-radius: var(--radius-xs);
-      border-bottom-left-radius: var(--radius-xs);
-    }
-
-    &:last-child {
-      border-top-right-radius: var(--radius-xs);
-      border-bottom-right-radius: var(--radius-xs);
     }
 
     &[data-selected] {

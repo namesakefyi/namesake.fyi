@@ -52,9 +52,9 @@ export function FormCompleteStep({
           Form complete!
         </Heading>
         <p className="form-complete-step-description">
-          Your <strong>{title}</strong> name change packet has downloaded.
-          Review, print, and follow the steps for filing. If you have questions,
-          email us at <a href="mailto:hey@namesake.fyi">hey@namesake.fyi</a>.
+          You&rsquo;re on your way. Check your downloads for your{" "}
+          <strong>{title}</strong> name change packet. Review, print, and follow
+          steps for filing.
         </p>
       </header>
       <div className="form-complete-step-content">
