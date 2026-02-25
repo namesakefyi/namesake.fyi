@@ -1,8 +1,8 @@
 import { FormContainer } from "@/components/react/forms/FormContainer";
 import type { FieldType } from "@/constants/fields";
-import { createFormSubmitHandler } from "@/utils/createFormSubmitHandler";
-import type { FormPdfMetadata } from "@/utils/getFormPdfMetadata";
-import { useForm } from "@/utils/useForm";
+import { createFormSubmitHandler } from "@/forms/createFormSubmitHandler";
+import type { FormPdfMetadata } from "@/forms/getFormPdfMetadata";
+import { useFormData } from "@/forms/useFormData";
 import { socialSecurityConfig } from "./config";
 
 type FormData = {
@@ -20,19 +20,16 @@ export function SocialSecurityForm({
   updatedAt?: string;
   pdfs?: FormPdfMetadata[];
 }) {
-  const { onSubmit, ...form } = useForm<FormData>(socialSecurityConfig.fields);
+  const form = useFormData<FormData>(socialSecurityConfig.fields);
 
-  const handleSubmit = createFormSubmitHandler(
-    socialSecurityConfig,
-    form,
-    onSubmit,
-  );
+  const handleSubmit = createFormSubmitHandler(socialSecurityConfig, form);
 
   return (
     <FormContainer
       title={title}
       description={description}
       steps={socialSecurityConfig.steps}
+      machine={socialSecurityConfig.machine}
       form={form}
       onSubmit={handleSubmit}
       updatedAt={updatedAt}

@@ -1,8 +1,8 @@
 import { AddressField } from "@/components/react/forms/AddressField";
-import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep } from "@/components/react/forms/FormStep";
+import type { Step } from "@/forms/types";
 
-export const addressStep: StepConfig = {
+export const addressStep: Step = {
   id: "address",
   title: "What is your mailing address?",
   fields: [

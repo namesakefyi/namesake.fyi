@@ -1,7 +1,9 @@
 import { RiArrowRightLine } from "@remixicon/react";
 import { Heading } from "react-aria-components";
-import type { StepConfig } from "@/components/react/forms/FormContainer";
+import { useFormContext } from "react-hook-form";
 import { useFormStep } from "@/components/react/forms/FormContainer";
+import type { FieldName, FormData } from "@/constants/fields";
+import type { Step } from "@/forms/types";
 import { slugify } from "../../../../utils/slugify";
 import { smartquotes } from "../../../../utils/smartquotes";
 import { Button } from "../../common/Button";
@@ -9,11 +11,29 @@ import "./FormStep.css";
 import clsx from "clsx";
 import { useId } from "react";
 
+/**
+ * Returns whether a specific field should be visible within a step, based on
+ * the step's `isFieldVisible` predicate and the current live form values.
+ *
+ * Using this hook in step components ensures that rendering and the review/PDF
+ * resolution both derive from the same single predicate on the Step config.
+ */
+export function useFieldVisible(
+  stepConfig: Step,
+  fieldName: FieldName,
+): boolean {
+  const form = useFormContext();
+  const data = form.watch() as FormData;
+  return stepConfig.isFieldVisible
+    ? stepConfig.isFieldVisible(fieldName, data)
+    : true;
+}
+
 export interface FormStepProps {
   /**
    * The step configuration containing title, description, fields, etc.
    */
-  stepConfig: StepConfig;
+  stepConfig: Step;
 
   /**
    * The form fields to render.
@@ -30,18 +50,10 @@ export function FormStep({ stepConfig, children, className }: FormStepProps) {
   const { title, description } = stepConfig;
   const titleId = slugify(title);
   const descriptionId = useId();
-  const { onSubmit, isReviewingMode } = useFormStep();
+  const { onSubmit, phase } = useFormStep();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // If in reviewing mode, navigate back to review page
-    if (isReviewingMode) {
-      window.location.hash = "review";
-      return;
-    }
-
-    // Otherwise, proceed with normal flow
     onSubmit(e);
   };
 
@@ -70,7 +82,7 @@ export function FormStep({ stepConfig, children, className }: FormStepProps) {
         endIcon={RiArrowRightLine}
         className="form-step-button"
       >
-        {isReviewingMode ? "Save Changes" : "Continue"}
+        {phase === "editing" ? "Save Changes" : "Continue"}
       </Button>
     </form>
   );

@@ -16,9 +16,10 @@ function TestWrapper({ children }: { children: ReactNode }) {
         formDescription: "Test Description",
         currentStepIndex: 0, // Title step
         totalSteps: 5, // 5 actual steps
-        isReviewStep: false,
-        isReviewingMode: false,
+        phase: "title" as const,
         onSubmit: vi.fn(),
+        onEditStep: vi.fn(),
+        submitError: null,
       }}
     >
       {children}
@@ -76,5 +77,33 @@ describe("FormTitleStep", () => {
 
     const contentDiv = document.querySelector(".form-title-step-content");
     expect(contentDiv).toBeNull();
+  });
+
+  it("renders PDF titles in the list", () => {
+    render(
+      <FormTitleStep
+        {...formTitleStep}
+        pdfs={[
+          { pdfId: "pdf-1" as any, title: "Petition for Name Change" },
+          { pdfId: "pdf-2" as any, title: "Civil Cover Sheet" },
+        ]}
+      />,
+      { wrapper: TestWrapper },
+    );
+
+    expect(screen.getByText("Petition for Name Change")).toBeInTheDocument();
+    expect(screen.getByText("Civil Cover Sheet")).toBeInTheDocument();
+  });
+
+  it("appends the PDF code in parentheses when provided", () => {
+    render(
+      <FormTitleStep
+        {...formTitleStep}
+        pdfs={[{ pdfId: "pdf-1" as any, title: "Petition", code: "CJD 400" }]}
+      />,
+      { wrapper: TestWrapper },
+    );
+
+    expect(screen.getByText("Petition (CJD 400)")).toBeInTheDocument();
   });
 });

@@ -1,8 +1,8 @@
-import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep } from "@/components/react/forms/FormStep";
 import { NameField } from "@/components/react/forms/NameField";
+import type { Step } from "@/forms/types";
 
-export const newNameStep: StepConfig = {
+export const newNameStep: Step = {
   id: "new-name",
   title: "What is your new name?",
   description:

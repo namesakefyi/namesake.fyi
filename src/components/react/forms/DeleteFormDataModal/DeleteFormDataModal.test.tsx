@@ -26,7 +26,7 @@ describe("DeleteFormDataModal", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole("button", { name: /delete stored data/i }),
+        screen.getByRole("button", { name: /clear data/i }),
       ).toBeInTheDocument();
     });
   });
@@ -50,7 +50,7 @@ describe("DeleteFormDataModal", () => {
 
     await waitFor(() => {
       expect(
-        screen.queryByRole("button", { name: /delete data/i }),
+        screen.queryByRole("button", { name: /clear data/i }),
       ).not.toBeInTheDocument();
     });
   });
@@ -61,17 +61,17 @@ describe("DeleteFormDataModal", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole("button", { name: /delete stored data/i }),
+        screen.getByRole("button", { name: /clear data/i }),
       ).toBeInTheDocument();
     });
 
     const triggerButton = screen.getByRole("button", {
-      name: /delete stored data/i,
+      name: /clear data/i,
     });
     await user.click(triggerButton);
 
     expect(
-      screen.getByRole("heading", { name: /delete stored data/i }),
+      screen.getByRole("heading", { name: /clear data/i }),
     ).toBeInTheDocument();
   });
 
@@ -81,16 +81,14 @@ describe("DeleteFormDataModal", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole("button", { name: /delete stored data/i }),
+        screen.getByRole("button", { name: /clear data/i }),
       ).toBeInTheDocument();
     });
 
-    await user.click(
-      screen.getByRole("button", { name: /delete stored data/i }),
-    );
+    await user.click(screen.getByRole("button", { name: /clear data/i }));
 
     expect(screen.getByText(/permanently delete all/i)).toBeInTheDocument();
-    expect(screen.getByText(/2 form responses/i)).toBeInTheDocument();
+    expect(screen.getByText(/2 responses/i)).toBeInTheDocument();
   });
 
   it("closes modal when cancel is clicked", async () => {
@@ -99,19 +97,17 @@ describe("DeleteFormDataModal", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole("button", { name: /delete stored data/i }),
+        screen.getByRole("button", { name: /clear data/i }),
       ).toBeInTheDocument();
     });
 
-    await user.click(
-      screen.getByRole("button", { name: /delete stored data/i }),
-    );
+    await user.click(screen.getByRole("button", { name: /clear data/i }));
 
     const cancelButton = screen.getByRole("button", { name: /cancel/i });
     await user.click(cancelButton);
 
     expect(
-      screen.queryByRole("heading", { name: /delete stored data/i }),
+      screen.queryByRole("heading", { name: /clear data/i }),
     ).not.toBeInTheDocument();
   });
 
@@ -123,16 +119,14 @@ describe("DeleteFormDataModal", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole("button", { name: /delete stored data/i }),
+        screen.getByRole("button", { name: /clear data/i }),
       ).toBeInTheDocument();
     });
 
-    await user.click(
-      screen.getByRole("button", { name: /delete stored data/i }),
-    );
+    await user.click(screen.getByRole("button", { name: /clear data/i }));
 
     const deleteButton = screen.getByRole("button", {
-      name: /delete all data/i,
+      name: /clear all data/i,
     });
     await user.click(deleteButton);
 

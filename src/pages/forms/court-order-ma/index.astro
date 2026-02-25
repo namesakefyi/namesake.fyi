@@ -1,8 +1,8 @@
 ---
 import type { SanityDocument } from "@sanity/client";
+import { getFormPdfMetadata } from "@/forms/getFormPdfMetadata";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { loadQuery } from "@/sanity/lib/loadQuery";
-import { getFormPdfMetadata } from "@/utils/getFormPdfMetadata";
 import { MaCourtOrderForm } from "./_Form";
 
 const { data: form } = await loadQuery<SanityDocument>({

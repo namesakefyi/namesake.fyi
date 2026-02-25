@@ -1,13 +1,16 @@
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "fake-indexeddb/auto";
 import { IDBFactory } from "fake-indexeddb";
 import {
   clearAllFields,
+  clearFormProgress,
   deleteField,
   getAllFields,
   getField,
   getFieldsByNames,
+  getFormProgress,
   saveField,
+  saveFormProgress,
 } from "../database";
 
 describe("IndexedDB Database Operations", () => {
@@ -19,6 +22,19 @@ describe("IndexedDB Database Operations", () => {
   afterEach(async () => {
     // Clean up after each test
     await clearAllFields();
+  });
+
+  describe("DB upgrade", () => {
+    it("creates both object stores on a fresh install (v0 → v2)", async () => {
+      vi.resetModules();
+      global.indexedDB = new IDBFactory();
+
+      const { getDB } = await import("../init");
+      const db = await getDB();
+
+      expect(db.objectStoreNames.contains("formData")).toBe(true);
+      expect(db.objectStoreNames.contains("formProgress")).toBe(true);
+    });
   });
 
   describe("saveField", () => {
@@ -181,6 +197,73 @@ describe("IndexedDB Database Operations", () => {
       // Should have one of the values (last write wins)
       const value = await getField("concurrent");
       expect(["value1", "value2", "value3"]).toContain(value);
+    });
+  });
+
+  describe("saveFormProgress", () => {
+    it("should save and retrieve machine state", async () => {
+      const machineState = {
+        value: { filling: "step-a" },
+        context: { formSlug: "test-form", editingStepId: null, formData: {} },
+        status: "active",
+      };
+
+      await saveFormProgress("test-form", machineState);
+      const restored = await getFormProgress("test-form");
+
+      expect(restored).toEqual(machineState);
+    });
+
+    it("should overwrite previous progress for the same slug", async () => {
+      const first = { value: "title", status: "active" };
+      const second = { value: { filling: "step-b" }, status: "active" };
+
+      await saveFormProgress("my-form", first);
+      await saveFormProgress("my-form", second);
+
+      const restored = await getFormProgress("my-form");
+      expect(restored).toEqual(second);
+    });
+
+    it("should keep progress for different slugs separate", async () => {
+      const stateA = { value: "review", status: "active" };
+      const stateB = { value: "title", status: "active" };
+
+      await saveFormProgress("form-a", stateA);
+      await saveFormProgress("form-b", stateB);
+
+      expect(await getFormProgress("form-a")).toEqual(stateA);
+      expect(await getFormProgress("form-b")).toEqual(stateB);
+    });
+  });
+
+  describe("getFormProgress", () => {
+    it("should return undefined for a slug with no saved progress", async () => {
+      const result = await getFormProgress("nonexistent");
+      expect(result).toBeUndefined();
+    });
+  });
+
+  describe("clearFormProgress", () => {
+    it("should remove saved progress for a slug", async () => {
+      await saveFormProgress("form-a", { value: "review" });
+      await clearFormProgress("form-a");
+
+      expect(await getFormProgress("form-a")).toBeUndefined();
+    });
+
+    it("should not throw when clearing nonexistent progress", async () => {
+      await expect(clearFormProgress("nonexistent")).resolves.not.toThrow();
+    });
+
+    it("should not affect other slugs", async () => {
+      await saveFormProgress("form-a", { value: "review" });
+      await saveFormProgress("form-b", { value: "title" });
+
+      await clearFormProgress("form-a");
+
+      expect(await getFormProgress("form-a")).toBeUndefined();
+      expect(await getFormProgress("form-b")).toEqual({ value: "title" });
     });
   });
 });

@@ -1,19 +1,21 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, renderHook, screen } from "@testing-library/react";
 import type { ReactNode } from "react";
-import { afterEach, describe, expect, it, vi } from "vitest";
-import type { StepConfig } from "../FormContainer";
+import { FormProvider, useForm } from "react-hook-form";
+import { describe, expect, it, vi } from "vitest";
+import type { FormPhase, Step } from "@/forms/types";
 import { FormStepContext } from "../FormContainer/FormStepContext";
-import { FormStep, FormSubsection } from "./FormStep";
+import { FormStep, FormSubsection, useFieldVisible } from "./FormStep";
 
 const defaultContextValue = {
   onNext: vi.fn(),
   onBack: vi.fn(),
   formTitle: "Test Form",
-  isReviewStep: false,
+  phase: "filling" as FormPhase,
   currentStepIndex: 2,
   totalSteps: 5,
-  isReviewingMode: false,
   onSubmit: vi.fn(),
+  onEditStep: vi.fn(),
+  submitError: null,
 };
 
 function makeWrapper(
@@ -26,13 +28,12 @@ function makeWrapper(
   );
 }
 
-// Default wrapper for tests that don't need context customisation
 function TestWrapper({ children }: { children: ReactNode }) {
   return makeWrapper()({ children });
 }
 
 describe("FormStep", () => {
-  const formStep: StepConfig = {
+  const formStep: Step = {
     id: "what-is-your-legal-name",
     component: () => <div>Test content</div>,
     title: "What is your legal name?",
@@ -57,7 +58,7 @@ describe("FormStep", () => {
   });
 
   it("does not render description when not provided", () => {
-    const stepWithoutDescription: StepConfig = {
+    const stepWithoutDescription: Step = {
       ...formStep,
       description: undefined,
     };
@@ -84,7 +85,7 @@ describe("FormStep", () => {
   });
 
   it("omits apostrophes from the id", () => {
-    const stepWithApostrophe: StepConfig = {
+    const stepWithApostrophe: Step = {
       ...formStep,
       id: "reason",
       title: "What is the reason you're changing your name?",
@@ -110,7 +111,7 @@ describe("FormStep", () => {
   });
 
   it("has no accessible description when description is omitted", () => {
-    const stepWithoutDescription: StepConfig = {
+    const stepWithoutDescription: Step = {
       ...formStep,
       description: undefined,
     };
@@ -127,14 +128,10 @@ describe("FormStep", () => {
   });
 
   describe("form submission", () => {
-    afterEach(() => {
-      window.location.hash = "";
-    });
-
     it("calls onSubmit when not in reviewing mode", () => {
       const onSubmit = vi.fn();
       render(<FormStep stepConfig={formStep} />, {
-        wrapper: makeWrapper({ onSubmit, isReviewingMode: false }),
+        wrapper: makeWrapper({ onSubmit, phase: "filling" }),
       });
 
       fireEvent.submit(screen.getByRole("form"));
@@ -142,16 +139,15 @@ describe("FormStep", () => {
       expect(onSubmit).toHaveBeenCalledOnce();
     });
 
-    it("sets window.location.hash to review when in reviewing mode", () => {
+    it("calls onSubmit when in reviewing mode (machine handles routing)", () => {
       const onSubmit = vi.fn();
       render(<FormStep stepConfig={formStep} />, {
-        wrapper: makeWrapper({ onSubmit, isReviewingMode: true }),
+        wrapper: makeWrapper({ onSubmit, phase: "editing" }),
       });
 
       fireEvent.submit(screen.getByRole("form"));
 
-      expect(window.location.hash).toBe("#review");
-      expect(onSubmit).not.toHaveBeenCalled();
+      expect(onSubmit).toHaveBeenCalledOnce();
     });
 
     it("prevents the default form submission", () => {
@@ -159,8 +155,58 @@ describe("FormStep", () => {
       const form = screen.getByRole("form");
       const event = fireEvent.submit(form);
 
-      expect(event).toBe(false); // fireEvent returns false when preventDefault was called
+      expect(event).toBe(false);
     });
+  });
+});
+
+describe("useFieldVisible", () => {
+  function wrapper({ children }: { children: ReactNode }) {
+    const form = useForm({ defaultValues: { middleName: "Lee" } });
+    return <FormProvider {...form}>{children}</FormProvider>;
+  }
+
+  const stepConfig: Step = {
+    id: "name",
+    title: "Name",
+    fields: ["middleName" as any],
+    component: () => null,
+  };
+
+  it("returns true when isFieldVisible is not defined", () => {
+    const { result } = renderHook(
+      () => useFieldVisible(stepConfig, "middleName" as any),
+      { wrapper },
+    );
+    expect(result.current).toBe(true);
+  });
+
+  it("returns true when isFieldVisible returns true for the field", () => {
+    const config = { ...stepConfig, isFieldVisible: () => true };
+    const { result } = renderHook(
+      () => useFieldVisible(config, "middleName" as any),
+      { wrapper },
+    );
+    expect(result.current).toBe(true);
+  });
+
+  it("returns false when isFieldVisible returns false for the field", () => {
+    const config = { ...stepConfig, isFieldVisible: () => false };
+    const { result } = renderHook(
+      () => useFieldVisible(config, "middleName" as any),
+      { wrapper },
+    );
+    expect(result.current).toBe(false);
+  });
+
+  it("passes live form data to isFieldVisible", () => {
+    const isFieldVisible = vi.fn(() => true);
+    const config = { ...stepConfig, isFieldVisible };
+    renderHook(() => useFieldVisible(config, "middleName" as any), { wrapper });
+    expect(isFieldVisible).toHaveBeenCalledWith(
+      "middleName",
+      expect.objectContaining({ middleName: "Lee" }),
+    );
   });
 });
 

@@ -16,12 +16,13 @@ const meta: Meta<typeof FormTitleStep> = {
           formTitle: "Massachusetts Court Order",
           currentStepIndex: 0, // Title step
           totalSteps: 5, // 5 actual steps
-          isReviewStep: false,
-          isReviewingMode: false,
+          phase: "title",
           onSubmit: (e) => {
             e.preventDefault();
             console.log("Submit clicked");
           },
+          onEditStep: () => {},
+          submitError: null,
         }}
       >
         <Story />

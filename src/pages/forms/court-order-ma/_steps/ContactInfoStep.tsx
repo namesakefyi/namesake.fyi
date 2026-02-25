@@ -1,9 +1,9 @@
 import { EmailField } from "@/components/react/forms/EmailField";
-import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep } from "@/components/react/forms/FormStep";
 import { PhoneField } from "@/components/react/forms/PhoneField";
+import type { Step } from "@/forms/types";
 
-export const contactInfoStep: StepConfig = {
+export const contactInfoStep: Step = {
   id: "contact-info",
   title: "What is your contact information?",
   description:

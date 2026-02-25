@@ -1,9 +1,9 @@
 import { Banner } from "@/components/react/common/Banner";
-import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep } from "@/components/react/forms/FormStep";
 import { YesNoField } from "@/components/react/forms/YesNoField";
+import type { Step } from "@/forms/types";
 
-export const ethnicityStep: StepConfig = {
+export const ethnicityStep: Step = {
   id: "ethnicity",
   title: "What is your ethnicity?",
   description:

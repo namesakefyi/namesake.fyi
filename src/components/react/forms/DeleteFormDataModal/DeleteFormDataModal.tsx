@@ -47,7 +47,7 @@ export function DeleteFormDataModal() {
   const hasData = responseCount !== null && responseCount > 0;
 
   return (
-    <>
+    <div className="delete-form-data-container">
       {responseCount === null ? (
         <p>Loading...</p>
       ) : hasData ? (
@@ -56,7 +56,7 @@ export function DeleteFormDataModal() {
           <strong>{`${responseCount} response${responseCount !== 1 ? "s" : ""}`}</strong>{" "}
           stored on this browser. Anyone else who visits Namesake on{" "}
           <strong>{`this ${device.model ?? "device"}`}</strong> will be able to
-          see your form responses.
+          see your responses.
         </p>
       ) : (
         <p>
@@ -68,12 +68,12 @@ export function DeleteFormDataModal() {
       {hasData && (
         <DialogTrigger isOpen={isOpen} onOpenChange={setIsOpen}>
           <Button variant="secondary" icon={RiDeleteBin2Line}>
-            Delete stored data
+            Clear data
           </Button>
           <Modal isDismissable>
             <Dialog>
               <div className="delete-form-data-modal">
-                <Heading slot="title">Delete stored data?</Heading>
+                <Heading slot="title">Clear data?</Heading>
                 <p className="delete-form-data-modal-description">
                   This will permanently delete all{" "}
                   <strong>
@@ -98,7 +98,7 @@ export function DeleteFormDataModal() {
                     onPress={handleDelete}
                     isPending={isDeleting}
                   >
-                    {isDeleting ? "Deleting..." : "Delete all data"}
+                    {isDeleting ? "Deleting..." : "Clear all data"}
                   </Button>
                 </div>
               </div>
@@ -106,6 +106,6 @@ export function DeleteFormDataModal() {
           </Modal>
         </DialogTrigger>
       )}
-    </>
+    </div>
   );
 }
