@@ -1,8 +1,8 @@
-import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep } from "@/components/react/forms/FormStep";
 import { MemorableDateField } from "@/components/react/forms/MemorableDateField";
+import type { Step } from "@/forms/types";
 
-export const dateOfBirthStep: StepConfig = {
+export const dateOfBirthStep: Step = {
   id: "date-of-birth",
   title: "What is your date of birth?",
   fields: ["dateOfBirth"],

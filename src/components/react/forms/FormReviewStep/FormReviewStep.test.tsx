@@ -6,7 +6,15 @@ import { FormStepContext } from "../FormContainer/FormStepContext";
 import { FormReviewStep } from "./FormReviewStep";
 
 // Test wrapper that provides form context and FormStepContext
-function TestWrapper({ children }: { children: React.ReactNode }) {
+function TestWrapper({
+  children,
+  phase = "review",
+  submitError = null,
+}: {
+  children: React.ReactNode;
+  phase?: "review" | "submitting";
+  submitError?: string | null;
+}) {
   const form = useForm();
   return (
     <FormProvider {...form}>
@@ -17,9 +25,10 @@ function TestWrapper({ children }: { children: React.ReactNode }) {
           formTitle: "Test Form",
           currentStepIndex: 0,
           totalSteps: 5,
-          isReviewStep: true,
-          isReviewingMode: false,
+          phase,
           onSubmit: vi.fn(),
+          onEditStep: vi.fn(),
+          submitError,
         }}
       >
         {children}
@@ -122,9 +131,10 @@ describe("FormReviewStep", () => {
               formTitle: "Test Form",
               currentStepIndex: 0,
               totalSteps: 5,
-              isReviewStep: true,
-              isReviewingMode: false,
+              phase: "review" as const,
               onSubmit: handleSubmit,
+              onEditStep: vi.fn(),
+              submitError: null,
             }}
           >
             <FormReviewStep steps={[]} />
@@ -141,5 +151,62 @@ describe("FormReviewStep", () => {
     await user.click(button);
 
     expect(handleSubmit).toHaveBeenCalled();
+  });
+
+  it("shows pending state on submit button when submitting", () => {
+    render(<FormReviewStep steps={[]} />, {
+      wrapper: ({ children }) => (
+        <TestWrapper phase="submitting">{children}</TestWrapper>
+      ),
+    });
+
+    const button = screen.getByRole("button", {
+      name: /finish and download/i,
+    });
+    expect(button).toBeDisabled();
+  });
+
+  it("sets aria-busy on the form when submitting", () => {
+    render(<FormReviewStep steps={[]} />, {
+      wrapper: ({ children }) => (
+        <TestWrapper phase="submitting">{children}</TestWrapper>
+      ),
+    });
+
+    const form = document.querySelector(".form-review-step");
+    expect(form).toHaveAttribute("aria-busy", "true");
+  });
+
+  it("makes review content inert when submitting", () => {
+    render(<FormReviewStep steps={[]} />, {
+      wrapper: ({ children }) => (
+        <TestWrapper phase="submitting">{children}</TestWrapper>
+      ),
+    });
+
+    const content = document.querySelector(".form-review-step-content");
+    expect(content).toHaveAttribute("inert");
+  });
+
+  it("does not show error banner when there is no submit error", () => {
+    render(<FormReviewStep steps={[]} />, { wrapper: TestWrapper });
+
+    expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+  });
+
+  it("shows error banner when submit error is present", () => {
+    render(<FormReviewStep steps={[]} />, {
+      wrapper: ({ children }) => (
+        <TestWrapper submitError="Something went wrong while generating your download. Please try again.">
+          {children}
+        </TestWrapper>
+      ),
+    });
+
+    const banner = screen.getByRole("alert");
+    expect(banner).toBeInTheDocument();
+    expect(banner).toHaveTextContent(
+      "Something went wrong while generating your download. Please try again.",
+    );
   });
 });

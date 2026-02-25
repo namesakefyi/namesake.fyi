@@ -1,4 +1,4 @@
-import type { FormConfig } from "@/constants/forms";
+import { defineFormConfig, step } from "@/forms/defineFormConfig";
 import { addressStep } from "./_steps/AddressStep";
 import { birthplaceStep } from "./_steps/BirthplaceStep";
 import { citizenshipStep } from "./_steps/CitizenshipStep";
@@ -15,30 +15,25 @@ import { previousSocialSecurityCardStep } from "./_steps/PreviousSocialSecurityC
 import { raceStep } from "./_steps/RaceStep";
 import { sexStep } from "./_steps/SexStep";
 
-const STEPS = [
-  newNameStep,
-  oldNameStep,
-  previousNamesStep,
-  birthplaceStep,
-  dateOfBirthStep,
-  citizenshipStep,
-  ethnicityStep,
-  raceStep,
-  sexStep,
-  parentOneNameStep,
-  parentTwoNameStep,
-  previousSocialSecurityCardStep,
-  phoneNumberStep,
-  addressStep,
-  filingForSomeoneElseStep,
-] as const;
-
-const FIELDS = STEPS.flatMap((step) => step.fields);
-
-export const socialSecurityConfig = {
+export const socialSecurityConfig = defineFormConfig({
   slug: "social-security",
-  steps: STEPS,
-  fields: FIELDS,
+  steps: [
+    step(newNameStep),
+    step(oldNameStep),
+    step(previousNamesStep),
+    step(birthplaceStep),
+    step(dateOfBirthStep),
+    step(citizenshipStep),
+    step(ethnicityStep),
+    step(raceStep),
+    step(sexStep),
+    step(parentOneNameStep),
+    step(parentTwoNameStep),
+    step(previousSocialSecurityCardStep),
+    step(phoneNumberStep),
+    step(addressStep),
+    step(filingForSomeoneElseStep),
+  ],
   pdfs: [{ pdfId: "ss5-application-for-social-security-card" }],
   downloadTitle: "Social Security Card",
   instructions: (data) =>
@@ -52,4 +47,4 @@ export const socialSecurityConfig = {
         ? "You must provide a document from a U.S. Federal, State, or local government agency that explains why you need a Social Security number and that you meet all the requirements for the government benefit."
         : "",
     ].filter(Boolean),
-} satisfies FormConfig;
+});

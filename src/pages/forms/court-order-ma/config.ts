@@ -1,4 +1,4 @@
-import type { FormConfig } from "@/constants/forms";
+import { defineFormConfig, step } from "@/forms/defineFormConfig";
 import { addressStep } from "./_steps/AddressStep";
 import { birthplaceStep } from "./_steps/BirthplaceStep";
 import { contactInfoStep } from "./_steps/ContactInfoStep";
@@ -14,29 +14,24 @@ import { pronounsStep } from "./_steps/PronounsStep";
 import { reasonStep } from "./_steps/ReasonStep";
 import { returnDocumentsStep } from "./_steps/ReturnDocumentsStep";
 
-const STEPS = [
-  newNameStep,
-  currentNameStep,
-  reasonStep,
-  contactInfoStep,
-  birthplaceStep,
-  dateOfBirthStep,
-  addressStep,
-  previousNameChangeStep,
-  otherNamesStep,
-  interpreterStep,
-  pronounsStep,
-  returnDocumentsStep,
-  feeWaiverStep,
-  mothersMaidenNameStep,
-] as const;
-
-const FIELDS = STEPS.flatMap((step) => step.fields);
-
-export const courtOrderMaConfig = {
+export const courtOrderMaConfig = defineFormConfig({
   slug: "court-order-ma",
-  steps: STEPS,
-  fields: FIELDS,
+  steps: [
+    step(newNameStep),
+    step(currentNameStep),
+    step(reasonStep),
+    step(contactInfoStep),
+    step(birthplaceStep),
+    step(dateOfBirthStep),
+    step(addressStep),
+    step(previousNameChangeStep),
+    step(otherNamesStep),
+    step(interpreterStep),
+    step(pronounsStep),
+    step(returnDocumentsStep),
+    step(feeWaiverStep),
+    step(mothersMaidenNameStep),
+  ],
   pdfs: [
     { pdfId: "cjp27-petition-to-change-name-of-adult" },
     { pdfId: "cjp34-cori-and-wms-release-request" },
@@ -55,4 +50,4 @@ export const courtOrderMaConfig = {
       : "To pay for filing, bring a credit or debit card, a check made payable to the Commonwealth of Massachusetts, or exact cash.",
     "Remember to bring all supporting documents to the court.",
   ],
-} satisfies FormConfig;
+});

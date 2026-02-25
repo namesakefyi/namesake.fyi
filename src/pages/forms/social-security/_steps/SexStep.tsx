@@ -1,9 +1,9 @@
 import { Banner } from "@/components/react/common/Banner";
-import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep } from "@/components/react/forms/FormStep";
 import { RadioGroupField } from "@/components/react/forms/RadioGroupField";
+import type { Step } from "@/forms/types";
 
-export const sexStep: StepConfig = {
+export const sexStep: Step = {
   id: "sex",
   title: "What is your sex?",
   description:

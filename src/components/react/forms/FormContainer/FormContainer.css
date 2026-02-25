@@ -11,3 +11,8 @@
   padding-block-end: var(--space-xl);
   width: 100%;
 }
+
+.form-container-loading {
+  align-items: center;
+  justify-content: center;
+}

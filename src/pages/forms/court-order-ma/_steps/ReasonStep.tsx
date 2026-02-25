@@ -1,9 +1,9 @@
 import { Banner } from "@/components/react/common/Banner";
-import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep } from "@/components/react/forms/FormStep";
 import { LongTextField } from "@/components/react/forms/LongTextField";
+import type { Step } from "@/forms/types";
 
-export const reasonStep: StepConfig = {
+export const reasonStep: Step = {
   id: "reason",
   title: "What is the reason you're changing your name?",
   fields: ["reasonForChangingName"],

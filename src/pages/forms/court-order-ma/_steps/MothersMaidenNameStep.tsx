@@ -1,9 +1,9 @@
 import { Banner } from "@/components/react/common/Banner";
-import type { StepConfig } from "@/components/react/forms/FormContainer";
 import { FormStep } from "@/components/react/forms/FormStep";
 import { ShortTextField } from "@/components/react/forms/ShortTextField";
+import type { Step } from "@/forms/types";
 
-export const mothersMaidenNameStep: StepConfig = {
+export const mothersMaidenNameStep: Step = {
   id: "mothers-maiden-name",
   title: "What is your mother's maiden name?",
   description:

@@ -20,12 +20,13 @@ export const FirstStep: Story = () => (
       formTitle: "Massachusetts Court Order",
       currentStepIndex: 1, // First actual step
       totalSteps: 5, // 5 actual steps
-      isReviewStep: false,
-      isReviewingMode: false,
+      phase: "filling",
       onSubmit: (e) => {
         e.preventDefault();
         console.log("Submit clicked");
       },
+      onEditStep: () => {},
+      submitError: null,
     }}
   >
     <FormNavigation />
@@ -40,12 +41,13 @@ export const MiddleStep: Story = () => (
       formTitle: "Massachusetts Court Order",
       currentStepIndex: 3, // Third actual step
       totalSteps: 5,
-      isReviewStep: false,
-      isReviewingMode: false,
+      phase: "filling",
       onSubmit: (e) => {
         e.preventDefault();
         console.log("Submit clicked");
       },
+      onEditStep: () => {},
+      submitError: null,
     }}
   >
     <FormNavigation />
@@ -60,12 +62,13 @@ export const LastStep: Story = () => (
       formTitle: "Massachusetts Court Order",
       currentStepIndex: 5, // Last actual step
       totalSteps: 5,
-      isReviewStep: false,
-      isReviewingMode: false,
+      phase: "filling",
       onSubmit: (e) => {
         e.preventDefault();
         console.log("Submit clicked");
       },
+      onEditStep: () => {},
+      submitError: null,
     }}
   >
     <FormNavigation />
@@ -80,12 +83,13 @@ export const ReviewStep: Story = () => (
       formTitle: "Massachusetts Court Order",
       currentStepIndex: 0,
       totalSteps: 5,
-      isReviewStep: true,
-      isReviewingMode: false,
+      phase: "review",
       onSubmit: (e) => {
         e.preventDefault();
         console.log("Submit clicked");
       },
+      onEditStep: () => {},
+      submitError: null,
     }}
   >
     <FormNavigation />
@@ -101,12 +105,13 @@ export const LongTitle: Story = () => (
         "Court-Ordered Name Change Application for the Commonwealth of Massachusetts",
       currentStepIndex: 2,
       totalSteps: 5,
-      isReviewStep: false,
-      isReviewingMode: false,
+      phase: "filling",
       onSubmit: (e) => {
         e.preventDefault();
         console.log("Submit clicked");
       },
+      onEditStep: () => {},
+      submitError: null,
     }}
   >
     <FormNavigation />
