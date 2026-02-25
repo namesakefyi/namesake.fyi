@@ -1,4 +1,4 @@
-import { defineFormConfig, step } from "@/forms/createFormMachine";
+import { defineFormConfig, step } from "@/forms/defineFormConfig";
 import { addressStep } from "./_steps/AddressStep";
 import { birthplaceStep } from "./_steps/BirthplaceStep";
 import { citizenshipStep } from "./_steps/CitizenshipStep";

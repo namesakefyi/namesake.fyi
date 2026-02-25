@@ -10,7 +10,8 @@ import {
 } from "vitest";
 import { createActor } from "xstate";
 import * as db from "@/db/database";
-import { createFormMachine, step } from "@/forms/createFormMachine";
+import { createFormMachine } from "@/forms/createFormMachine";
+import { step } from "@/forms/defineFormConfig";
 import type { Step } from "@/forms/types";
 import { useFormState } from "../useFormState";
 

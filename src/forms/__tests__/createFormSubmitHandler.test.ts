@@ -6,7 +6,7 @@ import type { FormData } from "@/constants/fields";
 import type { FormConfig } from "@/constants/forms";
 import { downloadMergedPdf } from "@/pdfs/utils/downloadMergedPdf";
 import { loadPdfs } from "@/pdfs/utils/loadPdfs";
-import { createFormSubmitHandler } from "../../forms/createFormSubmitHandler";
+import { createFormSubmitHandler } from "../createFormSubmitHandler";
 
 vi.mock("@/components/react/forms/FormContainer/resolveVisibleFields", () => ({
   resolveVisibleFields: vi.fn(),

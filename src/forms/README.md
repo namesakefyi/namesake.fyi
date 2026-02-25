@@ -8,7 +8,7 @@ Use `defineFormConfig` to declare a form. Provide a slug, an ordered list of ste
 
 ```ts
 // src/pages/forms/my-form/config.ts
-import { defineFormConfig, step } from "@/forms/createFormMachine";
+import { defineFormConfig, step } from "@/forms/defineFormConfig";
 import { nameStep } from "./_steps/NameStep";
 import { addressStep } from "./_steps/AddressStep";
 

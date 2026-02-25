@@ -2,7 +2,8 @@ import { render, screen } from "@testing-library/react";
 import { useForm } from "react-hook-form";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import * as db from "@/db/database";
-import { createFormMachine, step } from "@/forms/createFormMachine";
+import { createFormMachine } from "@/forms/createFormMachine";
+import { step } from "@/forms/defineFormConfig";
 import type { Step } from "@/forms/types";
 import { FormContainer } from "./FormContainer";
 
