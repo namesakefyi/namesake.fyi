@@ -23,16 +23,14 @@ describe("FormFeedback", () => {
     render(<FormFeedback formSlug="court-order-ma" />);
 
     expect(
-      screen.getByRole("radiogroup", {
-        name: /was it easy to complete this form/i,
-      }),
+      screen.getByRole("radiogroup", { name: /form rating/i }),
     ).toBeInTheDocument();
     expect(screen.getByRole("radio", { name: /easy/i })).toBeInTheDocument();
     expect(
       screen.getByRole("radio", { name: /problems/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("textbox", { name: /please share any feedback/i }),
+      screen.getByRole("textbox", { name: /feedback/i }),
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /submit/i })).toBeInTheDocument();
   });
@@ -88,7 +86,7 @@ describe("FormFeedback", () => {
 
     await user.click(screen.getByRole("radio", { name: /easy/i }));
     await user.type(
-      screen.getByRole("textbox", { name: /please share/i }),
+      screen.getByRole("textbox", { name: /feedback/i }),
       "Very helpful!",
     );
     await user.click(screen.getByRole("button", { name: /submit/i }));

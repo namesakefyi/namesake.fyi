@@ -34,6 +34,8 @@
 }
 
 .form-feedback-sentiment {
+  width: 100%;
+
   .radio-items {
     flex-direction: column;
     gap: var(--space-s);
