@@ -1,9 +1,7 @@
 import {
   RiArrowRightLine,
   RiHeart3Line,
-  RiThumbDownFill,
   RiThumbDownLine,
-  RiThumbUpFill,
   RiThumbUpLine,
 } from "@remixicon/react";
 import { useActionState } from "react";
