@@ -36,13 +36,8 @@ export interface UseFormStateReturn {
   goBack: () => void;
 }
 
-export function useFormState(
-  machine: FormMachine,
-  steps: readonly Step[],
-  getFormData: () => Record<string, any>,
-): UseFormStateReturn {
-  const formSlug = machine.id;
-
+// Loads a persisted XState snapshot from IndexedDB for the given form.
+function usePersistedSnapshot(formSlug: string) {
   const [savedSnapshot, setSavedSnapshot] = useState<unknown>(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -60,6 +55,17 @@ export function useFormState(
       .finally(() => setIsLoading(false));
   }, [formSlug]);
 
+  return { isLoading, savedSnapshot };
+}
+
+// Creates the XState actor, restores it from a snapshot if available,
+// and persists each state transition back to IndexedDB.
+function useFormActor(
+  machine: FormMachine,
+  savedSnapshot: unknown,
+  isLoading: boolean,
+  formSlug: string,
+) {
   const actorRef = useRef<FormActor | null>(null);
   const [state, setState] = useState<FormSnapshot | null>(null);
 
@@ -72,20 +78,19 @@ export function useFormState(
 
     actorRef.current = actor;
 
+    const canPersist = typeof indexedDB !== "undefined";
+
     const subscription = actor.subscribe((snapshot) => {
       setState(snapshot);
-
-      if (typeof indexedDB === "undefined") return;
-
+      if (!canPersist) return;
       const slug = (snapshot.context as FormMachineContext).formSlug;
-
       saveFormProgress(slug, actor.getPersistedSnapshot()).catch(() => {});
     });
 
     actor.start();
     setState(actor.getSnapshot());
 
-    if (typeof indexedDB !== "undefined") {
+    if (canPersist) {
       saveFormProgress(formSlug, actor.getPersistedSnapshot()).catch(() => {});
     }
 
@@ -100,6 +105,24 @@ export function useFormState(
     actorRef.current?.send(event);
   }, []);
 
+  return { actorRef, state, send };
+}
+
+export function useFormState(
+  machine: FormMachine,
+  steps: readonly Step[],
+  getFormData: () => Record<string, any>,
+): UseFormStateReturn {
+  const formSlug = machine.id;
+
+  const { isLoading, savedSnapshot } = usePersistedSnapshot(formSlug);
+  const { actorRef, state, send } = useFormActor(
+    machine,
+    savedSnapshot,
+    isLoading,
+    formSlug,
+  );
+
   const context = state?.context as FormMachineContext | undefined;
   const phase = state ? getPhase(state.value) : "title";
 
@@ -108,9 +131,7 @@ export function useFormState(
       ? (context?.editingStepId ?? null)
       : (context?.currentStepId ?? null);
 
-  const activeStep = activeStepId
-    ? (steps.find((s) => s.id === activeStepId) ?? null)
-    : null;
+  const activeStep = steps.find((s) => s.id === activeStepId) ?? null;
 
   const formData = getFormData();
   const visibleStepIds = useMemo(
@@ -131,21 +152,20 @@ export function useFormState(
     if (currentIndex === -1) return;
 
     const nextIndex = findNextStepIndex(steps, currentIndex, getFormData());
-    if (nextIndex === -1) {
+    const isLastStep = nextIndex === -1;
+    if (isLastStep) {
       send({ type: "GOTO_REVIEW" });
     } else {
       send({ type: "GOTO_STEP", stepId: steps[nextIndex].id });
     }
-  }, [steps, getFormData, send]);
+  }, [steps, getFormData, send, actorRef]);
 
   const goBack = useCallback(() => {
     const snapshot = actorRef.current?.getSnapshot();
-    if (!snapshot) return;
-    const currentId = snapshot.context.currentStepId;
+    const currentId = snapshot?.context.currentStepId;
     if (!currentId) return;
 
-    // From review, return to the last filling step
-    if (snapshot.value === "review") {
+    if (snapshot?.value === "review") {
       send({ type: "GOTO_STEP", stepId: currentId });
       return;
     }
@@ -154,12 +174,13 @@ export function useFormState(
     if (currentIndex === -1) return;
 
     const prevIndex = findPrevStepIndex(steps, currentIndex, getFormData());
-    if (prevIndex === -1) {
+    const isFirstStep = prevIndex === -1;
+    if (isFirstStep) {
       send({ type: "GOTO_TITLE" });
     } else {
       send({ type: "GOTO_STEP", stepId: steps[prevIndex].id });
     }
-  }, [steps, getFormData, send]);
+  }, [steps, getFormData, send, actorRef]);
 
   return {
     isLoading,
