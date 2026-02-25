@@ -7,6 +7,8 @@ import {
 } from "@/constants/forms";
 import { isRateLimited } from "@/utils/rateLimitByIp";
 
+const ALLOWED_ORIGINS = ["https://namesake.fyi"];
+
 const FeedbackSchema = z.object({
   form_slug: z.enum(FORM_SLUGS as [string, ...string[]]),
   sentiment: z.enum(
@@ -57,6 +59,11 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
   if (!db) {
     return Response.json({ error: "Database unavailable" }, { status: 503 });
+  }
+
+  const origin = request.headers.get("Origin") ?? "";
+  if (!ALLOWED_ORIGINS.includes(origin)) {
+    return Response.json({ error: "Forbidden" }, { status: 403 });
   }
 
   if (ip && (await isRateLimited({ db, ip, table: "form_feedback" }))) {

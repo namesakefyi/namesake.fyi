@@ -18,33 +18,43 @@ interface FormFeedbackProps {
   formSlug: string;
 }
 
-type SubmitState = "idle" | "success" | "error";
+const ERROR_MESSAGES: Record<number, string> = {
+  403: "Feedback can only be submitted from pages at https://namesake.fyi.",
+  429: "You've submitted feedback too many times. Try again in an hour.",
+};
+
+type SubmitState = "idle" | "success" | { error: string };
 
 export function FormFeedback({ formSlug }: FormFeedbackProps) {
-  const [state, submitAction, isPending] = useActionState(
-    async (_prev: SubmitState, formData: FormData) => {
-      const sentiment = formData.get("sentiment") as FormFeedbackSentiment;
-      const comment = formData.get("comment") as string | null;
+  const [state, submitAction, isPending] = useActionState<
+    SubmitState,
+    FormData
+  >(async (_prev, formData) => {
+    const sentiment = formData.get("sentiment") as FormFeedbackSentiment;
+    const comment = formData.get("comment") as string | null;
 
-      try {
-        const response = await fetch("/api/feedback", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            form_slug: formSlug,
-            sentiment,
-            comment: comment?.trim() || undefined,
-          }),
-        });
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          form_slug: formSlug,
+          sentiment,
+          comment: comment?.trim() || undefined,
+        }),
+      });
 
-        if (!response.ok) throw new Error("Request failed");
-        return "success";
-      } catch {
-        return "error";
+      if (!response.ok) {
+        const message =
+          ERROR_MESSAGES[response.status] ??
+          "Something went wrong. Please try again.";
+        return { error: message };
       }
-    },
-    "idle",
-  );
+      return "success";
+    } catch {
+      return { error: "Something went wrong. Please try again." };
+    }
+  }, "idle");
 
   if (state === "success") {
     return (
@@ -94,8 +104,8 @@ export function FormFeedback({ formSlug }: FormFeedbackProps) {
         label="Please share any feedback."
         maxLength={1000}
       />
-      {state === "error" && (
-        <Banner variant="error">Something went wrong. Please try again.</Banner>
+      {typeof state === "object" && "error" in state && (
+        <Banner variant="error">{state.error}</Banner>
       )}
       <Button
         type="submit"
