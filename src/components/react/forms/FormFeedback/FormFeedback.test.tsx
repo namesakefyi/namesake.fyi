@@ -156,7 +156,9 @@ describe("FormFeedback", () => {
       await user.click(screen.getByRole("button", { name: /submit/i }));
 
       await waitFor(() =>
-        expect(screen.getByRole("button", { name: /share/i })).toBeInTheDocument(),
+        expect(
+          screen.getByRole("button", { name: /share/i }),
+        ).toBeInTheDocument(),
       );
 
       await user.click(screen.getByRole("button", { name: /share/i }));
