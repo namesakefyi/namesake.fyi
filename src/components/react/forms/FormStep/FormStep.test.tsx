@@ -1,9 +1,10 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, renderHook, screen } from "@testing-library/react";
 import type { ReactNode } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 import { describe, expect, it, vi } from "vitest";
 import type { FormPhase, Step } from "@/forms/types";
 import { FormStepContext } from "../FormContainer/FormStepContext";
-import { FormStep, FormSubsection } from "./FormStep";
+import { FormStep, FormSubsection, useFieldVisible } from "./FormStep";
 
 const defaultContextValue = {
   onNext: vi.fn(),
@@ -156,6 +157,56 @@ describe("FormStep", () => {
 
       expect(event).toBe(false);
     });
+  });
+});
+
+describe("useFieldVisible", () => {
+  function wrapper({ children }: { children: ReactNode }) {
+    const form = useForm({ defaultValues: { middleName: "Lee" } });
+    return <FormProvider {...form}>{children}</FormProvider>;
+  }
+
+  const stepConfig: Step = {
+    id: "name",
+    title: "Name",
+    fields: ["middleName" as any],
+    component: () => null,
+  };
+
+  it("returns true when isFieldVisible is not defined", () => {
+    const { result } = renderHook(
+      () => useFieldVisible(stepConfig, "middleName" as any),
+      { wrapper },
+    );
+    expect(result.current).toBe(true);
+  });
+
+  it("returns true when isFieldVisible returns true for the field", () => {
+    const config = { ...stepConfig, isFieldVisible: () => true };
+    const { result } = renderHook(
+      () => useFieldVisible(config, "middleName" as any),
+      { wrapper },
+    );
+    expect(result.current).toBe(true);
+  });
+
+  it("returns false when isFieldVisible returns false for the field", () => {
+    const config = { ...stepConfig, isFieldVisible: () => false };
+    const { result } = renderHook(
+      () => useFieldVisible(config, "middleName" as any),
+      { wrapper },
+    );
+    expect(result.current).toBe(false);
+  });
+
+  it("passes live form data to isFieldVisible", () => {
+    const isFieldVisible = vi.fn(() => true);
+    const config = { ...stepConfig, isFieldVisible };
+    renderHook(() => useFieldVisible(config, "middleName" as any), { wrapper });
+    expect(isFieldVisible).toHaveBeenCalledWith(
+      "middleName",
+      expect.objectContaining({ middleName: "Lee" }),
+    );
   });
 });
 

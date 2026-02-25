@@ -292,6 +292,26 @@ describe("useFormState", () => {
       expect(result.current.phase).toBe("review");
     });
 
+    it("goNext goes directly to review from a single-step flow (isLastStep = true)", async () => {
+      const singleFlow = [step(makeStep("only"))];
+      const singleMachine = createFormMachine({
+        id: "single-step",
+        steps: singleFlow,
+      });
+
+      const { result } = renderHook(() =>
+        useFormState(singleMachine, singleFlow, getFormData),
+      );
+
+      await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+      act(() => { result.current.send({ type: "START" }); });
+      expect(result.current.activeStepId).toBe("only");
+
+      act(() => { result.current.goNext(); });
+      expect(result.current.phase).toBe("review");
+    });
+
     it("goBack goes to the previous step", async () => {
       const { result } = renderHook(() =>
         useFormState(machine, flow, getFormData),
@@ -385,7 +405,35 @@ describe("useFormState", () => {
     });
   });
 
+  describe("editing phase", () => {
+    it("returns editingStepId as activeStepId when in editing phase", async () => {
+      const { result } = renderHook(() =>
+        useFormState(machine, flow, getFormData),
+      );
+
+      await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+      act(() => { result.current.send({ type: "START" }); });
+      act(() => { result.current.send({ type: "GOTO_REVIEW" }); });
+      act(() => { result.current.send({ type: "EDIT_STEP", stepId: "b" }); });
+
+      expect(result.current.phase).toBe("editing");
+      expect(result.current.activeStepId).toBe("b");
+    });
+  });
+
   describe("derived state", () => {
+    it("returns activeStepId as null and currentStepIndex as 0 before START", async () => {
+      const { result } = renderHook(() =>
+        useFormState(machine, flow, getFormData),
+      );
+
+      await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+      expect(result.current.activeStepId).toBeNull();
+      expect(result.current.currentStepIndex).toBe(0);
+    });
+
     it("computes visibleStepIds", async () => {
       const { result } = renderHook(() =>
         useFormState(machine, flow, getFormData),
