@@ -12,6 +12,17 @@
 .form-feedback-success {
   display: flex;
   flex-direction: column;
+  gap: var(--space-m);
+}
+
+.form-feedback-success-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.form-feedback-success-actions {
+  display: flex;
   gap: var(--space-s);
 }
 
