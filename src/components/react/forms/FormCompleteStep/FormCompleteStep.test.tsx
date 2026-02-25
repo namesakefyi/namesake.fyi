@@ -29,9 +29,7 @@ describe("FormCompleteStep", () => {
 
     it("renders the form title in the description", () => {
       render(<FormCompleteStep {...defaultProps} />);
-      expect(
-        screen.getByText(/Massachusetts Court Order/),
-      ).toBeInTheDocument();
+      expect(screen.getByText(/Massachusetts Court Order/)).toBeInTheDocument();
     });
 
     it("renders a redownload button", () => {
@@ -79,7 +77,9 @@ describe("FormCompleteStep", () => {
     it("calls onRedownload when the redownload button is submitted", async () => {
       const user = userEvent.setup();
       const onRedownload = vi.fn();
-      render(<FormCompleteStep {...defaultProps} onRedownload={onRedownload} />);
+      render(
+        <FormCompleteStep {...defaultProps} onRedownload={onRedownload} />,
+      );
 
       await user.click(screen.getByRole("button", { name: /redownload/i }));
 
@@ -90,17 +90,26 @@ describe("FormCompleteStep", () => {
       const user = userEvent.setup();
       let resolveDownload!: () => void;
       const onRedownload = vi.fn(
-        () => new Promise<void>((resolve) => { resolveDownload = resolve; }),
+        () =>
+          new Promise<void>((resolve) => {
+            resolveDownload = resolve;
+          }),
       );
 
-      render(<FormCompleteStep {...defaultProps} onRedownload={onRedownload} />);
+      render(
+        <FormCompleteStep {...defaultProps} onRedownload={onRedownload} />,
+      );
       await user.click(screen.getByRole("button", { name: /redownload/i }));
 
-      expect(screen.getByRole("button", { name: /redownload/i })).toBeDisabled();
+      expect(
+        screen.getByRole("button", { name: /redownload/i }),
+      ).toBeDisabled();
 
       resolveDownload();
       await waitFor(() =>
-        expect(screen.getByRole("button", { name: /redownload/i })).not.toBeDisabled(),
+        expect(
+          screen.getByRole("button", { name: /redownload/i }),
+        ).not.toBeDisabled(),
       );
     });
   });

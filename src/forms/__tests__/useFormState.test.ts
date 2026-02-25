@@ -305,10 +305,14 @@ describe("useFormState", () => {
 
       await waitFor(() => expect(result.current.isLoading).toBe(false));
 
-      act(() => { result.current.send({ type: "START" }); });
+      act(() => {
+        result.current.send({ type: "START" });
+      });
       expect(result.current.activeStepId).toBe("only");
 
-      act(() => { result.current.goNext(); });
+      act(() => {
+        result.current.goNext();
+      });
       expect(result.current.phase).toBe("review");
     });
 
@@ -413,9 +417,15 @@ describe("useFormState", () => {
 
       await waitFor(() => expect(result.current.isLoading).toBe(false));
 
-      act(() => { result.current.send({ type: "START" }); });
-      act(() => { result.current.send({ type: "GOTO_REVIEW" }); });
-      act(() => { result.current.send({ type: "EDIT_STEP", stepId: "b" }); });
+      act(() => {
+        result.current.send({ type: "START" });
+      });
+      act(() => {
+        result.current.send({ type: "GOTO_REVIEW" });
+      });
+      act(() => {
+        result.current.send({ type: "EDIT_STEP", stepId: "b" });
+      });
 
       expect(result.current.phase).toBe("editing");
       expect(result.current.activeStepId).toBe("b");
