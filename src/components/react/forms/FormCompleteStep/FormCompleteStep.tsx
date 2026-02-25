@@ -52,8 +52,8 @@ export function FormCompleteStep({
           Form complete!
         </Heading>
         <p className="form-complete-step-description">
-          Check your downloads for your <strong>{title}</strong> name change
-          packet. Review, print, and follow steps for filing.
+          Check your downloads for your <strong>{title}</strong> packet. Review,
+          print, and follow steps for filing.
         </p>
       </header>
       <div className="form-complete-step-content">
