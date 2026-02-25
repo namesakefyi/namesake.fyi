@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { POST } from "@/pages/api/feedback";
 import { isRateLimited } from "@/utils/rateLimitByIp";
-import { POST } from "../pages/api/feedback";
 
 vi.mock("@/utils/rateLimitByIp", () => ({
   isRateLimited: vi.fn().mockResolvedValue(false),
@@ -25,7 +25,11 @@ const makeRequest = (
   Object.assign(
     new Request("http://localhost/api/feedback", {
       method: "POST",
-      headers: { "Content-Type": "application/json", ...headers },
+      headers: {
+        "Content-Type": "application/json",
+        Origin: "https://namesake.fyi",
+        ...headers,
+      },
       body: JSON.stringify(body),
     }),
     { cf },
@@ -81,6 +85,50 @@ describe("POST /api/feedback", () => {
         locals: makeLocals(),
       } as any);
       expect(response.status).toBe(400);
+    });
+  });
+
+  describe("origin validation", () => {
+    it("returns 403 when Origin header is missing", async () => {
+      const request = Object.assign(
+        new Request("http://localhost/api/feedback", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(validBody),
+        }),
+      );
+      const response = await POST({
+        request,
+        locals: makeLocals(),
+      } as any);
+      expect(response.status).toBe(403);
+      expect(await response.json()).toMatchObject({ error: "Forbidden" });
+    });
+
+    it("returns 403 for a localhost origin", async () => {
+      const response = await POST({
+        request: makeRequest(validBody, { Origin: "http://localhost:4321" }),
+        locals: makeLocals(),
+      } as any);
+      expect(response.status).toBe(403);
+    });
+
+    it("returns 403 for a preview deploy origin", async () => {
+      const response = await POST({
+        request: makeRequest(validBody, {
+          Origin: "https://namesake-fyi.pages.dev",
+        }),
+        locals: makeLocals(),
+      } as any);
+      expect(response.status).toBe(403);
+    });
+
+    it("accepts requests from namesake.fyi", async () => {
+      const response = await POST({
+        request: makeRequest(validBody, { Origin: "https://namesake.fyi" }),
+        locals: makeLocals(),
+      } as any);
+      expect(response.status).toBe(200);
     });
   });
 
