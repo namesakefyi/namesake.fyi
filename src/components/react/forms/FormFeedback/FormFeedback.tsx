@@ -99,7 +99,7 @@ export function FormFeedback({ formSlug }: FormFeedbackProps) {
   return (
     <Form className="form-feedback" action={submitAction}>
       <Heading level={2} className="form-feedback-title">
-        Help improve Namesake for others
+        Help improve this form
       </Heading>
       <RadioGroup
         name="sentiment"
@@ -107,7 +107,7 @@ export function FormFeedback({ formSlug }: FormFeedbackProps) {
         orientation="horizontal"
         className="form-feedback-sentiment"
         errorMessage="Please select a rating."
-        label="Was it easy to complete this form?"
+        aria-label="Form rating"
       >
         <Radio value="positive" className="form-feedback-sentiment-option">
           <RiThumbUpLine size={24} aria-hidden />
@@ -118,11 +118,7 @@ export function FormFeedback({ formSlug }: FormFeedbackProps) {
           Had some problems
         </Radio>
       </RadioGroup>
-      <TextArea
-        name="comment"
-        label="Please share any feedback."
-        maxLength={1000}
-      />
+      <TextArea name="comment" label="Feedback" maxLength={1000} />
       {typeof state === "object" && "error" in state && (
         <Banner variant="error">{state.error}</Banner>
       )}
