@@ -7,7 +7,7 @@ import {
   useForm,
 } from "react-hook-form";
 import type { FieldName } from "@/constants/fields";
-import { getFieldsByNames, saveField } from "@/db/database";
+import { deleteField, getFieldsByNames, saveField } from "@/db/database";
 
 export function useFormData<TFieldValues extends FieldValues = FieldValues>(
   fields: readonly FieldName[],
@@ -52,16 +52,20 @@ export function useFormData<TFieldValues extends FieldValues = FieldValues>(
 
       const fieldValue = value[name];
 
-      if (
-        fieldValue !== "" &&
-        fieldValue !== null &&
-        fieldValue !== undefined
-      ) {
-        try {
+      if (fieldValue === undefined) return;
+
+      try {
+        if (
+          fieldValue === null ||
+          fieldValue === "" ||
+          (Array.isArray(fieldValue) && fieldValue.length === 0)
+        ) {
+          await deleteField(name);
+        } else {
           await saveField(name, fieldValue);
-        } catch (error) {
-          console.error(`Error saving field ${name}:`, error);
         }
+      } catch (error) {
+        console.error(`Error saving field ${name}:`, error);
       }
     });
 
