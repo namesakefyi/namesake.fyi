@@ -142,6 +142,22 @@ describe("useFormData", () => {
       expect(database.saveField).not.toHaveBeenCalled();
     });
 
+    it("deletes a field when its value is set to an empty array", async () => {
+      const { result } = renderHook(() => useFormData(["pronouns"]));
+
+      await waitFor(() => expect(result.current.isLoading).toBe(false));
+      vi.clearAllMocks();
+
+      await act(async () => {
+        result.current.setValue("pronouns", []);
+      });
+
+      await waitFor(() => {
+        expect(database.deleteField).toHaveBeenCalledWith("pronouns");
+      });
+      expect(database.saveField).not.toHaveBeenCalled();
+    });
+
     it("logs an error when deleteField throws during auto-save", async () => {
       vi.mocked(database.deleteField).mockRejectedValue(
         new Error("Delete failed"),

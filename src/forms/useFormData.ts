@@ -55,7 +55,11 @@ export function useFormData<TFieldValues extends FieldValues = FieldValues>(
       if (fieldValue === undefined) return;
 
       try {
-        if (fieldValue === null || fieldValue === "") {
+        if (
+          fieldValue === null ||
+          fieldValue === "" ||
+          (Array.isArray(fieldValue) && fieldValue.length === 0)
+        ) {
           await deleteField(name);
         } else {
           await saveField(name, fieldValue);
