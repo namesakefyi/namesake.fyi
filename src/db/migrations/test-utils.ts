@@ -55,6 +55,8 @@ export async function writeMockRecord(
   record: object,
 ): Promise<void> {
   const db = await openDB(DB_NAME, dbVersion);
+  // openDB without a schema generic returns IDBPDatabase<unknown>, so storeName
+  // can't be statically verified — the cast is intentional.
   const tx = (db as any).transaction(storeName, "readwrite");
   await tx.objectStore(storeName).put(record);
   await tx.done;

@@ -2,7 +2,7 @@
 // Usage: pnpm idb:add-migration <kebab-case-name>
 // Example: pnpm idb:add-migration add-index-to-form-data
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -12,9 +12,7 @@ const MIGRATIONS_DIR = join(ROOT, "src/db/migrations");
 const MIGRATIONS_INDEX = join(MIGRATIONS_DIR, "index.ts");
 const INIT_FILE = join(ROOT, "src/db/init.ts");
 
-// ---------------------------------------------------------------------------
-// Validate input
-// ---------------------------------------------------------------------------
+/* Validate input */
 
 const name = process.argv[2];
 
@@ -30,27 +28,33 @@ if (!/^[a-z][a-z0-9-]*$/.test(name)) {
   process.exit(1);
 }
 
-// ---------------------------------------------------------------------------
-// Determine next migration number
-// ---------------------------------------------------------------------------
+/* Determine next migration number from DB_VERSION */
 
-const indexSource = readFileSync(MIGRATIONS_INDEX, "utf8");
-const existingImports = [...indexSource.matchAll(/from "\.\/(\d+)-/g)];
-const nextNum = existingImports.length + 1;
+const initSource = readFileSync(INIT_FILE, "utf8");
+const versionMatch = initSource.match(/^export const DB_VERSION = (\d+);/m);
+
+if (!versionMatch) {
+  console.error("Error: could not find DB_VERSION in src/db/init.ts");
+  process.exit(1);
+}
+
+const currentVersion = Number.parseInt(versionMatch[1], 10);
+const nextNum = currentVersion + 1;
 const paddedNum = String(nextNum).padStart(3, "0");
 const slug = `${paddedNum}-${name}`;
 
-// ---------------------------------------------------------------------------
-// Derive a readable title from the slug for comments
-// ---------------------------------------------------------------------------
+/* Derive a readable title from the slug for comments */
 
 const title = name.replace(/-/g, " ");
 
-// ---------------------------------------------------------------------------
-// Write migration file
-// ---------------------------------------------------------------------------
+/* Write migration file */
 
 const migrationFile = join(MIGRATIONS_DIR, `${slug}.ts`);
+
+if (existsSync(migrationFile)) {
+  console.error(`Error: src/db/migrations/${slug}.ts already exists.`);
+  process.exit(1);
+}
 const migrationSource = `import type { Migration } from "../types";
 
 export const migration: Migration = (db) => {
@@ -61,9 +65,7 @@ export const migration: Migration = (db) => {
 writeFileSync(migrationFile, migrationSource);
 console.log(`  created  src/db/migrations/${slug}.ts`);
 
-// ---------------------------------------------------------------------------
-// Write test file
-// ---------------------------------------------------------------------------
+/* Write test file */
 
 const testFile = join(MIGRATIONS_DIR, `__tests__/${slug}.test.ts`);
 const testSource = `import { IDBFactory } from "fake-indexeddb";
@@ -93,11 +95,11 @@ describe("${nextNum}: ${title}", () => {
 writeFileSync(testFile, testSource);
 console.log(`  created  src/db/migrations/__tests__/${slug}.test.ts`);
 
-// ---------------------------------------------------------------------------
-// Register in migrations/index.ts
-// ---------------------------------------------------------------------------
+/* Register in migrations/index.ts */
 
-const importAlias = `migration${nextNum}`;
+// add-documents-store → addDocumentsStore
+const importAlias = name.replace(/-([a-z0-9])/g, (_, c) => c.toUpperCase());
+const indexSource = readFileSync(MIGRATIONS_INDEX, "utf8");
 
 const updatedIndex = indexSource
   .replace(
@@ -112,20 +114,9 @@ const updatedIndex = indexSource
 writeFileSync(MIGRATIONS_INDEX, updatedIndex);
 console.log("  updated  src/db/migrations/index.ts");
 
-// ---------------------------------------------------------------------------
-// Bump DB_VERSION in init.ts
-// ---------------------------------------------------------------------------
+/* Bump DB_VERSION in init.ts */
 
-const initSource = readFileSync(INIT_FILE, "utf8");
-const versionMatch = initSource.match(/^export const DB_VERSION = (\d+);/m);
-
-if (!versionMatch) {
-  console.error("Error: could not find DB_VERSION in src/db/init.ts");
-  process.exit(1);
-}
-
-const currentVersion = Number.parseInt(versionMatch[1], 10);
-const newVersion = currentVersion + 1;
+const newVersion = nextNum;
 const updatedInit = initSource.replace(
   /^export const DB_VERSION = \d+;/m,
   `export const DB_VERSION = ${newVersion};`,
@@ -136,9 +127,7 @@ console.log(
   `  updated  src/db/init.ts  (DB_VERSION ${currentVersion} → ${newVersion})`,
 );
 
-// ---------------------------------------------------------------------------
-// Done
-// ---------------------------------------------------------------------------
+/* Done */
 
 console.log(`
 Next steps:

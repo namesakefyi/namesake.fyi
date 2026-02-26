@@ -5,7 +5,6 @@ import type { NamesakeDB, NamesakeDBSchema } from "./types";
 export const DB_NAME = "namesake";
 export const DB_VERSION = 2;
 
-// Re-exported for consumers that import store names from this module
 export { FORM_DATA_STORE, FORM_PROGRESS_STORE } from "./types";
 
 let dbInstance: NamesakeDB | null = null;
