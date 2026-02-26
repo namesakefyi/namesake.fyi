@@ -6,7 +6,7 @@ import {
   RiThumbDownLine,
   RiThumbUpLine,
 } from "@remixicon/react";
-import { useActionState } from "react";
+import { useActionState, useRef } from "react";
 import { Button } from "@/components/react/common/Button";
 import { Form } from "@/components/react/common/Form";
 import { Radio, RadioGroup } from "@/components/react/common/RadioGroup";
@@ -25,15 +25,22 @@ const ERROR_MESSAGES: Record<number, string> = {
   429: "You've submitted feedback too many times. Try again in an hour.",
 };
 
-type SubmitState = "idle" | "success" | { error: string };
+type SubmitError = { error: string; sentiment: string; comment: string };
+type SubmitState = "idle" | "success" | SubmitError;
+
+function isSubmitError(state: SubmitState): state is SubmitError {
+  return typeof state === "object";
+}
 
 export function FormFeedback({ formSlug }: FormFeedbackProps) {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
   const [state, submitAction, isPending] = useActionState<
     SubmitState,
     FormData
   >(async (_prev, formData) => {
     const sentiment = formData.get("sentiment") as FormFeedbackSentiment;
-    const comment = formData.get("comment") as string | null;
+    const comment = (formData.get("comment") as string) ?? "";
 
     try {
       const response = await fetch("/api/feedback", {
@@ -42,7 +49,7 @@ export function FormFeedback({ formSlug }: FormFeedbackProps) {
         body: JSON.stringify({
           form_slug: formSlug,
           sentiment,
-          comment: comment?.trim() || undefined,
+          comment: comment.trim() || undefined,
         }),
       });
 
@@ -50,11 +57,20 @@ export function FormFeedback({ formSlug }: FormFeedbackProps) {
         const message =
           ERROR_MESSAGES[response.status] ??
           "Something went wrong. Please try again.";
-        return { error: message };
+        return { error: message, sentiment, comment };
       }
+
+      wrapperRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
       return "success";
     } catch {
-      return { error: "Something went wrong. Please try again." };
+      return {
+        error: "Something went wrong. Please try again.",
+        sentiment,
+        comment,
+      };
     }
   }, "idle");
 
@@ -67,9 +83,9 @@ export function FormFeedback({ formSlug }: FormFeedbackProps) {
     });
   };
 
-  if (state === "success") {
-    return (
-      <div className="form-feedback">
+  return (
+    <div className="form-feedback" ref={wrapperRef}>
+      {state === "success" ? (
         <div className="form-feedback-success" role="alert">
           <RiHeart3Line size={32} aria-hidden />
           <div className="form-feedback-success-content">
@@ -92,44 +108,48 @@ export function FormFeedback({ formSlug }: FormFeedbackProps) {
             </a>
           </div>
         </div>
-      </div>
-    );
-  }
-
-  return (
-    <Form className="form-feedback" action={submitAction}>
-      <Heading level={2} className="form-feedback-title">
-        Help improve this form
-      </Heading>
-      <RadioGroup
-        name="sentiment"
-        isRequired
-        orientation="horizontal"
-        className="form-feedback-sentiment"
-        errorMessage="Please select a rating."
-        aria-label="Form rating"
-      >
-        <Radio value="positive" className="form-feedback-sentiment-option">
-          <RiThumbUpLine size={24} aria-hidden />
-          It was easy
-        </Radio>
-        <Radio value="negative" className="form-feedback-sentiment-option">
-          <RiThumbDownLine size={24} aria-hidden />
-          Had some problems
-        </Radio>
-      </RadioGroup>
-      <TextArea name="comment" label="Feedback" maxLength={1000} />
-      {typeof state === "object" && "error" in state && (
-        <Banner variant="error">{state.error}</Banner>
+      ) : (
+        <Form action={submitAction}>
+          <Heading level={2} className="form-feedback-title">
+            Help improve this form
+          </Heading>
+          <RadioGroup
+            name="sentiment"
+            isRequired
+            orientation="horizontal"
+            className="form-feedback-sentiment"
+            errorMessage="Please select a rating."
+            aria-label="Form rating"
+            defaultValue={isSubmitError(state) ? state.sentiment : undefined}
+          >
+            <Radio value="positive" className="form-feedback-sentiment-option">
+              <RiThumbUpLine size={24} aria-hidden />
+              It was easy
+            </Radio>
+            <Radio value="negative" className="form-feedback-sentiment-option">
+              <RiThumbDownLine size={24} aria-hidden />
+              Had some problems
+            </Radio>
+          </RadioGroup>
+          <TextArea
+            name="comment"
+            label="Feedback"
+            maxLength={1000}
+            defaultValue={isSubmitError(state) ? state.comment : undefined}
+          />
+          {isSubmitError(state) && (
+            <Banner variant="error">{state.error}</Banner>
+          )}
+          <Button
+            type="submit"
+            variant="primary"
+            endIcon={RiArrowRightLine}
+            isPending={isPending}
+          >
+            Submit
+          </Button>
+        </Form>
       )}
-      <Button
-        type="submit"
-        variant="primary"
-        endIcon={RiArrowRightLine}
-        isPending={isPending}
-      >
-        Submit
-      </Button>
-    </Form>
+    </div>
   );
 }

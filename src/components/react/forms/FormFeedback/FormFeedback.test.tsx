@@ -51,6 +51,24 @@ describe("FormFeedback", () => {
     expect(positive).not.toBeChecked();
   });
 
+  it("scrolls the success message into view after submission", async () => {
+    const user = userEvent.setup();
+    const scrollIntoView = vi.fn();
+    window.HTMLElement.prototype.scrollIntoView = scrollIntoView;
+
+    render(<FormFeedback formSlug="court-order-ma" />);
+
+    await user.click(screen.getByRole("radio", { name: /easy/i }));
+    await user.click(screen.getByRole("button", { name: /submit/i }));
+
+    await waitFor(() => {
+      expect(scrollIntoView).toHaveBeenCalledWith({
+        behavior: "smooth",
+        block: "nearest",
+      });
+    });
+  });
+
   it("shows a success message after submission", async () => {
     const user = userEvent.setup();
     render(<FormFeedback formSlug="court-order-ma" />);
@@ -105,6 +123,28 @@ describe("FormFeedback", () => {
 
     await waitFor(() => {
       expect(getSubmitBody().comment).toBeUndefined();
+    });
+  });
+
+  it("preserves field values after a submission error", async () => {
+    const user = userEvent.setup();
+    render(<FormFeedback formSlug="court-order-ma" />);
+
+    await user.click(screen.getByRole("radio", { name: /easy/i }));
+    await user.type(
+      screen.getByRole("textbox", { name: /feedback/i }),
+      "Great form!",
+    );
+    vi.mocked(fetch).mockResolvedValueOnce(
+      new Response(JSON.stringify({ error: "Server error" }), { status: 500 }),
+    );
+    await user.click(screen.getByRole("button", { name: /submit/i }));
+
+    await waitFor(() => {
+      expect(screen.getByRole("radio", { name: /easy/i })).toBeChecked();
+      expect(screen.getByRole("textbox", { name: /feedback/i })).toHaveValue(
+        "Great form!",
+      );
     });
   });
 
