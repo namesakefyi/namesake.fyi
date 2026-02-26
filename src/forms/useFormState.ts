@@ -50,7 +50,9 @@ function usePersistedSnapshot(formSlug: string) {
       .then((snapshot) => {
         if (snapshot) setSavedSnapshot(snapshot);
       })
-      .catch(() => {})
+      .catch((error) => {
+        console.error("Failed to load form progress from IndexedDB:", error);
+      })
       .finally(() => setIsLoading(false));
   }, [formSlug]);
 
@@ -83,14 +85,18 @@ function useFormActor(
       setState(snapshot);
       if (!canPersist) return;
       const slug = (snapshot.context as FormMachineContext).formSlug;
-      saveFormProgress(slug, actor.getPersistedSnapshot()).catch(() => {});
+      saveFormProgress(slug, actor.getPersistedSnapshot()).catch((error) => {
+        console.error("Failed to save form progress to IndexedDB:", error);
+      });
     });
 
     actor.start();
     setState(actor.getSnapshot());
 
     if (canPersist) {
-      saveFormProgress(formSlug, actor.getPersistedSnapshot()).catch(() => {});
+      saveFormProgress(formSlug, actor.getPersistedSnapshot()).catch((error) => {
+        console.error("Failed to save initial form progress to IndexedDB:", error);
+      });
     }
 
     return () => {
