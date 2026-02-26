@@ -30,4 +30,4 @@ export type Migration = (
     Array<keyof NamesakeDBSchema>,
     "versionchange"
   >,
-) => void;
+) => void | Promise<void>;

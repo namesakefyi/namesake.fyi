@@ -37,8 +37,8 @@ export async function runMockMigration(
   }
 
   return openDB(DB_NAME, toVersion, {
-    upgrade(db, _oldVersion, _newVersion, tx) {
-      migration(db as any, tx as any);
+    async upgrade(db, _oldVersion, _newVersion, tx) {
+      await migration(db as any, tx as any);
     },
   });
 }
