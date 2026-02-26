@@ -44,7 +44,7 @@ export function MemorableDateField<T extends DateValue>({
               {...field}
               value={dateValue as T}
               onChange={(date) => {
-                onChange(date?.toString());
+                onChange(date ? date.toString() : null);
                 props.onChange?.(date);
               }}
               label={label}

@@ -6,12 +6,14 @@ import { useFormData } from "../useFormData";
 vi.mock("@/db/database", () => ({
   getFieldsByNames: vi.fn(),
   saveField: vi.fn(),
+  deleteField: vi.fn(),
 }));
 
 describe("useFormData", () => {
   beforeEach(() => {
     vi.mocked(database.getFieldsByNames).mockResolvedValue([]);
     vi.mocked(database.saveField).mockResolvedValue(undefined);
+    vi.mocked(database.deleteField).mockResolvedValue(undefined);
     vi.spyOn(console, "error").mockImplementation(() => {});
   });
 
@@ -108,7 +110,7 @@ describe("useFormData", () => {
       });
     });
 
-    it("does not save when value is an empty string", async () => {
+    it("deletes a field when its value is cleared to an empty string", async () => {
       const { result } = renderHook(() => useFormData(["oldFirstName"]));
 
       await waitFor(() => expect(result.current.isLoading).toBe(false));
@@ -118,12 +120,13 @@ describe("useFormData", () => {
         result.current.setValue("oldFirstName", "");
       });
 
-      await new Promise((resolve) => setTimeout(resolve, 10));
-
+      await waitFor(() => {
+        expect(database.deleteField).toHaveBeenCalledWith("oldFirstName");
+      });
       expect(database.saveField).not.toHaveBeenCalled();
     });
 
-    it("does not save when value is null", async () => {
+    it("deletes a field when its value is set to null", async () => {
       const { result } = renderHook(() => useFormData(["oldFirstName"]));
 
       await waitFor(() => expect(result.current.isLoading).toBe(false));
@@ -133,9 +136,33 @@ describe("useFormData", () => {
         result.current.setValue("oldFirstName", null);
       });
 
-      await new Promise((resolve) => setTimeout(resolve, 10));
-
+      await waitFor(() => {
+        expect(database.deleteField).toHaveBeenCalledWith("oldFirstName");
+      });
       expect(database.saveField).not.toHaveBeenCalled();
+    });
+
+    it("logs an error when deleteField throws during auto-save", async () => {
+      vi.mocked(database.deleteField).mockRejectedValue(
+        new Error("Delete failed"),
+      );
+
+      const { result } = renderHook(() => useFormData(["oldFirstName"]));
+
+      await waitFor(() => expect(result.current.isLoading).toBe(false));
+      vi.clearAllMocks();
+      vi.spyOn(console, "error").mockImplementation(() => {});
+
+      await act(async () => {
+        result.current.setValue("oldFirstName", null);
+      });
+
+      await waitFor(() => {
+        expect(console.error).toHaveBeenCalledWith(
+          "Error saving field oldFirstName:",
+          expect.any(Error),
+        );
+      });
     });
 
     it("logs an error when saveField throws during auto-save", async () => {
