@@ -1,10 +1,11 @@
 import { openDB } from "idb";
-import type { FormFieldRecord, FormProgressRecord, NamesakeDB } from "./types";
+import { migrations } from "./migrations";
+import type { NamesakeDB, NamesakeDBSchema } from "./types";
 
-const DB_NAME = "namesake";
-const DB_VERSION = 2;
-const FORM_DATA_STORE = "formData";
-const FORM_PROGRESS_STORE = "formProgress";
+export const DB_NAME = "namesake";
+export const DB_VERSION = 2;
+
+export { FORM_DATA_STORE, FORM_PROGRESS_STORE } from "./types";
 
 let dbInstance: NamesakeDB | null = null;
 
@@ -13,27 +14,30 @@ export async function getDB(): Promise<NamesakeDB> {
     return dbInstance;
   }
 
-  dbInstance = await openDB<{
-    formData: {
-      key: string;
-      value: FormFieldRecord;
-    };
-    formProgress: {
-      key: string;
-      value: FormProgressRecord;
-    };
-  }>(DB_NAME, DB_VERSION, {
-    upgrade(db, oldVersion) {
-      if (oldVersion < 1) {
-        db.createObjectStore(FORM_DATA_STORE, { keyPath: "field" });
-      }
-      if (oldVersion < 2) {
-        db.createObjectStore(FORM_PROGRESS_STORE, { keyPath: "formSlug" });
-      }
-    },
-  });
+  try {
+    dbInstance = await openDB<NamesakeDBSchema>(DB_NAME, DB_VERSION, {
+      upgrade(db, oldVersion, newVersion, transaction) {
+        for (let v = oldVersion; v < (newVersion ?? DB_VERSION); v++) {
+          migrations[v]?.(db, transaction);
+        }
+      },
+      blocked(currentVersion, blockedVersion) {
+        console.warn(
+          `IndexedDB upgrade blocked (v${currentVersion} open elsewhere, needs v${blockedVersion})`,
+        );
+      },
+      blocking(currentVersion, blockedVersion) {
+        console.warn(
+          `IndexedDB: closing to allow upgrade (v${currentVersion} → v${blockedVersion})`,
+        );
+        dbInstance?.close();
+        dbInstance = null;
+      },
+    });
+  } catch (error) {
+    dbInstance = null;
+    throw error;
+  }
 
   return dbInstance;
 }
-
-export { FORM_DATA_STORE, FORM_PROGRESS_STORE };
