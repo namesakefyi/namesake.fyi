@@ -3,7 +3,7 @@
 // Example: pnpm idb:add-migration add-index-to-form-data
 
 import { readFileSync, writeFileSync } from "node:fs";
-import { join, dirname } from "node:path";
+import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -110,7 +110,7 @@ const updatedIndex = indexSource
   );
 
 writeFileSync(MIGRATIONS_INDEX, updatedIndex);
-console.log(`  updated  src/db/migrations/index.ts`);
+console.log("  updated  src/db/migrations/index.ts");
 
 // ---------------------------------------------------------------------------
 // Bump DB_VERSION in init.ts
@@ -124,7 +124,7 @@ if (!versionMatch) {
   process.exit(1);
 }
 
-const currentVersion = parseInt(versionMatch[1], 10);
+const currentVersion = Number.parseInt(versionMatch[1], 10);
 const newVersion = currentVersion + 1;
 const updatedInit = initSource.replace(
   /^export const DB_VERSION = \d+;/m,
@@ -132,7 +132,9 @@ const updatedInit = initSource.replace(
 );
 
 writeFileSync(INIT_FILE, updatedInit);
-console.log(`  updated  src/db/init.ts  (DB_VERSION ${currentVersion} → ${newVersion})`);
+console.log(
+  `  updated  src/db/init.ts  (DB_VERSION ${currentVersion} → ${newVersion})`,
+);
 
 // ---------------------------------------------------------------------------
 // Done
