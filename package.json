@@ -24,7 +24,8 @@
     "test:e2e": "playwright test --reporter=html",
     "check-links": "lychee --config .lychee.toml .",
     "storybook": "storybook dev -p 6006",
-    "storybook:build": "storybook build"
+    "storybook:build": "storybook build",
+    "idb:add-migration": "node scripts/create-idb-migration.mjs"
   },
   "lint-staged": {
     "*": "pnpm check:fix"

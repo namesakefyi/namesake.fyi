@@ -94,9 +94,14 @@ function useFormActor(
     setState(actor.getSnapshot());
 
     if (canPersist) {
-      saveFormProgress(formSlug, actor.getPersistedSnapshot()).catch((error) => {
-        console.error("Failed to save initial form progress to IndexedDB:", error);
-      });
+      saveFormProgress(formSlug, actor.getPersistedSnapshot()).catch(
+        (error) => {
+          console.error(
+            "Failed to save initial form progress to IndexedDB:",
+            error,
+          );
+        },
+      );
     }
 
     return () => {
