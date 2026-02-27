@@ -34,9 +34,9 @@
   }
 
   &[data-selected] {
-    border-color: var(--highlight-background);
-    background: var(--highlight-background);
     color: var(--highlight-foreground);
+    background: var(--highlight-background);
+    border-color: var(--highlight-background);
 
     svg:first-child {
       margin-inline: -0.1em;
@@ -44,20 +44,20 @@
   }
 
   [slot="remove"] {
-    background: none;
-    border: 1px solid var(--border-color);
-    padding: 0;
-    margin-left: 4px;
-    color: var(--text-color);
-    transition: color 200ms;
-    outline: none;
-    font-size: 0.95em;
-    border-radius: 100%;
-    aspect-ratio: 1 / 1;
-    height: calc(100% - 4px);
     display: flex;
     align-items: center;
     justify-content: center;
+    height: calc(100% - 4px);
+    aspect-ratio: 1 / 1;
+    padding: 0;
+    margin-left: 4px;
+    font-size: 0.95em;
+    color: var(--text-color);
+    outline: none;
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: 100%;
+    transition: color 200ms;
 
     &[data-focus-visible] {
       outline: 3px solid var(--focus-ring-color);
@@ -80,8 +80,8 @@
 .react-aria-TagList {
   .react-aria-Tag {
     &[data-disabled] {
-      border-color: var(--border-color-disabled);
       color: var(--text-color-disabled);
+      border-color: var(--border-color-disabled);
     }
 
     &:not([data-disabled]) {

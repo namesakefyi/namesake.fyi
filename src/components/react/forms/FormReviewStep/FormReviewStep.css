@@ -1,8 +1,8 @@
 .form-review-step {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: var(--space-2xl);
+  align-items: flex-start;
 }
 
 .form-review-step-header {
@@ -13,8 +13,8 @@
 
 .form-review-step-title {
   font-size: var(--step-3);
-  letter-spacing: var(--letter-spacing-condensed);
   line-height: 1.1;
+  letter-spacing: var(--letter-spacing-condensed);
   text-wrap: pretty;
 }
 
@@ -31,22 +31,22 @@
 }
 
 .form-review-step-placeholder {
+  width: 100%;
   padding: var(--space-2xl);
+  text-align: center;
   background: var(--surface-color);
   border: 2px dashed var(--border-color);
   border-radius: var(--radius-m);
-  text-align: center;
-  width: 100%;
 }
 
 .form-review-step-placeholder p {
-  color: var(--text-color-muted);
   font-size: var(--step-0);
+  color: var(--text-color-muted);
 }
 
 .form-review-step[aria-busy="true"] .form-review-step-content {
-  opacity: 0.5;
   pointer-events: none;
+  opacity: 0.5;
   transition: opacity 0.2s ease;
 }
 

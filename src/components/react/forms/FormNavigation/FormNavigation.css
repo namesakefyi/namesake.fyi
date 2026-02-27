@@ -1,12 +1,12 @@
 .form-navigation {
-  background: var(--background-color);
-  display: flex;
-  align-items: center;
-  gap: var(--space-m);
-  padding-block: var(--space-m);
   position: sticky;
   top: 0;
   z-index: 20;
+  display: flex;
+  gap: var(--space-m);
+  align-items: center;
+  padding-block: var(--space-m);
+  background: var(--background-color);
 }
 
 .form-progress {
@@ -20,13 +20,13 @@
 
 .form-navigation-buttons {
   display: flex;
-  align-items: center;
   gap: var(--space-xs);
+  align-items: center;
 }
 
 .form-navigation-button {
   flex-shrink: 0;
-  padding: 0;
   width: var(--space-2xl);
   height: var(--space-2xl);
+  padding: 0;
 }

@@ -21,16 +21,16 @@
   forced-color-adjust: none;
 
   &:before {
-    content: "";
+    box-sizing: border-box;
     display: block;
+    flex-shrink: 0;
     width: var(--space-2xl);
     height: var(--space-2xl);
-    box-sizing: border-box;
-    border: 1px solid var(--border-color);
+    content: "";
     background: var(--field-background);
+    border: 1px solid var(--border-color);
     border-radius: 50%;
     transition: border-width 150ms;
-    flex-shrink: 0;
   }
 
   &[data-pressed]:before {

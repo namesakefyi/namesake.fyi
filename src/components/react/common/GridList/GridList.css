@@ -21,17 +21,17 @@
   }
 
   .react-aria-GridListItem {
+    position: relative;
     display: flex;
-    align-items: center;
     gap: var(--space-s);
+    align-items: center;
     min-height: 28px;
     padding: var(--space-2xs) var(--space-2xs) var(--space-2xs) var(--space-s);
-    border-radius: var(--radius-xs);
-    outline: none;
-    cursor: default;
-    color: var(--text-color);
     font-size: var(--step-0);
-    position: relative;
+    color: var(--text-color);
+    cursor: default;
+    outline: none;
+    border-radius: var(--radius-xs);
     transform: translateZ(0);
 
     &[data-focus-visible] {
@@ -40,9 +40,9 @@
     }
 
     &[data-selected] {
-      background: var(--highlight-background);
-      color: var(--highlight-foreground);
       --focus-ring-color: var(--highlight-foreground);
+      color: var(--highlight-foreground);
+      background: var(--highlight-background);
 
       &[data-focus-visible] {
         outline-color: var(--highlight-foreground);
@@ -63,11 +63,11 @@
     }
 
     .react-aria-Button {
-      background: transparent;
-      border: none;
+      padding: var(--space-2xs) var(--space-2xs);
       font-size: var(--step-0);
       line-height: 1.2em;
-      padding: var(--space-2xs) var(--space-2xs);
+      background: transparent;
+      border: none;
       transition: background 200ms;
 
       &[data-hovered] {
@@ -136,8 +136,8 @@
     text-align: center;
 
     &[data-focus-visible] {
-      border-radius: 4px;
       outline: 3px solid var(--focus-ring-color);
+      border-radius: 4px;
     }
   }
 }
@@ -179,6 +179,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 24px;
   width: 100%;
+  height: 24px;
 }

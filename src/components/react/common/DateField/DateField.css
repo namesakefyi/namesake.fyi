@@ -1,7 +1,7 @@
 .namesake-date-field {
-  color: var(--text-color);
   display: flex;
   flex-direction: column;
+  color: var(--text-color);
 
   [slot="description"] {
     display: block;
@@ -29,16 +29,16 @@
   }
 
   &[data-disabled] {
-    border-color: var(--border-color-disabled);
     color: var(--text-color-disabled);
+    border-color: var(--border-color-disabled);
   }
 }
 
 .react-aria-DateSegment {
   padding: 2px 3px;
   font-variant-numeric: tabular-nums;
-  text-align: end;
   color: var(--text-color);
+  text-align: end;
 
   &[data-type="literal"] {
     padding: 0;
@@ -50,18 +50,18 @@
 
   &:focus {
     color: var(--highlight-foreground);
-    background: var(--highlight-background);
-    outline: none;
-    border-radius: var(--radius-2xs);
     caret-color: transparent;
+    outline: none;
+    background: var(--highlight-background);
+    border-radius: var(--radius-2xs);
   }
 
   &[data-invalid] {
     color: var(--invalid-color);
 
     &:focus {
-      background: var(--highlight-background-invalid);
       color: var(--highlight-foreground);
+      background: var(--highlight-background-invalid);
     }
   }
 

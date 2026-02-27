@@ -1,8 +1,8 @@
 .form-complete-step {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: var(--space-2xl);
+  align-items: flex-start;
   padding-block: var(--space-xl) var(--space-2xl);
 }
 
@@ -14,8 +14,8 @@
 
 .form-complete-step-heading {
   display: inline;
-  text-wrap: balance;
   margin-inline-start: -0.06em;
+  text-wrap: balance;
 }
 
 .form-complete-step-description {
@@ -27,8 +27,8 @@
 .form-complete-step-content {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: var(--space-l);
+  align-items: flex-start;
   width: 100%;
   max-width: 720px;
   margin-inline-end: auto;
@@ -36,9 +36,9 @@
 
 .form-complete-actions {
   display: flex;
+  gap: var(--space-m);
   align-items: flex-start;
   justify-content: flex-start;
-  gap: var(--space-m);
   width: 100%;
 
   svg {

@@ -7,18 +7,18 @@
   }
 
   .react-aria-Input {
+    min-width: 0;
+    padding: var(--space-s) var(--space-2xl) var(--space-s) var(--space-m);
     margin: 0;
     font-size: var(--step-0);
-    background: var(--field-background);
+    vertical-align: middle;
     color: var(--field-text-color);
+    outline: none;
+    background: var(--field-background);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-xs);
     box-shadow: inset 0 3px 0 0
       color-mix(in srgb, var(--namesake-black) 10%, transparent);
-    padding: var(--space-s) var(--space-2xl) var(--space-s) var(--space-m);
-    vertical-align: middle;
-    outline: none;
-    min-width: 0;
 
     &[data-focused] {
       outline: 3px solid var(--focus-ring-color);
@@ -33,8 +33,8 @@
   .react-aria-ListBox {
     display: block;
     width: unset;
-    max-height: inherit;
     min-height: unset;
+    max-height: inherit;
     border: none;
 
     .react-aria-Header {
@@ -51,26 +51,26 @@
 
     &[data-selected] {
       font-weight: 600;
-      background: unset;
       color: var(--text-color);
+      background: unset;
 
       &::before {
+        position: absolute;
+        top: var(--space-2xs);
+        left: var(--space-2xs);
+        width: var(--space-l);
+        height: var(--space-l);
         content: "";
         background-color: var(--highlight-background);
         mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z'%3E%3C/path%3E%3C/svg%3E");
         mask-size: cover;
-        width: var(--space-l);
-        height: var(--space-l);
-        position: absolute;
-        top: var(--space-2xs);
-        left: var(--space-2xs);
       }
     }
 
     &[data-focused],
     &[data-pressed] {
-      background: var(--highlight-background);
       color: var(--highlight-foreground);
+      background: var(--highlight-background);
 
       &::before {
         background-color: var(--highlight-foreground);

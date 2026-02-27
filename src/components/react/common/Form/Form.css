@@ -1,14 +1,14 @@
 .namesake-form {
   display: flex;
   flex-direction: column;
-  align-items: start;
   gap: var(--space-s);
+  align-items: start;
 }
 
 .namesake-label {
   display: inline-block;
-  color: var(--text-color);
   margin-bottom: var(--space-2xs);
+  color: var(--text-color);
 }
 
 .namesake-field-error {

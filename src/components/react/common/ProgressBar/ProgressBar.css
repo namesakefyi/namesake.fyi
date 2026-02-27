@@ -4,11 +4,11 @@
     "label value"
     "bar bar";
   grid-template-columns: 1fr auto;
-  align-items: flex-end;
   gap: var(--space-s);
+  align-items: flex-end;
   width: 250px;
-  color: var(--text-color);
   line-height: 1;
+  color: var(--text-color);
 
   .value {
     grid-area: value;
@@ -25,8 +25,8 @@
   }
 
   .fill {
-    background: var(--highlight-background);
     height: 100%;
+    background: var(--highlight-background);
     @media (prefers-reduced-motion: no-preference) {
       transition: transform 0.2s ease-out;
     }

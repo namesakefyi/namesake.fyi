@@ -1,9 +1,9 @@
 .react-aria-Menu {
-  max-height: inherit;
   box-sizing: border-box;
-  overflow: auto;
-  padding: 2px;
   min-width: 150px;
+  max-height: inherit;
+  padding: 2px;
+  overflow: auto;
   outline: none;
 }
 
@@ -25,8 +25,8 @@
 
   &[data-focused],
   &[data-open] {
-    background: var(--highlight-background);
     color: var(--highlight-foreground);
+    background: var(--highlight-background);
   }
 }
 
@@ -61,9 +61,9 @@
   }
 
   .react-aria-Header {
+    padding: 0 var(--space-s);
     font-size: var(--step-0);
     font-weight: bold;
-    padding: 0 var(--space-s);
   }
 }
 
@@ -75,15 +75,15 @@
 
 .react-aria-MenuItem {
   [slot="label"] {
-    font-weight: bold;
     grid-area: label;
+    font-weight: bold;
   }
 
   [slot="description"] {
     display: block;
+    grid-area: desc;
     margin-top: var(--space-2xs);
     font-size: var(--step--2);
-    grid-area: desc;
   }
 
   kbd {

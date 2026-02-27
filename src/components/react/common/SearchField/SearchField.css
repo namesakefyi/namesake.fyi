@@ -1,4 +1,5 @@
 .react-aria-SearchField {
+  position: relative;
   display: grid;
   grid-template-areas:
     "label label"
@@ -8,19 +9,18 @@
   align-items: center;
   width: fit-content;
   color: var(--text-color);
-  position: relative;
 
   .react-aria-Input {
     grid-area: input;
     width: 100%;
     padding: var(--space-xs) var(--space-xl) var(--space-xs) var(--space-xs);
     margin: 0;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-s);
-    background: var(--field-background);
     font-size: var(--step-0);
     color: var(--field-text-color);
     outline: none;
+    background: var(--field-background);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-s);
 
     &::-webkit-search-cancel-button,
     &::-webkit-search-decoration {
@@ -39,22 +39,22 @@
   }
 
   .react-aria-Button {
-    grid-area: button;
     position: absolute;
+    right: var(--space-2xs);
+    grid-area: button;
     width: var(--space-xl);
     height: var(--space-xl);
-    right: var(--space-2xs);
-    border-radius: 50%;
+    padding: 0;
     line-height: 1;
     vertical-align: middle;
     text-align: center;
     background: transparent;
     border: none;
-    padding: 0;
+    border-radius: 50%;
 
     &[data-hovered] {
-      background: var(--highlight-background);
       color: var(--highlight-foreground);
+      background: var(--highlight-background);
     }
   }
 
@@ -75,16 +75,16 @@
   }
 
   [slot="description"] {
-    grid-area: help;
     display: block;
+    grid-area: help;
     margin-top: var(--space-2xs);
     font-size: var(--step--2);
   }
 
   .react-aria-Input {
     &[data-disabled] {
-      border-color: var(--border-color-disabled);
       color: var(--text-color-disabled);
+      border-color: var(--border-color-disabled);
     }
   }
 }

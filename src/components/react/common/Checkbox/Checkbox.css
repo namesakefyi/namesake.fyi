@@ -12,25 +12,25 @@
   forced-color-adjust: none;
 
   .checkbox {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
     width: var(--space-2xl);
     height: var(--space-2xl);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-2xs);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
   }
 
   svg {
     width: 75%;
     height: 75%;
-    transform: translateY(-0.5px) translateX(1px);
     fill: none;
     stroke: var(--checkmark-color);
     stroke-width: 2;
     stroke-dasharray: 22px;
     stroke-dashoffset: 66;
+    transform: translateY(-0.5px) translateX(1px);
     transition: all 200ms ease-out;
   }
 
@@ -42,13 +42,13 @@
   &[data-selected],
   &[data-indeterminate] {
     .checkbox {
-      border-color: var(--selected-color);
       background: var(--selected-color);
+      border-color: var(--selected-color);
     }
 
     &[data-pressed] .checkbox {
-      border-color: var(--selected-color-pressed);
       background: var(--selected-color-pressed);
+      border-color: var(--selected-color-pressed);
     }
 
     svg {
@@ -58,8 +58,8 @@
 
   &[data-indeterminate] {
     & svg {
-      stroke: none;
       fill: var(--checkmark-color);
+      stroke: none;
     }
   }
 

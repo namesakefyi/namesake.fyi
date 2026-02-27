@@ -18,10 +18,10 @@
     transition: all 200ms;
 
     &:before {
-      content: "";
       display: block;
       width: var(--space-xl);
       height: var(--space-xl);
+      content: "";
       background: var(--field-background);
       border: 2px solid var(--border-color);
       border-radius: 16px;
@@ -31,8 +31,8 @@
 
   &[data-selected] {
     .indicator {
-      border-color: var(--highlight-background);
       background: var(--highlight-background);
+      border-color: var(--highlight-background);
 
       &:before {
         background: var(--field-background);

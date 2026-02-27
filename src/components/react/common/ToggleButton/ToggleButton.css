@@ -20,9 +20,9 @@
   }
 
   &[data-selected] {
+    color: var(--highlight-foreground);
     background: var(--highlight-background);
     border-color: var(--highlight-background);
-    color: var(--highlight-foreground);
 
     &[data-pressed] {
       background: var(--highlight-background);
@@ -36,9 +36,9 @@
   }
 
   &[data-disabled] {
-    border-color: var(--border-color-disabled);
-    background: var(--button-background);
     color: var(--text-color-disabled);
+    background: var(--button-background);
+    border-color: var(--border-color-disabled);
   }
 
   &:not([data-disabled]) {

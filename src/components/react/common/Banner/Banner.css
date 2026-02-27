@@ -2,17 +2,17 @@
   display: grid;
   grid-template-columns: auto 1fr;
   width: 100%;
-  border: 1px solid var(--border-color);
   background-color: var(--field-background);
+  border: 1px solid var(--border-color);
 
   .banner-icon {
-    background-color: var(--highlight-background);
-    color: var(--highlight-foreground);
-    padding-block: var(--space-s);
-    width: calc(var(--space-2xl) - 1px);
     display: flex;
     align-items: center;
     justify-content: center;
+    width: calc(var(--space-2xl) - 1px);
+    padding-block: var(--space-s);
+    color: var(--highlight-foreground);
+    background-color: var(--highlight-background);
   }
 
   svg {
@@ -21,8 +21,8 @@
   }
 
   &[data-variant="error"] {
-    border-color: var(--invalid-color);
     color: var(--invalid-color);
+    border-color: var(--invalid-color);
 
     .banner-icon {
       background-color: var(--invalid-color);
@@ -35,8 +35,8 @@
 }
 
 .banner-content {
-  font-size: var(--step-0);
   flex: 1;
   padding: var(--space-s);
   padding-inline-end: var(--space-m);
+  font-size: var(--step-0);
 }

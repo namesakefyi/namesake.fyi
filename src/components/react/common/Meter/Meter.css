@@ -24,8 +24,8 @@
   }
 
   .fill {
-    background: var(--fill-color);
     height: 100%;
+    background: var(--fill-color);
   }
 }
 

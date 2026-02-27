@@ -26,10 +26,10 @@
     }
 
     .sort-indicator {
-      padding: 0 2px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      padding: 0 2px;
     }
 
     &:not([data-sort-direction]) .sort-indicator {
@@ -39,25 +39,25 @@
 
   .namesake-table-column,
   .namesake-table-cell {
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .namesake-table-header {
     color: var(--text-color);
 
     & tr:last-child .namesake-table-column {
-      border-bottom: 1px solid var(--border-color);
       cursor: default;
+      border-bottom: 1px solid var(--border-color);
     }
   }
 
   .namesake-table-row {
-    outline: none;
-    cursor: default;
-    color: var(--text-color);
     position: relative;
+    color: var(--text-color);
+    cursor: default;
+    outline: none;
     transform: scale(1);
 
     &[data-focus-visible] {
@@ -66,9 +66,9 @@
     }
 
     &[data-selected] {
-      background: var(--highlight-background);
-      color: var(--highlight-foreground);
       --focus-ring-color: var(--highlight-foreground);
+      color: var(--highlight-foreground);
+      background: var(--highlight-background);
 
       &[data-focus-visible],
       .react-aria-Cell[data-focus-visible] {
@@ -95,18 +95,18 @@
       text-align: center;
 
       &[data-focus-visible] {
-        border-radius: 4px;
         outline: 3px solid var(--focus-ring-color);
+        border-radius: 4px;
       }
     }
   }
 
   .namesake-table-cell,
   .namesake-table-column {
+    box-sizing: border-box;
     padding: var(--space-2xs) var(--space-xs);
     text-align: left;
     outline: none;
-    box-sizing: border-box;
 
     & div {
       display: flex;
@@ -136,11 +136,11 @@
 }
 
 .react-aria-ResizableTableContainer {
+  position: relative;
   max-width: 400px;
   overflow: auto;
-  position: relative;
-  border: 1px solid var(--border-color);
   background: var(--field-background);
+  border: 1px solid var(--border-color);
 
   .namesake-table {
     border: none;
@@ -150,11 +150,11 @@
   .react-aria-Button {
     --background-color: var(--overlay-background);
     flex: 1;
-    font: inherit;
-    text-align: start;
-    color: inherit;
     overflow: hidden;
     text-overflow: ellipsis;
+    font: inherit;
+    color: inherit;
+    text-align: start;
     border-color: transparent;
     transition: background 200ms;
 
@@ -168,16 +168,16 @@
   }
 
   .react-aria-ColumnResizer {
-    width: 15px;
-    background-color: grey;
-    height: 25px;
-    flex: 0 0 auto;
-    touch-action: none;
     box-sizing: border-box;
-    border: 5px;
-    border-style: none solid;
-    border-color: transparent;
+    flex: 0 0 auto;
+    width: 15px;
+    height: 25px;
+    touch-action: none;
+    background-color: grey;
     background-clip: content-box;
+    border: 5px;
+    border-color: transparent;
+    border-style: none solid;
 
     &[data-resizable-direction="both"] {
       cursor: ew-resize;
@@ -196,8 +196,8 @@
     }
 
     &[data-resizing] {
-      border-color: var(--focus-ring-color);
       background-color: transparent;
+      border-color: var(--focus-ring-color);
     }
   }
 }
@@ -224,13 +224,13 @@
 }
 
 .namesake-table-cell img {
-  height: 30px;
-  width: 30px;
-  object-fit: cover;
   display: block;
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
 }
 
 .react-aria-TableLoadingIndicator {
-  height: 24px;
   position: relative;
+  height: 24px;
 }

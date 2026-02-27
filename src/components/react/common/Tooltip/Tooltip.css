@@ -16,13 +16,13 @@
 
   &[data-entering],
   &[data-exiting] {
-    transform: var(--origin);
     opacity: 0;
+    transform: var(--origin);
   }
 
   &[data-placement="top"] {
-    margin-bottom: var(--space-s);
     --origin: translateY(4px);
+    margin-bottom: var(--space-s);
   }
 
   & .react-aria-OverlayArrow svg {
@@ -31,24 +31,24 @@
   }
 
   &[data-placement="bottom"] {
-    margin-top: var(--space-s);
     --origin: translateY(-4px);
+    margin-top: var(--space-s);
     & .react-aria-OverlayArrow svg {
       transform: rotate(180deg);
     }
   }
 
   &[data-placement="right"] {
-    margin-left: var(--space-s);
     --origin: translateX(-4px);
+    margin-left: var(--space-s);
     & .react-aria-OverlayArrow svg {
       transform: rotate(90deg);
     }
   }
 
   &[data-placement="left"] {
-    margin-right: var(--space-s);
     --origin: translateX(4px);
+    margin-right: var(--space-s);
     & .react-aria-OverlayArrow svg {
       transform: rotate(-90deg);
     }
