@@ -3,11 +3,10 @@ import type { UseFormReturn } from "react-hook-form";
 import { resolveVisibleFields } from "@/components/react/forms/FormContainer/resolveVisibleFields";
 import type { FormData } from "@/constants/fields";
 import type { FormConfig } from "@/constants/forms";
-import { downloadMergedPdf } from "@/pdfs/utils/downloadMergedPdf";
-import { loadPdfs } from "@/pdfs/utils/loadPdfs";
 
 /**
  * Creates a form submit handler from a form configuration.
+ * PDF lib and utilities are loaded on demand when the user clicks download.
  *
  * @param config - The form configuration
  * @param form - The react-hook-form instance
@@ -26,6 +25,11 @@ export function createFormSubmitHandler<TFormData extends FormData>(
       pdfId: pdf.pdfId,
       include: pdf.include ? pdf.include(formData) : true,
     }));
+
+    const [{ loadPdfs }, { downloadMergedPdf }] = await Promise.all([
+      import("@/pdfs/utils/loadPdfs"),
+      import("@/pdfs/utils/downloadMergedPdf"),
+    ]);
 
     const pdfs = await loadPdfs(pdfConfigs);
     const visibleData = resolveVisibleFields(config.steps, formData);

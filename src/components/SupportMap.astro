@@ -210,12 +210,12 @@ function getFillForSupportLevel(supportLevel: string): string {
 </section>
 
 <script>
-  import * as d3 from "d3";
+  import { select, selectAll } from "d3-selection";
 
-  const container = d3.select(".map-container");
+  const container = select(".map-container");
   const svg = container.select("svg");
   const states = svg.selectAll("path.state");
-  const legendItems = d3.selectAll(".legend-item");
+  const legendItems = selectAll(".legend-item");
   const tooltip = container.select(".map-tooltip");
 
   function updatePatternScales() {
@@ -228,7 +228,7 @@ function getFillForSupportLevel(supportLevel: string): string {
 
       svg.selectAll("pattern").attr("patternTransform", `scale(${1 / scale})`);
 
-      d3.selectAll(".legend-pattern rect")
+      selectAll(".legend-pattern rect")
         .attr("width", 18 / scale)
         .attr("height", 18 / scale)
         .attr("transform", `scale(${scale})`);
@@ -279,7 +279,7 @@ function getFillForSupportLevel(supportLevel: string): string {
         textMap[supportLevel as keyof typeof textMap] || "No Support Yet";
 
       states.attr("data-hovered", null);
-      const hoveredState = d3.select(this);
+      const hoveredState = select(this as SVGPathElement);
       hoveredState.attr("data-hovered", "true");
 
       const node = hoveredState.node() as SVGPathElement;
@@ -294,7 +294,7 @@ function getFillForSupportLevel(supportLevel: string): string {
       positionTooltip(event);
     })
     .on("mouseleave", function () {
-      d3.select(this).attr("data-hovered", null);
+      select(this as SVGPathElement).attr("data-hovered", null);
       tooltip.attr("data-visible", null);
     });
 
