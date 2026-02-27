@@ -3,10 +3,10 @@
     display: flex;
     align-items: center;
     width: fit-content;
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
-    background: var(--field-background);
     overflow: hidden;
+    background: var(--field-background);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
     transition: all 200ms;
 
     &[data-focus-within] {
@@ -19,8 +19,8 @@
     }
 
     &[data-disabled] {
-      border-color: var(--border-color-disabled);
       color: var(--text-color-disabled);
+      border-color: var(--border-color-disabled);
     }
   }
 
@@ -30,8 +30,8 @@
     font-size: 1rem;
     color: var(--text-color);
     outline: none;
-    border: none;
     background: transparent;
+    border: none;
 
     &::placeholder {
       color: var(--text-color-placeholder);

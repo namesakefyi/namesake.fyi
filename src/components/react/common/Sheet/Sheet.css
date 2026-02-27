@@ -2,11 +2,11 @@
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 100;
   width: 100%;
   height: var(--page-height);
   background: rgba(0 0 0 / 0.3);
   backdrop-filter: blur(10px);
-  z-index: 100;
 
   &[data-entering] {
     animation: sheet-blur 300ms;
@@ -19,19 +19,19 @@
 
 .sheet {
   position: sticky;
-  left: 0;
-  width: 300px;
   /* Extra padding to account for iOS floating browser UI. */
   top: -100px;
+  left: 0;
+  width: 300px;
   height: calc(100dvh + 200px);
   padding: 100px 0;
   margin-left: auto;
-  background: var(--overlay-background);
-  outline: none;
-  border-left: 1px solid var(--border-color);
-  box-shadow: -8px 0 20px rgba(0 0 0 / 0.1);
   font-family: system-ui;
   font-size: var(--step--1);
+  outline: none;
+  background: var(--overlay-background);
+  border-left: 1px solid var(--border-color);
+  box-shadow: -8px 0 20px rgba(0 0 0 / 0.1);
 
   &[data-entering] {
     animation: sheet-slide 300ms;

@@ -1,24 +1,24 @@
 .react-aria-NumberField {
   .react-aria-Input {
+    z-index: 1;
+    flex: 1;
+    width: 7ch;
+    padding: var(--space-s) var(--space-2xl) var(--space-s) var(--space-s);
+    margin: 0 -1px;
+    font-size: var(--step-0);
+    color: var(--field-text-color);
+    outline: none;
     background: var(--field-background);
     border: 1px solid var(--border-color);
     border-radius: 0;
-    color: var(--field-text-color);
-    margin: 0 -1px;
-    z-index: 1;
-    font-size: var(--step-0);
-    padding: var(--space-s) var(--space-2xl) var(--space-s) var(--space-s);
-    outline: none;
-    width: 7ch;
-    flex: 1;
   }
 
   .namesake-button {
-    font-size: var(--step-0);
-    padding-inline: var(--space-s);
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    padding-inline: var(--space-s);
+    font-size: var(--step-0);
     box-shadow: none;
 
     &[slot="decrement"] {
@@ -82,15 +82,15 @@
 
   .namesake-button {
     &[data-disabled] {
-      border-color: var(--border-color-disabled);
       color: var(--text-color-disabled);
+      border-color: var(--border-color-disabled);
     }
   }
 
   .react-aria-Input {
     &[data-disabled] {
-      border-color: var(--border-color-disabled);
       color: var(--text-color-disabled);
+      border-color: var(--border-color-disabled);
     }
   }
 }

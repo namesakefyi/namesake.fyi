@@ -1,6 +1,10 @@
 {
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "biomejs.biome",
+  "editor.codeActionsOnSave": {
+    "source.action.useSortedProperties.biome": "explicit",
+    "source.fixAll.biome": "explicit"
+  },
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },

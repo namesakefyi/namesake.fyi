@@ -1,8 +1,8 @@
 .form-step {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: var(--space-xl);
+  align-items: flex-start;
   justify-content: center;
   border: none;
 
@@ -20,8 +20,8 @@
 
 .form-step-title {
   font-size: var(--step-3);
-  letter-spacing: var(--letter-spacing-condensed);
   line-height: 1.1;
+  letter-spacing: var(--letter-spacing-condensed);
   text-wrap: balance;
 }
 
@@ -41,11 +41,11 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-xl);
+  justify-content: center;
+  width: 100%;
   padding-inline-start: var(--space-xl);
   border: none;
   border-left: 3px solid var(--border-color);
-  justify-content: center;
-  width: 100%;
 }
 
 .form-subsection h2 {

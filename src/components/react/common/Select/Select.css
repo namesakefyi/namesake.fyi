@@ -1,8 +1,8 @@
 .react-aria-Select {
-  color: var(--text-color);
   position: relative;
-  max-width: 250px;
   width: fit-content;
+  max-width: 250px;
+  color: var(--text-color);
 
   span[aria-hidden] {
     margin-left: var(--space-l);
@@ -21,11 +21,11 @@
 
   .react-aria-SelectValue {
     flex: 1;
-    text-align: start;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
     font-size: var(--step-0);
+    text-align: start;
+    white-space: nowrap;
 
     &[data-placeholder] {
       color: var(--text-color-placeholder);
@@ -37,11 +37,11 @@
   }
 
   .react-aria-Button {
-    font-size: var(--step-0);
-    font-weight: var(--weight-normal);
     display: flex;
     align-items: center;
     width: 100%;
+    font-size: var(--step-0);
+    font-weight: var(--weight-normal);
 
     &[data-focus-visible] {
       outline: 3px solid var(--focus-ring-color);
@@ -49,11 +49,11 @@
     }
 
     &[data-disabled] {
-      border-color: var(--border-color-disabled);
       color: var(--text-color-disabled);
+      border-color: var(--border-color-disabled);
       span[aria-hidden] {
-        background: var(--border-color-disabled);
         color: var(--text-color-disabled);
+        background: var(--border-color-disabled);
       }
 
       .react-aria-SelectValue {
@@ -71,8 +71,8 @@
   .react-aria-ListBox {
     display: block;
     width: unset;
-    max-height: inherit;
     min-height: unset;
+    max-height: inherit;
     border: none;
 
     .react-aria-Header {
@@ -89,8 +89,8 @@
 
     &[data-selected] {
       font-weight: var(--weight-bold);
-      background: unset;
       color: var(--text-color);
+      background: unset;
 
       &::before {
         content: "✓";
@@ -103,8 +103,8 @@
 
     &[data-focused],
     &[data-pressed] {
-      background: var(--highlight-background);
       color: var(--highlight-foreground);
+      background: var(--highlight-background);
     }
   }
 }

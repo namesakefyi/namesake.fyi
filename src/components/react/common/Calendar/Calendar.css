@@ -11,8 +11,8 @@
     .react-aria-Heading {
       flex: 1;
       margin: 0;
-      text-align: center;
       font-size: var(--step-0);
+      text-align: center;
     }
   }
 
@@ -48,8 +48,8 @@
   }
 
   &[data-selected] {
-    background: var(--highlight-background);
     color: var(--highlight-foreground);
+    background: var(--highlight-background);
   }
 
   &[data-disabled] {
@@ -58,13 +58,13 @@
   }
 
   &[data-unavailable] {
-    text-decoration: line-through;
     color: var(--invalid-color);
+    text-decoration: line-through;
     cursor: not-allowed;
   }
 
   &[data-invalid] {
-    background: var(--invalid-color);
     color: var(--highlight-foreground);
+    background: var(--invalid-color);
   }
 }

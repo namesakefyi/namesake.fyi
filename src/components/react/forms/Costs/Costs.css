@@ -1,15 +1,15 @@
 .namesake-costs {
-  border: 1px solid var(--border-color);
-  border-spacing: 0;
   width: 100%;
   max-width: 400px;
   margin-block: var(--space-l);
   table-layout: fixed;
+  border-spacing: 0;
+  border: 1px solid var(--border-color);
 
   th,
   td {
-    padding: var(--space-2xs) var(--space-l);
     width: 100px;
+    padding: var(--space-2xs) var(--space-l);
   }
 
   tbody tr:not(:last-child) td {
@@ -17,16 +17,16 @@
   }
 
   tfoot td {
-    font-size: var(--step-1);
     padding-block: var(--space-s);
-    border-top: 1px solid var(--text-color);
+    font-size: var(--step-1);
     font-weight: var(--weight-bold);
+    border-top: 1px solid var(--text-color);
   }
 
   th:first-child,
   td:first-child {
-    text-align: left;
     padding-inline-end: var(--space-l);
+    text-align: left;
   }
 
   th:last-child,

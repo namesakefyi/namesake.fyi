@@ -2,19 +2,19 @@
 
 .react-aria-Popover {
   --background-color: var(--overlay-background);
-
-  border-radius: var(--radius-s);
-  background: var(--overlay-background);
-  border: none;
-  box-shadow: 8px 8px 0 0
-    color-mix(in srgb, var(--border-color) 20%, transparent);
+  max-width: 250px;
+  font-size: var(--step--1);
   color: var(--text-color);
   outline: 3px solid var(--border-color);
-  max-width: 250px;
+  background: var(--overlay-background);
+  border: none;
+
+  border-radius: var(--radius-s);
+  box-shadow: 8px 8px 0 0
+    color-mix(in srgb, var(--border-color) 20%, transparent);
   transition:
     transform 200ms,
     opacity 200ms;
-  font-size: var(--step--1);
 
   .react-aria-OverlayArrow svg {
     display: block;
@@ -25,8 +25,8 @@
 
   &[data-entering],
   &[data-exiting] {
-    transform: var(--origin);
     opacity: 0;
+    transform: var(--origin);
   }
 
   &[data-placement="top"] {

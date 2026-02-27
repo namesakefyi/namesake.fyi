@@ -6,8 +6,8 @@
 
 .guides-filter-bar {
   display: flex;
-  align-items: center;
   gap: var(--space-m);
+  align-items: center;
 }
 
 .guides-table-section {
@@ -17,14 +17,14 @@
 }
 
 .guides-table-heading {
+  margin: 0;
   font-size: var(--step-1);
   font-weight: var(--weight-bold);
-  margin: 0;
 }
 
 .guides-table-wrapper {
-  overflow-x: auto;
   width: 100%;
+  overflow-x: auto;
   border: 1px solid var(--border-color);
 }
 

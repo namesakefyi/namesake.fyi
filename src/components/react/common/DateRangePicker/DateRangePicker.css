@@ -2,23 +2,23 @@
   color: var(--text-color);
 
   .react-aria-Group {
+    position: relative;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     width: fit-content;
     min-width: 220px;
     max-width: 100%;
-    box-sizing: border-box;
-    overflow: clip;
-    position: relative;
     padding: var(--space-s) var(--space-2xl) var(--space-s) var(--space-s);
+    overflow: clip;
+    white-space: nowrap;
+    background: var(--field-background);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-s);
-    background: var(--field-background);
-    white-space: nowrap;
 
     &[data-pressed] {
-      box-shadow: none;
       background: var(--highlight-background);
+      box-shadow: none;
     }
 
     &[data-focus-within] {
@@ -36,8 +36,8 @@
   }
 
   [slot="end"] {
-    margin-right: 1.75rem;
     flex: 1;
+    margin-right: 1.75rem;
   }
 
   .react-aria-DateInput {

@@ -2,8 +2,8 @@
   display: flex;
 
   > button {
-    border-radius: 0;
     z-index: 1;
+    border-radius: 0;
 
     &[data-disabled] {
       z-index: 0;
@@ -23,8 +23,8 @@
     margin-inline-start: -1px;
 
     &:first-child {
-      border-radius: var(--radius-xs) 0 0 var(--radius-xs);
       margin-inline-start: 0;
+      border-radius: var(--radius-xs) 0 0 var(--radius-xs);
     }
 
     &:last-child {
@@ -41,8 +41,8 @@
     margin-block-start: -1px;
 
     &:first-child {
-      border-radius: var(--radius-xs) var(--radius-xs) 0 0;
       margin-block-start: 0;
+      border-radius: var(--radius-xs) var(--radius-xs) 0 0;
     }
 
     &:last-child {

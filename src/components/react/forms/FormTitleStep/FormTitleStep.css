@@ -1,21 +1,21 @@
 .form-title-step {
   display: flex;
-  align-items: flex-start;
   flex-direction: column;
   gap: var(--space-2xl);
+  align-items: flex-start;
   padding-block: var(--space-xl) var(--space-2xl);
 }
 
 .form-title-step-back-link {
   display: flex;
-  align-items: center;
   gap: var(--space-2xs);
-  text-decoration: none;
-  color: var(--text-color);
-  font-size: var(--step-0);
+  align-items: center;
   padding-inline-end: var(--space-2xs);
-  margin-inline-start: calc(-1 * var(--space-2xs));
   margin-block-end: var(--space-s);
+  margin-inline-start: calc(-1 * var(--space-2xs));
+  font-size: var(--step-0);
+  color: var(--text-color);
+  text-decoration: none;
 
   @media (hover: hover) {
     &:hover {
@@ -26,19 +26,19 @@
 
 .form-title-step-header {
   display: flex;
-  align-items: flex-start;
   flex-direction: column;
+  align-items: flex-start;
 }
 
 .form-title-step-heading {
+  display: inline;
+  margin-inline-start: -0.06em;
   font-size: var(--step-5);
   font-weight: var(--weight-bold);
-  color: var(--text-color);
   line-height: var(--line-height-display);
+  color: var(--text-color);
   letter-spacing: var(--letter-spacing-condensed);
-  display: inline;
   text-wrap: balance;
-  margin-inline-start: -0.06em;
 
   @media (width < 700px) {
     font-size: var(--step-5);
@@ -53,22 +53,22 @@
 }
 
 .form-info {
-  font-size: var(--step-0);
-  color: var(--text-color-secondary);
-  font-weight: var(--weight-medium);
-  list-style: none;
-  padding: 0;
-  margin: 0;
   display: flex;
   flex-direction: column;
   gap: var(--space-l);
+  padding: 0;
+  margin: 0;
+  font-size: var(--step-0);
+  font-weight: var(--weight-medium);
+  color: var(--text-color-secondary);
+  list-style: none;
 
   > li {
     display: grid;
-    grid-template-columns: auto 1fr;
     grid-template-areas: "icon title" ". description";
-    column-gap: var(--space-xs);
+    grid-template-columns: auto 1fr;
     row-gap: var(--space-2xs);
+    column-gap: var(--space-xs);
 
     svg {
       grid-area: icon;
@@ -83,11 +83,11 @@
 }
 
 .form-title-step-footer {
-  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: var(--space-m);
+  align-items: flex-start;
+  width: 100%;
 }
 
 @media (width < 600px) {
@@ -97,22 +97,22 @@
 }
 
 .form-info-description {
+  grid-area: description;
   font-size: var(--step--1);
   font-weight: var(--weight-medium);
   text-wrap: pretty;
-  grid-area: description;
 }
 
 .form-info-pdf-list {
-  list-style-type: disc;
   padding-inline-start: var(--space-m);
   margin: 0;
+  list-style-type: disc;
 }
 
 .form-title-step-date-updated {
   width: 100%;
-  border-top: 1px solid var(--border-color);
   padding-block: var(--space-s);
   font-size: var(--step--1);
   text-wrap: pretty;
+  border-top: 1px solid var(--border-color);
 }

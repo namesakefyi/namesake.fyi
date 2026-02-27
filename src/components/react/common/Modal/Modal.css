@@ -2,12 +2,12 @@
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 100;
   width: 100vw;
   height: var(--page-height);
-  background: color-mix(in srgb, var(--overlay-background) 80%, transparent);
-  z-index: 100;
   font-family: system-ui;
   font-size: var(--step--1);
+  background: color-mix(in srgb, var(--overlay-background) 80%, transparent);
 
   &[data-entering] {
     animation: modal-fade 200ms;
@@ -20,18 +20,18 @@
 
 .react-aria-Modal {
   position: sticky;
-  max-height: var(--visual-viewport-height);
   top: calc(var(--visual-viewport-height) / 2);
-  margin-left: 50vw;
-  translate: -50% -50%;
-  box-shadow: 0 4px 0 var(--border-color);
-  border-radius: var(--radius-s);
-  background: var(--overlay-background);
-  color: var(--text-color);
-  border: 2px solid var(--border-color);
-  outline: none;
   width: max-content;
   max-width: min(480px, 95vw);
+  max-height: var(--visual-viewport-height);
+  margin-left: 50vw;
+  color: var(--text-color);
+  outline: none;
+  background: var(--overlay-background);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-s);
+  box-shadow: 0 4px 0 var(--border-color);
+  translate: -50% -50%;
 
   &[data-entering] {
     animation: modal-zoom 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);

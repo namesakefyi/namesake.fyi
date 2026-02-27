@@ -16,14 +16,14 @@
   }
 
   .react-aria-SliderTrack {
-    grid-area: track;
     position: relative;
+    grid-area: track;
 
     /* track line */
     &:before {
-      content: "";
-      display: block;
       position: absolute;
+      display: block;
+      content: "";
       background: var(--border-color);
     }
   }
@@ -38,8 +38,8 @@
     cursor: grab;
 
     &[data-dragging] {
-      background: var(--highlight-background);
       cursor: grabbing;
+      background: var(--highlight-background);
     }
 
     &[data-focus-visible] {
@@ -52,13 +52,13 @@
     width: 300px;
 
     .react-aria-SliderTrack {
-      height: 30px;
       width: 100%;
+      height: 30px;
 
       &:before {
-        height: 3px;
-        width: 100%;
         top: 50%;
+        width: 100%;
+        height: 3px;
         transform: translateY(-50%);
       }
     }
@@ -69,8 +69,8 @@
   }
 
   &[data-orientation="vertical"] {
-    height: 150px;
     display: block;
+    height: 150px;
 
     .react-aria-Label,
     .react-aria-SliderOutput {
@@ -82,9 +82,9 @@
       height: 100%;
 
       &:before {
+        left: 50%;
         width: 3px;
         height: 100%;
-        left: 50%;
         transform: translateX(-50%);
       }
     }
@@ -100,8 +100,8 @@
     }
 
     .react-aria-SliderThumb {
-      background: var(--border-color-disabled);
       cursor: not-allowed;
+      background: var(--border-color-disabled);
     }
   }
 }

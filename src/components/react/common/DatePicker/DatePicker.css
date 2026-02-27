@@ -3,13 +3,13 @@
 
   .react-aria-Group {
     display: flex;
-    width: fit-content;
     align-items: center;
+    width: fit-content;
   }
 
   .react-aria-DateInput {
-    padding: var(--space-s) var(--space-2xl) var(--space-s) var(--space-s);
     width: 16ch;
+    padding: var(--space-s) var(--space-2xl) var(--space-s) var(--space-s);
   }
 
   &[data-invalid] {
