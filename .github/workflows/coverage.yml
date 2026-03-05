@@ -25,17 +25,17 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           run_install: false
 
-      - name: Setup Node.js 20
+      - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: "24.x"
           cache: 'pnpm'
 
       - name: Install dependencies
@@ -45,7 +45,7 @@ jobs:
         run: npx vitest --coverage.enabled true
 
       - name: Upload coverage
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-branch
           path: coverage
@@ -57,7 +57,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: main
 
@@ -66,10 +66,10 @@ jobs:
         with:
           run_install: false
 
-      - name: Setup Node.js 20
+      - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: "24.x"
           cache: 'pnpm'
 
       - name: Install dependencies
@@ -79,7 +79,7 @@ jobs:
         run: npx vitest --coverage.enabled true
 
       - name: Upload coverage
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-main
           path: coverage
@@ -92,10 +92,10 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Download coverage (${{ github.head_ref }})
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: coverage-branch
           path: coverage
@@ -103,14 +103,14 @@ jobs:
       - name: Download coverage (main)
         id: download-main
         continue-on-error: true
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: coverage-main
           path: coverage-main
 
       - name: Report coverage and comparison
         if: always() && hashFiles('coverage-main/coverage-summary.json') != ''
-        uses: davelosert/vitest-coverage-report-action@v2.8.3
+        uses: davelosert/vitest-coverage-report-action@v2.9.3
         with:
           json-summary-compare-path: coverage-main/coverage-summary.json
 
@@ -118,4 +118,4 @@ jobs:
         # if coverage from main is not available
       - name: Report coverage
         if: always() && hashFiles('coverage-main/coverage-summary.json') == ''
-        uses: davelosert/vitest-coverage-report-action@v2.8.3
+        uses: davelosert/vitest-coverage-report-action@v2.9.3
