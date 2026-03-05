@@ -3,7 +3,7 @@ import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import type { NamesakeColor } from "@/constants/colors";
 import { colors } from "@/constants/colors";
-import siteInfo from "@/constants/site-info";
+import { siteInfo } from "@/constants/site-info";
 import "../styles/base.css";
 import "../styles/reset.css";
 import "../styles/theme.css";
@@ -74,6 +74,8 @@ const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Namesake`;
       title="Namesake"
       href={new URL("rss.xml", Astro.site)}
     />
+    <script is:inline async defer src="https://embeds.every.org/0.4/button.js"
+    ></script>
   </head>
   <body data-color={color}>
     <Header />
