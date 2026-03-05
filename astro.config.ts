@@ -44,6 +44,42 @@ export default defineConfig({
     format: "file",
   },
   vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks(id: string) {
+            if (!id.includes("node_modules")) return;
+
+            if (id.includes("@cantoo/pdf-lib")) {
+              return "pdf";
+            }
+
+            if (id.includes("language-name-map")) {
+              return "language-names";
+            }
+
+            if (
+              id.includes("d3") ||
+              id.includes("topojson") ||
+              id.includes("@severo_bo/us-atlas")
+            ) {
+              return "d3";
+            }
+
+            if (
+              id.includes("react-aria") ||
+              id.includes("react-aria-components") ||
+              id.includes("react-dom") ||
+              id.includes("react/jsx") ||
+              id.includes("react-is") ||
+              id.includes("/react/")
+            ) {
+              return "react";
+            }
+          },
+        },
+      },
+    },
     plugins: [
       visualizer({
         emitFile: true,
