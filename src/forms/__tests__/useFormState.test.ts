@@ -142,7 +142,9 @@ describe("useFormState", () => {
         new Error("DB error"),
       );
 
-      const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+      const consoleError = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
 
       const { result } = renderHook(() =>
         useFormState(machine, flow, getFormData),
