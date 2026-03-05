@@ -49,7 +49,7 @@ export type SiteInfo = {
   socialLinks: Record<SocialPlatform, SocialLink>;
 };
 
-const siteInfo: SiteInfo = {
+export const siteInfo: SiteInfo = {
   name: "Namesake",
   fullName: "Namesake Collaborative",
   title: "Your name is yours to change",
@@ -65,7 +65,8 @@ const siteInfo: SiteInfo = {
     blog: "/blog",
     chat: "/chat",
     status: "/status",
-    donate: "https://www.every.org/namesake?suggestedAmounts=20%2C40%2C100%2C250&theme_color=6E56CF&method=card%2Cbank%2Cpaypal%2Cvenmo%2Cpay%2Cdaf&utm_campaign=donate-link#/donate",
+    donate:
+      "https://www.every.org/namesake?suggestedAmounts=20%2C40%2C100%2C250&theme_color=6E56CF&method=card%2Cbank%2Cpaypal%2Cvenmo%2Cpay%2Cdaf&utm_campaign=donate-link#/donate",
   },
   image: {
     src: "/og/social.png",
@@ -116,5 +117,3 @@ const siteInfo: SiteInfo = {
     },
   },
 };
-
-export default siteInfo;
