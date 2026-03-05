@@ -1,8 +1,8 @@
 ---
-import { RiFileCheckLine, RiTimerLine } from "@remixicon/react";
 import type { SanityDocument } from "@sanity/client";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import FormLink from "@/components/FormLink.astro";
 import PageHeader from "@/components/PageHeader.astro";
 import { getFormConfig } from "@/constants/forms";
 import { getFormPdfMetadata } from "@/forms/getFormPdfMetadata";
@@ -57,22 +57,13 @@ dayjs.extend(utc);
     {
       formsWithPdfs.length ? (
         formsWithPdfs.map((form) => (
-          <div class="form">
-            <h2>
-              <a href={`/forms/${form.slug.current}`}>{form.title}</a>
-            </h2>
-            <ul class="form-metadata">
-              <li>
-                <RiFileCheckLine />{" "}
-                {`${form.pdfs.length} document${form.pdfs.length > 1 ? "s" : ""}`}
-              </li>
-              <li>
-                <RiTimerLine />
-                {form.timeEstimate}
-              </li>
-              <li>Updated {dayjs.utc(form.updatedAt).format("MMM D, YYYY")}</li>
-            </ul>
-          </div>
+          <FormLink
+            title={form.title}
+            slug={form.slug.current}
+            documentCount={form.pdfs.length}
+            timeEstimate={form.timeEstimate}
+            updatedAt={form.updatedAt}
+          />
         ))
       ) : (
         <p>No forms found.</p>
@@ -95,71 +86,6 @@ dayjs.extend(utc);
 
     @media (width > 1000px) {
       grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
-  }
-
-  .form {
-    border: 1px solid var(--border-color);
-    padding: var(--space-l) var(--space-l);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    aspect-ratio: 8.5 / 11;
-    overflow: hidden;
-    box-shadow:
-      5px 5px 0 -3px var(--background-color),
-      5px 5px 0 -2px var(--border-color),
-      10px 10px 0 -5px var(--background-color),
-      10px 10px 0 -4px var(--border-color);
-
-    @media (width < 600px) {
-      padding: var(--space-m) var(--space-m);
-      box-shadow:
-        5px 5px 0 -3px var(--background-color),
-        5px 5px 0 -2px var(--border-color);
-    }
-
-    h2 {
-      font-size: var(--step-1);
-      line-height: var(--line-height-display);
-
-      @media (width < 600px) {
-        font-size: var(--step-0);
-      }
-
-      a {
-        text-decoration: none;
-        color: var(--text-color);
-
-        &:hover,
-        &:focus {
-          text-decoration: underline;
-        }
-      }
-    }
-  }
-
-  .form-metadata {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-    margin: 0;
-    padding-inline-start: var(--space-m);
-    font-size: var(--step--2);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-
-    li {
-      display: flex;
-      align-items: center;
-      gap: var(--space-2xs);
-
-      svg {
-        height: 1lh;
-        width: 1lh;
-        flex-shrink: 0;
-      }
     }
   }
 </style>
