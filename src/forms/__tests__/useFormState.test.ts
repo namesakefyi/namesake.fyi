@@ -142,6 +142,10 @@ describe("useFormState", () => {
         new Error("DB error"),
       );
 
+      const consoleError = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
+
       const { result } = renderHook(() =>
         useFormState(machine, flow, getFormData),
       );
@@ -149,6 +153,11 @@ describe("useFormState", () => {
       await waitFor(() => expect(result.current.isLoading).toBe(false));
 
       expect(result.current.phase).toBe("title");
+      expect(consoleError).toHaveBeenCalledWith(
+        'Failed to load form progress for "test-form" from IndexedDB:',
+        expect.any(Error),
+      );
+      consoleError.mockRestore();
     });
   });
 
