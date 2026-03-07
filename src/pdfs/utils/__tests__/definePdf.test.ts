@@ -19,8 +19,9 @@ describe("definePdf", () => {
     expect(definition).toMatchObject({
       id: "test-form",
       pdfPath: "public/forms/test-form.pdf",
-      fields: expect.any(Function),
+      fieldValueResolvers: expect.any(Object),
     });
-    expect(typeof definition.fields).toBe("function");
+    expect(definition.fieldValueResolvers).toHaveProperty("newFirstName");
+    expect(typeof definition.fieldValueResolvers.newFirstName).toBe("function");
   });
 });

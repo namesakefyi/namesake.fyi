@@ -11,7 +11,6 @@ export const testPdfDefinition = definePdf({
   fieldValueResolvers: {
     newFirstName: (data) => data.newFirstName,
     oldFirstName: (data) => data.oldFirstName,
-    shouldReturnOriginalDocuments: (data) =>
-      data.shouldReturnOriginalDocuments,
+    shouldReturnOriginalDocuments: (data) => data.shouldReturnOriginalDocuments,
   },
 });

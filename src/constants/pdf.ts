@@ -49,25 +49,19 @@ export interface PDFDefinition<TPdfFieldName extends string = string> {
   pdfPath: string;
 
   /**
-   * A function that transforms the user data into a set of fields for the PDF.
-   * @internal Derived from fieldValueResolvers by definePdf.
+   * Map of PDF field names to resolver functions return a printed value for the field.
+   * @example
+   * ```ts
+   * fieldValueResolvers: {
+   *   division: (data) => data.residenceCounty,
+   *   petitionerName: (data) => joinNames(data.oldFirstName, data.oldMiddleName, data.oldLastName),
+   * }
+   * ```
    */
-  fields: (
-    data: Partial<FormData>,
-  ) => Partial<Record<TPdfFieldName, PDFFieldValue>>;
+  fieldValueResolvers: PDFFieldValueResolvers<TPdfFieldName>;
 }
 
-/**
- * Map of PDF field names to functions that derive the value from form data.
- * Object literal keys are strictly checked—typos will cause type errors.
- *
- * @example
- * ```ts
- * fieldValueResolvers: {
- *   division: (data) => data.residenceCounty,
- *   petitionerName: (data) => joinNames(data.oldFirstName, data.oldMiddleName, data.oldLastName),
- * }
- * ```
- */
-export type PDFFieldValueResolvers<TPdfFieldName extends string, TFormData = Partial<FormData>> =
-  Partial<Record<TPdfFieldName, (data: TFormData) => PDFFieldValue>>;
+export type PDFFieldValueResolvers<
+  TPdfFieldName extends string,
+  TFormData = Partial<FormData>,
+> = Partial<Record<TPdfFieldName, (data: TFormData) => PDFFieldValue>>;

@@ -27,13 +27,21 @@ export default definePdf<PdfFieldName>({
     residenceState: (data) => data.residenceState,
     residenceZipCode: (data) => data.residenceZipCode,
     mailingStreetAddress: (data) =>
-      data.isMailingAddressDifferentFromResidence ? data.mailingStreetAddress : undefined,
+      data.isMailingAddressDifferentFromResidence
+        ? data.mailingStreetAddress
+        : undefined,
     mailingCity: (data) =>
-      data.isMailingAddressDifferentFromResidence ? data.mailingCity : undefined,
+      data.isMailingAddressDifferentFromResidence
+        ? data.mailingCity
+        : undefined,
     mailingState: (data) =>
-      data.isMailingAddressDifferentFromResidence ? data.mailingState : undefined,
+      data.isMailingAddressDifferentFromResidence
+        ? data.mailingState
+        : undefined,
     mailingZipCode: (data) =>
-      data.isMailingAddressDifferentFromResidence ? data.mailingZipCode : undefined,
+      data.isMailingAddressDifferentFromResidence
+        ? data.mailingZipCode
+        : undefined,
     email: (data) => data.email,
     phoneNumber: (data) => data.phoneNumber,
     hasPreviousNameChangeTrue: (data) => data.hasPreviousNameChange,
@@ -41,8 +49,7 @@ export default definePdf<PdfFieldName>({
     previousNameFrom: (data) => data.previousNameFrom,
     previousNameTo: (data) => data.previousNameTo,
     previousNameReason: (data) => data.previousNameReason,
-    shouldReturnOriginalDocuments: (data) =>
-      data.shouldReturnOriginalDocuments,
+    shouldReturnOriginalDocuments: (data) => data.shouldReturnOriginalDocuments,
     hasUsedOtherNameOrAliasTrue: (data) => data.hasUsedOtherNameOrAlias,
     hasUsedOtherNameOrAliasFalse: (data) => !data.hasUsedOtherNameOrAlias,
     otherNamesOrAliases: (data) => data.otherNamesOrAliases,
