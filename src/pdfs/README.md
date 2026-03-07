@@ -21,15 +21,15 @@ When all user-enterable fields have been labeled and positioned, download the mo
 
 ### Step 2: Generate PDF definitions
 
-Next we'll run a script which iterates through all of the fields in the pdf and generates a schema that maps to our internal field definitions. For definitions which don't yet exist, the script will help create them.
+Next, we'll run a script which iterates through all of the fields in the pdf and generates a schema that maps to our internal field definitions. For definitions which don't yet exist, the script will help create them.
 
-From the terminal, within the `/namesake` repo, type:
+From the terminal, within the repo, type:
 
 ```zsh
 pnpm pdf:generate-defs
 ```
 
-Drag the .pdf document to your terminal to insert a path to it. (Don't worry about where the .pdf file is located on your system — the script will put a renamed version in the correct spot in the codebase.)
+Drag the .pdf document to your terminal to insert a path to it. (Don't worry if the .pdf is located in /Downloads, /Desktop, or somewhere else outside of the repo—the script will put a renamed version in the correct spot in the codebase.)
 
 ```zsh
 pnpm pdf:generate-defs ./path/to/form.pdf

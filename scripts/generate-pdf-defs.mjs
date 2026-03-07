@@ -88,7 +88,11 @@ function generateFieldName(pdfFieldName, type) {
   const camel = first + rest;
   if (isCheckboxOrRadio({ type })) {
     const lower = camel.toLowerCase();
-    if (!lower.startsWith("is") && !lower.startsWith("should") && !lower.startsWith("has")) {
+    if (
+      !lower.startsWith("is") &&
+      !lower.startsWith("should") &&
+      !lower.startsWith("has")
+    ) {
       return `is${camel[0].toUpperCase()}${camel.slice(1)}`;
     }
   }
