@@ -4,17 +4,18 @@ This directory contains all the blank PDFs that Namesake uses to fill forms, inc
 
 ## Adding new PDFs
 
-### Step 1: Review and rename field names
+### Step 1: Review and rename fields
 
-Use the [BentoPDF Form Creator](https://bentopdf.com/form-creator.html). Upload the PDF form that was downloaded from a .gov site.
+Use the [BentoPDF Form Creator](https://bentopdf.com/form-creator.html). Upload the original PDF form that was downloaded.
 
-The task now is to observe the position and name of all fields in the form. Each form field name will be mapped to our own internal names and types.
+Examine the names of all fields in the form. Our goal is to take existing names, which may exist as vague labels ("type"), full sentence phrases ("[A] I receive assistance from ..."), odd internal markers ("OptC[B]select_1"), or a mix of the above. We want these labels to be more understandable.
 
 Guidance on choosing names:
 
 1. Use `camelCase` naming for all fields, like `residenceAddress` or `newFirstName`.
 2. Prefix checkbox fields with `is` or `should`, like `isReceivingMedicaid` or `shouldReturnOriginalDocuments`.
 3. Try to match the list of [existing field definitions](../constants/fields.ts). It's okay if they're not exactly the same, but keeping them close will make the next step easier. 
+4. Don't hesitate to make a name long, if it needs to be. Some of these form fields are very specific!
 
 When all user-enterable fields have been labeled and positioned, download the modified PDF and save it anywhere.
 
