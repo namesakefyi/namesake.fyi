@@ -488,9 +488,17 @@ function idToImportName(id) {
     .join("");
 }
 
+/** Escape a string for safe inclusion in a double-quoted JavaScript string literal. */
+function escapeForJsDoubleQuotedString(value) {
+  return String(value)
+    .replace(/\\/g, "\\\\")
+    .replace(/"/g, '\\"');
+}
+
 /** Generate starter test file content. */
 function generateStarterTest({ id, title, mappings, pdfFields }) {
   const importName = idToImportName(id);
+  const escapedTitle = escapeForJsDoubleQuotedString(title);
   const seen = new Set();
   const testDataEntries = mappings
     .filter((m) => {
@@ -508,7 +516,7 @@ function generateStarterTest({ id, title, mappings, pdfFields }) {
 import { getPdfForm } from "@/pdfs/utils/getPdfForm";
 import ${importName} from "../${id}";
 
-describe("${title.replace(/"/g, '\\"')}", () => {
+describe("${escapedTitle}", () => {
 const testData = {
 ${testDataEntries.join("\n")}
 };
