@@ -2,7 +2,7 @@
 
 /**
  * Extract AcroForm field names from PDFs and generate .types.ts files.
- * Usage: pnpm pdf:extract-fields [path/to/file.pdf]
+ * Usage: pnpm pdf:extract-types [path/to/file.pdf]
  *   - No arg: process all .pdf files in src/pdfs
  *   - With arg: process single PDF file
  */
@@ -66,7 +66,7 @@ async function processPdf(pdfPath, task) {
 }
 
 async function main() {
-  intro("PDF Field Extraction");
+  intro("PDF Type Extraction");
 
   const arg = process.argv[2];
   let pdfPaths;
@@ -87,7 +87,7 @@ async function main() {
     return;
   }
 
-  const task = taskLog({ title: "Extracting fields", retainLog: true });
+  const task = taskLog({ title: "Extracting types", retainLog: true });
   const typesPaths = [];
   for (const pdfPath of pdfPaths) {
     const result = await processPdf(pdfPath, task);
