@@ -1,8 +1,8 @@
 import { definePdf } from "@/pdfs/utils/definePdf";
 import { formatDateMMDDYYYY } from "@/utils/formatDateMMDDYYYY";
 import { joinNames } from "@/utils/joinNames";
-import type { PdfFieldName } from "./cjp34-cori-and-wms-release-request.types";
 import pdf from "./cjp34-cori-and-wms-release-request.pdf";
+import type { PdfFieldName } from "./cjp34-cori-and-wms-release-request.types";
 
 export default definePdf<PdfFieldName>({
   id: "cjp34-cori-and-wms-release-request",

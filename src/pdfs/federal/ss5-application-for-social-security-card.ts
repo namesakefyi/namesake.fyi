@@ -1,15 +1,17 @@
 import { definePdf } from "@/pdfs/utils/definePdf";
 import { formatBirthplaceCountryOrState } from "@/utils/formatBirthplaceCountryOrState";
 import { formatDateMMDDYYYY } from "@/utils/formatDateMMDDYYYY";
-import type { PdfFieldName } from "./ss5-application-for-social-security-card.types";
 import pdf from "./ss5-application-for-social-security-card.pdf";
+import type { PdfFieldName } from "./ss5-application-for-social-security-card.types";
 
 export default definePdf<PdfFieldName>({
   id: "ss5-application-for-social-security-card",
   title: "Application for Social Security Card",
   code: "SS-5",
   pdfPath: pdf,
-  fields: (data): Partial<Record<PdfFieldName, string | boolean | undefined>> => ({
+  fields: (
+    data,
+  ): Partial<Record<PdfFieldName, string | boolean | undefined>> => ({
     // Field 1: Name
     newFirstName: data.newFirstName,
     newMiddleName: data.newMiddleName,

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 /**
  * Extract AcroForm field names from PDFs and generate .types.ts files.
  * Usage: pnpm pdf:extract-fields [path/to/file.pdf]
@@ -6,12 +7,12 @@
  *   - With arg: process single PDF file
  */
 
-import { intro, log, taskLog } from "@clack/prompts";
-import { PDFDocument } from "@cantoo/pdf-lib";
 import { spawnSync } from "node:child_process";
-import { readFileSync, writeFileSync, readdirSync } from "node:fs";
-import { join, dirname, basename, extname, relative, resolve } from "node:path";
+import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { basename, dirname, extname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { PDFDocument } from "@cantoo/pdf-lib";
+import { intro, log, taskLog } from "@clack/prompts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");

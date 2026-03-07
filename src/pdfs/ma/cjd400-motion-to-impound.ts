@@ -1,7 +1,7 @@
 import { definePdf } from "@/pdfs/utils/definePdf";
 import { joinNames } from "@/utils/joinNames";
-import type { PdfFieldName } from "./cjd400-motion-to-waive-publication.types";
 import pdf from "./cjd400-motion-to-waive-publication.pdf";
+import type { PdfFieldName } from "./cjd400-motion-to-waive-publication.types";
 
 export default definePdf<PdfFieldName>({
   id: "cjd400-motion-to-impound-records",
