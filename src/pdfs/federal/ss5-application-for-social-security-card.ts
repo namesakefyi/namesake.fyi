@@ -2,106 +2,77 @@ import { definePdf } from "@/pdfs/utils/definePdf";
 import { formatBirthplaceCountryOrState } from "@/utils/formatBirthplaceCountryOrState";
 import { formatDateMMDDYYYY } from "@/utils/formatDateMMDDYYYY";
 import pdf from "./ss5-application-for-social-security-card.pdf";
+import type { PdfFieldName } from "./ss5-application-for-social-security-card.types";
 
-export default definePdf({
+export default definePdf<PdfFieldName>({
   id: "ss5-application-for-social-security-card",
   title: "Application for Social Security Card",
   code: "SS-5",
   pdfPath: pdf,
-  fields: (data) => ({
-    // Field 1: Name
-    newFirstName: data.newFirstName,
-    newMiddleName: data.newMiddleName,
-    newLastName: data.newLastName,
-    oldFirstName: data.oldFirstName,
-    oldMiddleName: data.oldMiddleName,
-    oldLastName: data.oldLastName,
-    otherNames: data.previousLegalNames,
-
-    // Field 2: Social Security (Not asked)
-
-    // Field 3: Birthplace
-    birthplaceCity: data.birthplaceCity,
-    birthplaceState: formatBirthplaceCountryOrState(
-      data.birthplaceCountry,
-      data.birthplaceState,
-    ),
-
-    // Field 4: Date of Birth
-    dateOfBirth: formatDateMMDDYYYY(data.dateOfBirth),
-
-    // Field 5: Citizenship
-    usCitizen: data.citizenshipStatus === "usCitizen",
-    legalAlienAllowedToWork:
+  fieldValueResolvers: {
+    newFirstName: (data) => data.newFirstName,
+    newMiddleName: (data) => data.newMiddleName,
+    newLastName: (data) => data.newLastName,
+    oldFirstName: (data) => data.oldFirstName,
+    oldMiddleName: (data) => data.oldMiddleName,
+    oldLastName: (data) => data.oldLastName,
+    otherNames: (data) => data.previousLegalNames,
+    birthplaceCity: (data) => data.birthplaceCity,
+    birthplaceState: (data) =>
+      formatBirthplaceCountryOrState(
+        data.birthplaceCountry,
+        data.birthplaceState,
+      ),
+    dateOfBirth: (data) => formatDateMMDDYYYY(data.dateOfBirth),
+    usCitizen: (data) => data.citizenshipStatus === "usCitizen",
+    legalAlienAllowedToWork: (data) =>
       data.citizenshipStatus === "legalAlienAllowedToWork",
-    legalAlienNotAllowedToWork:
+    legalAlienNotAllowedToWork: (data) =>
       data.citizenshipStatus === "legalAlienNotAllowedToWork",
-    citizenshipOther: data.citizenshipStatus === "other",
-
-    // Field 6: Ethnicity
-    isHispanicOrLatino: data.isHispanicOrLatino === true,
-    isNotHispanicOrLatino: data.isHispanicOrLatino === false,
-
-    // Field 7: Race
-    isNativeHawaiian: data.race?.includes("nativeHawaiian"),
-    isAlaskaNative: data.race?.includes("alaskaNative"),
-    isAsian: data.race?.includes("asian"),
-    isAmericanIndian: data.race?.includes("americanIndian"),
-    isBlack: data.race?.includes("black"),
-    isOtherPacificIslander: data.race?.includes("otherPacificIslander"),
-    isWhite: data.race?.includes("white"),
-
-    // Field 8: Sex
-    isMale: data.sexAssignedAtBirth === "male",
-    isFemale: data.sexAssignedAtBirth === "female",
-
-    // Field 9: Mother's name
-    mothersFirstName: data.mothersFirstName,
-    mothersMiddleName: data.mothersMiddleName,
-    mothersLastName: data.mothersLastName,
-
-    // Field 10: Father's name
-    fathersFirstName: data.fathersFirstName,
-    fathersMiddleName: data.fathersMiddleName,
-    fathersLastName: data.fathersLastName,
-
-    // Field 11: Previous Social Security Card
-    hasPreviousSocialSecurityCard: data.hasPreviousSocialSecurityCard === true,
-    hasNoPreviousSocialSecurityCard:
+    citizenshipOther: (data) => data.citizenshipStatus === "other",
+    isHispanicOrLatino: (data) => data.isHispanicOrLatino === true,
+    isNotHispanicOrLatino: (data) => data.isHispanicOrLatino === false,
+    isNativeHawaiian: (data) => data.race?.includes("nativeHawaiian"),
+    isAlaskaNative: (data) => data.race?.includes("alaskaNative"),
+    isAsian: (data) => data.race?.includes("asian"),
+    isAmericanIndian: (data) => data.race?.includes("americanIndian"),
+    isBlack: (data) => data.race?.includes("black"),
+    isOtherPacificIslander: (data) =>
+      data.race?.includes("otherPacificIslander"),
+    isWhite: (data) => data.race?.includes("white"),
+    isMale: (data) => data.sexAssignedAtBirth === "male",
+    isFemale: (data) => data.sexAssignedAtBirth === "female",
+    mothersFirstName: (data) => data.mothersFirstName,
+    mothersMiddleName: (data) => data.mothersMiddleName,
+    mothersLastName: (data) => data.mothersLastName,
+    fathersFirstName: (data) => data.fathersFirstName,
+    fathersMiddleName: (data) => data.fathersMiddleName,
+    fathersLastName: (data) => data.fathersLastName,
+    hasPreviousSocialSecurityCard: (data) =>
+      data.hasPreviousSocialSecurityCard === true,
+    hasNoPreviousSocialSecurityCard: (data) =>
       data.hasPreviousSocialSecurityCard === false,
-
-    // Field 12: Previous Social Security Card name
-    previousSocialSecurityCardFirstName:
+    previousSocialSecurityCardFirstName: (data) =>
       data.previousSocialSecurityCardFirstName,
-    previousSocialSecurityCardMiddleName:
+    previousSocialSecurityCardMiddleName: (data) =>
       data.previousSocialSecurityCardMiddleName,
-    previousSocialSecurityCardLastName: data.previousSocialSecurityCardLastName,
-
-    // Field 13: Different date of birth (not asked)
-
-    // Field 14: Today's date
-    todaysDate: new Date().toLocaleDateString("en-US", {
-      month: "2-digit",
-      day: "2-digit",
-      year: "numeric",
-    }),
-
-    // Field 15: Phone number
-    phoneNumber: data.phoneNumber,
-
-    // Field 16: Address
-    mailingStreetAddress: data.mailingStreetAddress,
-    mailingCity: data.mailingCity,
-    mailingState: data.mailingState,
-    mailingZipCode: data.mailingZipCode,
-
-    // Field 17: Signature (not asked)
-
-    // Field 18: Relationship to the person you are filing for
-    isSelf: data.isFilingForSomeoneElse === false,
-    isParent: data.relationshipToFilingFor === "parent",
-    isGuardian: data.relationshipToFilingFor === "legalGuardian",
-    isFilingOther: data.relationshipToFilingFor === "other",
-    otherSpecify: data.relationshipToFilingForOther,
-  }),
+    previousSocialSecurityCardLastName: (data) =>
+      data.previousSocialSecurityCardLastName,
+    todaysDate: () =>
+      new Date().toLocaleDateString("en-US", {
+        month: "2-digit",
+        day: "2-digit",
+        year: "numeric",
+      }),
+    phoneNumber: (data) => data.phoneNumber,
+    mailingStreetAddress: (data) => data.mailingStreetAddress,
+    mailingCity: (data) => data.mailingCity,
+    mailingState: (data) => data.mailingState,
+    mailingZipCode: (data) => data.mailingZipCode,
+    isSelf: (data) => data.isFilingForSomeoneElse === false,
+    isParent: (data) => data.relationshipToFilingFor === "parent",
+    isGuardian: (data) => data.relationshipToFilingFor === "legalGuardian",
+    isFilingOther: (data) => data.relationshipToFilingFor === "other",
+    otherSpecify: (data) => data.relationshipToFilingForOther,
+  },
 });

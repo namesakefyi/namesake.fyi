@@ -3,6 +3,8 @@ import type { Jurisdiction } from "./jurisdictions";
 
 export type PDFFields = Record<string, string | boolean | undefined>;
 
+export type PDFFieldValue = string | boolean | undefined;
+
 export const PDF_IDS = [
   "affidavit-of-indigency",
   "cjp27-petition-to-change-name-of-adult",
@@ -14,7 +16,7 @@ export const PDF_IDS = [
 
 export type PDFId = (typeof PDF_IDS)[number];
 
-export interface PDFDefinition {
+export interface PDFDefinition<TPdfFieldName extends string = string> {
   /**
    * The unique identifier for the PDF definition.
    * @example "cjp27-petition-to-change-name-of-adult"
@@ -47,23 +49,19 @@ export interface PDFDefinition {
   pdfPath: string;
 
   /**
-   * A function that transforms the user data into a set of fields for the PDF.
-   *
-   * PDF field names may be in a variety of formats, from camelCase
-   * to snake_case to a "Plain String" label. It's recommended to
-   * rename fields into a consistent format matching our own schema
-   * for ease of readability and testing.
-   *
-   * @url https://github.com/namesakefyi/namesake/tree/main/src/forms/README.md
-   *
+   * Map of PDF field names to resolver functions return a printed value for the field.
    * @example
    * ```ts
-   * fields: (data) => ({
-   *   firstNameField: data.newFirstName,
-   *   middle_name_field: data.newMiddleName,
-   *   "Last Name Field": data.newLastName,
-   * })
+   * fieldValueResolvers: {
+   *   division: (data) => data.residenceCounty,
+   *   petitionerName: (data) => joinNames(data.oldFirstName, data.oldMiddleName, data.oldLastName),
+   * }
    * ```
    */
-  fields: (data: Partial<FormData>) => PDFFields;
+  fieldValueResolvers: PDFFieldValueResolvers<TPdfFieldName>;
 }
+
+export type PDFFieldValueResolvers<
+  TPdfFieldName extends string,
+  TFormData = Partial<FormData>,
+> = Partial<Record<TPdfFieldName, (data: TFormData) => PDFFieldValue>>;

@@ -24,6 +24,7 @@ export default getViteConfig({
         ...coverageConfigDefaults.exclude,
         "**/*.css",
         "**/*.pdf",
+        "**/*.types.ts",
         "**/*.astro",
         "**/*.config.?(c|m)[jt]s?(x)",
         "**/*.stories.tsx",

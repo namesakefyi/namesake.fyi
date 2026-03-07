@@ -1,0 +1,26 @@
+/** Auto-generated from cjp30-assent-to-petition-to-change-name-of-minor.pdf — do not edit */
+export const pdfFieldNames = [
+  "form1[0].BodyPage1[0].S1[0].Ln[0]",
+  "form1[0].BodyPage1[0].S1[0].Fn[0]",
+  "form1[0].BodyPage1[0].S1[0].Mn[0]",
+  "form1[0].BodyPage1[0].S1[0].DropDownList1[0]",
+  "form1[0].BodyPage1[0].S1[0].DocketNo[0]",
+  "form1[0].BodyPage1[0].S2[0].TextField4[0]",
+  "form1[0].BodyPage1[0].S2[0].TextField4[1]",
+  "form1[0].BodyPage1[0].S2[0].TextField4[2]",
+  "form1[0].BodyPage1[0].S2[0].CheckBox1[0]",
+  "form1[0].BodyPage1[0].S2[0].CheckBox1[1]",
+  "form1[0].BodyPage1[0].S2[0].CheckBox1[2]",
+  "form1[0].BodyPage1[0].S3[0].TextField4[0]",
+  "form1[0].BodyPage1[0].S3[0].TextField4[1]",
+  "form1[0].BodyPage1[0].S3[0].TextField4[2]",
+  "form1[0].S10[0].DateTimeField3[0]",
+  "form1[0].S10[0].TextField5[0]",
+  "form1[0].S10[0].TextField4[0]",
+  "form1[0].S10[0].TextField4[1]",
+  "form1[0].S10[0].TextField4[2]",
+  "form1[0].S10[0].TextField4[3]",
+  "form1[0].S10[0].TextField4[4]",
+  "form1[0].S10[0].TextField4[5]",
+] as const;
+export type PdfFieldName = (typeof pdfFieldNames)[number];

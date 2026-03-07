@@ -8,9 +8,9 @@ export const testPdfDefinition = definePdf({
   title: "Test Form",
   jurisdiction: "MA",
   pdfPath: "public/forms/test-form.pdf",
-  fields: (data) => ({
-    newFirstName: data.newFirstName,
-    oldFirstName: data.oldFirstName,
-    shouldReturnOriginalDocuments: data.shouldReturnOriginalDocuments,
-  }),
+  fieldValueResolvers: {
+    newFirstName: (data) => data.newFirstName,
+    oldFirstName: (data) => data.oldFirstName,
+    shouldReturnOriginalDocuments: (data) => data.shouldReturnOriginalDocuments,
+  },
 });
