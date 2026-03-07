@@ -8,13 +8,14 @@ This directory contains all the blank PDFs that Namesake uses to fill forms, inc
 
 Use the [BentoPDF Form Creator](https://bentopdf.com/form-creator.html). Upload the original PDF form that was downloaded.
 
-Examine the names of all fields in the form. Our goal is to take existing names, which may exist as vague labels ("type"), full sentence phrases ("[A] I receive assistance from ..."), odd internal markers ("OptC[B]select_1"), or a mix of the above. We want these labels to be more understandable.
+Examine the names of all fields in the form. These names are what we use to map user submittions from Namesake forms to the final output in the completed PDF. Often times, the raw .pdf downloaded from a .gov website will have PDF field names that are vague ("type"), full sentences ("[A] I receive assistance from ..."), meaningless internal markers ("OptC[B]select_1"), or a mix of all three.
 
-Guidance on choosing names:
+To make things easier for us, let's rename them:
 
 1. Use `camelCase` naming for all fields, like `residenceStreetAddress` or `newFirstName`.
 2. Prefix checkbox fields with `is`, `should`, or `has`. For example, `isReceivingMedicaid` or `shouldReturnOriginalDocuments`.
-3. Try to match the list of [existing field definitions](../constants/fields.ts). It's okay if they're not exactly the same, but keeping them close will make the next step easier. 
+   a. If there are two sepraate checkboxes representing the same boolean value (such as a "Yes" and "No" checkbox for the same question), you can add the suffix `True` and `False`. For example, `hasPreviousNameChangeTrue` and `hasPreviousNameChangeFalse`.
+3. Try to match the list of [existing field definitions](../constants/fields.ts). Nothing needs to *exactly* match, but keeping the names close will make the next step easier.
 4. Don't hesitate to make a name long, if it needs to be; some of these form fields are very specific.
 
 When all user-enterable fields have been labeled and positioned, download the modified PDF and save it anywhere.
@@ -39,9 +40,27 @@ Once the path is present, run the script.
 
 The script will walk you through the process of filling out everything that's required for the definition. When you are done, it should have generated a new `.ts` and `.test.ts` file.
 
-### Step 3: Write tests
+### Step 3: Nest conditional logic
 
-Every PDF and definition should also include a test to validate that the form renders, checkboxes get checked, text fields get filled, etc.
+We've generated a `.ts` file with all of our field definitions, but all of those definitions are in a flat list. We need to do a little more manual work. Wherever conditional fields exist, we need to query when to include them in the `fields` list and when they should be excluded. An example:
+
+```ts
+// Mailing address (if different)
+...(data.isMailingAddressDifferentFromResidence
+  ? {
+      mailingStreetAddress: data.mailingStreetAddress,
+      mailingCity: data.mailingCity,
+      mailingState: data.mailingState,
+      mailingZipCode: data.mailingZipCode,
+    }
+  : {}),
+```
+
+This helps us verify that even if data exists for some hidden fields, we never print those values to the final PDF unless the original condition is met. You will have to take a look at the structure of the PDF to determine what's conditional and how best to structure this logic.
+
+### Step 4: Write tests
+
+Every PDF and definition should also include a test to validate that the form renders, checkboxes get checked, text fields get filled, and conditional logic applies as expected.
 
 Since we've already defined definitions for the data, this is pretty straightforward. Use `getPdfForm` to return a [PDFForm](https://pdf-lib.js.org/docs/api/classes/pdfform) object from `pdf-lib`, and then use methods like [getCheckBox](https://pdf-lib.js.org/docs/api/classes/pdfform#getcheckbox) and [getTextField](https://pdf-lib.js.org/docs/api/classes/pdfform#gettextfield) to test the values in the PDF.
 
