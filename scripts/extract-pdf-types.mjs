@@ -96,10 +96,14 @@ async function main() {
   }
 
   task.message("Formatting with Biome...");
-  const result = spawnSync("pnpm", ["exec", "biome", "format", "--write", ...typesPaths], {
-    cwd: ROOT,
-    stdio: "inherit",
-  });
+  const result = spawnSync(
+    "pnpm",
+    ["exec", "biome", "format", "--write", ...typesPaths],
+    {
+      cwd: ROOT,
+      stdio: "inherit",
+    },
+  );
   if (result.status !== 0) {
     process.exit(result.status ?? 1);
   }
