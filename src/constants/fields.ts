@@ -197,6 +197,27 @@ export const FIELD_DEFS = [
     label: "Relationship to the person you are filing for (other)",
     type: "string",
   },
+  {
+    name: "isPresentedByLegalFatherParent2",
+    label: "Is Presented By Legal Father Parent2",
+    type: "boolean",
+  },
+  {
+    name: "isPresentedByLegalMotherParent1",
+    label: "Is Presented By Legal Mother Parent1",
+    type: "boolean",
+  },
+  {
+    name: "isPresentedByCourtAppointedGuardian",
+    label: "Is Presented By Court Appointed Guardian",
+    type: "boolean",
+  },
+  { name: "currentAge", label: "Current Age", type: "string" },
+  {
+    name: "isAddressIsUnderMassYouthServicesSupervision",
+    label: "Is Address Is Under Mass Youth Services Supervision",
+    type: "boolean",
+  },
 ] as const;
 
 export type FieldName = (typeof FIELD_DEFS)[number]["name"];

@@ -2,66 +2,50 @@
 
 This directory contains all the blank PDFs that Namesake uses to fill forms, including schemas and tests for those PDFs.
 
-## Naming and organization
+## Adding new PDFs
 
-PDFs should be titled using all lowercase `kebab-case`. File names should begin with the form code, if one exists, followed by the full form title. For example, the form "Petition to Change Name of Adult" with the code "CJP 27" has the file name `cjp27-petition-to-change-name-of-adult.pdf`.
+### Step 1: Review and rename field names
 
-If the form code contains any spaces or hyphens, those should be omitted. For example, the form code "CJ-D 400" is `cjd400`. Together with the title "Probate and Family Court Motion", the file name is `cjd400-probate-and-family-court-motion.pdf`.
+Use the [BentoPDF Form Creator](https://bentopdf.com/form-creator.html). Upload the PDF form that was downloaded from a .gov site.
 
-State-specific PDFs should be placed within a folder using the state's two-character abbreviation, like `/ma`. Federal forms, such as ones for Social Security or Passports, go in `/federal`.
+The task now is to observe the position and name of all fields in the form. Each form field name will be mapped to our own internal names and types.
 
-## Defining PDF schemas
+Guidance on choosing names:
 
-Each `.pdf` file should be accompanied by a `.ts` definition of the same name containing a single `default export`. For example:
+1. Use `camelCase` naming for all fields, like `residenceAddress` or `newFirstName`.
+2. Prefix checkbox fields with `is` or `should`, like `isReceivingMedicaid` or `shouldReturnOriginalDocuments`.
+3. Try to match the list of [existing field definitions](../constants/fields.ts). It's okay if they're not exactly the same, but keeping them close will make the next step easier. 
 
-```ts
-// cjp27-petition-to-change-name-of-adult.ts
-import { definePdf } from "@/utils/pdf";
-import pdf from "./cjp27-petition-to-change-name-of-adult.pdf";
+When all user-enterable fields have been labeled and positioned, download the modified PDF and save it anywhere.
 
-export default definePdf({
-  // Add title, optional code and jurisdiction, and
-  // pass in the path to the pdf file
-  title: "Petition to Change Name of Adult",
-  code: "CJP 27",
-  jurisdiction: "MA",
-  pdfPath: pdf,
+### Step 2: Generate PDF definitions
 
-  // Add the field schema. Keys in the `data`
-  // object should all be from USER_FORM_DATA_FIELDS.
-  fields: (data: {
-    oldFirstName: string;
-    oldMiddleName: string;
-    oldLastName: string;
-    // ... Additional user form data
-  }) => ({
-    // The keys in the return object are the names
-    // of the fields (as defined in the PDF).
-    firstNameField: data.oldFirstName,
-    middle_name_field: data.oldMiddleName,
-    "Last Name Field": data.newLastName,
-    // ... Additional field mappings
-  });
-});
+Next we'll run a script which iterates through all of the fields in the pdf and generates a schema that maps to our internal field definitions. For definitions which don't yet exist, the script will help create them.
+
+From the terminal, within the `/namesake` repo, type:
+
+```zsh
+pnpm pdf:generate-defs
 ```
 
-## Renaming PDF fields and adding new fields
+Drag the .pdf document to your terminal to insert a path to it. (Don't worry about where the .pdf file is located on your system — the script will put a renamed version in the correct spot in the codebase.)
 
-Sometimes original PDFs do not include form fields embedded within the PDF. Other PDFs do include form fields, but they are named poorly. In either case, you will want to make modifications to the PDF to add missing fields and name fields consistently.
+```zsh
+pnpm pdf:generate-defs ./path/to/form.pdf
+```
 
-To edit a PDF, download the original, then open it in the [Nutrient.io PDF Form Creator](https://www.nutrient.io/demo/pdf-form-creator). In the left sidebar, expand the "Create a Fillable Form" section, and it will allow you to add new form fields. Click on each field within the PDF to see a popover that allows you to rename it.
+Once the path is present, run the script.
 
-In general, it's good to name the fields so that they match the global constants for user form data. This will make mapping between the PDF field names and the names in our database much easier.
+The script will walk you through the process of filling out everything that's required for the definition. When you are done, it should have generated a new `.ts` and `.test.ts` file.
 
-Once you have finished editing the PDF, click the download button in the top right, rename the file, and add it to the appropriate directory within `/src/pdfs`.
-
-## Testing PDFs
+### Step 3: Write tests
 
 Every PDF and definition should also include a test to validate that the form renders, checkboxes get checked, text fields get filled, etc.
 
 Since we've already defined definitions for the data, this is pretty straightforward. Use `getPdfForm` to return a [PDFForm](https://pdf-lib.js.org/docs/api/classes/pdfform) object from `pdf-lib`, and then use methods like [getCheckBox](https://pdf-lib.js.org/docs/api/classes/pdfform#getcheckbox) and [getTextField](https://pdf-lib.js.org/docs/api/classes/pdfform#gettextfield) to test the values in the PDF.
 
-Take extra care to test any conditional logic around checkboxes.
+> [!IMPORTANT]
+> Take extra care to test any conditional logic. If certain fields should only be filled when a checkbox is checked, verify that via testing.
 
 ```ts
 describe("CJP27 Petition to Change Name of Adult", () => {
@@ -89,3 +73,11 @@ describe("CJP27 Petition to Change Name of Adult", () => {
   })
 });
 ```
+
+Run your tests to verify they work:
+
+```zsh
+pnpm test ./path/to/form.test.ts
+```
+
+Then open a pull request with your changes! Congrats! You've added a new PDF definition to Namesake. All that's left now is to create the new form.
