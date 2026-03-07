@@ -614,7 +614,7 @@ async function main() {
   }
 
   clack.note(
-    "Before beginning this process, use BentoPDF to validate that form fields are named and positioned correctly in the document.\n\nhttps://bentopdf.com/form-creator.html",
+    "Before beginning, use BentoPDF to create, rename, and/or reposition form fields in the document.\n\nhttps://bentopdf.com/form-creator.html",
   );
 
   const fieldDefs = loadFieldDefs();
