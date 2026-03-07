@@ -9,9 +9,7 @@ export default definePdf<PdfFieldName>({
   title: "Application for Social Security Card",
   code: "SS-5",
   pdfPath: pdf,
-  fields: (
-    data,
-  ): Partial<Record<PdfFieldName, string | boolean | undefined>> => ({
+  fields: (data) => ({
     // Field 1: Name
     newFirstName: data.newFirstName,
     newMiddleName: data.newMiddleName,
