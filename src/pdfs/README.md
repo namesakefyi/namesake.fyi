@@ -12,10 +12,10 @@ Examine the names of all fields in the form. Our goal is to take existing names,
 
 Guidance on choosing names:
 
-1. Use `camelCase` naming for all fields, like `residenceAddress` or `newFirstName`.
-2. Prefix checkbox fields with `is` or `should`, like `isReceivingMedicaid` or `shouldReturnOriginalDocuments`.
+1. Use `camelCase` naming for all fields, like `residenceStreetAddress` or `newFirstName`.
+2. Prefix checkbox fields with `is`, `should`, or `has`. For example, `isReceivingMedicaid` or `shouldReturnOriginalDocuments`.
 3. Try to match the list of [existing field definitions](../constants/fields.ts). It's okay if they're not exactly the same, but keeping them close will make the next step easier. 
-4. Don't hesitate to make a name long, if it needs to be. Some of these form fields are very specific!
+4. Don't hesitate to make a name long, if it needs to be; some of these form fields are very specific.
 
 When all user-enterable fields have been labeled and positioned, download the modified PDF and save it anywhere.
 
