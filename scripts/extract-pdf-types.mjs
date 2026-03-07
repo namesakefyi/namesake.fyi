@@ -18,12 +18,13 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const PDFS_DIR = join(ROOT, "src/pdfs");
 
-function findPdfFiles(dir, files = []) {
+function findPdfFiles(dir) {
+  const files = [];
   const entries = readdirSync(dir, { withFileTypes: true });
   for (const entry of entries) {
     const fullPath = join(dir, entry.name);
     if (entry.isDirectory()) {
-      findPdfFiles(fullPath, files);
+      files.push(...findPdfFiles(fullPath));
     } else if (entry.isFile() && entry.name.endsWith(".pdf")) {
       files.push(fullPath);
     }
@@ -95,10 +96,13 @@ async function main() {
   }
 
   task.message("Formatting with Biome...");
-  spawnSync("pnpm", ["exec", "biome", "format", "--write", ...typesPaths], {
+  const result = spawnSync("pnpm", ["exec", "biome", "format", "--write", ...typesPaths], {
     cwd: ROOT,
     stdio: "inherit",
   });
+  if (result.status !== 0) {
+    process.exit(result.status ?? 1);
+  }
 
   task.success(`Extracted types for ${pdfPaths.length} PDFs`);
 }
