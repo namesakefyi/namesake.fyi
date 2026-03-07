@@ -1,9 +1,10 @@
 import type { PDFDefinition, PDFId } from "@/constants/pdf";
 
 export async function getPdfDefinition(pdfId: PDFId) {
-  const pdfModules = import.meta.glob("/src/pdfs/!(utils)/**/!(*.test).ts", {
-    import: "default",
-  });
+  const pdfModules = import.meta.glob(
+    ["/src/pdfs/!(utils)/**/!(*.test).ts", "!**/*.types.ts"],
+    { import: "default" },
+  );
 
   for (const path in pdfModules) {
     const mod = (await pdfModules[path]()) as unknown as PDFDefinition;
