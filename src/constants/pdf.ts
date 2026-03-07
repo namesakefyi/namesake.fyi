@@ -10,7 +10,6 @@ export const PDF_IDS = [
   "cjd400-motion-to-waive-publication",
   "cjd400-motion-to-impound-records",
   "ss5-application-for-social-security-card",
-  "cjp25-petition-to-change-name-of-minor",
 ] as const;
 
 export type PDFId = (typeof PDF_IDS)[number];
