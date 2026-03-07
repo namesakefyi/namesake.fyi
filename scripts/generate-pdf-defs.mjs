@@ -490,9 +490,7 @@ function idToImportName(id) {
 
 /** Escape a string for safe inclusion in a double-quoted JavaScript string literal. */
 function escapeForJsDoubleQuotedString(value) {
-  return String(value)
-    .replace(/\\/g, "\\\\")
-    .replace(/"/g, '\\"');
+  return String(value).replace(/\\/g, "\\\\").replace(/"/g, '\\"');
 }
 
 /** Generate starter test file content. */
