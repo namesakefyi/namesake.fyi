@@ -2,9 +2,10 @@ import languageNameMap from "language-name-map/map";
 import { definePdf } from "@/pdfs/utils/definePdf";
 import { formatDateMMDDYYYY } from "@/utils/formatDateMMDDYYYY";
 import { joinPronouns } from "@/utils/joinPronouns";
+import type { PdfFieldName } from "./cjp27-petition-to-change-name-of-adult.types";
 import pdf from "./cjp27-petition-to-change-name-of-adult.pdf";
 
-export default definePdf({
+export default definePdf<PdfFieldName>({
   id: "cjp27-petition-to-change-name-of-adult",
   title: "Petition to Change Name of Adult",
   code: "CJP-27",

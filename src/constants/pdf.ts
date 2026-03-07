@@ -3,6 +3,8 @@ import type { Jurisdiction } from "./jurisdictions";
 
 export type PDFFields = Record<string, string | boolean | undefined>;
 
+export type PDFFieldValue = string | boolean | undefined;
+
 export const PDF_IDS = [
   "affidavit-of-indigency",
   "cjp27-petition-to-change-name-of-adult",
@@ -14,7 +16,7 @@ export const PDF_IDS = [
 
 export type PDFId = (typeof PDF_IDS)[number];
 
-export interface PDFDefinition {
+export interface PDFDefinition<TPdfFieldName extends string = string> {
   /**
    * The unique identifier for the PDF definition.
    * @example "cjp27-petition-to-change-name-of-adult"
@@ -65,5 +67,7 @@ export interface PDFDefinition {
    * })
    * ```
    */
-  fields: (data: Partial<FormData>) => PDFFields;
+  fields: (
+    data: Partial<FormData>,
+  ) => Partial<Record<TPdfFieldName, PDFFieldValue>>;
 }
