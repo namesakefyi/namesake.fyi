@@ -8,14 +8,12 @@ export default definePdf<PdfFieldName>({
   title: "Affidavit of Indigency",
   jurisdiction: "MA",
   pdfPath: pdf,
-  fields: (data) => ({
-    applicantName: joinNames(
-      data.oldFirstName,
-      data.oldMiddleName,
-      data.oldLastName,
-    ),
-    residenceStreetAddress: data.residenceStreetAddress,
-    residenceCity: data.residenceCity,
-    residenceStateAndZip: `${data.residenceState} ${data.residenceZipCode}`,
-  }),
+  fieldValueResolvers: {
+    applicantName: (data) =>
+      joinNames(data.oldFirstName, data.oldMiddleName, data.oldLastName),
+    residenceStreetAddress: (data) => data.residenceStreetAddress,
+    residenceCity: (data) => data.residenceCity,
+    residenceStateAndZip: (data) =>
+      `${data.residenceState} ${data.residenceZipCode}`,
+  },
 });

@@ -16,32 +16,26 @@ Each `.pdf` file should be accompanied by a `.ts` definition of the same name co
 
 ```ts
 // cjp27-petition-to-change-name-of-adult.ts
-import { definePdf } from "@/utils/pdf";
+import { definePdf } from "@/pdfs/utils/definePdf";
 import pdf from "./cjp27-petition-to-change-name-of-adult.pdf";
+import type { PdfFieldName } from "./cjp27-petition-to-change-name-of-adult.types";
 
-export default definePdf({
-  // Add title, optional code and jurisdiction, and
-  // pass in the path to the pdf file
+export default definePdf<PdfFieldName>({
+  id: "cjp27-petition-to-change-name-of-adult",
   title: "Petition to Change Name of Adult",
-  code: "CJP 27",
+  code: "CJP-27",
   jurisdiction: "MA",
   pdfPath: pdf,
 
-  // Add the field schema. Keys in the `data`
-  // object should all be from USER_FORM_DATA_FIELDS.
-  fields: (data: {
-    oldFirstName: string;
-    oldMiddleName: string;
-    oldLastName: string;
-    // ... Additional user form data
-  }) => ({
-    // The keys in the return object are the names
-    // of the fields (as defined in the PDF).
-    firstNameField: data.oldFirstName,
-    middle_name_field: data.oldMiddleName,
-    "Last Name Field": data.newLastName,
-    // ... Additional field mappings
-  });
+  // Map PDF field names to resolvers that derive values from form data.
+  // Keys are strictly typed—typos will cause type errors.
+  fieldValueResolvers: {
+    oldFirstName: (data) => data.oldFirstName,
+    oldMiddleName: (data) => data.oldMiddleName,
+    oldLastName: (data) => data.oldLastName,
+    newFirstName: (data) => data.newFirstName,
+    // ... Additional field value resolvers
+  },
 });
 ```
 

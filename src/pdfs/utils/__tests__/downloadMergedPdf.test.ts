@@ -109,9 +109,9 @@ describe("downloadMergedPdf", () => {
       title: "Test Form 2",
       jurisdiction: "MA",
       pdfPath: "public/forms/test-form-2.pdf",
-      fields: (data) => ({
-        field1: data.newFirstName,
-      }),
+      fieldValueResolvers: {
+        field1: (data) => data.newFirstName,
+      },
     });
 
     await downloadMergedPdf({
