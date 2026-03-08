@@ -1,13 +1,14 @@
 import { definePdf } from "@/pdfs/utils/definePdf";
 import { joinNames } from "@/utils/joinNames";
 import pdf from "./affidavit-of-indigency.pdf";
+import type { PdfFieldName } from "./schema";
 
-export default definePdf({
+export default definePdf<PdfFieldName>({
   id: "affidavit-of-indigency",
   title: "Affidavit of Indigency",
   jurisdiction: "MA",
   pdfPath: pdf,
-  fields: (data) => ({
+  resolver: (data) => ({
     applicantName: joinNames(
       data.oldFirstName,
       data.oldMiddleName,

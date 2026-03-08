@@ -7,7 +7,7 @@
     "prepare": "husky",
     "dev": "astro dev --open",
     "start": "astro dev",
-    "build": "wrangler types && astro check && astro build",
+    "build": "pnpm pdf:schema && wrangler types && astro check && astro build",
     "build:only": "astro build",
     "preview": "wrangler types && astro preview",
     "astro": "astro",
@@ -25,7 +25,8 @@
     "check-links": "lychee --config .lychee.toml .",
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",
-    "idb:add-migration": "node scripts/create-idb-migration.mjs"
+    "idb:add-migration": "node scripts/create-idb-migration.mjs",
+    "pdf:schema": "node scripts/extract-pdf-schema.mjs"
   },
   "lint-staged": {
     "*": "pnpm check:fix"
@@ -81,6 +82,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.8",
+    "@clack/prompts": "^1.1.0",
     "@csstools/postcss-logical-viewport-units": "^4.0.0",
     "@playwright/test": "^1.58.2",
     "@react-aria/test-utils": "1.0.0-beta.2",

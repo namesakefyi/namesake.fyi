@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { getPdfForm } from "@/pdfs/utils/getPdfForm";
-import ss5Application from "../ss5-application-for-social-security-card";
+import ss5Application from ".";
 
 describe("SS-5 Application for Social Security Card", () => {
   const testData = {

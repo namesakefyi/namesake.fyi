@@ -16,7 +16,6 @@ export async function fillPdf({
 }): Promise<Uint8Array> {
   try {
     const { PDFDocument } = await loadPdfLib();
-    const pdfFields = pdf.fields(userData);
 
     // Fetch the PDF with form fields
     const formPdfBytes = await fetchPdf(pdf.pdfPath);
@@ -31,8 +30,10 @@ export async function fillPdf({
     // Get the form containing all the fields
     const form = pdfDoc.getForm();
 
-    // Fill out each field from our transformed data
-    for (const [fieldName, value] of Object.entries(pdfFields)) {
+    // Fill out each field from the resolver
+    const fields = pdf.resolver(userData);
+    for (const [fieldName, value] of Object.entries(fields)) {
+      if (value === undefined) continue;
       if (typeof value === "boolean") {
         const checkbox = form.getCheckBox(fieldName);
         value ? checkbox.check() : checkbox.uncheck();

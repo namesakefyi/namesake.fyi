@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { getPdfForm } from "@/pdfs/utils/getPdfForm";
-import motionToImpoundRecords from "../cjd400-motion-to-impound";
+import motionToWaivePublication from ".";
 
-describe("CJD400 Motion to Impound Records", () => {
+describe("CJD400 Motion to Waive Publication", () => {
   const testData = {
     oldFirstName: "Old",
     oldMiddleName: "M",
@@ -16,41 +16,35 @@ describe("CJD400 Motion to Impound Records", () => {
     residenceState: "MA",
     residenceZipCode: "02139",
     phoneNumber: "555-555-5555",
-    reasonToImpoundCourtRecords: "Personal safety concerns",
+    reasonToWaivePublication: "Personal safety concerns",
   };
 
   it("maps all fields correctly to the PDF", async () => {
     const form = await getPdfForm({
-      pdf: motionToImpoundRecords,
+      pdf: motionToWaivePublication,
       userData: testData,
-    });
-
-    // Get today's date in MM/DD/YYYY format for comparison
-    const today = new Date().toLocaleDateString("en-US", {
-      month: "2-digit",
-      day: "2-digit",
-      year: "numeric",
     });
 
     // Division fields
     expect(form.getTextField("division").getText()).toBe("Suffolk");
     expect(form.getTextField("division2").getText()).toBe("Suffolk");
 
-    // Petitioner name
+    // Petitioner name (current legal name)
     expect(form.getTextField("petitionerName").getText()).toBe("Old M Name");
 
-    // Motion for fields
+    // Motion for
     expect(form.getTextField("motionFor").getText()).toBe(
-      "Impound Entire Case",
+      "Waive Publication for Name Change",
     );
     expect(form.getTextField("motionFor2").getText()).toBe("Old M Name");
-    expect(form.getTextField("motionForPageTwo").getText()).toBe(
-      "Impound Entire Case",
-    );
 
-    // Date fields
+    // Date (should be today's date in MM/DD/YYYY)
+    const today = new Date().toLocaleDateString("en-US", {
+      month: "2-digit",
+      day: "2-digit",
+      year: "numeric",
+    });
     expect(form.getTextField("date").getText()).toBe(today);
-    expect(form.getTextField("dated").getText()).toBe(today);
 
     // Current legal name
     expect(form.getTextField("currentLegalName").getText()).toBe("Old M Name");
@@ -76,5 +70,11 @@ describe("CJD400 Motion to Impound Records", () => {
 
     // Phone number
     expect(form.getTextField("phoneNumber").getText()).toBe("555-555-5555");
+
+    // Additional page two fields
+    expect(form.getTextField("motionForPageTwo").getText()).toBe(
+      "Waive Publication for Name Change",
+    );
+    expect(form.getTextField("dated").getText()).toBe(today);
   });
 });

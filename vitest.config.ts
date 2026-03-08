@@ -29,6 +29,7 @@ export default getViteConfig({
         "**/*.stories.tsx",
         "src/components/**/index.ts",
         "src/pdfs/index.ts",
+        "src/pdfs/**/schema.ts",
       ],
       thresholds: {
         lines: 85,

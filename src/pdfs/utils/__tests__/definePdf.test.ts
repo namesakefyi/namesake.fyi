@@ -8,7 +8,7 @@ describe("definePdf", () => {
       title: "Test Form",
       jurisdiction: "MA",
       pdfPath: "public/forms/test-form.pdf",
-      fields: (data) => ({
+      resolver: (data) => ({
         newFirstName: data.newFirstName,
         oldFirstName: data.oldFirstName,
         shouldReturnOriginalDocuments: data.shouldReturnOriginalDocuments,
@@ -18,8 +18,14 @@ describe("definePdf", () => {
     expect(definition).toMatchObject({
       id: "test-form",
       pdfPath: "public/forms/test-form.pdf",
-      fields: expect.any(Function),
+      resolver: expect.any(Function),
     });
-    expect(typeof definition.fields).toBe("function");
+    const fields = definition.resolver({
+      newFirstName: "New",
+      oldFirstName: "Old",
+      shouldReturnOriginalDocuments: true,
+    });
+    expect(fields.newFirstName).toBe("New");
+    expect(fields.oldFirstName).toBe("Old");
   });
 });
