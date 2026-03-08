@@ -49,9 +49,27 @@ The script will prompt for:
 - **Form code** (optional) — e.g. "CJP-27"
 - **Jurisdiction** — Federal or a state (MA, NY, etc.)
 
-### Step 3: Add conditional logic
+### Step 3: Map PDF fields to form data
 
-We've generated an `index.ts` file with all of our field definitions in a flat list. Wherever fields depend on a condition, check that condition for each field and return `undefined` when the condition isn't met:
+We've generated an `index.ts` file with all of our field definitions in a flat list. Right now, all those fields are `undefined`.
+
+```ts
+resolver: (data) => ({
+  petitionerFirstName: undefined,
+  petitionerMiddleName: undefined,
+  petitionerLastName: undefined,
+  county: undefined,
+  // etc.
+})
+```
+
+The resolver maps each PDF field name (left) to a value from user-submitted form data (right). Form data comes from [FIELD_DEFS](../constants/fields.ts).
+
+For each PDF field, look up a matching FIELD_DEF by name. Use it directly: `data.existingFieldName`, or derive a value (e.g. `formatDateMMDDYYYY(data.dateOfBirth)`). Format helpers can be imported from `@/utils`.
+
+If no FIELD_DEF exists for a PDF field, add one to `src/constants/fields.ts`.
+
+Wherever fields depend on a condition, check that condition for each field and return `undefined` when the condition isn't met:
 
 ```ts
 // Mailing address (if different from residence)
