@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 
 /**
- * Extract AcroForm field names from PDFs and generate schema.ts files.
- * Usage: pnpm pdf:schema [path/to/file.pdf]
- *   - No arg: process all .pdf files in src/pdfs
- *   - With arg: process single PDF file
+ * Extracts AcroForm field names from PDFs and writes schema.ts files.
+ * Usage: pnpm pdf:schema [path/to/file.pdf] [--quiet]
+ *   No arg: all PDFs in src/pdfs. With arg: single PDF. --quiet: no output.
  */
 
 import { spawnSync } from "node:child_process";
@@ -13,11 +12,13 @@ import { basename, dirname, extname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { PDFDocument } from "@cantoo/pdf-lib";
 import { intro, log, taskLog } from "@clack/prompts";
+import { escapeKey } from "./utils.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const PDFS_DIR = join(ROOT, "src/pdfs");
 
+/** Returns paths to all .pdf files under dir, recursively. */
 function findPdfFiles(dir) {
   const files = [];
   const entries = readdirSync(dir, { withFileTypes: true });
@@ -32,6 +33,7 @@ function findPdfFiles(dir) {
   return files;
 }
 
+/** Returns { name, fieldClass }[] for each form field in the PDF. */
 async function extractFields(pdfPath) {
   const bytes = readFileSync(pdfPath);
   const doc = await PDFDocument.load(bytes);
@@ -43,11 +45,7 @@ async function extractFields(pdfPath) {
   }));
 }
 
-function escapeKey(key) {
-  if (/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(key)) return key;
-  return JSON.stringify(key);
-}
-
+/** Returns schema.ts file content as a string. */
 function generateTypesContent(stem, fields) {
   const usedClasses = [...new Set(fields.map((f) => f.fieldClass))];
   const imports =
@@ -67,41 +65,44 @@ export type PdfFieldName = keyof typeof pdfSchema;
 `;
 }
 
-async function processPdf(pdfPath, task) {
+/** Writes schema.ts for the PDF. Returns { path, displayPath, count, checkboxCount }. */
+async function processPdf(pdfPath) {
   const dir = dirname(pdfPath);
   const filename = basename(pdfPath);
   const stem = filename.slice(0, -extname(filename).length);
   const schemaPath = join(dir, "schema.ts");
 
-  try {
-    const fields = await extractFields(pdfPath);
-    const content = generateTypesContent(stem, fields);
-    writeFileSync(schemaPath, content);
-    const displayPath = relative(PDFS_DIR, join(dir, stem));
-    const checkboxCount = fields.filter(
-      (f) => f.fieldClass === "PDFCheckBox",
-    ).length;
-    task?.message(
-      `${displayPath}\n→ extracted ${fields.length} fields (${checkboxCount} checkbox)`,
-    );
-    return { path: schemaPath, count: fields.length };
-  } catch (err) {
-    task?.error(err.message);
-    throw err;
-  }
+  const fields = await extractFields(pdfPath);
+  const content = generateTypesContent(stem, fields);
+  writeFileSync(schemaPath, content);
+
+  const displayPath = relative(PDFS_DIR, join(dir, stem));
+  const checkboxCount = fields.filter(
+    (f) => f.fieldClass === "PDFCheckBox",
+  ).length;
+
+  return {
+    path: schemaPath,
+    displayPath,
+    count: fields.length,
+    checkboxCount,
+  };
 }
 
 async function main() {
-  intro("PDF Schema Extraction");
+  const argv = process.argv.slice(2);
+  const quiet = argv.includes("--quiet");
+  const arg = argv.find((a) => a !== "--quiet");
 
-  const arg = process.argv[2];
+  if (!quiet) intro("PDF Schema Extraction");
+
   let pdfPaths;
 
   if (arg) {
     const resolved = resolve(process.cwd(), arg);
     pdfPaths = [resolved];
     if (!resolved.endsWith(".pdf")) {
-      log.error("Path must be a .pdf file");
+      if (!quiet) log.error("Path must be a .pdf file");
       process.exit(1);
     }
   } else {
@@ -109,31 +110,44 @@ async function main() {
   }
 
   if (pdfPaths.length === 0) {
-    log.warn("No PDF files found in src/pdfs");
+    if (!quiet) log.warn("No PDF files found in src/pdfs");
     return;
   }
 
-  const task = taskLog({ title: "Extracting schema", retainLog: true });
+  const task = quiet
+    ? null
+    : taskLog({ title: "Extracting schema", retainLog: true });
   const schemaPaths = [];
+
   for (const pdfPath of pdfPaths) {
-    const result = await processPdf(pdfPath, task);
-    schemaPaths.push(result.path);
+    try {
+      const result = await processPdf(pdfPath);
+      schemaPaths.push(result.path);
+      if (!quiet) {
+        task?.message(
+          `${result.displayPath}\n→ extracted ${result.count} fields (${result.checkboxCount} checkbox)`,
+        );
+      }
+    } catch (err) {
+      if (!quiet) task?.error(err.message);
+      throw err;
+    }
   }
 
-  task.message("Formatting with Biome...");
+  if (!quiet) task?.message("Formatting with Biome...");
   const result = spawnSync(
     "pnpm",
     ["exec", "biome", "format", "--write", ...schemaPaths],
     {
       cwd: ROOT,
-      stdio: "inherit",
+      stdio: quiet ? "pipe" : "inherit",
     },
   );
   if (result.status !== 0) {
     process.exit(result.status ?? 1);
   }
 
-  task.success(`Extracted schema for ${pdfPaths.length} PDFs`);
+  if (!quiet) task.success(`Extracted schema for ${pdfPaths.length} PDFs`);
 }
 
 main().catch((err) => {

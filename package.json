@@ -26,7 +26,8 @@
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",
     "idb:add-migration": "node scripts/create-idb-migration.mjs",
-    "pdf:schema": "node scripts/extract-pdf-schema.mjs"
+    "pdf:schema": "node scripts/extract-pdf-schema.mjs",
+    "pdf:define": "node scripts/define-pdf.mjs"
   },
   "lint-staged": {
     "*": "pnpm check:fix"

@@ -44,6 +44,10 @@ Code formatting and linting is handled with [Biome](https://biomejs.dev/). If yo
 
 In addition, each time you `git commit` changes to the codebase, a [Husky](https://typicode.github.io/husky/) pre-commit hook will run to check and format your code according to our Biome rules. This check helps prevent any poorly-formatted code from entering the codebase. If Biome throws an error when you try to commit your code, fix the error, `add` your changes, and `commit` again. You can re-use your original commit message—since the commit failed, the original message was discarded.
 
+## Adding new PDFs
+
+See the [README](https://github.com/namesakefyi/namesake.fyi/blob/main/src/pdfs/README.md).
+
 ## Creating pull requests
 
 1. **Keep changes small.** If you're tackling multiple issues, split them up into multiple pull requests. Smaller chunks of code are easier to review and test!
