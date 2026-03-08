@@ -32,7 +32,7 @@ To make things easier for us, let's rename them:
 
 1. Use `camelCase` naming for all fields, like `residenceStreetAddress` or `newFirstName`.
 2. Prefix checkbox fields with `is`, `should`, or `has`. For example, `isReceivingMedicaid` or `shouldReturnOriginalDocuments`.
-   a. If there are two separate checkboxes representing the same boolean value (such as a "Yes" and "No" checkbox for the same question), you can add the suffix `True` and `False`. For example, `hasPreviousNameChangeTrue` and `hasPreviousNameChangeFalse`.
+   - If there are two separate checkboxes representing the same boolean value (such as a "Yes" and "No" checkbox for the same question), you can add the suffix `True` and `False`. For example, `hasPreviousNameChangeTrue` and `hasPreviousNameChangeFalse`.
 3. Try to match the list of [existing field definitions](../constants/fields.ts). Nothing needs to *exactly* match, but keeping the names close will make the next step easier.
 4. Don't hesitate to make a name long, if it needs to be; some of these form fields are very specific.
 
