@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { getPdfForm } from "@/pdfs/utils/getPdfForm";
-import affidavitOfIndigency from "../affidavit-of-indigency";
+import affidavitOfIndigency from ".";
 
 describe("Affidavit of Indigency", () => {
   const testData = {

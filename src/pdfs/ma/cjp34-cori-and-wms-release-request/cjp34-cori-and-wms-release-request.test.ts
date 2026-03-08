@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { getPdfForm } from "@/pdfs/utils/getPdfForm";
-import coriAndWmsReleaseRequest from "../cjp34-cori-and-wms-release-request";
+import coriAndWmsReleaseRequest from ".";
 
 describe("CJP34 CORI and WMS Release Request", () => {
   const testData = {

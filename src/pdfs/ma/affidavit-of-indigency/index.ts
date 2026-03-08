@@ -1,7 +1,7 @@
 import { definePdf } from "@/pdfs/utils/definePdf";
 import { joinNames } from "@/utils/joinNames";
 import pdf from "./affidavit-of-indigency.pdf";
-import type { PdfFieldName } from "./affidavit-of-indigency.types";
+import type { PdfFieldName } from "./schema";
 
 export default definePdf<PdfFieldName>({
   id: "affidavit-of-indigency",

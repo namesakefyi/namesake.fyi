@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 /**
- * Extract AcroForm field names from PDFs and generate .types.ts files.
- * Usage: pnpm pdf:types [path/to/file.pdf]
+ * Extract AcroForm field names from PDFs and generate schema.ts files.
+ * Usage: pnpm pdf:schema [path/to/file.pdf]
  *   - No arg: process all .pdf files in src/pdfs
  *   - With arg: process single PDF file
  */
@@ -74,18 +74,20 @@ async function processPdf(pdfPath, task) {
   const dir = dirname(pdfPath);
   const filename = basename(pdfPath);
   const stem = filename.slice(0, -extname(filename).length);
-  const typesPath = join(dir, `${stem}.types.ts`);
+  const schemaPath = join(dir, "schema.ts");
 
   try {
     const fields = await extractFields(pdfPath);
     const content = generateTypesContent(stem, fields);
-    writeFileSync(typesPath, content);
+    writeFileSync(schemaPath, content);
     const displayPath = relative(PDFS_DIR, join(dir, stem));
-    const checkboxCount = fields.filter((f) => f.fieldClass === "PDFCheckBox").length;
+    const checkboxCount = fields.filter(
+      (f) => f.fieldClass === "PDFCheckBox",
+    ).length;
     task?.message(
       `${displayPath}\n→ extracted ${fields.length} fields (${checkboxCount} checkbox)`,
     );
-    return { path: typesPath, count: fields.length };
+    return { path: schemaPath, count: fields.length };
   } catch (err) {
     task?.error(err.message);
     throw err;
@@ -93,7 +95,7 @@ async function processPdf(pdfPath, task) {
 }
 
 async function main() {
-  intro("PDF Type Extraction");
+  intro("PDF Schema Extraction");
 
   const arg = process.argv[2];
   let pdfPaths;
@@ -114,17 +116,17 @@ async function main() {
     return;
   }
 
-  const task = taskLog({ title: "Extracting types", retainLog: true });
-  const typesPaths = [];
+  const task = taskLog({ title: "Extracting schema", retainLog: true });
+  const schemaPaths = [];
   for (const pdfPath of pdfPaths) {
     const result = await processPdf(pdfPath, task);
-    typesPaths.push(result.path);
+    schemaPaths.push(result.path);
   }
 
   task.message("Formatting with Biome...");
   const result = spawnSync(
     "pnpm",
-    ["exec", "biome", "format", "--write", ...typesPaths],
+    ["exec", "biome", "format", "--write", ...schemaPaths],
     {
       cwd: ROOT,
       stdio: "inherit",
@@ -134,7 +136,7 @@ async function main() {
     process.exit(result.status ?? 1);
   }
 
-  task.success(`Extracted types for ${pdfPaths.length} PDFs`);
+  task.success(`Extracted schema for ${pdfPaths.length} PDFs`);
 }
 
 main().catch((err) => {

@@ -3,7 +3,7 @@ import { definePdf } from "@/pdfs/utils/definePdf";
 import { formatDateMMDDYYYY } from "@/utils/formatDateMMDDYYYY";
 import { joinPronouns } from "@/utils/joinPronouns";
 import pdf from "./cjp27-petition-to-change-name-of-adult.pdf";
-import type { PdfFieldName } from "./cjp27-petition-to-change-name-of-adult.types";
+import type { PdfFieldName } from "./schema";
 
 export default definePdf<PdfFieldName>({
   id: "cjp27-petition-to-change-name-of-adult",

@@ -1,11 +1,11 @@
 import { definePdf } from "@/pdfs/utils/definePdf";
 import { joinNames } from "@/utils/joinNames";
-import pdf from "./cjd400-motion-to-waive-publication.pdf";
-import type { PdfFieldName } from "./cjd400-motion-to-waive-publication.types";
+import pdf from "./cjd400-motion-to-impound.pdf";
+import type { PdfFieldName } from "./schema";
 
 export default definePdf<PdfFieldName>({
-  id: "cjd400-motion-to-waive-publication",
-  title: "Motion to Waive Publication",
+  id: "cjd400-motion-to-impound-records",
+  title: "Motion to Impound Records",
   code: "CJD-400",
   jurisdiction: "MA",
   pdfPath: pdf,
@@ -14,7 +14,7 @@ export default definePdf<PdfFieldName>({
     division2: (data) => data.residenceCounty,
     petitionerName: (data) =>
       joinNames(data.oldFirstName, data.oldMiddleName, data.oldLastName),
-    motionFor: () => "Waive Publication for Name Change",
+    motionFor: () => "Impound Entire Case",
     motionFor2: (data) =>
       joinNames(data.oldFirstName, data.oldMiddleName, data.oldLastName),
     date: () =>
@@ -26,7 +26,7 @@ export default definePdf<PdfFieldName>({
     currentLegalName: (data) =>
       joinNames(data.oldFirstName, data.oldMiddleName, data.oldLastName),
     petitioner: () => true,
-    request: (data) => data.reasonToWaivePublication,
+    request: (data) => data.reasonToImpoundCourtRecords,
     printName: (data) =>
       joinNames(data.oldFirstName, data.oldMiddleName, data.oldLastName),
     residenceStreetAddress: (data) => data.residenceStreetAddress,
@@ -34,7 +34,7 @@ export default definePdf<PdfFieldName>({
     residenceState: (data) => data.residenceState,
     residenceZip: (data) => data.residenceZipCode,
     phoneNumber: (data) => data.phoneNumber,
-    motionForPageTwo: () => "Waive Publication for Name Change",
+    motionForPageTwo: () => "Impound Entire Case",
     dated: () =>
       new Date().toLocaleDateString("en-US", {
         month: "2-digit",
