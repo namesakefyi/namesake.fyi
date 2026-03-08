@@ -331,7 +331,9 @@ async function runGenerationSteps({
 /** Run schema extraction (all PDFs or a single path). Silences output when called from define-pdf. */
 function runSchemaExtraction(pdfPath) {
   const scriptPath = join(__dirname, "extract-pdf-schema.mjs");
-  const args = pdfPath ? [scriptPath, pdfPath, "--quiet"] : [scriptPath, "--quiet"];
+  const args = pdfPath
+    ? [scriptPath, pdfPath, "--quiet"]
+    : [scriptPath, "--quiet"];
   const result = spawnSync("node", args, {
     cwd: ROOT,
     stdio: "pipe",
@@ -391,7 +393,9 @@ async function main() {
       `${unsupported.length} field(s) are dropdown/other — fillPdf only supports text and checkbox. Map to string for dropdown; you may need custom fill logic.`,
     );
   }
-  log.success(`Found ${pdfFields.length} form ${pdfFields.length === 1 ? "field" : "fields"}`);
+  log.success(
+    `Found ${pdfFields.length} form ${pdfFields.length === 1 ? "field" : "fields"}`,
+  );
 
   if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
   if (!existsSync(pdfDir)) mkdirSync(pdfDir, { recursive: true });

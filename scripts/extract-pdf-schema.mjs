@@ -117,7 +117,9 @@ async function main() {
     return;
   }
 
-  const task = quiet ? null : taskLog({ title: "Extracting schema", retainLog: true });
+  const task = quiet
+    ? null
+    : taskLog({ title: "Extracting schema", retainLog: true });
   const schemaPaths = [];
   for (const pdfPath of pdfPaths) {
     const result = await processPdf(pdfPath, task);
