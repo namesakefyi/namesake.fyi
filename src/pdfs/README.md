@@ -26,7 +26,7 @@ If the form code contains any spaces or hyphens, those should be omitted. For ex
 
 Use the [BentoPDF Form Creator](https://bentopdf.com/form-creator.html). Upload the original PDF form that was downloaded.
 
-Examine the names of all fields in the form. These names are what we use to map user submittions from Namesake forms to the final output in the completed PDF. Often times, the raw .pdf downloaded from a .gov website will have PDF field names that are vague ("type"), full sentences ("[A] I receive assistance from ..."), meaningless internal markers ("OptC[B]select_1"), or a mix of all three.
+Examine the names of all fields in the form. These names are what we use to map user submissions from Namesake forms to the final output in the completed PDF. Often, the raw PDF from a .gov site has field names that are vague ("type"), full sentences ("[A] I receive assistance from ..."), meaningless internal markers ("form1[0].BodyPage1[0].S1[0].Ln[0]""), or a mix of all three.
 
 To make things easier for us, let's rename them:
 
@@ -40,23 +40,18 @@ When all user-enterable fields have been labeled and positioned, download the mo
 
 ### Step 2: Generate PDF definitions
 
-Next, we'll run a script which iterates through all of the fields in the pdf and generates a schema that maps to our internal field definitions. For definitions which don't yet exist, the script will help create them.
-
-From the terminal, within the repo, type:
-
-```zsh
-pnpm pdf:define
-```
-
-Drag the .pdf document to your terminal to insert a path to it. (Don't worry if the .pdf is located in /Downloads, /Desktop, or somewhere else outside of the repo—the script will put a renamed version in the correct spot in the codebase.)
+Run the define script with the path to your modified PDF:
 
 ```zsh
 pnpm pdf:define ./path/to/form.pdf
 ```
 
-Once the path is present, run the script.
+The path can be anywhere (e.g. Downloads, Desktop). The script will copy the PDF into the correct folder and generate `index.ts`, `schema.ts`, and a starter test file.
 
-The script will walk you through the process of filling out everything that's required for the definition. When you are done, it should have generated a new `index.ts`, `schema.ts`, and `.test.ts` file.
+The script will prompt for:
+- **Form title** — e.g. "Petition to Change Name of Adult"
+- **Form code** (optional) — e.g. "CJP-27"
+- **Jurisdiction** — Federal or a state (MA, NY, etc.)
 
 ### Step 3: Add conditional logic
 
@@ -84,13 +79,12 @@ This ensures we never print values to the final PDF unless the condition is met.
 
 Every PDF and definition should also include a test to validate that the form renders, checkboxes get checked, text fields get filled, and conditional logic applies as expected.
 
-Since we've already defined definitions for the data, this is pretty straightforward. Use `getPdfForm` to return a [PDFForm](https://pdf-lib.js.org/docs/api/classes/pdfform) object from `pdf-lib`, and then use methods like [getCheckBox](https://pdf-lib.js.org/docs/api/classes/pdfform#getcheckbox) and [getTextField](https://pdf-lib.js.org/docs/api/classes/pdfform#gettextfield) to test the values in the PDF.
+Use `getPdfForm` with your test data to get a [PDFForm](https://pdf-lib.js.org/docs/api/classes/pdfform), then use [getCheckBox](https://pdf-lib.js.org/docs/api/classes/pdfform#getcheckbox) and [getTextField](https://pdf-lib.js.org/docs/api/classes/pdfform#gettextfield) to assert values.
 
 > [!IMPORTANT]
 > Take extra care to test any conditional logic. If certain fields should only be filled when a checkbox is checked, verify that via testing.
 
 ```ts
-// cjp27-petition-to-change-name-of-adult.test.ts
 import { getPdfForm } from "@/pdfs/utils/getPdfForm";
 import petitionToChangeNameOfAdult from ".";
 
@@ -120,12 +114,22 @@ describe("CJP27 Petition to Change Name of Adult", () => {
 });
 ```
 
-Run your tests to verify they work:
+Run your tests:
 
 ```zsh
-pnpm test ./path/to/form.test.ts
+pnpm test path/to/pdf.test.ts
 ```
 
-Then open a pull request with your changes! Congrats! You've added a new PDF definition to Namesake. All that's left now is to create the new form.
+Then open a pull request. You've added a new PDF definition to Namesake.
 
-Run `pnpm pdf:schema` to regenerate `schema.ts` from the PDF after adding or modifying form fields.
+---
+
+## Regenerating schema.ts
+
+After you add or modify form fields in a PDF (e.g. in BentoPDF), regenerate the schema:
+
+```zsh
+pnpm pdf:schema path/to/form.pdf
+```
+
+Or run without an argument to regenerate schemas for all PDFs in `src/pdfs`.

@@ -7,6 +7,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { PDFDocument, PDFName } from "@cantoo/pdf-lib";
+import { escapeKey } from "./utils.mjs";
 import {
   autocomplete,
   box,
@@ -30,19 +31,19 @@ const DEFINITION_EXISTS_MSG =
 
 const onCancel = () => exitWith("Operation canceled.", 0);
 
-/** Exit the process with a Clack cancel message. */
+/** Exits the process after showing a cancel message. */
 function exitWith(message, code = 1) {
   cancel(message);
   process.exit(code);
 }
 
-/** Validate that the form title is non-empty. */
+/** Returns an error message if title is empty; otherwise undefined. */
 function validateTitle(value) {
   if (!value?.trim()) return "Title is required";
   return undefined;
 }
 
-/** Generate a PDF id from code and title (e.g. "CJP 27", "Petition to Change Name" → "cjp27-petition-to-change-name"). */
+/** Returns a kebab-case PDF id from code and title. */
 function generatePdfId(code, title) {
   const codePart = (code || "").replace(/[\s-]/g, "").toLowerCase();
   const titlePart = (title || "")
@@ -53,7 +54,7 @@ function generatePdfId(code, title) {
   return codePart ? `${codePart}-${titlePart}` : titlePart;
 }
 
-/** Parse jurisdictions from jurisdictions.ts (usaStates array). */
+/** Returns jurisdictions from jurisdictions.ts as { name, abbreviation }[]. */
 function loadJurisdictions() {
   const content = readFileSync(JURISDICTIONS_PATH, "utf8");
   const jurisdictions = [];
@@ -64,7 +65,7 @@ function loadJurisdictions() {
   return jurisdictions;
 }
 
-/** Extract form fields from a PDF document with name and type. */
+/** Returns { name, type }[] for each form field in the PDF. */
 function extractPdfFields(pdfDoc) {
   let form;
   try {
@@ -88,7 +89,7 @@ function extractPdfFields(pdfDoc) {
   return result;
 }
 
-/** Remove borders and backgrounds from all form fields (delete AP, set border width to 0, remove BG/BC). */
+/** Removes borders and backgrounds from all form fields in place. */
 function stripFormFieldStyles(pdfDoc) {
   const form = pdfDoc.getForm();
   for (const field of form.getFields()) {
@@ -105,7 +106,7 @@ function stripFormFieldStyles(pdfDoc) {
   }
 }
 
-/** Return the output directory for a given jurisdiction (federal, state, or root). */
+/** Returns the output directory path for a jurisdiction. */
 function getOutputDir(jurisdiction) {
   if (!jurisdiction || jurisdiction === "federal") {
     return join(
@@ -116,7 +117,7 @@ function getOutputDir(jurisdiction) {
   return join(ROOT, "src/pdfs", jurisdiction.toLowerCase());
 }
 
-/** Compute id, outDir, pdfDir, pdfDestPath, and outPath from metadata. */
+/** Returns { id, outDir, pdfDir, pdfDestPath, outPath } from metadata. */
 function computeOutputPaths(metadata) {
   const id = generatePdfId(metadata.code, metadata.title);
   const outDir = getOutputDir(metadata.jurisdiction);
@@ -130,7 +131,7 @@ function computeOutputPaths(metadata) {
   };
 }
 
-/** Normalize metadata (trim title/code, coalesce jurisdiction). */
+/** Returns metadata with trimmed title/code and coalesced jurisdiction. */
 function normalizeMetadata(metadata) {
   return {
     title: metadata.title.trim(),
@@ -139,13 +140,7 @@ function normalizeMetadata(metadata) {
   };
 }
 
-/** Escape a key for use as a JS object property (quote if needed). */
-function escapeKey(key) {
-  if (/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(key)) return key;
-  return JSON.stringify(key);
-}
-
-/** Generate the .ts definition file content. */
+/** Returns the index.ts definition file content as a string. */
 function generateDefinition({ id, title, code, jurisdiction, pdfFields }) {
   const props = [
     `id: "${id}",`,
@@ -173,7 +168,7 @@ ${fieldLines.join("\n")}
 `;
 }
 
-/** Build jurisdiction options for the autocomplete prompt. */
+/** Returns Clack autocomplete options for jurisdictions. */
 function buildJurisdictionOptions(jurisdictions) {
   return [
     { value: "federal", label: "Federal" },
@@ -184,7 +179,7 @@ function buildJurisdictionOptions(jurisdictions) {
   ];
 }
 
-/** Prompts for form title, code, and jurisdiction. */
+/** Prompts for metadata. Returns { title, code, jurisdiction }. */
 async function promptMetadata(jurisdictionOptions) {
   const metadata = await group(
     {
@@ -214,14 +209,14 @@ async function promptMetadata(jurisdictionOptions) {
   return metadata;
 }
 
-/** Strip form field styles and write the PDF to the given path. */
+/** Writes the PDF with stripped form field styles to the given path. */
 async function writeStrippedPdf(pdfDoc, pdfDestPath) {
   stripFormFieldStyles(pdfDoc);
   const strippedBytes = await pdfDoc.save();
   writeFileSync(pdfDestPath, strippedBytes);
 }
 
-/** Run biome format on the given file paths. */
+/** Formats the given file paths with Biome. */
 function formatFiles(paths) {
   if (paths.length === 0) return;
   spawnSync("pnpm", ["exec", "biome", "format", "--write", ...paths], {
@@ -230,7 +225,7 @@ function formatFiles(paths) {
   });
 }
 
-/** Add the given id to PDF_IDS in pdf.ts; return false if already present. */
+/** Appends id to PDF_IDS in pdf.ts. Returns false if already present. */
 function addIdToPdfConstants(id) {
   let content = readFileSync(PDF_TS_PATH, "utf8");
   if (content.includes(`"${id}"`)) return false;
@@ -239,7 +234,7 @@ function addIdToPdfConstants(id) {
   return true;
 }
 
-/** Convert a kebab-case id to camelCase (e.g. "cjp27-foo" → "cjp27Foo"). */
+/** Returns camelCase import name from kebab-case id. */
 function idToImportName(id) {
   return id
     .split("-")
@@ -252,7 +247,7 @@ function escapeForJsDoubleQuotedString(value) {
   return String(value).replace(/\\/g, "\\\\").replace(/"/g, '\\"');
 }
 
-/** Generate starter test file content. */
+/** Returns starter test file content as a string. */
 function generateStarterTest({ id, title }) {
   const importName = idToImportName(id);
   const escapedTitle = escapeForJsDoubleQuotedString(title);
@@ -276,7 +271,7 @@ describe("${escapedTitle}", () => {
 `;
 }
 
-/** Write the starter test file to disk. */
+/** Writes the starter test file to the given path. */
 function writeStarterTest({ testPath, id, title }) {
   const testDir = dirname(testPath);
   if (!existsSync(testDir)) mkdirSync(testDir, { recursive: true });
@@ -284,7 +279,7 @@ function writeStarterTest({ testPath, id, title }) {
   writeFileSync(testPath, `${content}\n`);
 }
 
-/** Run all generation steps, logging each with log.message. */
+/** Runs all generation steps and logs progress. */
 async function runGenerationSteps({
   pdfDoc,
   pdfDestPath,
@@ -328,7 +323,7 @@ async function runGenerationSteps({
   log.message("Formatted new files!");
 }
 
-/** Run schema extraction (all PDFs or a single path). Silences output when called from define-pdf. */
+/** Spawns extract-pdf-schema.mjs. Throws on failure. */
 function runSchemaExtraction(pdfPath) {
   const scriptPath = join(__dirname, "extract-pdf-schema.mjs");
   const args = pdfPath
@@ -343,7 +338,7 @@ function runSchemaExtraction(pdfPath) {
   }
 }
 
-/** Main entry: validate input, prompt for metadata and mappings, write files. */
+/** Main entry: validates input, prompts for metadata, generates files. */
 async function main() {
   intro("Let's define a Namesake PDF! ♥︎");
 
