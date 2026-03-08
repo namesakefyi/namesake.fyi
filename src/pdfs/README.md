@@ -16,10 +16,6 @@ src/pdfs/
       affidavit-of-indigency.test.ts
 ```
 
-PDFs should be titled using all lowercase `kebab-case`. File names should begin with the form code, if one exists, followed by the full form title. For example, the form "Petition to Change Name of Adult" with the code "CJP 27" has the folder name `cjp27-petition-to-change-name-of-adult`.
-
-If the form code contains any spaces or hyphens, those should be omitted. For example, the form code "CJ-D 400" is `cjd400`. State-specific PDFs go in `/ma`, `/ny`, etc. Federal forms go in `/federal`.
-
 ## Adding new PDFs
 
 ### Step 1: Review and rename fields
