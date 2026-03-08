@@ -46,16 +46,14 @@ export default definePdf<PdfFieldName>({
     fathersFirstName: data.fathersFirstName,
     fathersMiddleName: data.fathersMiddleName,
     fathersLastName: data.fathersLastName,
-    hasPreviousSocialSecurityCard:
-      data.hasPreviousSocialSecurityCard === true,
+    hasPreviousSocialSecurityCard: data.hasPreviousSocialSecurityCard === true,
     hasNoPreviousSocialSecurityCard:
       data.hasPreviousSocialSecurityCard === false,
     previousSocialSecurityCardFirstName:
       data.previousSocialSecurityCardFirstName,
     previousSocialSecurityCardMiddleName:
       data.previousSocialSecurityCardMiddleName,
-    previousSocialSecurityCardLastName:
-      data.previousSocialSecurityCardLastName,
+    previousSocialSecurityCardLastName: data.previousSocialSecurityCardLastName,
     todaysDate: new Date().toLocaleDateString("en-US", {
       month: "2-digit",
       day: "2-digit",
