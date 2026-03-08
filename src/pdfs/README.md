@@ -130,16 +130,18 @@ Run your tests:
 pnpm test path/to/pdf.test.ts
 ```
 
-Then open a pull request. You've added a new PDF definition to Namesake.
-
----
+Then open a pull request. You've added a new PDF definition to Namesake!
 
 ## Regenerating schema.ts
 
-After you add or modify form fields in a PDF (e.g. in BentoPDF), regenerate the schema:
+If you modify a PDF file (e.g. in BentoPDF or another tool) to rename form fields, regenerate the schema:
 
 ```zsh
 pnpm pdf:schema path/to/form.pdf
 ```
 
-Or run without an argument to regenerate schemas for all PDFs in `src/pdfs`.
+To regenerate schemas for all PDFs in `src/pdfs`, run without an argument:
+
+```zsh
+pnpm pdf:schema
+```
