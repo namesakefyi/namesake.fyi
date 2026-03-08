@@ -50,10 +50,10 @@ function escapeKey(key) {
 
 function generateTypesContent(stem, fields) {
   const usedClasses = [...new Set(fields.map((f) => f.fieldClass))];
-  const importClasses = usedClasses.includes("PDFCheckBox")
-    ? usedClasses
-    : ["PDFCheckBox", ...usedClasses];
-  const imports = `import { ${importClasses.sort().join(", ")} } from "@cantoo/pdf-lib";`;
+  const imports =
+    usedClasses.length > 0
+      ? `import { ${usedClasses.sort().join(", ")} } from "@cantoo/pdf-lib";`
+      : "";
   const schemaEntries = fields
     .map((f) => `  ${escapeKey(f.name)}: ${f.fieldClass}`)
     .join(",\n");
@@ -64,9 +64,6 @@ ${imports}
 export const pdfSchema = {${schemaBody}} as const;
 
 export type PdfFieldName = keyof typeof pdfSchema;
-
-export type PdfFieldValueType<T extends PdfFieldName> =
-  (typeof pdfSchema)[T] extends typeof PDFCheckBox ? boolean : string;
 `;
 }
 
