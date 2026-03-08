@@ -39,7 +39,7 @@ export default definePdf<PdfFieldName>({
 
   // Map PDF field names to resolvers that derive values from form data.
   // Keys are strictly typed—typos will cause type errors.
-  fieldValueResolvers: {
+  resolver: {
     oldFirstName: (data) => data.oldFirstName,
     oldMiddleName: (data) => data.oldMiddleName,
     oldLastName: (data) => data.oldLastName,

@@ -1,8 +1,6 @@
 import type { FormData } from "./fields";
 import type { Jurisdiction } from "./jurisdictions";
 
-export type PDFFields = Record<string, string | boolean | undefined>;
-
 export type PDFFieldValue = string | boolean | undefined;
 
 export const PDF_IDS = [
@@ -52,16 +50,16 @@ export interface PDFDefinition<TPdfFieldName extends string = string> {
    * Map of PDF field names to resolver functions return a printed value for the field.
    * @example
    * ```ts
-   * fieldValueResolvers: {
+   * resolver: {
    *   division: (data) => data.residenceCounty,
    *   petitionerName: (data) => joinNames(data.oldFirstName, data.oldMiddleName, data.oldLastName),
    * }
    * ```
    */
-  fieldValueResolvers: PDFFieldValueResolvers<TPdfFieldName>;
+  resolver: PDFResolver<TPdfFieldName>;
 }
 
-export type PDFFieldValueResolvers<
+export type PDFResolver<
   TPdfFieldName extends string,
   TFormData = Partial<FormData>,
 > = Partial<Record<TPdfFieldName, (data: TFormData) => PDFFieldValue>>;

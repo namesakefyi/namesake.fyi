@@ -8,7 +8,7 @@ describe("definePdf", () => {
       title: "Test Form",
       jurisdiction: "MA",
       pdfPath: "public/forms/test-form.pdf",
-      fieldValueResolvers: {
+      resolver: {
         newFirstName: (data) => data.newFirstName,
         oldFirstName: (data) => data.oldFirstName,
         shouldReturnOriginalDocuments: (data) =>
@@ -19,9 +19,9 @@ describe("definePdf", () => {
     expect(definition).toMatchObject({
       id: "test-form",
       pdfPath: "public/forms/test-form.pdf",
-      fieldValueResolvers: expect.any(Object),
+      resolver: expect.any(Object),
     });
-    expect(definition.fieldValueResolvers).toHaveProperty("newFirstName");
-    expect(typeof definition.fieldValueResolvers.newFirstName).toBe("function");
+    expect(definition.resolver).toHaveProperty("newFirstName");
+    expect(typeof definition.resolver.newFirstName).toBe("function");
   });
 });

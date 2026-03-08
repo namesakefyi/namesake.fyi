@@ -9,7 +9,7 @@ export default definePdf<PdfFieldName>({
   code: "CJD-400",
   jurisdiction: "MA",
   pdfPath: pdf,
-  fieldValueResolvers: {
+  resolver: {
     division: (data) => data.residenceCounty,
     division2: (data) => data.residenceCounty,
     petitionerName: (data) =>

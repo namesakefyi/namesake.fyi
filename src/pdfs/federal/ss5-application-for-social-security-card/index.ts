@@ -9,7 +9,7 @@ export default definePdf<PdfFieldName>({
   title: "Application for Social Security Card",
   code: "SS-5",
   pdfPath: pdf,
-  fieldValueResolvers: {
+  resolver: {
     newFirstName: (data) => data.newFirstName,
     newMiddleName: (data) => data.newMiddleName,
     newLastName: (data) => data.newLastName,

@@ -10,7 +10,7 @@ export default definePdf<PdfFieldName>({
   code: "CJP-34",
   jurisdiction: "MA",
   pdfPath: pdf,
-  fieldValueResolvers: {
+  resolver: {
     county: (data) => data.residenceCounty,
     caseName: (data) =>
       joinNames(data.oldFirstName, data.oldMiddleName, data.oldLastName),

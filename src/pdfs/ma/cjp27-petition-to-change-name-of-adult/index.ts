@@ -11,7 +11,7 @@ export default definePdf<PdfFieldName>({
   code: "CJP-27",
   jurisdiction: "MA",
   pdfPath: pdf,
-  fieldValueResolvers: {
+  resolver: {
     petitionerFirstName: (data) => data.oldFirstName,
     petitionerMiddleName: (data) => data.oldMiddleName,
     petitionerLastName: (data) => data.oldLastName,
