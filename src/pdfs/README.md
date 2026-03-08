@@ -37,15 +37,15 @@ export default definePdf<PdfFieldName>({
   jurisdiction: "MA",
   pdfPath: pdf,
 
-  // Map PDF field names to resolvers that derive values from form data.
+  // Map PDF field names to values derived from form data.
   // Keys are strictly typed—typos will cause type errors.
-  resolver: {
-    oldFirstName: (data) => data.oldFirstName,
-    oldMiddleName: (data) => data.oldMiddleName,
-    oldLastName: (data) => data.oldLastName,
-    newFirstName: (data) => data.newFirstName,
-    // ... Additional field value resolvers
-  },
+  resolver: (data) => ({
+    oldFirstName: data.oldFirstName,
+    oldMiddleName: data.oldMiddleName,
+    oldLastName: data.oldLastName,
+    newFirstName: data.newFirstName,
+    // ... Additional field mappings
+  }),
 });
 ```
 

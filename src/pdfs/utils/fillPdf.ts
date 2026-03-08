@@ -30,10 +30,9 @@ export async function fillPdf({
     // Get the form containing all the fields
     const form = pdfDoc.getForm();
 
-    // Fill out each field from the resolvers (skip undefined)
-    for (const [fieldName, resolver] of Object.entries(pdf.resolver)) {
-      if (typeof resolver !== "function") continue;
-      const value = resolver(userData);
+    // Fill out each field from the resolver (skip undefined)
+    const fields = pdf.resolver(userData);
+    for (const [fieldName, value] of Object.entries(fields)) {
       if (value === undefined) continue;
       if (typeof value === "boolean") {
         const checkbox = form.getCheckBox(fieldName);

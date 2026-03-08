@@ -47,13 +47,13 @@ export interface PDFDefinition<TPdfFieldName extends string = string> {
   pdfPath: string;
 
   /**
-   * Map of PDF field names to resolver functions return a printed value for the field.
+   * Function that maps form data to PDF field values.
    * @example
    * ```ts
-   * resolver: {
-   *   division: (data) => data.residenceCounty,
-   *   petitionerName: (data) => joinNames(data.oldFirstName, data.oldMiddleName, data.oldLastName),
-   * }
+   * resolver: (data) => ({
+   *   division: data.residenceCounty,
+   *   petitionerName: joinNames(data.oldFirstName, data.oldMiddleName, data.oldLastName),
+   * })
    * ```
    */
   resolver: PDFResolver<TPdfFieldName>;
@@ -62,4 +62,4 @@ export interface PDFDefinition<TPdfFieldName extends string = string> {
 export type PDFResolver<
   TPdfFieldName extends string,
   TFormData = Partial<FormData>,
-> = Partial<Record<TPdfFieldName, (data: TFormData) => PDFFieldValue>>;
+> = (data: TFormData) => Partial<Record<TPdfFieldName, PDFFieldValue>>;

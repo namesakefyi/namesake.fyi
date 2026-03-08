@@ -101,7 +101,7 @@ describe("downloadPdf", () => {
       title: "Custom Form Name",
       jurisdiction: "MA",
       pdfPath: "public/forms/test-form.pdf",
-      resolver: {},
+      resolver: () => ({}),
     });
 
     const pdfBytes = await fillPdf({
