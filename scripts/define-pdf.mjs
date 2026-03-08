@@ -106,13 +106,13 @@ function stripFormFieldStyles(pdfDoc) {
   }
 }
 
-/** Returns the output directory path for a jurisdiction. */
+/** Returns the output directory path for a jurisdiction (required). */
 function getOutputDir(jurisdiction) {
-  if (!jurisdiction || jurisdiction === "federal") {
-    return join(
-      ROOT,
-      jurisdiction === "federal" ? "src/pdfs/federal" : "src/pdfs",
-    );
+  if (!jurisdiction?.trim()) {
+    throw new Error("Jurisdiction is required");
+  }
+  if (jurisdiction === "federal") {
+    return join(ROOT, "src/pdfs/federal");
   }
   return join(ROOT, "src/pdfs", jurisdiction.toLowerCase());
 }
@@ -131,12 +131,12 @@ function computeOutputPaths(metadata) {
   };
 }
 
-/** Returns metadata with trimmed title/code and coalesced jurisdiction. */
+/** Returns metadata with trimmed title/code and jurisdiction. */
 function normalizeMetadata(metadata) {
   return {
     title: metadata.title.trim(),
     code: (metadata.code || "").trim(),
-    jurisdiction: metadata.jurisdiction || undefined,
+    jurisdiction: metadata.jurisdiction?.trim() ?? "",
   };
 }
 
@@ -179,6 +179,12 @@ function buildJurisdictionOptions(jurisdictions) {
   ];
 }
 
+/** Returns an error message if jurisdiction is empty; otherwise undefined. */
+function validateJurisdiction(value) {
+  if (!value?.trim()) return "Jurisdiction is required";
+  return undefined;
+}
+
 /** Prompts for metadata. Returns { title, code, jurisdiction }. */
 async function promptMetadata(jurisdictionOptions) {
   const metadata = await group(
@@ -200,6 +206,7 @@ async function promptMetadata(jurisdictionOptions) {
           options: jurisdictionOptions,
           placeholder: "Type to search...",
           maxItems: 10,
+          validate: validateJurisdiction,
         }),
     },
     { onCancel },

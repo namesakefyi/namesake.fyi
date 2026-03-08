@@ -147,7 +147,7 @@ async function main() {
     process.exit(result.status ?? 1);
   }
 
-  if (!quiet) task?.success(`Extracted schema for ${pdfPaths.length} PDFs`);
+  if (!quiet) task.success(`Extracted schema for ${pdfPaths.length} PDFs`);
 }
 
 main().catch((err) => {

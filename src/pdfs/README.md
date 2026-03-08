@@ -22,7 +22,7 @@ src/pdfs/
 
 Use the [BentoPDF Form Creator](https://bentopdf.com/form-creator.html). Upload the original PDF form that was downloaded.
 
-Examine the names of all fields in the form. These names are what we use to map user submissions from Namesake forms to the final output in the completed PDF. Often, the raw PDF from a .gov site has field names that are vague ("type"), full sentences ("[A] I receive assistance from ..."), meaningless internal markers ("form1[0].BodyPage1[0].S1[0].Ln[0]""), or a mix of all three.
+Examine the names of all fields in the form. These names are what we use to map user submissions from Namesake forms to the final output in the completed PDF. Often, the raw PDF from a .gov site has field names that are vague ("type"), full sentences ("[A] I receive assistance from ..."), meaningless internal markers ("form1[0].BodyPage1[0].S1[0].Ln[0]"), or a mix of all three.
 
 To make things easier for us, let's rename them:
 
