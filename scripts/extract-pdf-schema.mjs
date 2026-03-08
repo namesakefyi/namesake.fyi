@@ -2,9 +2,10 @@
 
 /**
  * Extract AcroForm field names from PDFs and generate schema.ts files.
- * Usage: pnpm pdf:schema [path/to/file.pdf]
+ * Usage: pnpm pdf:schema [path/to/file.pdf] [--quiet]
  *   - No arg: process all .pdf files in src/pdfs
  *   - With arg: process single PDF file
+ *   - --quiet: suppress intro, progress, and success output (for use by define-pdf)
  */
 
 import { spawnSync } from "node:child_process";
@@ -92,16 +93,19 @@ async function processPdf(pdfPath, task) {
 }
 
 async function main() {
-  intro("PDF Schema Extraction");
+  const argv = process.argv.slice(2);
+  const quiet = argv.includes("--quiet");
+  const arg = argv.find((a) => a !== "--quiet");
 
-  const arg = process.argv[2];
+  if (!quiet) intro("PDF Schema Extraction");
+
   let pdfPaths;
 
   if (arg) {
     const resolved = resolve(process.cwd(), arg);
     pdfPaths = [resolved];
     if (!resolved.endsWith(".pdf")) {
-      log.error("Path must be a .pdf file");
+      if (!quiet) log.error("Path must be a .pdf file");
       process.exit(1);
     }
   } else {
@@ -109,31 +113,31 @@ async function main() {
   }
 
   if (pdfPaths.length === 0) {
-    log.warn("No PDF files found in src/pdfs");
+    if (!quiet) log.warn("No PDF files found in src/pdfs");
     return;
   }
 
-  const task = taskLog({ title: "Extracting schema", retainLog: true });
+  const task = quiet ? null : taskLog({ title: "Extracting schema", retainLog: true });
   const schemaPaths = [];
   for (const pdfPath of pdfPaths) {
     const result = await processPdf(pdfPath, task);
     schemaPaths.push(result.path);
   }
 
-  task.message("Formatting with Biome...");
+  if (!quiet) task.message("Formatting with Biome...");
   const result = spawnSync(
     "pnpm",
     ["exec", "biome", "format", "--write", ...schemaPaths],
     {
       cwd: ROOT,
-      stdio: "inherit",
+      stdio: quiet ? "pipe" : "inherit",
     },
   );
   if (result.status !== 0) {
     process.exit(result.status ?? 1);
   }
 
-  task.success(`Extracted schema for ${pdfPaths.length} PDFs`);
+  if (!quiet) task.success(`Extracted schema for ${pdfPaths.length} PDFs`);
 }
 
 main().catch((err) => {

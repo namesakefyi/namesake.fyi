@@ -1,48 +1,38 @@
 #!/usr/bin/env node
 // Usage: pnpm pdf:define path/to/form.pdf
-// Generates a PDF definition (index.ts, schema.ts) by mapping each form field to a field definition.
+// Generates a PDF definition (index.ts, schema.ts) with placeholders for all form fields.
 
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { PDFDocument, PDFName } from "@cantoo/pdf-lib";
-import * as clack from "@clack/prompts";
+import {
+  autocomplete,
+  box,
+  cancel,
+  group,
+  intro,
+  isCancel,
+  log,
+  outro,
+  text,
+} from "@clack/prompts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const ROOT = join(__dirname, "..");
-const FIELDS_PATH = join(ROOT, "src/constants/fields.ts");
 const JURISDICTIONS_PATH = join(ROOT, "src/constants/jurisdictions.ts");
 const PDF_TS_PATH = join(ROOT, "src/constants/pdf.ts");
-
-const SKIP = "__skip__";
-const CREATE_NEW = "__create_new__";
-const CREATE_NEW_PREFIX = "__create_new__|";
 
 const DEFINITION_EXISTS_MSG =
   "Definition already exists. Use a different form or remove the existing file first.";
 
 const onCancel = () => exitWith("Operation canceled.", 0);
 
-/** @param {{ type?: string }} field */
-function isCheckboxOrRadio(field) {
-  return field?.type === "checkbox" || field?.type === "radio";
-}
-
-/** Return true if the user chose to create a new field definition. */
-function isCreateNewChoice(choice) {
-  return choice === CREATE_NEW || String(choice).startsWith(CREATE_NEW_PREFIX);
-}
-
-/** Return true if a field definition with the given name exists. */
-function fieldExistsInDefs(fieldDefs, name) {
-  return fieldDefs.some((d) => d.name === name);
-}
-
 /** Exit the process with a Clack cancel message. */
 function exitWith(message, code = 1) {
-  clack.cancel(message);
+  cancel(message);
   process.exit(code);
 }
 
@@ -50,53 +40,6 @@ function exitWith(message, code = 1) {
 function validateTitle(value) {
   if (!value?.trim()) return "Title is required";
   return undefined;
-}
-
-/** Return a validator for camelCase field names; optionally allow existing names. */
-function validateFieldName(existingNames, { allowExisting = false } = {}) {
-  return (value) => {
-    const v = value?.trim() || "";
-    if (!/^[a-z][a-zA-Z0-9]*$/.test(v))
-      return "Use camelCase (e.g. myFieldName)";
-    if (!allowExisting && existingNames.some((d) => d.name === v)) {
-      return "Field already exists";
-    }
-    return undefined;
-  };
-}
-
-/** Convert camelCase to a human-readable label (e.g. "residenceStreetAddress" → "Residence street address"). */
-function fieldNameToLabel(name) {
-  const words = String(name || "")
-    .split(/(?=[A-Z])/)
-    .filter(Boolean)
-    .map((w) => w[0].toUpperCase() + w.slice(1).toLowerCase());
-  return words.join(" ");
-}
-
-/** Generate a suggested camelCase field name from a PDF field name; prefix "is" for checkbox/radio when needed. */
-function generateFieldName(pdfFieldName, type) {
-  const words = String(pdfFieldName || "")
-    .split(/(?=[A-Z])|[^a-zA-Z0-9]+/)
-    .filter(Boolean);
-  if (words.length === 0) return "";
-  const first = words[0][0].toLowerCase() + words[0].slice(1).toLowerCase();
-  const rest = words
-    .slice(1)
-    .map((w) => w[0].toUpperCase() + w.slice(1).toLowerCase())
-    .join("");
-  const camel = first + rest;
-  if (isCheckboxOrRadio({ type })) {
-    const lower = camel.toLowerCase();
-    if (
-      !lower.startsWith("is") &&
-      !lower.startsWith("should") &&
-      !lower.startsWith("has")
-    ) {
-      return `is${camel[0].toUpperCase()}${camel.slice(1)}`;
-    }
-  }
-  return camel;
 }
 
 /** Generate a PDF id from code and title (e.g. "CJP 27", "Petition to Change Name" → "cjp27-petition-to-change-name"). */
@@ -110,14 +53,6 @@ function generatePdfId(code, title) {
   return codePart ? `${codePart}-${titlePart}` : titlePart;
 }
 
-/** Filter field defs to those compatible with the PDF field type (boolean for checkbox/radio, string for text). */
-function filterDefsByPdfFieldType(defs, pdfField) {
-  if (isCheckboxOrRadio(pdfField)) {
-    return defs.filter((d) => d.type === "boolean");
-  }
-  return defs.filter((d) => d.type === "string" || d.type === "string[]");
-}
-
 /** Parse jurisdictions from jurisdictions.ts (usaStates array). */
 function loadJurisdictions() {
   const content = readFileSync(JURISDICTIONS_PATH, "utf8");
@@ -127,18 +62,6 @@ function loadJurisdictions() {
     jurisdictions.push({ name: m[1], abbreviation: m[2] });
   }
   return jurisdictions;
-}
-
-/** Parse FIELD_DEFS from fields.ts. */
-function loadFieldDefs() {
-  const content = readFileSync(FIELDS_PATH, "utf8");
-  const defs = [];
-  const regex =
-    /\{\s*name:\s*"([^"]+)",\s*label:\s*"([^"]+)",\s*type:\s*"([^"]+)"\s*,?\s*\}/g;
-  for (const m of content.matchAll(regex)) {
-    defs.push({ name: m[1], label: m[2], type: m[3] });
-  }
-  return defs;
 }
 
 /** Extract form fields from a PDF document with name and type. */
@@ -216,8 +139,14 @@ function normalizeMetadata(metadata) {
   };
 }
 
+/** Escape a key for use as a JS object property (quote if needed). */
+function escapeKey(key) {
+  if (/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(key)) return key;
+  return JSON.stringify(key);
+}
+
 /** Generate the .ts definition file content. */
-function generateDefinition({ id, title, code, jurisdiction, mappings }) {
+function generateDefinition({ id, title, code, jurisdiction, pdfFields }) {
   const props = [
     `id: "${id}",`,
     `title: "${title}",`,
@@ -228,12 +157,7 @@ function generateDefinition({ id, title, code, jurisdiction, mappings }) {
     "pdfPath: pdf,",
   ];
 
-  const fieldLines = mappings.map((m) => {
-    const value = m.inverse
-      ? `!data.${m.fieldDefName}`
-      : `data.${m.fieldDefName}`;
-    return `${m.pdfFieldName}: ${value},`;
-  });
+  const fieldLines = pdfFields.map((f) => `  ${escapeKey(f.name)}: undefined,`);
 
   return `import { definePdf } from "@/pdfs/utils/definePdf";
 import pdf from "./${id}.pdf";
@@ -242,7 +166,7 @@ import type { PdfFieldName } from "./schema";
 export default definePdf<PdfFieldName>({
 ${props.join("\n")}
   resolver: (data) => ({
-    // TODO: Add conditionals per field (e.g. isDifferent ? data.value : undefined)
+    // TODO: Map fields to form data
 ${fieldLines.join("\n")}
   }),
 });
@@ -262,21 +186,21 @@ function buildJurisdictionOptions(jurisdictions) {
 
 /** Prompts for form title, code, and jurisdiction. */
 async function promptMetadata(jurisdictionOptions) {
-  const metadata = await clack.group(
+  const metadata = await group(
     {
       title: () =>
-        clack.text({
+        text({
           message: "Form title",
           placeholder: "Petition to Change Name of Adult",
           validate: validateTitle,
         }),
       code: () =>
-        clack.text({
+        text({
           message: "Form code (optional)",
           placeholder: "CJP-27",
         }),
       jurisdiction: () =>
-        clack.autocomplete({
+        autocomplete({
           message: "Jurisdiction",
           options: jurisdictionOptions,
           placeholder: "Type to search...",
@@ -286,147 +210,8 @@ async function promptMetadata(jurisdictionOptions) {
     { onCancel },
   );
 
-  if (clack.isCancel(metadata)) exitWith("Operation canceled.", 0);
+  if (isCancel(metadata)) exitWith("Operation canceled.", 0);
   return metadata;
-}
-
-/** Build autocomplete options for mapping a PDF field to a field definition. */
-function buildFieldMappingOptions(pdfField, fieldDefs) {
-  const compatibleDefs = filterDefsByPdfFieldType(fieldDefs, pdfField);
-  return [
-    { value: CREATE_NEW, label: "+ Create new field definition" },
-    { value: SKIP, label: "Skip this field" },
-    ...compatibleDefs.map((d) => ({
-      value: d.name,
-      label: `${d.name} (${d.label})`,
-    })),
-  ];
-}
-
-/** Returns an async function that prompts to map a single PDF field to a field definition. */
-function createFieldMappingPrompt(pdfField, prefix, fieldDefs, mappings) {
-  return async () => {
-    const getExistingNames = () => [
-      ...fieldDefs,
-      ...mappings.map((m) => ({ name: m.fieldDefName })),
-    ];
-    const baseOptions = buildFieldMappingOptions(pdfField, fieldDefs);
-
-    const innerResult = await clack.group(
-      {
-        map: () =>
-          clack.autocomplete({
-            message: `${prefix} "${pdfField.name}" (${pdfField.type}) maps to`,
-            options: function () {
-              const search = (this.userInput ?? "").trim().toLowerCase();
-              if (!search) return baseOptions;
-              const hasMatch = baseOptions.some(
-                (o) =>
-                  o.value !== CREATE_NEW &&
-                  o.value !== SKIP &&
-                  (String(o.label).toLowerCase().includes(search) ||
-                    String(o.value).toLowerCase().includes(search)),
-              );
-              if (!hasMatch && search.length > 0) {
-                return [
-                  {
-                    value: `${CREATE_NEW_PREFIX}${this.userInput.trim()}`,
-                    label: `Create new: "${this.userInput.trim()}"`,
-                  },
-                  ...baseOptions,
-                ];
-              }
-              return baseOptions;
-            },
-            placeholder: "Type to search (or type new name to create)...",
-            maxItems: 10,
-          }),
-        createNew: ({ results }) => {
-          const choice = results.map;
-          if (choice === SKIP) return undefined;
-          if (!isCreateNewChoice(choice)) return undefined;
-          const userTyped = String(choice).startsWith(CREATE_NEW_PREFIX)
-            ? String(choice).slice(CREATE_NEW_PREFIX.length).trim()
-            : "";
-          const initialValue = /^[a-z][a-zA-Z0-9]*$/.test(userTyped)
-            ? userTyped
-            : generateFieldName(pdfField.name, pdfField.type);
-          return clack.text({
-            message: `${prefix} Field name (camelCase)`,
-            placeholder: "myNewField",
-            initialValue: initialValue || undefined,
-            validate: validateFieldName(getExistingNames(), {
-              allowExisting: true,
-            }),
-          });
-        },
-        inverse: ({ results }) => {
-          if (results.map === SKIP) return undefined;
-          if (!isCheckboxOrRadio(pdfField)) return undefined;
-          const fieldDefName = results.createNew ?? results.map;
-          if (results.createNew && fieldExistsInDefs(fieldDefs, fieldDefName)) {
-            clack.log.info("Field already exists; using existing definition");
-          }
-          return clack.select({
-            message: `${prefix} When should "${pdfField.name}" be checked?`,
-            initialValue: false,
-            options: [
-              { value: false, label: `When data.${fieldDefName} is true` },
-              { value: true, label: `When data.${fieldDefName} is false` },
-            ],
-          });
-        },
-      },
-      { onCancel },
-    );
-
-    if (clack.isCancel(innerResult)) exitWith("Operation canceled.", 0);
-
-    const { map: choice, createNew: newName, inverse: inv } = innerResult;
-    if (choice === SKIP) return null;
-
-    const fieldDefName = newName?.trim() ?? choice;
-    const inverse = inv ?? false;
-
-    if (newName) {
-      if (
-        fieldExistsInDefs(fieldDefs, fieldDefName) &&
-        !isCheckboxOrRadio(pdfField)
-      ) {
-        clack.log.info("Field already exists; using existing definition");
-      } else if (!fieldExistsInDefs(fieldDefs, fieldDefName)) {
-        clack.note(
-          `New field "${fieldDefName}" will be added to FIELD_DEFS automatically`,
-        );
-      }
-    }
-
-    const result = { pdfFieldName: pdfField.name, fieldDefName, inverse };
-    mappings.push(result);
-    return result;
-  };
-}
-
-/** Prompt to map each PDF field to a field definition; return the mappings array. */
-async function promptFieldMappings(pdfFields, fieldDefs) {
-  const mappings = [];
-  const fieldGroup = {};
-
-  for (let i = 0; i < pdfFields.length; i++) {
-    const pdfField = pdfFields[i];
-    const prefix = `${i + 1}/${pdfFields.length}`;
-    fieldGroup[`field_${i}`] = createFieldMappingPrompt(
-      pdfField,
-      prefix,
-      fieldDefs,
-      mappings,
-    );
-  }
-
-  const results = await clack.group(fieldGroup, { onCancel });
-
-  if (clack.isCancel(results)) exitWith("Operation canceled.", 0);
-  return mappings;
 }
 
 /** Strip form field styles and write the PDF to the given path. */
@@ -436,31 +221,12 @@ async function writeStrippedPdf(pdfDoc, pdfDestPath) {
   writeFileSync(pdfDestPath, strippedBytes);
 }
 
-/** Return [name, type] entries for field defs that are new (not in fieldDefs). */
-function computeNewFields(mappings, pdfFields, fieldDefs) {
-  const existingNames = new Set(fieldDefs.map((d) => d.name));
-  const newFieldsByType = {};
-
-  for (const m of mappings) {
-    if (!existingNames.has(m.fieldDefName)) {
-      existingNames.add(m.fieldDefName);
-      const pdfField = pdfFields.find((f) => f.name === m.pdfFieldName);
-      const type = isCheckboxOrRadio(pdfField) ? "boolean" : "string";
-      if (!newFieldsByType[m.fieldDefName]) {
-        newFieldsByType[m.fieldDefName] = type;
-      }
-    }
-  }
-
-  return Object.entries(newFieldsByType);
-}
-
 /** Run biome format on the given file paths. */
 function formatFiles(paths) {
   if (paths.length === 0) return;
   spawnSync("pnpm", ["exec", "biome", "format", "--write", ...paths], {
     cwd: ROOT,
-    stdio: "inherit",
+    stdio: "pipe",
   });
 }
 
@@ -471,18 +237,6 @@ function addIdToPdfConstants(id) {
   content = content.replace(/(\] as const;)/, `  "${id}",\n$1`);
   writeFileSync(PDF_TS_PATH, content);
   return true;
-}
-
-/** Append new field definitions to FIELD_DEFS in fields.ts. */
-function addFieldsToConstants(newFields) {
-  if (newFields.length === 0) return;
-  let content = readFileSync(FIELDS_PATH, "utf8");
-  const entries = newFields.map(
-    ([name, type]) =>
-      `  { name: "${name}", label: "${fieldNameToLabel(name)}", type: "${type}" },`,
-  );
-  content = content.replace(/(\]\s*as const;)/, `\n${entries.join("\n")}\n$1`);
-  writeFileSync(FIELDS_PATH, content);
 }
 
 /** Convert a kebab-case id to camelCase (e.g. "cjp27-foo" → "cjp27Foo"). */
@@ -499,30 +253,16 @@ function escapeForJsDoubleQuotedString(value) {
 }
 
 /** Generate starter test file content. */
-function generateStarterTest({ id, title, mappings, pdfFields }) {
+function generateStarterTest({ id, title }) {
   const importName = idToImportName(id);
   const escapedTitle = escapeForJsDoubleQuotedString(title);
-  const seen = new Set();
-  const testDataEntries = mappings
-    .filter((m) => {
-      if (seen.has(m.fieldDefName)) return false;
-      seen.add(m.fieldDefName);
-      return true;
-    })
-    .map((m) => {
-      const pdfField = pdfFields.find((f) => f.name === m.pdfFieldName);
-      const value = isCheckboxOrRadio(pdfField) ? false : '"value"';
-      return `${m.fieldDefName}: ${value},`;
-    });
 
   return `import { describe, expect, it } from "vitest";
 import { getPdfForm } from "@/pdfs/utils/getPdfForm";
 import ${importName} from ".";
 
 describe("${escapedTitle}", () => {
-  const testData = {
-${testDataEntries.join("\n")}
-  };
+  const testData = {}; // TODO: Add form data for resolver
 
   it("maps fields correctly to the PDF", async () => {
     const form = await getPdfForm({
@@ -537,78 +277,64 @@ ${testDataEntries.join("\n")}
 }
 
 /** Write the starter test file to disk. */
-function writeStarterTest({ testPath, id, title, mappings, pdfFields }) {
+function writeStarterTest({ testPath, id, title }) {
   const testDir = dirname(testPath);
   if (!existsSync(testDir)) mkdirSync(testDir, { recursive: true });
-  const content = generateStarterTest({ id, title, mappings, pdfFields });
+  const content = generateStarterTest({ id, title });
   writeFileSync(testPath, `${content}\n`);
 }
 
-/** Build the list of write tasks (definition, PDF_IDS, FIELD_DEFS, starter test). */
-function buildWriteTasks({
+/** Run all generation steps, logging each with log.message. */
+async function runGenerationSteps({
+  pdfDoc,
+  pdfDestPath,
   outPath,
   output,
   id,
   title,
-  newFields,
-  mappings,
-  pdfFields,
   pdfDir,
 }) {
-  const needsPdfId = !readFileSync(PDF_TS_PATH, "utf8").includes(`"${id}"`);
-
   const testPath = join(pdfDir, `${id}.test.ts`);
   const needsStarterTest = !existsSync(testPath);
 
-  const tasks = [
-    {
-      title: "Write definition file",
-      task: async () => {
-        writeFileSync(outPath, `${output}\n`);
-        return `Wrote ${outPath}`;
-      },
-    },
-    needsPdfId && {
-      title: "Update PDF_IDS",
-      task: async () => {
-        addIdToPdfConstants(id);
-        return `Added "${id}"`;
-      },
-    },
-    newFields.length > 0 && {
-      title: "Update FIELD_DEFS",
-      task: async () => {
-        addFieldsToConstants(newFields);
-        return `Added ${newFields.map(([n]) => n).join(", ")}`;
-      },
-    },
-    needsStarterTest && {
-      title: "Write starter test file",
-      task: async () => {
-        writeStarterTest({ testPath, id, title, mappings, pdfFields });
-        return `Wrote ${testPath}`;
-      },
-    },
-    {
-      title: "Format generated files",
-      task: async () => {
-        const toFormat = [outPath];
-        if (existsSync(testPath)) toFormat.push(testPath);
-        formatFiles(toFormat);
-        return "Formatted with biome";
-      },
-    },
-  ];
+  try {
+    await writeStrippedPdf(pdfDoc, pdfDestPath);
+  } catch (err) {
+    throw new Error(`Failed to write PDF: ${err.message}`);
+  }
+  log.message("Saved PDF!");
 
-  return tasks.filter(Boolean);
+  if (readFileSync(PDF_TS_PATH, "utf8").includes(`"${id}"`)) {
+    log.message("Already in PDF_IDS");
+  } else {
+    addIdToPdfConstants(id);
+    log.message("Added to PDF_IDS!");
+  }
+
+  runSchemaExtraction(pdfDestPath);
+  log.message("Generated schema!");
+
+  writeFileSync(outPath, `${output}\n`);
+  log.message("Generated definition!");
+
+  if (needsStarterTest) {
+    writeStarterTest({ testPath, id, title });
+    log.message("Generated test file!");
+  }
+
+  const toFormat = [outPath];
+  if (existsSync(testPath)) toFormat.push(testPath);
+  formatFiles(toFormat);
+  log.message("Formatted new files!");
 }
 
-/** Run schema extraction (all PDFs or a single path). */
+/** Run schema extraction (all PDFs or a single path). Silences output when called from define-pdf. */
 function runSchemaExtraction(pdfPath) {
-  const args = pdfPath ? ["pdf:schema", pdfPath] : ["pdf:schema"];
-  const result = spawnSync("pnpm", args, {
+  const scriptPath = join(__dirname, "extract-pdf-schema.mjs");
+  const args = pdfPath ? [scriptPath, pdfPath, "--quiet"] : [scriptPath, "--quiet"];
+  const result = spawnSync("node", args, {
     cwd: ROOT,
-    stdio: "inherit",
+    stdio: "pipe",
   });
   if (result.status !== 0) {
     exitWith("Schema extraction failed.", result.status ?? 1);
@@ -617,7 +343,7 @@ function runSchemaExtraction(pdfPath) {
 
 /** Main entry: validate input, prompt for metadata and mappings, write files. */
 async function main() {
-  clack.intro("Let's define a Namesake PDF! ♥︎");
+  intro("Let's define a Namesake PDF! ♥︎");
 
   const pdfPathArg = process.argv[2];
   if (!pdfPathArg?.trim()) {
@@ -631,14 +357,10 @@ async function main() {
   if (!resolvedPath.toLowerCase().endsWith(".pdf"))
     exitWith("File must be a .pdf");
 
-  clack.log.step("Updating PDF schemas…");
-  runSchemaExtraction();
-
-  clack.note(
-    "Before beginning, use BentoPDF to create, rename, and/or reposition form fields in the document.\n\nhttps://bentopdf.com/form-creator.html",
+  log.message(
+    "Before beginning: create, rename, and/or reposition form fields in the PDF. Follow instructions in the README:\n\nhttps://github.com/namesakefyi/namesake.fyi/blob/main/src/pdfs/README.md",
   );
 
-  const fieldDefs = loadFieldDefs();
   const jurisdictions = loadJurisdictions();
   const jurisdictionOptions = buildJurisdictionOptions(jurisdictions);
 
@@ -665,64 +387,47 @@ async function main() {
     (f) => f.type === "dropdown" || f.type === "other",
   );
   if (unsupported.length > 0) {
-    clack.log.warn(
+    log.warn(
       `${unsupported.length} field(s) are dropdown/other — fillPdf only supports text and checkbox. Map to string for dropdown; you may need custom fill logic.`,
     );
   }
-  clack.log.success(`Found ${pdfFields.length} form field(s)`);
-
-  clack.log.step("Map PDF field names to Namesake field definitions");
-  const mappings = await promptFieldMappings(pdfFields, fieldDefs);
+  log.success(`Found ${pdfFields.length} form ${pdfFields.length === 1 ? "field" : "fields"}`);
 
   if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
   if (!existsSync(pdfDir)) mkdirSync(pdfDir, { recursive: true });
 
-  try {
-    await writeStrippedPdf(pdfDoc, pdfDestPath);
-    clack.log.success(
-      `Wrote PDF (borders/backgrounds stripped) to ${pdfDestPath}`,
-    );
-  } catch (err) {
-    exitWith(`Failed to write PDF: ${err.message}`);
-  }
-
-  clack.log.step("Generating schema for new PDF…");
-  runSchemaExtraction(pdfDestPath);
-
   const output = generateDefinition({
     id,
     ...normalized,
-    mappings,
+    pdfFields,
   });
 
-  clack.log.info(`Generated id: ${id}`);
-
-  const newFields = computeNewFields(mappings, pdfFields, fieldDefs);
-  const tasks = buildWriteTasks({
+  await runGenerationSteps({
+    pdfDoc,
+    pdfDestPath,
     outPath,
     output,
     id,
     title: normalized.title,
-    newFields,
-    mappings,
-    pdfFields,
     pdfDir,
   });
-  await clack.tasks(tasks);
 
-  clack.outro("Done!");
+  const dirPath = relative(ROOT, pdfDir);
+  log.success(dirPath);
 
-  clack.box(
-    `1. index.ts — Apply conditional logic to resolver fields
-2. ${id}.test.ts — Write tests to validate all form fields and conditional logic
-3. Open a pull request with the new form definition!`,
+  outro("All done!");
+
+  box(
+    `1. Map fields to form data in the resolver
+2. Write tests to validate all field mappings and conditional logic
+3. Open a pull request!`,
     "Next steps",
     {
       contentAlign: "left",
       titleAlign: "left",
       width: "auto",
       rounded: true,
-      contentPadding: 2,
+      withGuide: false,
     },
   );
 }
