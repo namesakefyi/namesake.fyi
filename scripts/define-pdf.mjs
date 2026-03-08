@@ -7,7 +7,6 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { PDFDocument, PDFName } from "@cantoo/pdf-lib";
-import { escapeKey } from "./utils.mjs";
 import {
   autocomplete,
   box,
@@ -19,6 +18,7 @@ import {
   outro,
   text,
 } from "@clack/prompts";
+import { escapeKey } from "./utils.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 

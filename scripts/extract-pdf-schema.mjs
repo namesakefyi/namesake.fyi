@@ -11,8 +11,8 @@ import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, extname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { PDFDocument } from "@cantoo/pdf-lib";
-import { escapeKey } from "./utils.mjs";
 import { intro, log, taskLog } from "@clack/prompts";
+import { escapeKey } from "./utils.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
