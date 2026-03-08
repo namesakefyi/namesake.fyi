@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Usage: pnpm pdf:define path/to/form.pdf
-// Generates a PDF definition .ts file by mapping each form field to a FIELD_DEF.
+// Generates a PDF definition (index.ts, schema.ts) by mapping each form field to a field definition.
 
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -193,15 +193,17 @@ function getOutputDir(jurisdiction) {
   return join(ROOT, "src/pdfs", jurisdiction.toLowerCase());
 }
 
-/** Compute id, outDir, pdfDestPath, and outPath from metadata. */
+/** Compute id, outDir, pdfDir, pdfDestPath, and outPath from metadata. */
 function computeOutputPaths(metadata) {
   const id = generatePdfId(metadata.code, metadata.title);
   const outDir = getOutputDir(metadata.jurisdiction);
+  const pdfDir = join(outDir, id);
   return {
     id,
     outDir,
-    pdfDestPath: join(outDir, `${id}.pdf`),
-    outPath: join(outDir, `${id}.ts`),
+    pdfDir,
+    pdfDestPath: join(pdfDir, `${id}.pdf`),
+    outPath: join(pdfDir, "index.ts"),
   };
 }
 
@@ -235,15 +237,14 @@ function generateDefinition({ id, title, code, jurisdiction, mappings }) {
 
   return `import { definePdf } from "@/pdfs/utils/definePdf";
 import pdf from "./${id}.pdf";
+import type { PdfFieldName } from "./schema";
 
-export default definePdf({
+export default definePdf<PdfFieldName>({
 ${props.join("\n")}
-fields: (data) => ({
-// TODO: Remember to nest conditional fields!
-// @example
-// @cjp27-petition-to-change-name-of-adult.ts (39-46)
+  resolver: (data) => ({
+    // TODO: Add conditionals per field (e.g. isDifferent ? data.value : undefined)
 ${fieldLines.join("\n")}
-}),
+  }),
 });
 `;
 }
@@ -516,22 +517,21 @@ function generateStarterTest({ id, title, mappings, pdfFields }) {
 
   return `import { describe, expect, it } from "vitest";
 import { getPdfForm } from "@/pdfs/utils/getPdfForm";
-import ${importName} from "../${id}";
+import ${importName} from ".";
 
 describe("${escapedTitle}", () => {
-const testData = {
+  const testData = {
 ${testDataEntries.join("\n")}
-};
+  };
 
-it("maps fields correctly to the PDF", async () => {
-const form = await getPdfForm({
-pdf: ${importName},
-userData: testData,
-});
-
-// TODO: Add assertions for each field
-expect(form).toBeDefined();
-});
+  it("maps fields correctly to the PDF", async () => {
+    const form = await getPdfForm({
+      pdf: ${importName},
+      userData: testData,
+    });
+    // TODO: Add assertions for each field
+    expect(form).toBeDefined();
+  });
 });
 `;
 }
@@ -553,10 +553,11 @@ function buildWriteTasks({
   newFields,
   mappings,
   pdfFields,
+  pdfDir,
 }) {
   const needsPdfId = !readFileSync(PDF_TS_PATH, "utf8").includes(`"${id}"`);
 
-  const testPath = join(dirname(outPath), "__tests__", `${id}.test.ts`);
+  const testPath = join(pdfDir, `${id}.test.ts`);
   const needsStarterTest = !existsSync(testPath);
 
   const tasks = [
@@ -602,6 +603,18 @@ function buildWriteTasks({
   return tasks.filter(Boolean);
 }
 
+/** Run schema extraction (all PDFs or a single path). */
+function runSchemaExtraction(pdfPath) {
+  const args = pdfPath ? ["pdf:schema", pdfPath] : ["pdf:schema"];
+  const result = spawnSync("pnpm", args, {
+    cwd: ROOT,
+    stdio: "inherit",
+  });
+  if (result.status !== 0) {
+    exitWith("Schema extraction failed.", result.status ?? 1);
+  }
+}
+
 /** Main entry: validate input, prompt for metadata and mappings, write files. */
 async function main() {
   clack.intro("Let's define a Namesake PDF! ♥︎");
@@ -618,10 +631,8 @@ async function main() {
   if (!resolvedPath.toLowerCase().endsWith(".pdf"))
     exitWith("File must be a .pdf");
 
-  const definitionPath = resolvedPath.replace(/\.pdf$/i, ".ts");
-  if (existsSync(definitionPath)) {
-    exitWith(`${definitionPath} — ${DEFINITION_EXISTS_MSG}`);
-  }
+  clack.log.step("Updating PDF schemas…");
+  runSchemaExtraction();
 
   clack.note(
     "Before beginning, use BentoPDF to create, rename, and/or reposition form fields in the document.\n\nhttps://bentopdf.com/form-creator.html",
@@ -633,7 +644,8 @@ async function main() {
 
   const metadata = await promptMetadata(jurisdictionOptions);
   const normalized = normalizeMetadata(metadata);
-  const { id, outDir, pdfDestPath, outPath } = computeOutputPaths(normalized);
+  const { id, outDir, pdfDir, pdfDestPath, outPath } =
+    computeOutputPaths(normalized);
 
   if (existsSync(outPath)) {
     exitWith(`${outPath} — ${DEFINITION_EXISTS_MSG}`);
@@ -663,6 +675,7 @@ async function main() {
   const mappings = await promptFieldMappings(pdfFields, fieldDefs);
 
   if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
+  if (!existsSync(pdfDir)) mkdirSync(pdfDir, { recursive: true });
 
   try {
     await writeStrippedPdf(pdfDoc, pdfDestPath);
@@ -672,6 +685,9 @@ async function main() {
   } catch (err) {
     exitWith(`Failed to write PDF: ${err.message}`);
   }
+
+  clack.log.step("Generating schema for new PDF…");
+  runSchemaExtraction(pdfDestPath);
 
   const output = generateDefinition({
     id,
@@ -690,18 +706,15 @@ async function main() {
     newFields,
     mappings,
     pdfFields,
+    pdfDir,
   });
   await clack.tasks(tasks);
 
   clack.outro("Done!");
 
-  const defFilename = `${id}.ts`;
-  const testFilename = `${id}.test.ts`;
-  const testPath = `__tests__/${testFilename}`;
-
   clack.box(
-    `1. ${defFilename} — Apply conditional logic to fields
-2. ${testPath} — Write tests to validate all form fields can be written to and that conditional logic works correctly
+    `1. index.ts — Apply conditional logic to resolver fields
+2. ${id}.test.ts — Write tests to validate all form fields and conditional logic
 3. Open a pull request with the new form definition!`,
     "Next steps",
     {
