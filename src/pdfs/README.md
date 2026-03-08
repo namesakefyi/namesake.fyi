@@ -77,9 +77,6 @@ Every PDF and definition should also include a test to validate that the form re
 
 Use `getPdfForm` with your test data to get a [PDFForm](https://pdf-lib.js.org/docs/api/classes/pdfform), then use [getCheckBox](https://pdf-lib.js.org/docs/api/classes/pdfform#getcheckbox) and [getTextField](https://pdf-lib.js.org/docs/api/classes/pdfform#gettextfield) to assert values.
 
-> [!IMPORTANT]
-> Take extra care to test any conditional logic. If certain fields should only be filled when a checkbox is checked, verify that via testing.
-
 ```ts
 import { getPdfForm } from "@/pdfs/utils/getPdfForm";
 import petitionToChangeNameOfAdult from ".";
@@ -106,6 +103,23 @@ describe("CJP27 Petition to Change Name of Adult", () => {
     expect(form.getTextField("newLastName").getText()).toBe("Name");
 
     // Test more fields...
+  });
+
+  // Test conditional fields...
+  it("shows language when interpreter is needed", async () => {
+    const dataWithInterpreter = {
+      ...testData,
+      isInterpreterNeeded: true,
+      language: "es",
+    };
+
+    const form = await getPdfForm({
+      pdf: petitionToChangeNameOfAdult,
+      userData: dataWithInterpreter,
+    });
+
+    expect(form.getCheckBox("isInterpreterNeeded").isChecked()).toBe(true);
+    expect(form.getTextField("language").getText()).toBe("Spanish");
   });
 });
 ```
