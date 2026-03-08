@@ -1,5 +1,5 @@
 /** Auto-generated from ds11-application-for-us-passport.pdf — do not edit */
-import { PDFCheckBox } from "@cantoo/pdf-lib";
+import type { PDFCheckBox } from "@cantoo/pdf-lib";
 
 export const pdfSchema = {} as const;
 
