@@ -1,3 +1,9 @@
 /** Auto-generated from ds11-application-for-us-passport.pdf — do not edit */
-export const pdfFieldNames = [] as const;
-export type PdfFieldName = (typeof pdfFieldNames)[number];
+import { PDFCheckBox } from "@cantoo/pdf-lib";
+
+export const pdfSchema = {} as const;
+
+export type PdfFieldName = keyof typeof pdfSchema;
+
+export type PdfFieldValueType<T extends PdfFieldName> =
+  (typeof pdfSchema)[T] extends typeof PDFCheckBox ? boolean : string;

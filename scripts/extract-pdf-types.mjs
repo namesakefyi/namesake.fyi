@@ -2,7 +2,7 @@
 
 /**
  * Extract AcroForm field names from PDFs and generate .types.ts files.
- * Usage: pnpm pdf:extract-types [path/to/file.pdf]
+ * Usage: pnpm pdf:types [path/to/file.pdf]
  *   - No arg: process all .pdf files in src/pdfs
  *   - With arg: process single PDF file
  */
@@ -32,18 +32,41 @@ function findPdfFiles(dir) {
   return files;
 }
 
-async function extractFieldNames(pdfPath) {
+async function extractFields(pdfPath) {
   const bytes = readFileSync(pdfPath);
   const doc = await PDFDocument.load(bytes);
   const form = doc.getForm();
   const fields = form.getFields();
-  return fields.map((f) => f.getName());
+  return fields.map((f) => ({
+    name: f.getName(),
+    fieldClass: f.constructor.name,
+  }));
 }
 
-function generateTypesContent(stem, fieldNames) {
+function escapeKey(key) {
+  if (/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(key)) return key;
+  return JSON.stringify(key);
+}
+
+function generateTypesContent(stem, fields) {
+  const usedClasses = [...new Set(fields.map((f) => f.fieldClass))];
+  const importClasses = usedClasses.includes("PDFCheckBox")
+    ? usedClasses
+    : ["PDFCheckBox", ...usedClasses];
+  const imports = `import { ${importClasses.sort().join(", ")} } from "@cantoo/pdf-lib";`;
+  const schemaEntries = fields
+    .map((f) => `  ${escapeKey(f.name)}: ${f.fieldClass}`)
+    .join(",\n");
+  const schemaBody = schemaEntries ? `\n${schemaEntries},\n` : "\n";
   return `/** Auto-generated from ${stem}.pdf — do not edit */
-export const pdfFieldNames = ${JSON.stringify(fieldNames)} as const;
-export type PdfFieldName = (typeof pdfFieldNames)[number];
+${imports}
+
+export const pdfSchema = {${schemaBody}} as const;
+
+export type PdfFieldName = keyof typeof pdfSchema;
+
+export type PdfFieldValueType<T extends PdfFieldName> =
+  (typeof pdfSchema)[T] extends typeof PDFCheckBox ? boolean : string;
 `;
 }
 
@@ -54,12 +77,15 @@ async function processPdf(pdfPath, task) {
   const typesPath = join(dir, `${stem}.types.ts`);
 
   try {
-    const fieldNames = await extractFieldNames(pdfPath);
-    const content = generateTypesContent(stem, fieldNames);
+    const fields = await extractFields(pdfPath);
+    const content = generateTypesContent(stem, fields);
     writeFileSync(typesPath, content);
     const displayPath = relative(PDFS_DIR, join(dir, stem));
-    task?.message(`${displayPath}\n→ extracted ${fieldNames.length} fields`);
-    return { path: typesPath, count: fieldNames.length };
+    const checkboxCount = fields.filter((f) => f.fieldClass === "PDFCheckBox").length;
+    task?.message(
+      `${displayPath}\n→ extracted ${fields.length} fields (${checkboxCount} checkbox)`,
+    );
+    return { path: typesPath, count: fields.length };
   } catch (err) {
     task?.error(err.message);
     throw err;

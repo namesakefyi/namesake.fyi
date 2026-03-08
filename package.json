@@ -7,7 +7,7 @@
     "prepare": "husky",
     "dev": "astro dev --open",
     "start": "astro dev",
-    "build": "pnpm pdf:extract-types && wrangler types && astro check && astro build",
+    "build": "pnpm pdf:types && wrangler types && astro check && astro build",
     "build:only": "astro build",
     "preview": "wrangler types && astro preview",
     "astro": "astro",
@@ -26,7 +26,7 @@
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",
     "idb:add-migration": "node scripts/create-idb-migration.mjs",
-    "pdf:extract-types": "node scripts/extract-pdf-types.mjs"
+    "pdf:types": "node scripts/extract-pdf-types.mjs"
   },
   "lint-staged": {
     "*": "pnpm check:fix"
