@@ -30,7 +30,7 @@ export async function fillPdf({
     // Get the form containing all the fields
     const form = pdfDoc.getForm();
 
-    // Fill out each field from the resolver (skip undefined)
+    // Fill out each field from the resolver
     const fields = pdf.resolver(userData);
     for (const [fieldName, value] of Object.entries(fields)) {
       if (value === undefined) continue;
