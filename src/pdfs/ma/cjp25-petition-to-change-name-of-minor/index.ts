@@ -1,9 +1,9 @@
 import { definePdf } from "@/pdfs/utils/definePdf";
-import pdf from "./cjp25-petition-to-change-name-of-minor.pdf";
-import type { PdfFieldName } from "./schema";
+import { deriveCurrentAge } from "@/utils/deriveCurrentAge";
 import { formatDateMMDDYYYY } from "@/utils/formatDateMMDDYYYY";
 import { joinPronouns } from "@/utils/joinPronouns";
-import { deriveCurrentAge } from "@/utils/deriveCurrentAge";
+import pdf from "./cjp25-petition-to-change-name-of-minor.pdf";
+import type { PdfFieldName } from "./schema";
 
 export default definePdf<PdfFieldName>({
   id: "cjp25-petition-to-change-name-of-minor",
@@ -21,7 +21,8 @@ export default definePdf<PdfFieldName>({
     oldLastName: data.oldLastName,
     isPresentedByLegalMotherParent1: data.isPresentedByLegalMotherParent1,
     isPresentedByLegalFatherParent2: data.isPresentedByLegalFatherParent2,
-    isPresentedByCourtAppointedGuardian: data.isPresentedByCourtAppointedGuardian,
+    isPresentedByCourtAppointedGuardian:
+      data.isPresentedByCourtAppointedGuardian,
     birthplaceCity: data.birthplaceCity,
     birthplaceState: data.birthplaceState,
     dateOfBirth: formatDateMMDDYYYY(data.dateOfBirth),
@@ -88,14 +89,20 @@ export default definePdf<PdfFieldName>({
       : undefined,
     isParent1AssentingTrue: data.isParent1Assenting === true,
     isParent1AssentingFalse: !data.isParent1Assenting,
-    parent1DissentReason: !data.isParent1Assenting ? data.parent1DissentReason : undefined,
+    parent1DissentReason: !data.isParent1Assenting
+      ? data.parent1DissentReason
+      : undefined,
     isParent2AssentingTrue: data.isParent2Assenting === true,
     isParent2AssentingFalse: !data.isParent2Assenting,
-    parent2DissentReason: !data.isParent2Assenting ? data.parent2DissentReason : undefined,
+    parent2DissentReason: !data.isParent2Assenting
+      ? data.parent2DissentReason
+      : undefined,
     isAllGuardiansAssentingTrue: data.isAllGuardiansAssenting === true,
     isAllGuardiansAssentingFalse: !data.isAllGuardiansAssenting,
     hasNoCountAppointedGuardian: !data.hasCourtAppointedGuardian,
-    guardianDissentReason: !data.isAllGuardiansAssenting ? data.guardianDissentReason : undefined,
+    guardianDissentReason: !data.isAllGuardiansAssenting
+      ? data.guardianDissentReason
+      : undefined,
     newFirstName: data.newFirstName,
     newMiddleName: data.newMiddleName,
     newLastName: data.newLastName,

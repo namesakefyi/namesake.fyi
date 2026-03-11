@@ -98,12 +98,12 @@ describe("Petition to Change Name of Minor", () => {
     expect(form.getTextField("mailingCity").getText()).toBe("Boston");
     expect(form.getTextField("mailingState").getText()).toBe("MA");
     expect(form.getTextField("mailingZipCode").getText()).toBe("02110");
-    expect(form.getCheckBox("isPresentedByLegalMotherParent1").isChecked()).toBe(
-      true,
-    );
-    expect(form.getCheckBox("isPresentedByLegalFatherParent2").isChecked()).toBe(
-      false,
-    );
+    expect(
+      form.getCheckBox("isPresentedByLegalMotherParent1").isChecked(),
+    ).toBe(true);
+    expect(
+      form.getCheckBox("isPresentedByLegalFatherParent2").isChecked(),
+    ).toBe(false);
     expect(
       form.getCheckBox("isPresentedByCourtAppointedGuardian").isChecked(),
     ).toBe(false);
