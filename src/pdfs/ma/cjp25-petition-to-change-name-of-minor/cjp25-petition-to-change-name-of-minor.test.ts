@@ -19,8 +19,10 @@ describe("Petition to Change Name of Minor", () => {
     birthplaceState: "MA",
     dateOfBirth: "2015-06-15",
     residenceCounty: "Suffolk",
-    isMailingAddressDifferentFromResidence: true,
-    mailingStreetAddress: "456 Post St",
+    residenceStreetAddress: "456 Post St",
+    residenceCity: "Boston",
+    residenceState: "MA",
+    residenceZipCode: "02110",
     mailingCity: "Boston",
     mailingState: "MA",
     mailingZipCode: "02110",
@@ -169,22 +171,6 @@ describe("Petition to Change Name of Minor", () => {
     expect(form.getTextField("previousNameReason").getText()).toBe("Marriage");
   });
 
-  it("does not show mailing address when same as residence", async () => {
-    vi.setSystemTime(new Date(2025, 5, 15));
-    const dataWithSameAddress = {
-      ...testData,
-      isMailingAddressDifferentFromResidence: false,
-    };
-
-    const form = await getPdfForm({
-      pdf: cjp25PetitionToChangeNameOfMinor,
-      userData: dataWithSameAddress,
-    });
-
-    expect(form.getTextField("mailingStreetAddress").getText() ?? "").toBe("");
-    expect(form.getTextField("mailingCity").getText() ?? "").toBe("");
-  });
-
   it("shows parent dissent reason when parent does not assent", async () => {
     vi.setSystemTime(new Date(2025, 5, 15));
     const dataWithDissent = {
@@ -239,5 +225,143 @@ describe("Petition to Change Name of Minor", () => {
       true,
     );
     expect(form.getTextField("languages").getText()).toBe("Spanish");
+  });
+
+  it("shows guardian fields when court-appointed guardian exists", async () => {
+    vi.setSystemTime(new Date(2025, 5, 15));
+    const dataWithGuardian = {
+      ...testData,
+      hasCourtAppointedGuardian: true,
+      guardianFullName: "Guardian Smith",
+      guardianStreetAddress: "789 Guardian Ln",
+      guardianCity: "Quincy",
+      guardianState: "MA",
+      guardianZipCode: "02169",
+      guardianPhone: "555-333-3333",
+      guardianEmail: "guardian@example.com",
+      coGuardianFullName: "Co-Guardian Jones",
+      coGuardianStreetAddress: "321 CoGuardian St",
+      coGuardianCity: "Worcester",
+      coGuardianState: "MA",
+      coGuardianZipCode: "01608",
+      coGuardianPhone: "555-444-4444",
+      coGuardianEmail: "coguardian@example.com",
+    };
+
+    const form = await getPdfForm({
+      pdf: cjp25PetitionToChangeNameOfMinor,
+      userData: dataWithGuardian,
+    });
+
+    expect(form.getCheckBox("hasCourtAppointedGuardianTrue").isChecked()).toBe(
+      true,
+    );
+    expect(form.getTextField("guardianFullName").getText()).toBe(
+      "Guardian Smith",
+    );
+    expect(form.getTextField("guardianStreetAddress").getText()).toBe(
+      "789 Guardian Ln",
+    );
+    expect(form.getTextField("guardianCity").getText()).toBe("Quincy");
+    expect(form.getTextField("coGuardianFullName").getText()).toBe(
+      "Co-Guardian Jones",
+    );
+  });
+
+  it("does not show guardian fields when no court-appointed guardian", async () => {
+    vi.setSystemTime(new Date(2025, 5, 15));
+    const dataWithGuardianInfoButNoGuardian = {
+      ...testData,
+      hasCourtAppointedGuardian: false,
+      guardianFullName: "Should not appear",
+      coGuardianFullName: "Should not appear",
+    };
+
+    const form = await getPdfForm({
+      pdf: cjp25PetitionToChangeNameOfMinor,
+      userData: dataWithGuardianInfoButNoGuardian,
+    });
+
+    expect(form.getTextField("guardianFullName").getText() ?? "").toBe("");
+    expect(form.getTextField("coGuardianFullName").getText() ?? "").toBe("");
+  });
+
+  it("shows parent 2 dissent reason when parent 2 does not assent", async () => {
+    vi.setSystemTime(new Date(2025, 5, 15));
+    const dataWithParent2Dissent = {
+      ...testData,
+      isParent2Assenting: false,
+      parent2DissentReason: "Parent 2 objects",
+    };
+
+    const form = await getPdfForm({
+      pdf: cjp25PetitionToChangeNameOfMinor,
+      userData: dataWithParent2Dissent,
+    });
+
+    expect(form.getCheckBox("isParent2AssentingTrue").isChecked()).toBe(false);
+    expect(form.getCheckBox("isParent2AssentingFalse").isChecked()).toBe(true);
+    expect(form.getTextField("parent2DissentReason").getText()).toBe(
+      "Parent 2 objects",
+    );
+  });
+
+  it("shows guardian dissent reason when guardians do not assent", async () => {
+    vi.setSystemTime(new Date(2025, 5, 15));
+    const dataWithGuardianDissent = {
+      ...testData,
+      hasCourtAppointedGuardian: true,
+      isAllGuardiansAssenting: false,
+      guardianDissentReason: "Guardian unavailable",
+    };
+
+    const form = await getPdfForm({
+      pdf: cjp25PetitionToChangeNameOfMinor,
+      userData: dataWithGuardianDissent,
+    });
+
+    expect(form.getCheckBox("isAllGuardiansAssentingTrue").isChecked()).toBe(
+      false,
+    );
+    expect(form.getCheckBox("isAllGuardiansAssentingFalse").isChecked()).toBe(
+      true,
+    );
+    expect(form.getTextField("guardianDissentReason").getText()).toBe(
+      "Guardian unavailable",
+    );
+  });
+
+  it("shows child over 12 when date of birth makes child 12 or older", async () => {
+    vi.setSystemTime(new Date(2025, 5, 15)); // Jun 15, 2025
+    const dataWithOlderChild = {
+      ...testData,
+      dateOfBirth: "2012-01-01", // 13 years old
+    };
+
+    const form = await getPdfForm({
+      pdf: cjp25PetitionToChangeNameOfMinor,
+      userData: dataWithOlderChild,
+    });
+
+    expect(form.getCheckBox("isChildUnder12").isChecked()).toBe(false);
+  });
+
+  it("does not show language when interpreter needed but no language specified", async () => {
+    vi.setSystemTime(new Date(2025, 5, 15));
+    const dataWithInterpreterButNoLanguage = {
+      ...testData,
+      isInterpreterNeededForChild: true,
+      language: undefined,
+    };
+
+    const form = await getPdfForm({
+      pdf: cjp25PetitionToChangeNameOfMinor,
+      userData: dataWithInterpreterButNoLanguage,
+    });
+
+    expect(form.getCheckBox("isInterpreterNeededForChild").isChecked()).toBe(
+      true,
+    );
+    expect(form.getTextField("languages").getText() ?? "").toBe("");
   });
 });
