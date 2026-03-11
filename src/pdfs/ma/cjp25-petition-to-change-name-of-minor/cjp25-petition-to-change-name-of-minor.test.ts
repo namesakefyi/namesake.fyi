@@ -1,13 +1,14 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { getPdfForm } from "@/pdfs/utils/getPdfForm";
 import cjp25PetitionToChangeNameOfMinor from ".";
+import type { FormData } from "@/constants/fields";
 
 describe("Petition to Change Name of Minor", () => {
   afterEach(() => {
     vi.useRealTimers();
   });
 
-  const testData = {
+  const testData: Partial<FormData> = {
     oldFirstName: "Old",
     oldMiddleName: "M",
     oldLastName: "Name",
@@ -24,8 +25,7 @@ describe("Petition to Change Name of Minor", () => {
     mailingState: "MA",
     mailingZipCode: "02110",
     isOkayToSharePronouns: true,
-    pronouns: ["She/Her"],
-    // New fields for minor petition
+    pronouns: ["she/her"],
     isPresentedByLegalMotherParent1: true,
     isPresentedByLegalFatherParent2: false,
     isPresentedByCourtAppointedGuardian: false,
@@ -60,14 +60,13 @@ describe("Petition to Change Name of Minor", () => {
     guardianEmail: "",
     coGuardianEmail: "",
     isAllGuardiansAssenting: false,
-    hasNoCourtAppointedGuardian: true,
     hasCourtAppointedGuardian: false,
     reasonForChangingName: "Preferred name",
     isInterpreterNeededForChild: false,
     isInterpreterNeededForParent1: false,
     isInterpreterNeededForParent2: false,
     isInterpreterNeededForGuardian: false,
-    languages: "",
+    language: "",
     hasPreviousNameChange: false,
   };
 
@@ -141,7 +140,7 @@ describe("Petition to Change Name of Minor", () => {
       "Preferred name",
     );
     expect(form.getCheckBox("isOkayToSharePronouns").isChecked()).toBe(true);
-    expect(form.getTextField("pronouns").getText()).toBe("She/Her");
+    expect(form.getTextField("pronouns").getText()).toBe("she/her");
   });
 
   it("shows previous name change when it exists", async () => {
@@ -211,7 +210,7 @@ describe("Petition to Change Name of Minor", () => {
     const dataWithoutPronouns = {
       ...testData,
       isOkayToSharePronouns: false,
-      pronouns: ["She/Her"],
+      pronouns: ["she/her"],
     };
 
     const form = await getPdfForm({
@@ -221,5 +220,22 @@ describe("Petition to Change Name of Minor", () => {
 
     expect(form.getCheckBox("isOkayToSharePronouns").isChecked()).toBe(false);
     expect(form.getTextField("pronouns").getText() ?? "").toBe("");
+  });
+
+  it("shows language when interpreter is needed for any party", async () => {
+    vi.setSystemTime(new Date(2025, 5, 15));
+    const dataWithInterpreter = {
+      ...testData,
+      isInterpreterNeededForChild: true,
+      language: "es",
+    };
+
+    const form = await getPdfForm({
+      pdf: cjp25PetitionToChangeNameOfMinor,
+      userData: dataWithInterpreter,
+    });
+
+    expect(form.getCheckBox("isInterpreterNeededForChild").isChecked()).toBe(true);
+    expect(form.getTextField("languages").getText()).toBe("Spanish");
   });
 });

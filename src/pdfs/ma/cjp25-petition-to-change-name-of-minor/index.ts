@@ -1,3 +1,4 @@
+import languageNameMap from "language-name-map/map";
 import { definePdf } from "@/pdfs/utils/definePdf";
 import { deriveCurrentAge } from "@/utils/deriveCurrentAge";
 import { formatDateMMDDYYYY } from "@/utils/formatDateMMDDYYYY";
@@ -87,6 +88,8 @@ export default definePdf<PdfFieldName>({
     isChildUnder12: data.dateOfBirth
       ? deriveCurrentAge(new Date(data.dateOfBirth)) < 12
       : undefined,
+
+    // Parent/guardian consent
     isParent1AssentingTrue: data.isParent1Assenting === true,
     isParent1AssentingFalse: !data.isParent1Assenting,
     parent1DissentReason: !data.isParent1Assenting
@@ -103,15 +106,23 @@ export default definePdf<PdfFieldName>({
     guardianDissentReason: !data.isAllGuardiansAssenting
       ? data.guardianDissentReason
       : undefined,
+
+    // New name
     newFirstName: data.newFirstName,
     newMiddleName: data.newMiddleName,
     newLastName: data.newLastName,
     reasonForChangingName: data.reasonForChangingName,
+
+    // Interpreters
     isInterpreterNeededForChild: data.isInterpreterNeededForChild,
     isInterpreterNeededForParent1: data.isInterpreterNeededForParent1,
     isInterpreterNeededForParent2: data.isInterpreterNeededForParent2,
     isInterpreterNeededForGuardian: data.isInterpreterNeededForGuardian,
-    languages: data.language,
+    languages: (data.isInterpreterNeededForChild || data.isInterpreterNeededForParent1 || data.isInterpreterNeededForParent2 || data.isInterpreterNeededForGuardian) && data.language
+    ? languageNameMap[data.language].name
+    : undefined,
+
+    // Okay to share pronouns
     isOkayToSharePronouns: data.isOkayToSharePronouns,
     pronouns: data.isOkayToSharePronouns
       ? joinPronouns(data.pronouns, data.otherPronouns)

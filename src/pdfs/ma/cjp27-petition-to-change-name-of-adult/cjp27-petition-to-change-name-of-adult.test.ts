@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { getPdfForm } from "@/pdfs/utils/getPdfForm";
 import petitionToChangeNameOfAdult from ".";
+import type { FormData } from "@/constants/fields";
 
 describe("CJP27 Petition to Change Name of Adult", () => {
-  const testData = {
+  const testData: Partial<FormData> = {
     newFirstName: "Eva",
     newMiddleName: "K",
     newLastName: "Decker",
@@ -26,7 +27,7 @@ describe("CJP27 Petition to Change Name of Adult", () => {
     phoneNumber: "555-555-5555",
     dateOfBirth: "1990-01-01",
     hasPreviousNameChange: false,
-    pronouns: ["She/Her"],
+    pronouns: ["she/her"],
   };
 
   it("maps fields correctly to the PDF", async () => {
