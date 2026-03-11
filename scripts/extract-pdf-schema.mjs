@@ -99,7 +99,8 @@ async function main() {
   let pdfPaths;
 
   if (arg) {
-    const resolved = resolve(process.cwd(), arg);
+    const baseDir = process.env.INIT_CWD || process.cwd();
+    const resolved = resolve(baseDir, arg);
     pdfPaths = [resolved];
     if (!resolved.endsWith(".pdf")) {
       if (!quiet) log.error("Path must be a .pdf file");

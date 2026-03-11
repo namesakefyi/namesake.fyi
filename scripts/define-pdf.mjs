@@ -6,7 +6,7 @@ import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { PDFDocument, PDFName } from "@cantoo/pdf-lib";
+import { PDFDocument } from "@cantoo/pdf-lib";
 import {
   autocomplete,
   box,
@@ -18,6 +18,7 @@ import {
   outro,
   text,
 } from "@clack/prompts";
+import { stripFormFieldStyles } from "./clean-pdf.mjs";
 import { escapeKey } from "./utils.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -87,23 +88,6 @@ function extractPdfFields(pdfDoc) {
     result.push({ name, type });
   }
   return result;
-}
-
-/** Removes borders and backgrounds from all form fields in place. */
-function stripFormFieldStyles(pdfDoc) {
-  const form = pdfDoc.getForm();
-  for (const field of form.getFields()) {
-    for (const widget of field.acroField.getWidgets()) {
-      widget.dict.delete(PDFName.of("AP"));
-      const borderStyle = widget.getOrCreateBorderStyle?.();
-      if (borderStyle) borderStyle.setWidth(0);
-      const ac = widget.getOrCreateAppearanceCharacteristics?.();
-      if (ac) {
-        ac.dict.delete(PDFName.of("BG"));
-        ac.dict.delete(PDFName.of("BC"));
-      }
-    }
-  }
 }
 
 /** Returns the output directory path for a jurisdiction (required). */
@@ -356,7 +340,8 @@ async function main() {
     );
   }
 
-  const resolvedPath = resolve(process.cwd(), pdfPathArg.trim());
+  const baseDir = process.env.INIT_CWD || process.cwd();
+  const resolvedPath = resolve(baseDir, pdfPathArg.trim());
   if (!existsSync(resolvedPath)) exitWith(`File not found: ${resolvedPath}`);
   if (!resolvedPath.toLowerCase().endsWith(".pdf"))
     exitWith("File must be a .pdf");

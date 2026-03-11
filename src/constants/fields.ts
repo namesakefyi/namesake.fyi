@@ -17,8 +17,73 @@ export const FIELD_DEFS = [
   { name: "birthplaceState", label: "State of birth", type: "string" },
   { name: "birthplaceCountry", label: "Country of birth", type: "string" },
   {
+    name: "isALegalParentDeceased",
+    label: "Is a legal parent deceased?",
+    type: "boolean",
+  },
+  {
+    name: "isAllGuardiansAssenting",
+    label: "All guardians assenting?",
+    type: "boolean",
+  },
+  {
     name: "isCurrentlyUnhoused",
     label: "Currently unhoused?",
+    type: "boolean",
+  },
+  {
+    name: "isInterpreterNeededForChild",
+    label: "Interpreter needed for child?",
+    type: "boolean",
+  },
+  {
+    name: "isInterpreterNeededForGuardian",
+    label: "Interpreter needed for guardian?",
+    type: "boolean",
+  },
+  {
+    name: "isInterpreterNeededForParent1",
+    label: "Interpreter needed for parent 1?",
+    type: "boolean",
+  },
+  {
+    name: "isInterpreterNeededForParent2",
+    label: "Interpreter needed for parent 2?",
+    type: "boolean",
+  },
+  {
+    name: "isOnlyOneParentListedOnBirthCertificate",
+    label: "Only one parent listed on birth certificate?",
+    type: "boolean",
+  },
+  {
+    name: "isParent1Assenting",
+    label: "Parent 1 assenting?",
+    type: "boolean",
+  },
+  {
+    name: "isParent2Assenting",
+    label: "Parent 2 assenting?",
+    type: "boolean",
+  },
+  {
+    name: "isPresentedByCourtAppointedGuardian",
+    label: "Presented by court-appointed guardian?",
+    type: "boolean",
+  },
+  {
+    name: "isPresentedByLegalFatherParent2",
+    label: "Presented by legal father (parent 2)?",
+    type: "boolean",
+  },
+  {
+    name: "isPresentedByLegalMotherParent1",
+    label: "Presented by legal mother (parent 1)?",
+    type: "boolean",
+  },
+  {
+    name: "isUnderSupervisionOfMassDeptOfYouthServices",
+    label: "Under supervision of Mass. Dept. of Youth Services?",
     type: "boolean",
   },
   {
@@ -60,6 +125,86 @@ export const FIELD_DEFS = [
   {
     name: "otherNamesOrAliases",
     label: "Other names or aliases",
+    type: "string",
+  },
+  {
+    name: "parent1City",
+    label: "Parent 1 city",
+    type: "string",
+  },
+  {
+    name: "parent1DissentReason",
+    label: "Parent 1 dissent reason",
+    type: "string",
+  },
+  {
+    name: "parent1Email",
+    label: "Parent 1 email",
+    type: "string",
+  },
+  {
+    name: "parent1FullName",
+    label: "Parent 1 full name",
+    type: "string",
+  },
+  {
+    name: "parent1Phone",
+    label: "Parent 1 phone",
+    type: "string",
+  },
+  {
+    name: "parent1State",
+    label: "Parent 1 state",
+    type: "string",
+  },
+  {
+    name: "parent1StreetAddress",
+    label: "Parent 1 street address",
+    type: "string",
+  },
+  {
+    name: "parent1ZipCode",
+    label: "Parent 1 zip code",
+    type: "string",
+  },
+  {
+    name: "parent2City",
+    label: "Parent 2 city",
+    type: "string",
+  },
+  {
+    name: "parent2DissentReason",
+    label: "Parent 2 dissent reason",
+    type: "string",
+  },
+  {
+    name: "parent2Email",
+    label: "Parent 2 email",
+    type: "string",
+  },
+  {
+    name: "parent2FullName",
+    label: "Parent 2 full name",
+    type: "string",
+  },
+  {
+    name: "parent2Phone",
+    label: "Parent 2 phone",
+    type: "string",
+  },
+  {
+    name: "parent2State",
+    label: "Parent 2 state",
+    type: "string",
+  },
+  {
+    name: "parent2StreetAddress",
+    label: "Parent 2 street address",
+    type: "string",
+  },
+  {
+    name: "parent2ZipCode",
+    label: "Parent 2 zip code",
     type: "string",
   },
   {
@@ -118,6 +263,41 @@ export const FIELD_DEFS = [
     type: "string",
   },
   {
+    name: "coGuardianCity",
+    label: "Co-guardian city",
+    type: "string",
+  },
+  {
+    name: "coGuardianEmail",
+    label: "Co-guardian email",
+    type: "string",
+  },
+  {
+    name: "coGuardianFullName",
+    label: "Co-guardian full name",
+    type: "string",
+  },
+  {
+    name: "coGuardianPhone",
+    label: "Co-guardian phone",
+    type: "string",
+  },
+  {
+    name: "coGuardianState",
+    label: "Co-guardian state",
+    type: "string",
+  },
+  {
+    name: "coGuardianStreetAddress",
+    label: "Co-guardian street address",
+    type: "string",
+  },
+  {
+    name: "coGuardianZipCode",
+    label: "Co-guardian zip code",
+    type: "string",
+  },
+  {
     name: "sexAssignedAtBirth",
     label: "Sex assigned at birth",
     type: "string",
@@ -161,6 +341,56 @@ export const FIELD_DEFS = [
     name: "fathersLastName",
     label: "Father's last name",
     type: "string",
+  },
+  {
+    name: "guardianCity",
+    label: "Guardian city",
+    type: "string",
+  },
+  {
+    name: "guardianDissentReason",
+    label: "Guardian dissent reason",
+    type: "string",
+  },
+  {
+    name: "guardianEmail",
+    label: "Guardian email",
+    type: "string",
+  },
+  {
+    name: "guardianFullName",
+    label: "Guardian full name",
+    type: "string",
+  },
+  {
+    name: "guardianPhone",
+    label: "Guardian phone",
+    type: "string",
+  },
+  {
+    name: "guardianState",
+    label: "Guardian state",
+    type: "string",
+  },
+  {
+    name: "guardianStreetAddress",
+    label: "Guardian street address",
+    type: "string",
+  },
+  {
+    name: "guardianZipCode",
+    label: "Guardian zip code",
+    type: "string",
+  },
+  {
+    name: "hasCourtAppointedGuardian",
+    label: "Court-appointed guardian?",
+    type: "boolean",
+  },
+  {
+    name: "hasLegalParentHadParentalRightsTerminated",
+    label: "Has legal parent had parental rights terminated?",
+    type: "boolean",
   },
   {
     name: "hasPreviousSocialSecurityCard",
