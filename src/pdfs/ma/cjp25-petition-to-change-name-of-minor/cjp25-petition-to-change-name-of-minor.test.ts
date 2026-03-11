@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
+import type { FormData } from "@/constants/fields";
 import { getPdfForm } from "@/pdfs/utils/getPdfForm";
 import cjp25PetitionToChangeNameOfMinor from ".";
-import type { FormData } from "@/constants/fields";
 
 describe("Petition to Change Name of Minor", () => {
   afterEach(() => {
@@ -235,7 +235,9 @@ describe("Petition to Change Name of Minor", () => {
       userData: dataWithInterpreter,
     });
 
-    expect(form.getCheckBox("isInterpreterNeededForChild").isChecked()).toBe(true);
+    expect(form.getCheckBox("isInterpreterNeededForChild").isChecked()).toBe(
+      true,
+    );
     expect(form.getTextField("languages").getText()).toBe("Spanish");
   });
 });

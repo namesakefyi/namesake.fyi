@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
+import type { FormData } from "@/constants/fields";
 import { getPdfForm } from "@/pdfs/utils/getPdfForm";
 import petitionToChangeNameOfAdult from ".";
-import type { FormData } from "@/constants/fields";
 
 describe("CJP27 Petition to Change Name of Adult", () => {
   const testData: Partial<FormData> = {

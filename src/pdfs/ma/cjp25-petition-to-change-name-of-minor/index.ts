@@ -118,9 +118,14 @@ export default definePdf<PdfFieldName>({
     isInterpreterNeededForParent1: data.isInterpreterNeededForParent1,
     isInterpreterNeededForParent2: data.isInterpreterNeededForParent2,
     isInterpreterNeededForGuardian: data.isInterpreterNeededForGuardian,
-    languages: (data.isInterpreterNeededForChild || data.isInterpreterNeededForParent1 || data.isInterpreterNeededForParent2 || data.isInterpreterNeededForGuardian) && data.language
-    ? languageNameMap[data.language].name
-    : undefined,
+    languages:
+      (data.isInterpreterNeededForChild ||
+        data.isInterpreterNeededForParent1 ||
+        data.isInterpreterNeededForParent2 ||
+        data.isInterpreterNeededForGuardian) &&
+      data.language
+        ? languageNameMap[data.language].name
+        : undefined,
 
     // Okay to share pronouns
     isOkayToSharePronouns: data.isOkayToSharePronouns,
