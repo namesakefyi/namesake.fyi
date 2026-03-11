@@ -1,8 +1,8 @@
+import { useFormContext } from "react-hook-form";
 import { Banner } from "@/components/react/common/Banner";
 import { FormStep } from "@/components/react/forms/FormStep";
 import { YesNoField } from "@/components/react/forms/YesNoField";
 import type { Step } from "@/forms/types";
-import { useFormContext } from "react-hook-form";
 
 export const parentalRightsTerminatedStep: Step = {
   id: "parental-rights-terminated",
@@ -12,20 +12,20 @@ export const parentalRightsTerminatedStep: Step = {
     const form = useFormContext();
 
     return (
-    <FormStep stepConfig={stepConfig}>
-      <YesNoField
-        name="hasLegalParentHadParentalRightsTerminated"
-        label="Has any legal parent listed on the minor's birth certificate had their parental rights terminated?"
-        labelHidden
-        yesLabel="Yes"
-        noLabel="No"
-      />
-      {form.watch("hasLegalParentHadParentalRightsTerminated") === true && (
-        <Banner>
-          You will need to attach proof from the prior court proceeding.
-        </Banner>
-      )}
-    </FormStep>
-  )
-},
+      <FormStep stepConfig={stepConfig}>
+        <YesNoField
+          name="hasLegalParentHadParentalRightsTerminated"
+          label="Has any legal parent listed on the minor's birth certificate had their parental rights terminated?"
+          labelHidden
+          yesLabel="Yes"
+          noLabel="No"
+        />
+        {form.watch("hasLegalParentHadParentalRightsTerminated") === true && (
+          <Banner>
+            You will need to attach proof from the prior court proceeding.
+          </Banner>
+        )}
+      </FormStep>
+    );
+  },
 };

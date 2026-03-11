@@ -45,10 +45,16 @@ export const parentAddressStep: Step = {
           label="Parents have different addresses"
         />
         {!secondAddressVisible && <AddressField type="parent1" />}
-        <FormSubsection title="First parent's address" isVisible={secondAddressVisible}>
+        <FormSubsection
+          title="First parent's address"
+          isVisible={secondAddressVisible}
+        >
           <AddressField type="parent1" />
         </FormSubsection>
-        <FormSubsection title="Second parent's address" isVisible={secondAddressVisible}>
+        <FormSubsection
+          title="Second parent's address"
+          isVisible={secondAddressVisible}
+        >
           <AddressField type="parent2" />
         </FormSubsection>
       </FormStep>

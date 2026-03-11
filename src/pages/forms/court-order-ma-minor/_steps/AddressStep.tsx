@@ -1,7 +1,5 @@
 import { AddressField } from "@/components/react/forms/AddressField";
-import {
-  FormStep,
-} from "@/components/react/forms/FormStep";
+import { FormStep } from "@/components/react/forms/FormStep";
 import type { Step } from "@/forms/types";
 
 export const addressStep: Step = {

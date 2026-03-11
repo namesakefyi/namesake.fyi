@@ -1,14 +1,14 @@
+import { Controller, useFormContext } from "react-hook-form";
+import { ComboBox, ComboBoxItem } from "@/components/react/common/ComboBox";
+import { EmailField } from "@/components/react/forms/EmailField";
 import {
   FormStep,
   FormSubsection,
   useFieldVisible,
 } from "@/components/react/forms/FormStep";
+import { PhoneField } from "@/components/react/forms/PhoneField";
 import { ShortTextField } from "@/components/react/forms/ShortTextField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
-import { EmailField } from "@/components/react/forms/EmailField";
-import { PhoneField } from "@/components/react/forms/PhoneField";
-import { Controller, useFormContext } from "react-hook-form";
-import { ComboBox, ComboBoxItem } from "@/components/react/common/ComboBox";
 import { JURISDICTIONS } from "@/constants/jurisdictions";
 import type { Step } from "@/forms/types";
 
@@ -51,10 +51,7 @@ export const guardianStep: Step = {
           isVisible={guardianVisible}
         >
           <ShortTextField name="guardianFullName" label="Guardian full name" />
-          <ShortTextField
-            name="guardianStreetAddress"
-            label="Street address"
-          />
+          <ShortTextField name="guardianStreetAddress" label="Street address" />
           <ShortTextField name="guardianCity" label="City" />
           <GuardianStateField />
           <ShortTextField name="guardianZipCode" label="ZIP code" />
@@ -65,7 +62,10 @@ export const guardianStep: Step = {
           title="Co-guardian (if any)"
           isVisible={guardianVisible}
         >
-          <ShortTextField name="coGuardianFullName" label="Co-guardian full name" />
+          <ShortTextField
+            name="coGuardianFullName"
+            label="Co-guardian full name"
+          />
           <ShortTextField
             name="coGuardianStreetAddress"
             label="Street address"

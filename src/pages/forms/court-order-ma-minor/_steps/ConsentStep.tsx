@@ -10,7 +10,15 @@ import type { Step } from "@/forms/types";
 export const consentStep: Step = {
   id: "consent",
   title: "Does everyone consent to the name change?",
-  fields: ["isParent1Assenting", "parent1DissentReason", "isParent2Assenting", "parent2DissentReason", "hasCourtAppointedGuardian", "isAllGuardiansAssenting", "guardianDissentReason"],
+  fields: [
+    "isParent1Assenting",
+    "parent1DissentReason",
+    "isParent2Assenting",
+    "parent2DissentReason",
+    "hasCourtAppointedGuardian",
+    "isAllGuardiansAssenting",
+    "guardianDissentReason",
+  ],
   isFieldVisible: (fieldName, data) => {
     if (fieldName === "parent1DissentReason") {
       return data.isParent1Assenting === false;
@@ -51,20 +59,14 @@ export const consentStep: Step = {
           label="Does parent 1 consent to the name change?"
         />
         <FormSubsection isVisible={parent1DissentVisible}>
-          <LongTextField
-            name="parent1DissentReason"
-            label="Reason"
-          />
+          <LongTextField name="parent1DissentReason" label="Reason" />
         </FormSubsection>
         <YesNoField
           name="isParent2Assenting"
           label="Does parent 2 consent to the name change?"
         />
         <FormSubsection isVisible={parent2DissentVisible}>
-          <LongTextField
-            name="parent2DissentReason"
-            label="Reason"
-          />
+          <LongTextField name="parent2DissentReason" label="Reason" />
         </FormSubsection>
         {guardianVisible && (
           <>
@@ -73,10 +75,7 @@ export const consentStep: Step = {
               label="Do all court-appointed guardians consent to the name change?"
             />
             <FormSubsection isVisible={guardianDissentVisible}>
-              <LongTextField
-                name="guardianDissentReason"
-                label="Reason"
-              />
+              <LongTextField name="guardianDissentReason" label="Reason" />
             </FormSubsection>
           </>
         )}

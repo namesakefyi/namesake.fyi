@@ -6,11 +6,7 @@ import type { FieldName } from "@/constants/fields";
 import { JURISDICTIONS } from "@/constants/jurisdictions";
 import "./AddressField.css";
 
-type AddressType =
-  | "residence"
-  | "mailing"
-  | "parent1"
-  | "parent2";
+type AddressType = "residence" | "mailing" | "parent1" | "parent2";
 
 export interface AddressFieldProps {
   children?: React.ReactNode;
@@ -65,7 +61,8 @@ export function AddressField({
     },
   };
 
-  const hasCounty = includeCounty && (type === "residence" || type === "mailing");
+  const hasCounty =
+    includeCounty && (type === "residence" || type === "mailing");
 
   // Input mask: enforce ZIP code format of 12345-1234
   const maskitoOptions: MaskitoOptions = {

@@ -1,12 +1,11 @@
-import { FormStep } from "@/components/react/forms/FormStep";
 import { CheckboxField } from "@/components/react/forms/CheckboxField";
+import { FormStep } from "@/components/react/forms/FormStep";
 import type { Step } from "@/forms/types";
 
 export const presentedByStep: Step = {
   id: "presented-by",
   title: "Who is presenting this petition?",
-  description:
-    "Select all that apply.",
+  description: "Select all that apply.",
   fields: [
     "isPresentedByLegalMotherParent1",
     "isPresentedByLegalFatherParent2",

@@ -1,16 +1,15 @@
+import { CheckboxField } from "@/components/react/forms/CheckboxField";
 import {
   FormStep,
   FormSubsection,
   useFieldVisible,
 } from "@/components/react/forms/FormStep";
-import { CheckboxField } from "@/components/react/forms/CheckboxField";
 import { LanguageSelectField } from "@/components/react/forms/LanguageSelectField";
 import type { Step } from "@/forms/types";
 
 export const interpreterStep: Step = {
   id: "interpreter",
-  title:
-    "If there is a hearing, does anyone need an interpreter?",
+  title: "If there is a hearing, does anyone need an interpreter?",
   description: "In most cases, a hearing is not required.",
   fields: [
     "isInterpreterNeededForChild",

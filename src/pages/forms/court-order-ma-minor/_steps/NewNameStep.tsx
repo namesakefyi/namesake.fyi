@@ -1,4 +1,3 @@
-import { Banner } from "@/components/react/common/Banner";
 import { FormStep } from "@/components/react/forms/FormStep";
 import { NameField } from "@/components/react/forms/NameField";
 import type { Step } from "@/forms/types";

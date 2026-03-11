@@ -21,7 +21,8 @@ export const returnDocumentsStep: Step = {
         />
         {form.watch("shouldReturnOriginalDocuments") === false && (
           <Banner variant="warning">
-            We strongly recommend getting original documents back from the court.
+            We strongly recommend getting original documents back from the
+            court.
           </Banner>
         )}
       </FormStep>

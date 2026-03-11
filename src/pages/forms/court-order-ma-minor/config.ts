@@ -10,15 +10,15 @@ import { guardianStep } from "./_steps/GuardianStep";
 import { interpreterStep } from "./_steps/InterpreterStep";
 import { newNameStep } from "./_steps/NewNameStep";
 import { parentAddressStep } from "./_steps/ParentAddressStep";
-import { parentInfoStep } from "./_steps/ParentInfoStep";
 import { parentalRightsTerminatedStep } from "./_steps/ParentalRightsTerminatedStep";
+import { parentInfoStep } from "./_steps/ParentInfoStep";
+import { parentsDeceasedStep } from "./_steps/ParentsDeceasedStep";
 import { presentedByStep } from "./_steps/PresentedByStep";
 import { previousNameChangeStep } from "./_steps/PreviousNameChangeStep";
 import { pronounsStep } from "./_steps/PronounsStep";
 import { reasonStep } from "./_steps/ReasonStep";
 import { returnDocumentsStep } from "./_steps/ReturnDocumentsStep";
 import { youthServicesStep } from "./_steps/YouthServicesStep";
-import { parentsDeceasedStep } from "./_steps/ParentsDeceasedStep";
 
 export const courtOrderMinorMaConfig = defineFormConfig({
   slug: "court-order-ma-minor",
