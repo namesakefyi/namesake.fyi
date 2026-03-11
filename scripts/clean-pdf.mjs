@@ -3,8 +3,8 @@
 // Removes borders and backgrounds from all form fields in the PDF (in place).
 
 import { readFileSync, writeFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { PDFDocument, PDFName } from "@cantoo/pdf-lib";
 
 /** Removes borders and backgrounds from all form fields in place. */
