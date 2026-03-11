@@ -24,9 +24,11 @@ Use the [BentoPDF Form Creator](https://bentopdf.com/form-creator.html). Upload 
 
 Examine the names of all fields in the form. These names are what we use to map user submissions from Namesake forms to the final output in the completed PDF. Often, the raw PDF from a .gov site has field names that are vague ("type"), full sentences ("[A] I receive assistance from ..."), meaningless internal markers ("form1[0].BodyPage1[0].S1[0].Ln[0]"), or a mix of all three.
 
-To make things easier for us, let's rename them:
+Sometimes, interactive fields will be missing altogether. In this case, you'll need to insert new text fields and checkbox fields, then position and name them.
 
-1. Use `camelCase` naming for all fields, like `residenceStreetAddress` or `newFirstName`.
+When naming:
+
+1. Use `camelCase` for all fields, like `residenceStreetAddress` or `newFirstName`.
 2. Prefix checkbox fields with `is`, `should`, or `has`. For example, `isReceivingMedicaid` or `shouldReturnOriginalDocuments`.
    - If there are two separate checkboxes representing the same boolean value (such as a "Yes" and "No" checkbox for the same question), you can add the suffix `True` and `False`. For example, `hasPreviousNameChangeTrue` and `hasPreviousNameChangeFalse`.
 3. Try to match the list of [existing field definitions](../constants/fields.ts). Nothing needs to *exactly* match, but keeping the names close will make the next step easier.
