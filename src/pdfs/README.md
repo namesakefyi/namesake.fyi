@@ -165,3 +165,13 @@ To regenerate schemas for all PDFs in `src/pdfs`, run without an argument:
 ```zsh
 pnpm pdf:schema
 ```
+
+## Removing form borders and backgrounds
+
+PDF editors may insert default black borders and white backgrounds to text fields and checkboxes that you insert. To remove these styles and display transparent fields, run:
+
+```zsh
+pnpm pdf:clean path/to/form.pdf
+```
+
+Form fields are stripped of styles automatically during `pnpm pdf:define`.
