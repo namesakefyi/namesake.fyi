@@ -31,7 +31,8 @@ async function main() {
     process.exit(1);
   }
 
-  const pdfPath = resolve(process.cwd(), pathArg);
+  const baseDir = process.env.INIT_CWD || process.cwd();
+  const pdfPath = resolve(baseDir, pathArg);
   let pdfDoc;
   try {
     const bytes = readFileSync(pdfPath);

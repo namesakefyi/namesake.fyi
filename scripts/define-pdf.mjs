@@ -340,7 +340,8 @@ async function main() {
     );
   }
 
-  const resolvedPath = resolve(process.cwd(), pdfPathArg.trim());
+  const baseDir = process.env.INIT_CWD || process.cwd();
+  const resolvedPath = resolve(baseDir, pdfPathArg.trim());
   if (!existsSync(resolvedPath)) exitWith(`File not found: ${resolvedPath}`);
   if (!resolvedPath.toLowerCase().endsWith(".pdf"))
     exitWith("File must be a .pdf");
