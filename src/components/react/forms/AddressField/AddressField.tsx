@@ -6,7 +6,11 @@ import type { FieldName } from "@/constants/fields";
 import { JURISDICTIONS } from "@/constants/jurisdictions";
 import "./AddressField.css";
 
-type AddressType = "residence" | "mailing";
+type AddressType =
+  | "residence"
+  | "mailing"
+  | "parent1"
+  | "parent2";
 
 export interface AddressFieldProps {
   children?: React.ReactNode;
@@ -45,7 +49,23 @@ export function AddressField({
       zip: "mailingZipCode",
       county: "mailingCounty",
     },
+    parent1: {
+      street: "parent1StreetAddress",
+      city: "parent1City",
+      state: "parent1State",
+      zip: "parent1ZipCode",
+      county: "residenceCounty", // unused for parent types
+    },
+    parent2: {
+      street: "parent2StreetAddress",
+      city: "parent2City",
+      state: "parent2State",
+      zip: "parent2ZipCode",
+      county: "residenceCounty", // unused for parent types
+    },
   };
+
+  const hasCounty = includeCounty && (type === "residence" || type === "mailing");
 
   // Input mask: enforce ZIP code format of 12345-1234
   const maskitoOptions: MaskitoOptions = {
@@ -113,7 +133,7 @@ export function AddressField({
           </ComboBox>
         )}
       />
-      {includeCounty && (
+      {hasCounty && (
         <Controller
           control={control}
           name={names[type].county}

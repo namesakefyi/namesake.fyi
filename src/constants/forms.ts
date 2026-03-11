@@ -1,6 +1,7 @@
 import type { FormMachine } from "@/forms/createFormMachine";
 import type { Step } from "@/forms/types";
 import { courtOrderMaConfig } from "@/pages/forms/court-order-ma/config";
+import { courtOrderMinorMaConfig } from "@/pages/forms/court-order-ma-minor/config";
 import { socialSecurityConfig } from "@/pages/forms/social-security/config";
 import type { FieldName, FormData } from "./fields";
 import type { PDFId } from "./pdf";
@@ -50,6 +51,7 @@ export interface FormConfig {
  */
 export const FORM_CONFIGS: Record<string, FormConfig> = {
   "court-order-ma": courtOrderMaConfig,
+  "court-order-ma-minor": courtOrderMinorMaConfig,
   "social-security": socialSecurityConfig,
 };
 

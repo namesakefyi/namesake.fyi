@@ -52,8 +52,8 @@ export const FIELD_DEFS = [
     type: "boolean",
   },
   {
-    name: "isOnlyOneParentListedOnBirthCertificate",
-    label: "Only one parent listed on birth certificate?",
+    name: "areBothParentsListedOnBirthCertificate",
+    label: "Are both parents listed on the birth certificate?",
     type: "boolean",
   },
   {
@@ -206,6 +206,11 @@ export const FIELD_DEFS = [
     name: "parent2ZipCode",
     label: "Parent 2 zip code",
     type: "string",
+  },
+  {
+    name: "parentsHaveDifferentAddresses",
+    label: "Parents have different addresses",
+    type: "boolean",
   },
   {
     name: "hasOtherLegalNames",
