@@ -5,8 +5,6 @@ export type PDFFieldValue = string | boolean | undefined;
 
 export const PDF_IDS = [
   "affidavit-of-indigency",
-  "cjd400-motion-to-impound-records",
-  "cjd400-motion-to-waive-publication",
   "cjp25-petition-to-change-name-of-minor",
   "cjp27-petition-to-change-name-of-adult",
   "cjp34-cori-and-wms-release-request",

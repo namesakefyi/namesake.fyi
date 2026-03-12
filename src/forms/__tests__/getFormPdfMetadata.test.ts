@@ -62,16 +62,16 @@ describe("getFormPdfMetadata", () => {
     vi.mocked(forms.getFormConfig).mockReturnValue({
       pdfs: [
         {
-          pdfId: "cjd400-motion-to-waive-publication",
+          pdfId: "cjp25-petition-to-change-name-of-minor",
           include: () => true,
         },
       ],
     } as never);
 
     vi.mocked(pdfs.getPdfDefinition).mockResolvedValue({
-      id: "cjd400-motion-to-waive-publication",
-      title: "Motion to Waive Publication",
-      code: "CJD-400",
+      id: "cjp25-petition-to-change-name-of-minor",
+      title: "Petition to Change Name of Minor",
+      code: "CJP-25",
     } as never);
 
     const [metadata] = await getFormPdfMetadata("court-order-ma");

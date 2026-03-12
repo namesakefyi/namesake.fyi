@@ -6,8 +6,8 @@ import type { PDFDefinition } from "@/constants/pdf";
  * @example
  * ```ts
  * definePdf<PdfFieldName>({
- *   id: "cjd400-motion-to-waive-publication",
- *   title: "Motion to Waive Publication",
+ *   id: "cjp25-petition-to-change-name-of-minor",
+ *   title: "Petition to Change Name of Minor",
  *   jurisdiction: "MA",
  *   pdfPath: pdf,
  *   resolver: {

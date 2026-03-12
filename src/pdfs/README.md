@@ -13,7 +13,7 @@ src/pdfs/
       index.ts           # typed PDF definition
       schema.ts          # auto-generated form schema
       affidavit-of-indigency.pdf
-      affidavit-of-indigency.test.ts
+      index.test.ts
 ```
 
 ## Adding new PDFs
@@ -60,45 +60,38 @@ resolver: (data) => ({
   petitionerFirstName: undefined,
   petitionerMiddleName: undefined,
   petitionerLastName: undefined,
-  county: undefined,
+  dateOfBirth: undefined,
   // etc.
 })
 ```
 
 The resolver maps each PDF field name (left) to a value from user-submitted form data (right). Form data comes from [FIELD_DEFS](../constants/fields.ts).
 
-For each PDF field, look up a matching FIELD_DEF by name. Use it directly: `data.existingFieldName`, or derive a value (e.g. `formatDateMMDDYYYY(data.dateOfBirth)`). Format helpers can be imported from `@/utils`.
+```ts
+resolver: (data) => ({
+  petitionerFirstName: data.oldFirstName,
+  petitionerMiddleName: data.oldMiddleName,
+  petitionerLastName: data.oldLastName,
+  dateOfBirth: formatDateMMDDYYYY(data.dateOfBirth),
+  // etc.
+})
+```
+
+For each PDF field, look up a matching FIELD_DEF by name. Use it directly, or derive a value. Format helpers can be imported from `@/utils` to help concatenate a full name, join an array of pronouns, or format a date.
 
 If no FIELD_DEF exists for a PDF field, add one to `src/constants/fields.ts`.
 
-Wherever fields depend on a condition, check that condition for each field and return `undefined` when the condition isn't met:
-
-```ts
-// Mailing address (if different from residence)
-mailingStreetAddress: data.isMailingAddressDifferentFromResidence
-  ? data.mailingStreetAddress
-  : undefined,
-mailingCity: data.isMailingAddressDifferentFromResidence
-  ? data.mailingCity
-  : undefined,
-mailingState: data.isMailingAddressDifferentFromResidence
-  ? data.mailingState
-  : undefined,
-mailingZipCode: data.isMailingAddressDifferentFromResidence
-  ? data.mailingZipCode
-  : undefined,
-```
-
-This ensures we never print values to the final PDF unless the condition is met. Look at the PDF structure to determine which fields are conditional.
+No conditional checks are needed in the PDF definition itself; that logic is handled elsewhere. Just map PDF field names to data names.
 
 ### Step 4: Write tests
 
-Every PDF and definition should also include a test to validate that the form renders, checkboxes get checked, text fields get filled, and conditional logic applies as expected.
+Every PDF and definition should include a test to validate that the form renders, checkboxes get checked, text fields get filled, and all fields are mapped correctly.
 
-Use `getPdfForm` with your test data to get a [PDFForm](https://pdf-lib.js.org/docs/api/classes/pdfform), then use [getCheckBox](https://pdf-lib.js.org/docs/api/classes/pdfform#getcheckbox) and [getTextField](https://pdf-lib.js.org/docs/api/classes/pdfform#gettextfield) to assert values.
+Use `expectPdfFieldsMatch` to verify all resolver output is correctly written to the PDF—it compares the filled form against the resolver output, eliminating boilerplate. Tests can then focus on derived values (formatting, transformations) or other unique logic by passing different `userData`.
 
 ```ts
-import { getPdfForm } from "@/pdfs/utils/getPdfForm";
+import { describe, it } from "vitest";
+import { expectPdfFieldsMatch } from "@/pdfs/utils/expectPdfFieldsMatch";
 import petitionToChangeNameOfAdult from ".";
 
 describe("CJP27 Petition to Change Name of Adult", () => {
@@ -106,40 +99,19 @@ describe("CJP27 Petition to Change Name of Adult", () => {
     newFirstName: "New",
     newMiddleName: "Newly",
     newLastName: "Name",
-    oldFirstName: "Old",
-    oldMiddleName: "Oldly",
-    oldLastName: "Name",
-    // More test data...
-  } as const;
+    // Full test data for all fields...
+  };
 
   it("maps all fields correctly to the PDF", async () => {
-    const form = await getPdfForm({
-      pdf: petitionToChangeNameOfAdult,
-      userData: testData,
-    });
-
-    expect(form.getTextField("newFirstName").getText()).toBe("New");
-    expect(form.getTextField("newMiddleName").getText()).toBe("Newly");
-    expect(form.getTextField("newLastName").getText()).toBe("Name");
-
-    // Test more fields...
+    await expectPdfFieldsMatch(petitionToChangeNameOfAdult, testData);
   });
 
-  // Test conditional fields...
-  it("shows language when interpreter is needed", async () => {
-    const dataWithInterpreter = {
+  it("derives X when Y", async () => {
+    // Test derived values with different userData
+    await expectPdfFieldsMatch(petitionToChangeNameOfAdult, {
       ...testData,
-      isInterpreterNeeded: true,
-      language: "es",
-    };
-
-    const form = await getPdfForm({
-      pdf: petitionToChangeNameOfAdult,
-      userData: dataWithInterpreter,
+      someField: "value that triggers derivation",
     });
-
-    expect(form.getCheckBox("isInterpreterNeeded").isChecked()).toBe(true);
-    expect(form.getTextField("language").getText()).toBe("Spanish");
   });
 });
 ```
@@ -147,7 +119,7 @@ describe("CJP27 Petition to Change Name of Adult", () => {
 Run your tests:
 
 ```zsh
-pnpm test path/to/pdf.test.ts
+pnpm test path/to/pdf/index.test.ts
 ```
 
 Then open a pull request. You've added a new PDF definition to Namesake!

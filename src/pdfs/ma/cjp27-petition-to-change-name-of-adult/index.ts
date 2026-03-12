@@ -1,6 +1,6 @@
-import languageNameMap from "language-name-map/map";
 import { definePdf } from "@/pdfs/utils/definePdf";
 import { formatDateMMDDYYYY } from "@/utils/formatDateMMDDYYYY";
+import { formatLanguage } from "@/utils/formatLanguage";
 import { joinPronouns } from "@/utils/joinPronouns";
 import pdf from "./cjp27-petition-to-change-name-of-adult.pdf";
 import type { PdfFieldName } from "./schema";
@@ -26,18 +26,10 @@ export default definePdf<PdfFieldName>({
     residenceCity: data.residenceCity,
     residenceState: data.residenceState,
     residenceZipCode: data.residenceZipCode,
-    mailingStreetAddress: data.isMailingAddressDifferentFromResidence
-      ? data.mailingStreetAddress
-      : undefined,
-    mailingCity: data.isMailingAddressDifferentFromResidence
-      ? data.mailingCity
-      : undefined,
-    mailingState: data.isMailingAddressDifferentFromResidence
-      ? data.mailingState
-      : undefined,
-    mailingZipCode: data.isMailingAddressDifferentFromResidence
-      ? data.mailingZipCode
-      : undefined,
+    mailingStreetAddress: data.mailingStreetAddress,
+    mailingCity: data.mailingCity,
+    mailingState: data.mailingState,
+    mailingZipCode: data.mailingZipCode,
     email: data.email,
     phoneNumber: data.phoneNumber,
     hasPreviousNameChangeTrue: data.hasPreviousNameChange,
@@ -53,18 +45,9 @@ export default definePdf<PdfFieldName>({
     newMiddleName: data.newMiddleName,
     newLastName: data.newLastName,
     reasonForChangingName: data.reasonForChangingName,
-    isInterpreterNeeded: data.isInterpreterNeeded
-      ? data.isInterpreterNeeded
-      : undefined,
-    language:
-      data.isInterpreterNeeded && data.language
-        ? languageNameMap[data.language].name
-        : undefined,
-    isOkayToSharePronouns: data.isOkayToSharePronouns
-      ? data.isOkayToSharePronouns
-      : undefined,
-    pronouns: data.isOkayToSharePronouns
-      ? joinPronouns(data.pronouns, data.otherPronouns)
-      : undefined,
+    isInterpreterNeeded: data.isInterpreterNeeded,
+    language: formatLanguage(data.language),
+    isOkayToSharePronouns: data.isOkayToSharePronouns,
+    pronouns: joinPronouns(data.pronouns, data.otherPronouns),
   }),
 });

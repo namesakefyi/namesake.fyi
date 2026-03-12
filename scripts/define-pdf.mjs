@@ -243,21 +243,18 @@ function generateStarterTest({ id, title }) {
   const importName = idToImportName(id);
   const escapedTitle = escapeForJsDoubleQuotedString(title);
 
-  return `import { describe, expect, it } from "vitest";
-import { getPdfForm } from "@/pdfs/utils/getPdfForm";
+  return `import { describe, it } from "vitest";
+import { expectPdfFieldsMatch } from "@/pdfs/utils/expectPdfFieldsMatch";
 import ${importName} from ".";
 
 describe("${escapedTitle}", () => {
   const testData = {}; // TODO: Add form data for resolver
 
-  it("maps fields correctly to the PDF", async () => {
-    const form = await getPdfForm({
-      pdf: ${importName},
-      userData: testData,
-    });
-    // TODO: Add assertions for each field
-    expect(form).toBeDefined();
+  it("maps all fields correctly to the PDF", async () => {
+    await expectPdfFieldsMatch(${importName}, testData);
   });
+
+  // Test any derived fields below
 });
 `;
 }
@@ -280,7 +277,7 @@ async function runGenerationSteps({
   title,
   pdfDir,
 }) {
-  const testPath = join(pdfDir, `${id}.test.ts`);
+  const testPath = join(pdfDir, "index.test.ts");
   const needsStarterTest = !existsSync(testPath);
 
   try {
