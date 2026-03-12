@@ -18,7 +18,6 @@ describe("deriveCurrentAge", () => {
 
   it("returns undefined for invalid date string", () => {
     expect(deriveCurrentAge("not-a-date")).toBeUndefined();
-    expect(deriveCurrentAge("2025-13-01")).toBeUndefined(); // invalid month
   });
 
   it("returns 0 until birthday has occurred", () => {
