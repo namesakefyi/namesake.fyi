@@ -6,6 +6,21 @@ describe("deriveCurrentAge", () => {
     vi.useRealTimers();
   });
 
+  it("returns undefined for undefined or empty string", () => {
+    expect(deriveCurrentAge(undefined)).toBeUndefined();
+    expect(deriveCurrentAge("")).toBeUndefined();
+  });
+
+  it("returns undefined for non-string input", () => {
+    expect(deriveCurrentAge(null as unknown as string)).toBeUndefined();
+    expect(deriveCurrentAge(123 as unknown as string)).toBeUndefined();
+  });
+
+  it("returns undefined for invalid date string", () => {
+    expect(deriveCurrentAge("not-a-date")).toBeUndefined();
+    expect(deriveCurrentAge("2025-13-01")).toBeUndefined(); // invalid month
+  });
+
   it("returns 0 until birthday has occurred", () => {
     vi.setSystemTime(new Date(2025, 0, 1)); // Jan 1, 2025
     // Born Dec 31, 2024 — not yet 1 year old until 2025-12-31

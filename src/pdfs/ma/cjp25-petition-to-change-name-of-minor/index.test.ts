@@ -83,10 +83,20 @@ describe("Petition to Change Name of Minor", () => {
   };
 
   it("maps all fields correctly to the PDF", async () => {
+    vi.setSystemTime(new Date(2025, 5, 15)); // Jun 15, 2025 — child turns 10
     await expectPdfFieldsMatch(cjp25PetitionToChangeNameOfMinor, testData);
   });
 
-  it("derives isChildUnder12 from date of birth", async () => {
+  it("derives isChildUnder12 true when child is under 12", async () => {
+    vi.setSystemTime(new Date(2025, 5, 15));
+    const form = await getPdfForm({
+      pdf: cjp25PetitionToChangeNameOfMinor,
+      userData: testData, // dateOfBirth 2015-06-15 → age 10
+    });
+    expect(form.getCheckBox("isChildUnder12").isChecked()).toBe(true);
+  });
+
+  it("derives isChildUnder12 false when child is 12 or older", async () => {
     vi.setSystemTime(new Date(2025, 5, 15));
     const dataWithOlderChild = {
       ...testData,
@@ -99,5 +109,59 @@ describe("Petition to Change Name of Minor", () => {
     });
 
     expect(form.getCheckBox("isChildUnder12").isChecked()).toBe(false);
+  });
+
+  it("derives hasPreviousNameChangeFalse when no previous name change", async () => {
+    vi.setSystemTime(new Date(2025, 5, 15));
+    const dataWithNoPreviousChange = {
+      ...testData,
+      hasPreviousNameChange: false,
+    };
+    const form = await getPdfForm({
+      pdf: cjp25PetitionToChangeNameOfMinor,
+      userData: dataWithNoPreviousChange,
+    });
+    expect(form.getCheckBox("hasPreviousNameChangeTrue").isChecked()).toBe(
+      false,
+    );
+    expect(form.getCheckBox("hasPreviousNameChangeFalse").isChecked()).toBe(
+      true,
+    );
+  });
+
+  it("derives hasCourtAppointedGuardianFalse when no guardian", async () => {
+    vi.setSystemTime(new Date(2025, 5, 15));
+    const dataWithNoGuardian = {
+      ...testData,
+      hasCourtAppointedGuardian: false,
+    };
+    const form = await getPdfForm({
+      pdf: cjp25PetitionToChangeNameOfMinor,
+      userData: dataWithNoGuardian,
+    });
+    expect(form.getCheckBox("hasCountAppointedGuardianFalse").isChecked()).toBe(
+      true,
+    );
+    expect(form.getCheckBox("hasCourtAppointedGuardianTrue").isChecked()).toBe(
+      false,
+    );
+    expect(form.getCheckBox("hasNoCountAppointedGuardian").isChecked()).toBe(
+      true,
+    );
+  });
+
+  it("derives isOnlyOneParentListedOnBirthCertificate when both listed", async () => {
+    vi.setSystemTime(new Date(2025, 5, 15));
+    const dataWithBothParents = {
+      ...testData,
+      areBothParentsListedOnBirthCertificate: true,
+    };
+    const form = await getPdfForm({
+      pdf: cjp25PetitionToChangeNameOfMinor,
+      userData: dataWithBothParents,
+    });
+    expect(
+      form.getCheckBox("isOnlyOneParentListedOnBirthCertificate").isChecked(),
+    ).toBe(false);
   });
 });
