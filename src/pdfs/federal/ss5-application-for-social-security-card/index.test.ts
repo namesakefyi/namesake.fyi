@@ -1,5 +1,6 @@
-import { describe, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import { expectPdfFieldsMatch } from "@/pdfs/utils/expectPdfFieldsMatch";
+import { getPdfForm } from "@/pdfs/utils/getPdfForm";
 import ss5Application from ".";
 
 describe("SS-5 Application for Social Security Card", () => {
@@ -76,6 +77,11 @@ describe("SS-5 Application for Social Security Card", () => {
       birthplaceState: undefined,
     };
 
-    await expectPdfFieldsMatch(ss5Application, dataWithForeignBirthplace);
+    const form = await getPdfForm({
+      pdf: ss5Application,
+      userData: dataWithForeignBirthplace,
+    });
+
+    expect(form.getTextField("birthplaceState").getText()).toBe("Canada");
   });
 });

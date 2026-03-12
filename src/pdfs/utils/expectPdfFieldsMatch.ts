@@ -4,12 +4,7 @@ import type { PDFDefinition } from "@/constants/pdf";
 import { getPdfForm } from "./getPdfForm";
 
 /**
- * Asserts that all resolver output values are correctly written to the PDF form.
- * Use this to verify base field mapping without boilerplate—the resolver output
- * is the source of truth.
- *
- * Tests can then focus on derived values (formatting, transformations) or other
- * unique logic by passing different userData.
+ * Assert that all form data values are correctly written to the PDF fields.
  */
 export async function expectPdfFieldsMatch(
   pdf: PDFDefinition,

@@ -1,6 +1,7 @@
-import { afterEach, describe, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import type { FormData } from "@/constants/fields";
 import { expectPdfFieldsMatch } from "@/pdfs/utils/expectPdfFieldsMatch";
+import { getPdfForm } from "@/pdfs/utils/getPdfForm";
 import cjp25PetitionToChangeNameOfMinor from ".";
 
 describe("Petition to Change Name of Minor", () => {
@@ -90,12 +91,14 @@ describe("Petition to Change Name of Minor", () => {
     vi.setSystemTime(new Date(2025, 5, 15));
     const dataWithOlderChild = {
       ...testData,
-      dateOfBirth: "2012-01-01", // 13 years old
+      dateOfBirth: "2012-01-01", // 13 years old — isChildUnder12 becomes false
     };
 
-    await expectPdfFieldsMatch(
-      cjp25PetitionToChangeNameOfMinor,
-      dataWithOlderChild,
-    );
+    const form = await getPdfForm({
+      pdf: cjp25PetitionToChangeNameOfMinor,
+      userData: dataWithOlderChild,
+    });
+
+    expect(form.getCheckBox("isChildUnder12").isChecked()).toBe(false);
   });
 });

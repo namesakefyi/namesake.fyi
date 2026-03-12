@@ -85,33 +85,44 @@ No conditional checks are needed in the PDF definition itself; that logic is han
 
 ### Step 4: Write tests
 
-Every PDF and definition should include a test to validate that the form renders, checkboxes get checked, text fields get filled, and all fields are mapped correctly.
+Every PDF and definition should include a test to validate that the form renders, checkboxes get checked, text fields get filled, and derived values are correct.
 
-Use `expectPdfFieldsMatch` to verify all resolver output is correctly written to the PDF—it compares the filled form against the resolver output, eliminating boilerplate. Tests can then focus on derived values (formatting, transformations) or other unique logic by passing different `userData`.
+Use `expectPdfFieldsMatch` to verify the base set of data. Other tests can then focus on testing derived values or other unique behavior.
 
 ```ts
-import { describe, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import type { FormData } from "@/constants/fields";
 import { expectPdfFieldsMatch } from "@/pdfs/utils/expectPdfFieldsMatch";
-import petitionToChangeNameOfAdult from ".";
+import { getPdfForm } from "@/pdfs/utils/getPdfForm";
+import cjp25PetitionToChangeNameOfMinor from ".";
 
-describe("CJP27 Petition to Change Name of Adult", () => {
-  const testData = {
-    newFirstName: "New",
-    newMiddleName: "Newly",
-    newLastName: "Name",
+describe("Petition to Change Name of Minor", () => {
+  afterEach(() => vi.useRealTimers());
+
+  const testData: Partial<FormData> = {
     // Full test data for all fields...
   };
 
+  // Verify that all fields render
   it("maps all fields correctly to the PDF", async () => {
-    await expectPdfFieldsMatch(petitionToChangeNameOfAdult, testData);
+    vi.setSystemTime(new Date(2025, 5, 15)); // Jun 15, 2025
+    await expectPdfFieldsMatch(cjp25PetitionToChangeNameOfMinor, testData);
   });
 
-  it("derives X when Y", async () => {
-    // Test derived values with different userData
-    await expectPdfFieldsMatch(petitionToChangeNameOfAdult, {
+  // Test derived logic
+  it("derives isChildUnder12 from date of birth", async () => {
+    vi.setSystemTime(new Date(2025, 5, 15));
+    const dataWithOlderChild = {
       ...testData,
-      someField: "value that triggers derivation",
+      dateOfBirth: "2012-01-01", // 13 years old — isChildUnder12 becomes false
+    };
+
+    const form = await getPdfForm({
+      pdf: cjp25PetitionToChangeNameOfMinor,
+      userData: dataWithOlderChild,
     });
+
+    expect(form.getCheckBox("isChildUnder12").isChecked()).toBe(false);
   });
 });
 ```
