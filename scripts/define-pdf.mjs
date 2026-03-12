@@ -24,8 +24,17 @@ import { escapeKey } from "./utils.mjs";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const ROOT = join(__dirname, "..");
+const FIELDS_PATH = join(ROOT, "src/constants/fields.ts");
 const JURISDICTIONS_PATH = join(ROOT, "src/constants/jurisdictions.ts");
 const PDF_TS_PATH = join(ROOT, "src/constants/pdf.ts");
+
+/** Common PDF field name -> form field name mappings. */
+const PDF_TO_FORM_FIELD_MAP = {
+  petitionerFirstName: "oldFirstName",
+  petitionerMiddleName: "oldMiddleName",
+  petitionerLastName: "oldLastName",
+  county: "residenceCounty",
+};
 
 const DEFINITION_EXISTS_MSG =
   "Definition already exists. Use a different form or remove the existing file first.";
@@ -88,6 +97,72 @@ function extractPdfFields(pdfDoc) {
     result.push({ name, type });
   }
   return result;
+}
+
+/** Returns { name, type }[] parsed from FIELD_DEFS in fields.ts. */
+function loadFormFields() {
+  const content = readFileSync(FIELDS_PATH, "utf8");
+  const regex =
+    /\{\s*name:\s*"([^"]+)"[^}]*type:\s*"(string|boolean|string\[\])"/g;
+  const result = [];
+  for (const m of content.matchAll(regex)) {
+    result.push({ name: m[1], type: m[2] });
+  }
+  return result;
+}
+
+/** Maps a PDF field name to a form field name, or null if no match. */
+function pdfFieldToFormField(pdfFieldName, formFieldsByName) {
+  if (formFieldsByName.has(pdfFieldName)) return pdfFieldName;
+  if (PDF_TO_FORM_FIELD_MAP[pdfFieldName])
+    return PDF_TO_FORM_FIELD_MAP[pdfFieldName];
+  const base = pdfFieldName.replace(/(True|False)$/, "");
+  if (formFieldsByName.has(base)) return base;
+  return null;
+}
+
+/** Returns a placeholder value for a form field by type and name. */
+function getPlaceholderForField(formField) {
+  const { name, type } = formField;
+  if (type === "boolean") return true;
+  if (type === "string[]") return '["placeholder"]';
+  if (name === "dateOfBirth") return '"1990-01-01"';
+  if (name === "email") return '"test@example.com"';
+  if (name === "phoneNumber") return '"555-555-5555"';
+  if (name === "language") return '"es"';
+  if (name.includes("ZipCode") || name.includes("Zip")) return '"02139"';
+  if (name.includes("State")) return '"MA"';
+  return '"placeholder"';
+}
+
+/** Builds testData entries from PDF fields. Returns array of "key: value" or comment lines. */
+function buildTestDataEntries(pdfFields, formFields) {
+  const formFieldsByName = new Map(formFields.map((f) => [f.name, f]));
+  const seen = new Set();
+  const lines = [];
+  const unmapped = [];
+
+  for (const pdfField of pdfFields) {
+    const formFieldName = pdfFieldToFormField(pdfField.name, formFieldsByName);
+    if (!formFieldName) {
+      unmapped.push(pdfField.name);
+      continue;
+    }
+    if (seen.has(formFieldName)) continue;
+    seen.add(formFieldName);
+    const formField = formFields.find((f) => f.name === formFieldName);
+    const value = getPlaceholderForField(formField);
+    lines.push(`    ${formFieldName}: ${value},`);
+  }
+
+  if (unmapped.length > 0) {
+    lines.push(
+      "",
+      `    // TODO: map PDF fields to form data: ${unmapped.join(", ")}`,
+    );
+  }
+
+  return lines;
 }
 
 /** Returns the output directory path for a jurisdiction (required). */
@@ -239,34 +314,40 @@ function escapeForJsDoubleQuotedString(value) {
 }
 
 /** Returns starter test file content as a string. */
-function generateStarterTest({ id, title }) {
+function generateStarterTest({ id, title, pdfFields }) {
   const importName = idToImportName(id);
   const escapedTitle = escapeForJsDoubleQuotedString(title);
+  const formFields = loadFormFields();
+  const testDataLines = buildTestDataEntries(pdfFields, formFields);
+  const testDataBody =
+    testDataLines.length > 0
+      ? testDataLines.join("\n")
+      : "    // TODO: Add form data for resolver";
 
-  return `import { describe, expect, it } from "vitest";
-import { getPdfForm } from "@/pdfs/utils/getPdfForm";
+  return `import { describe, it } from "vitest";
+import type { FormData } from "@/constants/fields";
+import { expectPdfFieldsMatch } from "@/pdfs/utils/expectPdfFieldsMatch";
 import ${importName} from ".";
 
 describe("${escapedTitle}", () => {
-  const testData = {}; // TODO: Add form data for resolver
+  const testData: Partial<FormData> = {
+${testDataBody}
+  };
 
-  it("maps fields correctly to the PDF", async () => {
-    const form = await getPdfForm({
-      pdf: ${importName},
-      userData: testData,
-    });
-    // TODO: Add assertions for each field
-    expect(form).toBeDefined();
+  it("maps all fields correctly to the PDF", async () => {
+    await expectPdfFieldsMatch(${importName}, testData);
   });
+
+  // Test any derived fields below
 });
 `;
 }
 
 /** Writes the starter test file to the given path. */
-function writeStarterTest({ testPath, id, title }) {
+function writeStarterTest({ testPath, id, title, pdfFields }) {
   const testDir = dirname(testPath);
   if (!existsSync(testDir)) mkdirSync(testDir, { recursive: true });
-  const content = generateStarterTest({ id, title });
+  const content = generateStarterTest({ id, title, pdfFields });
   writeFileSync(testPath, `${content}\n`);
 }
 
@@ -279,8 +360,9 @@ async function runGenerationSteps({
   id,
   title,
   pdfDir,
+  pdfFields,
 }) {
-  const testPath = join(pdfDir, `${id}.test.ts`);
+  const testPath = join(pdfDir, "index.test.ts");
   const needsStarterTest = !existsSync(testPath);
 
   try {
@@ -304,7 +386,7 @@ async function runGenerationSteps({
   log.message("Generated definition!");
 
   if (needsStarterTest) {
-    writeStarterTest({ testPath, id, title });
+    writeStarterTest({ testPath, id, title, pdfFields });
     log.message("Generated test file!");
   }
 
@@ -401,6 +483,7 @@ async function main() {
     id,
     title: normalized.title,
     pdfDir,
+    pdfFields,
   });
 
   const dirPath = relative(ROOT, pdfDir);

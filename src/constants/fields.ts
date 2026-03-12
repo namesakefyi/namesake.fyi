@@ -52,8 +52,8 @@ export const FIELD_DEFS = [
     type: "boolean",
   },
   {
-    name: "isOnlyOneParentListedOnBirthCertificate",
-    label: "Only one parent listed on birth certificate?",
+    name: "areBothParentsListedOnBirthCertificate",
+    label: "Are both parents listed on the birth certificate?",
     type: "boolean",
   },
   {
