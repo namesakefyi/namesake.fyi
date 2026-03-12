@@ -83,7 +83,6 @@ describe("Petition to Change Name of Minor", () => {
   };
 
   it("maps all fields correctly to the PDF", async () => {
-    vi.setSystemTime(new Date(2025, 5, 15)); // Jun 15, 2025 — child turns 10
     await expectPdfFieldsMatch(cjp25PetitionToChangeNameOfMinor, testData);
   });
 
