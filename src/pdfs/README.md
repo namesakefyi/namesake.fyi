@@ -9,11 +9,11 @@ Each PDF has its own folder under a jurisdiction (`ma`, `federal`, `ny`). The fo
 ```
 src/pdfs/
   ma/
-    affidavit-of-indigency/
+    cjp27-petition-to-change-name-of-adult/
+      cjp27-petition-to-change-name-of-adult.pdf
       index.ts           # typed PDF definition
+      index.test.ts      # PDF definition test
       schema.ts          # auto-generated form schema
-      affidavit-of-indigency.pdf
-      index.test.ts
 ```
 
 ## Adding new PDFs
