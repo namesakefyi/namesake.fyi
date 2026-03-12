@@ -320,7 +320,9 @@ function generateStarterTest({ id, title, pdfFields }) {
   const formFields = loadFormFields();
   const testDataLines = buildTestDataEntries(pdfFields, formFields);
   const testDataBody =
-    testDataLines.length > 0 ? testDataLines.join("\n") : "    // TODO: Add form data for resolver";
+    testDataLines.length > 0
+      ? testDataLines.join("\n")
+      : "    // TODO: Add form data for resolver";
 
   return `import { describe, it } from "vitest";
 import type { FormData } from "@/constants/fields";
