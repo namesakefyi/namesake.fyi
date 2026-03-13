@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
-import type { FormConfig } from "@/constants/forms";
+import type { Form } from "@/constants/forms";
 import * as db from "@/db/database";
 import { createFormMachine } from "@/forms/createFormMachine";
 import type { Step } from "@/forms/types";
@@ -13,6 +13,7 @@ vi.mock("@/db/database", () => ({
   saveFormProgress: vi.fn().mockResolvedValue(undefined),
   clearFormProgress: vi.fn().mockResolvedValue(undefined),
   getAllFields: vi.fn().mockResolvedValue([]),
+  getFieldsByNames: vi.fn().mockResolvedValue([]),
 }));
 
 const mockSubmitHandler = vi.fn().mockResolvedValue(undefined);
@@ -48,7 +49,7 @@ const formStepMachine = createFormMachine({
 function makeConfig(
   flow: Step[],
   machine: ReturnType<typeof createFormMachine>,
-): FormConfig {
+): Form {
   return {
     slug: machine.id,
     steps: flow,

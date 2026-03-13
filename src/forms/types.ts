@@ -28,8 +28,8 @@ type ExpandField<F> = F extends FieldName
         : never
       : never;
 
-/** Extracts all field names from a tuple of steps. Use for form-specific FormData typing. */
-export type FieldsFromSteps<T extends readonly Step[]> = ExpandField<
+/** Field names used in a form's steps. */
+export type FieldsOf<T extends readonly Step[]> = ExpandField<
   T[number]["fields"][number]
 >;
 

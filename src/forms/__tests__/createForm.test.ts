@@ -1,15 +1,15 @@
 import { describe, expect, it } from "vitest";
-import { createFormConfig } from "@/forms/createFormConfig";
+import { createForm } from "@/forms/createForm";
 import { makeStep } from "./testHelpers";
 
-describe("createFormConfig", () => {
+describe("createForm", () => {
   it("derives machine from slug and steps", () => {
     const steps = [
       makeStep("a", ["oldFirstName" as any]),
       makeStep("b", ["oldLastName" as any]),
     ];
 
-    const config = createFormConfig({
+    const config = createForm({
       slug: "test-form",
       steps,
       pdfs: [],
@@ -26,7 +26,7 @@ describe("createFormConfig", () => {
     const steps = [makeStep("a")];
     const instructionsFn = () => ["Do a thing"];
 
-    const config = createFormConfig({
+    const config = createForm({
       slug: "extra-props",
       steps,
       pdfs: [],

@@ -1,9 +1,9 @@
 import type { FormMachine } from "@/forms/createFormMachine";
 import type { PdfEntry } from "@/forms/formVisibility";
-import type { Step } from "@/forms/types";
+import type { FieldsOf, Step } from "@/forms/types";
 import { courtOrderMaConfig } from "@/pages/forms/court-order-ma/config";
 import { socialSecurityConfig } from "@/pages/forms/social-security/config";
-import type { FormData } from "./fields";
+import type { FieldType, FormData } from "./fields";
 
 /**
  * Function that generates instructions based on form data.
@@ -13,7 +13,7 @@ export type FormInstructionsFn = (data: Partial<FormData>) => string[];
 /**
  * Complete configuration for a form.
  */
-export interface FormConfig {
+export interface Form {
   /** Form identifier matching the URL slug */
   slug: string;
   /** Ordered steps, including optional `when` rules for conditional inclusion. */
@@ -28,10 +28,15 @@ export interface FormConfig {
   instructions: string[] | FormInstructionsFn;
 }
 
+/** Form data type for a specific form (only fields from its steps). */
+export type FormDataOf<F extends Form> = {
+  [K in FieldsOf<F["steps"]>]: FieldType<K>;
+};
+
 /**
  * Registry of all form configurations.
  */
-export const FORM_CONFIGS: Record<string, FormConfig> = {
+const FORM_CONFIGS: Record<string, Form> = {
   "court-order-ma": courtOrderMaConfig,
   "social-security": socialSecurityConfig,
 };
@@ -39,7 +44,7 @@ export const FORM_CONFIGS: Record<string, FormConfig> = {
 /**
  * Get a form configuration by slug.
  */
-export function getFormConfig(slug: string): FormConfig | undefined {
+export function getFormConfig(slug: string): Form | undefined {
   return FORM_CONFIGS[slug];
 }
 

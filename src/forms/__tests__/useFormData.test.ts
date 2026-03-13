@@ -2,6 +2,7 @@ import { act, renderHook, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import * as database from "@/db/database";
 import { useFormData } from "../useFormData";
+import { makeForm, makeStep } from "./testHelpers";
 
 vi.mock("@/db/database", () => ({
   getFieldsByNames: vi.fn(),
@@ -24,7 +25,9 @@ describe("useFormData", () => {
 
   describe("initial state", () => {
     it("starts with isLoading true", async () => {
-      const { result } = renderHook(() => useFormData(["oldFirstName"]));
+      const { result } = renderHook(() =>
+        useFormData(makeForm([makeStep("a", ["oldFirstName"])])),
+      );
 
       expect(result.current.isLoading).toBe(true);
 
@@ -32,7 +35,9 @@ describe("useFormData", () => {
     });
 
     it("exposes react-hook-form methods alongside custom properties", async () => {
-      const { result } = renderHook(() => useFormData(["oldFirstName"]));
+      const { result } = renderHook(() =>
+        useFormData(makeForm([makeStep("a", ["oldFirstName"])])),
+      );
 
       expect(result.current).toHaveProperty("register");
       expect(result.current).toHaveProperty("handleSubmit");
@@ -46,7 +51,9 @@ describe("useFormData", () => {
 
   describe("loading saved data", () => {
     it("sets isLoading to false after loading completes", async () => {
-      const { result } = renderHook(() => useFormData(["oldFirstName"]));
+      const { result } = renderHook(() =>
+        useFormData(makeForm([makeStep("a", ["oldFirstName"])])),
+      );
 
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false);
@@ -55,7 +62,7 @@ describe("useFormData", () => {
 
     it("calls getFieldsByNames with the provided field names", async () => {
       const { result } = renderHook(() =>
-        useFormData(["oldFirstName", "oldLastName"]),
+        useFormData(makeForm([makeStep("a", ["oldFirstName", "oldLastName"])])),
       );
 
       await waitFor(() => expect(result.current.isLoading).toBe(false));
@@ -73,7 +80,7 @@ describe("useFormData", () => {
       ]);
 
       const { result } = renderHook(() =>
-        useFormData(["oldFirstName", "oldLastName"]),
+        useFormData(makeForm([makeStep("a", ["oldFirstName", "oldLastName"])])),
       );
 
       await waitFor(() => expect(result.current.isLoading).toBe(false));
@@ -87,7 +94,9 @@ describe("useFormData", () => {
         new Error("DB unavailable"),
       );
 
-      const { result } = renderHook(() => useFormData(["oldFirstName"]));
+      const { result } = renderHook(() =>
+        useFormData(makeForm([makeStep("a", ["oldFirstName"])])),
+      );
 
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false);
@@ -97,7 +106,9 @@ describe("useFormData", () => {
 
   describe("auto-save on change", () => {
     it("saves a field when its value changes after loading", async () => {
-      const { result } = renderHook(() => useFormData(["oldFirstName"]));
+      const { result } = renderHook(() =>
+        useFormData(makeForm([makeStep("a", ["oldFirstName"])])),
+      );
 
       await waitFor(() => expect(result.current.isLoading).toBe(false));
 
@@ -111,7 +122,9 @@ describe("useFormData", () => {
     });
 
     it("deletes a field when its value is cleared to an empty string", async () => {
-      const { result } = renderHook(() => useFormData(["oldFirstName"]));
+      const { result } = renderHook(() =>
+        useFormData(makeForm([makeStep("a", ["oldFirstName"])])),
+      );
 
       await waitFor(() => expect(result.current.isLoading).toBe(false));
       vi.clearAllMocks();
@@ -127,13 +140,15 @@ describe("useFormData", () => {
     });
 
     it("deletes a field when its value is set to null", async () => {
-      const { result } = renderHook(() => useFormData(["oldFirstName"]));
+      const { result } = renderHook(() =>
+        useFormData(makeForm([makeStep("a", ["oldFirstName"])])),
+      );
 
       await waitFor(() => expect(result.current.isLoading).toBe(false));
       vi.clearAllMocks();
 
       await act(async () => {
-        result.current.setValue("oldFirstName", null);
+        result.current.setValue("oldFirstName", null as unknown as string);
       });
 
       await waitFor(() => {
@@ -143,7 +158,9 @@ describe("useFormData", () => {
     });
 
     it("deletes a field when its value is set to an empty array", async () => {
-      const { result } = renderHook(() => useFormData(["pronouns"]));
+      const { result } = renderHook(() =>
+        useFormData(makeForm([makeStep("a", ["pronouns"])])),
+      );
 
       await waitFor(() => expect(result.current.isLoading).toBe(false));
       vi.clearAllMocks();
@@ -163,14 +180,16 @@ describe("useFormData", () => {
         new Error("Delete failed"),
       );
 
-      const { result } = renderHook(() => useFormData(["oldFirstName"]));
+      const { result } = renderHook(() =>
+        useFormData(makeForm([makeStep("a", ["oldFirstName"])])),
+      );
 
       await waitFor(() => expect(result.current.isLoading).toBe(false));
       vi.clearAllMocks();
       vi.spyOn(console, "error").mockImplementation(() => {});
 
       await act(async () => {
-        result.current.setValue("oldFirstName", null);
+        result.current.setValue("oldFirstName", null as unknown as string);
       });
 
       await waitFor(() => {
@@ -186,7 +205,9 @@ describe("useFormData", () => {
         new Error("Write failed"),
       );
 
-      const { result } = renderHook(() => useFormData(["oldFirstName"]));
+      const { result } = renderHook(() =>
+        useFormData(makeForm([makeStep("a", ["oldFirstName"])])),
+      );
 
       await waitFor(() => expect(result.current.isLoading).toBe(false));
       vi.clearAllMocks();
@@ -205,7 +226,9 @@ describe("useFormData", () => {
     });
 
     it("does not save when value is undefined", async () => {
-      const { result } = renderHook(() => useFormData(["oldFirstName"]));
+      const { result } = renderHook(() =>
+        useFormData(makeForm([makeStep("a", ["oldFirstName"])])),
+      );
 
       await waitFor(() => expect(result.current.isLoading).toBe(false));
       vi.clearAllMocks();

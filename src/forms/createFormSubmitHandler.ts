@@ -1,7 +1,7 @@
 import type { SubmitEvent } from "react";
 import type { UseFormReturn } from "react-hook-form";
 import type { FormData } from "@/constants/fields";
-import type { FormConfig } from "@/constants/forms";
+import type { Form } from "@/constants/forms";
 import { resolveFormVisibility } from "@/forms/formVisibility";
 
 /**
@@ -13,7 +13,7 @@ import { resolveFormVisibility } from "@/forms/formVisibility";
  * @returns A submit handler function
  */
 export function createFormSubmitHandler<TFormData extends Partial<FormData>>(
-  config: FormConfig,
+  config: Form,
   form: UseFormReturn<TFormData>,
 ) {
   return async (event: SubmitEvent<HTMLFormElement>) => {

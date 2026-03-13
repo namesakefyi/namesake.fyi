@@ -1,4 +1,4 @@
-import { createFormConfig } from "@/forms/createFormConfig";
+import { createForm } from "@/forms/createForm";
 import { addressStep } from "./_steps/AddressStep";
 import { birthplaceStep } from "./_steps/BirthplaceStep";
 import { contactInfoStep } from "./_steps/ContactInfoStep";
@@ -14,7 +14,7 @@ import { pronounsStep } from "./_steps/PronounsStep";
 import { reasonStep } from "./_steps/ReasonStep";
 import { returnDocumentsStep } from "./_steps/ReturnDocumentsStep";
 
-export const courtOrderMaConfig = createFormConfig({
+export const courtOrderMaConfig = createForm({
   slug: "court-order-ma",
   steps: [
     newNameStep,

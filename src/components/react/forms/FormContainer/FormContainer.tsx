@@ -9,23 +9,16 @@ import { FormCompleteStep } from "@/components/react/forms/FormCompleteStep";
 import { FormNavigation } from "@/components/react/forms/FormNavigation";
 import { FormReviewStep } from "@/components/react/forms/FormReviewStep";
 import { FormTitleStep } from "@/components/react/forms/FormTitleStep/FormTitleStep";
-import type { FieldType } from "@/constants/fields";
-import type { FormConfig } from "@/constants/forms";
+import type { Form } from "@/constants/forms";
 import { createFormSubmitHandler } from "@/forms/createFormSubmitHandler";
-import { getFormFields } from "@/forms/formVisibility";
 import type { FormPdfMetadata } from "@/forms/getFormPdfMetadata";
-import type { FieldsFromSteps } from "@/forms/types";
 import { useFormData } from "@/forms/useFormData";
 import { useFormState } from "@/forms/useFormState";
 import type { Cost } from "@/utils/formatTotalCosts";
 import { FormStepContext } from "./FormStepContext";
 import "./FormContainer.css";
 
-type FormDataFromConfig<T extends FormConfig> = {
-  [K in FieldsFromSteps<T["steps"]>]: FieldType<K>;
-};
-
-export interface FormContainerProps<T extends FormConfig = FormConfig> {
+export interface FormContainerProps<T extends Form = Form> {
   /** Form configuration. */
   config: T;
 
@@ -48,7 +41,7 @@ export interface FormContainerProps<T extends FormConfig = FormConfig> {
   costs?: Cost[];
 }
 
-export function FormContainer<T extends FormConfig>({
+export function FormContainer<T extends Form>({
   config,
   title,
   description,
@@ -58,12 +51,9 @@ export function FormContainer<T extends FormConfig>({
   costs,
 }: FormContainerProps<T>) {
   const { steps, machine } = config;
-  const form = useFormData<Partial<FormDataFromConfig<T>>>(
-    getFormFields(config.steps),
-  );
+  const form = useFormData(config);
   const onSubmit = createFormSubmitHandler(config, form);
 
-  const formSlug = machine.id;
   const {
     isLoading,
     phase,
@@ -185,7 +175,7 @@ export function FormContainer<T extends FormConfig>({
         return (
           <FormCompleteStep
             title={title}
-            formSlug={formSlug}
+            formSlug={config.slug}
             onRedownload={onSubmit}
           />
         );
@@ -201,10 +191,10 @@ export function FormContainer<T extends FormConfig>({
     title,
     description,
     banner,
+    config.slug,
     totalSteps,
     onStart,
     onSubmit,
-    formSlug,
   ]);
 
   const showNavigation = !["title", "complete"].includes(phase);

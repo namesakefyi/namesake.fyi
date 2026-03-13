@@ -4,15 +4,15 @@ This directory contains the state machine, React hooks, and utilities that drive
 
 ## Defining a form
 
-Use `createFormConfig` to declare a form. Provide a slug, an ordered list of steps, the PDFs to generate, and a download title.
+Use `createForm` to declare a form. Provide a slug, an ordered list of steps, the PDFs to generate, and a download title.
 
 ```ts
 // src/pages/forms/my-form/config.ts
-import { createFormConfig } from "@/forms/formConfig";
+import { createForm } from "@/forms/createForm";
 import { nameStep } from "./_steps/NameStep";
 import { addressStep } from "./_steps/AddressStep";
 
-export const myFormConfig = createFormConfig({
+export const myForm = createForm({
   slug: "my-form",
   steps: [nameStep, addressStep],
   pdfs: [{ pdfId: "my-form-pdf" }],
@@ -137,5 +137,5 @@ Restarting a form clears the progress (returning to the title page) but keeps al
 `FormContainer` accepts a `config` and wires up `useFormData` and `createFormSubmitHandler` internally. It collects the current form values, generates the PDFs, and triggers a download. Only fields that were visible to the user (respecting step and field `when` rules) are written to the PDFs.
 
 ```ts
-<FormContainer config={myFormConfig} title="..." description="..." />
+<FormContainer config={myForm} title="..." description="..." />
 ```

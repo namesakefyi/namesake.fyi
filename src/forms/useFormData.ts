@@ -1,23 +1,29 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-  type FieldValues,
   type Path,
   type PathValue,
   type UseFormProps,
   useForm,
 } from "react-hook-form";
-import type { FieldName } from "@/constants/fields";
+import type { Form, FormDataOf } from "@/constants/forms";
 import { deleteField, getFieldsByNames, saveField } from "@/db/database";
+import { getFormFields } from "./formVisibility";
 
-export function useFormData<TFieldValues extends FieldValues = FieldValues>(
-  fields: readonly FieldName[],
-  options?: Omit<UseFormProps<TFieldValues>, "values" | "defaultValues">,
+export function useFormData<T extends Form>(
+  config: T,
+  options?: Omit<
+    UseFormProps<Partial<FormDataOf<T>>>,
+    "values" | "defaultValues"
+  >,
 ) {
   const [isLoading, setIsLoading] = useState(true);
+  const fieldsList = useMemo(
+    () => [...getFormFields(config.steps)] as string[],
+    [config.steps],
+  );
 
-  const fieldsList = useMemo(() => [...fields] as string[], [fields]);
-
-  const form = useForm<TFieldValues>({
+  type FormValues = Partial<FormDataOf<T>>;
+  const form = useForm<FormValues>({
     mode: "onBlur",
     ...options,
   });
@@ -29,8 +35,8 @@ export function useFormData<TFieldValues extends FieldValues = FieldValues>(
 
         for (const { field, value } of savedFields) {
           form.setValue(
-            field as Path<TFieldValues>,
-            value as PathValue<TFieldValues, Path<TFieldValues>>,
+            field as Path<FormValues>,
+            value as PathValue<FormValues, Path<FormValues>>,
             {
               shouldDirty: false,
             },
@@ -50,7 +56,7 @@ export function useFormData<TFieldValues extends FieldValues = FieldValues>(
     const subscription = form.watch(async (value, { name }) => {
       if (!name || isLoading) return;
 
-      const fieldValue = value[name];
+      const fieldValue = (value as Record<string, unknown>)[name];
 
       if (fieldValue === undefined) return;
 

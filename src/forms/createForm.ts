@@ -1,12 +1,12 @@
-import type { FormConfig } from "@/constants/forms";
+import type { Form } from "@/constants/forms";
 import { createFormMachine } from "./createFormMachine";
 
 /**
- * Creates a complete FormConfig from the unique per-form properties.
+ * Creates a complete Form from the unique per-form properties.
  * Derives `machine` from `slug` and `steps`. Use `getFormFields(config.steps)` for fields.
  *
  * @example
- * export const myFormConfig = createFormConfig({
+ * export const myForm = createForm({
  *   slug: "my-form",
  *   steps,
  *   pdfs: [...],
@@ -14,9 +14,7 @@ import { createFormMachine } from "./createFormMachine";
  *   instructions: [],
  * });
  */
-export function createFormConfig(
-  input: Omit<FormConfig, "machine">,
-): FormConfig {
+export function createForm(input: Omit<Form, "machine">): Form {
   const { slug, steps, ...rest } = input;
   return {
     slug,

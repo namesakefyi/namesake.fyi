@@ -1,4 +1,4 @@
-import { createFormConfig } from "@/forms/createFormConfig";
+import { createForm } from "@/forms/createForm";
 import { addressStep } from "./_steps/AddressStep";
 import { birthplaceStep } from "./_steps/BirthplaceStep";
 import { citizenshipStep } from "./_steps/CitizenshipStep";
@@ -15,7 +15,7 @@ import { previousSocialSecurityCardStep } from "./_steps/PreviousSocialSecurityC
 import { raceStep } from "./_steps/RaceStep";
 import { sexStep } from "./_steps/SexStep";
 
-export const socialSecurityConfig = createFormConfig({
+export const socialSecurityConfig = createForm({
   slug: "social-security",
   steps: [
     newNameStep,
