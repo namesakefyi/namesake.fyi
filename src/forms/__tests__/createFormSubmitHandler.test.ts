@@ -8,9 +8,16 @@ import { loadPdfs } from "@/pdfs/utils/loadPdfs";
 import { createFormSubmitHandler } from "../createFormSubmitHandler";
 import { resolveFormVisibility } from "../formVisibility";
 
-vi.mock("../formVisibility", () => ({
-  resolveFormVisibility: vi.fn(),
-}));
+vi.mock("../formVisibility", async () => {
+  const actual =
+    await vi.importActual<typeof import("../formVisibility")>(
+      "../formVisibility",
+    );
+  return {
+    ...actual,
+    resolveFormVisibility: vi.fn(),
+  };
+});
 vi.mock("@/pdfs/utils/downloadMergedPdf", () => ({
   downloadMergedPdf: vi.fn(),
 }));

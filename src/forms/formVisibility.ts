@@ -1,4 +1,5 @@
 import type { FieldName, FormData } from "@/constants/fields";
+import type { Instruction } from "@/constants/forms";
 import type { PDFId } from "@/constants/pdf";
 import type { Field, Step } from "./types";
 import type { VisibilityRule } from "./visibilityRules";
@@ -130,4 +131,27 @@ export function resolveFormVisibility(
     sections,
     pdfsToInclude,
   };
+}
+
+/**
+ * Resolves instructions for the cover page based on form data.
+ * String entries are always included. Object entries with `when` are included
+ * only when the rule passes. `when: undefined` means always include.
+ *
+ * @param instructions - Form instructions (strings or { text, when? })
+ * @param formData - Current form values
+ * @returns Filtered array of instruction strings
+ */
+export function resolveInstructions(
+  instructions: readonly Instruction[],
+  formData: Partial<FormData>,
+): string[] {
+  return instructions
+    .filter((entry) => {
+      if (typeof entry === "string") return true;
+      // when: false is not a valid VisibilityRule; guard for untyped config
+      if ((entry as { when?: unknown }).when === false) return false;
+      return evaluateRule(entry.when, formData);
+    })
+    .map((entry) => (typeof entry === "string" ? entry : entry.text));
 }

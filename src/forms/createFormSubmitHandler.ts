@@ -2,8 +2,10 @@ import type { SubmitEvent } from "react";
 import type { UseFormReturn } from "react-hook-form";
 import type { FormData } from "@/constants/fields";
 import type { Form } from "@/constants/forms";
-import { resolveFormVisibility } from "@/forms/formVisibility";
-import { evaluateRule } from "@/forms/visibilityRules";
+import {
+  resolveFormVisibility,
+  resolveInstructions,
+} from "@/forms/formVisibility";
 
 /**
  * Creates a form submit handler from a form.
@@ -34,11 +36,7 @@ export function createFormSubmitHandler<TFormData extends Partial<FormData>>(
 
     const pdfs = await loadPdfs(pdfsToInclude);
 
-    const instructions = config.instructions
-      .filter((entry) =>
-        typeof entry === "string" ? true : evaluateRule(entry.when, formData),
-      )
-      .map((entry) => (typeof entry === "string" ? entry : entry.text));
+    const instructions = resolveInstructions(config.instructions, formData);
 
     await downloadMergedPdf({
       title: config.downloadTitle,

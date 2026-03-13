@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { resolveFormVisibility } from "../formVisibility";
+import type { Instruction } from "@/constants/forms";
+import { resolveFormVisibility, resolveInstructions } from "../formVisibility";
 import { makeStep } from "./testHelpers";
 
 describe("resolveFormVisibility", () => {
@@ -188,6 +189,69 @@ describe("resolveFormVisibility", () => {
         "cjp27-petition-to-change-name-of-adult",
         "affidavit-of-indigency",
       ]);
+    });
+  });
+
+  describe("resolveInstructions", () => {
+    it("returns string entries as-is", () => {
+      const instructions: Instruction[] = ["Do this", "Do that"];
+      expect(resolveInstructions(instructions, {})).toEqual([
+        "Do this",
+        "Do that",
+      ]);
+    });
+
+    it("includes object entry with when: undefined (always include)", () => {
+      const instructions: Instruction[] = [
+        { text: "Always", when: undefined },
+        "Also always",
+      ];
+      expect(resolveInstructions(instructions, {})).toEqual([
+        "Always",
+        "Also always",
+      ]);
+    });
+
+    it("filters object entry when when rule fails", () => {
+      const instructions: Instruction[] = [
+        "Always",
+        {
+          text: "Only when fee waiver",
+          when: {
+            field: "shouldApplyForFeeWaiver",
+            equals: true,
+          },
+        },
+      ];
+      expect(
+        resolveInstructions(instructions, { shouldApplyForFeeWaiver: false }),
+      ).toEqual(["Always"]);
+    });
+
+    it("includes object entry when when rule passes", () => {
+      const instructions: Instruction[] = [
+        "Always",
+        {
+          text: "Only when fee waiver",
+          when: {
+            field: "shouldApplyForFeeWaiver",
+            equals: true,
+          },
+        },
+      ];
+      expect(
+        resolveInstructions(instructions, {
+          shouldApplyForFeeWaiver: true,
+        }),
+      ).toEqual(["Always", "Only when fee waiver"]);
+    });
+
+    it("excludes object entry with when: false (edge case)", () => {
+      const instructions = [
+        "Always",
+        { text: "Explicitly excluded", when: false as never },
+      ];
+      expect(resolveInstructions(instructions, {})).toEqual(["Always"]);
     });
   });
 });
