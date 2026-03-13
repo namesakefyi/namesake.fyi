@@ -1,5 +1,6 @@
 import type { FormConfig } from "@/constants/forms";
 import { createFormMachine } from "./createFormMachine";
+import { getFieldNames } from "./formVisibility";
 import type { Step } from "./types";
 
 /**
@@ -21,7 +22,7 @@ export function step(config: Step): Step {
  * Extracts and flattens all field names from a steps array.
  */
 export function fieldsFromSteps(steps: readonly Step[]) {
-  return steps.flatMap((s) => s.fields);
+  return steps.flatMap((s) => getFieldNames(s.fields));
 }
 
 /**

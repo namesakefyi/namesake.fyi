@@ -47,14 +47,14 @@ The `fields` array tells the form which database fields belong to this step. It 
 
 ### Conditional steps
 
-Add a `guard` to skip a step entirely when a condition isn't met. The step is excluded from the forward and backward flow when its guard returns false.
+Add a `when` rule to skip a step entirely when a condition isn't met. The step is excluded from the forward and backward flow when its rule evaluates to false.
 
 ```ts
 export const feeWaiverDocumentsStep: Step = {
   id: "fee-waiver-documents",
   title: "Upload your fee waiver documents",
-  fields: ["feeWaiverDocument"],
-  guard: (data) => data.shouldApplyForFeeWaiver === true,
+  fields: ["reasonToWaivePublication"],
+  when: { field: "shouldApplyForFeeWaiver", equals: true },
   component: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>
       ...
@@ -65,20 +65,17 @@ export const feeWaiverDocumentsStep: Step = {
 
 ### Field visibility
 
-Add `isFieldVisible` when a step contains follow-up questions that only apply given a previous answer within the same step. Fields that are not visible are excluded from the review table and PDF output.
+Use the object form of `fields` with a `when` rule for follow-up questions that only apply given a previous answer. Fields that are not visible are excluded from the review table and PDF output.
 
 In the component, call `useFieldVisible(stepConfig, fieldName)` to get a reactive boolean for showing or hiding that field:
 
 ```ts
 export const otherNamesStep: Step = {
   id: "other-names",
-  fields: ["hasUsedOtherNameOrAlias", "otherNamesOrAliases"],
-  isFieldVisible: (fieldName, data) => {
-    if (fieldName === "otherNamesOrAliases") {
-      return data.hasUsedOtherNameOrAlias === true;
-    }
-    return true;
-  },
+  fields: [
+    "hasUsedOtherNameOrAlias",
+    { name: "otherNamesOrAliases", when: { field: "hasUsedOtherNameOrAlias", equals: true } },
+  ],
   component: ({ stepConfig }) => {
     const otherNamesVisible = useFieldVisible(stepConfig, "otherNamesOrAliases");
     return (
@@ -142,7 +139,7 @@ Restarting a form clears the progress (returning to the title page) but keeps al
 
 ## Submission
 
-Pass `createFormSubmitHandler` to `FormContainer` as the `onSubmit` handler. It collects the current form values, generates the PDFs, and triggers a download. Only fields that were visible to the user (respecting guards and `isFieldVisible`) are written to the PDFs.
+Pass `createFormSubmitHandler` to `FormContainer` as the `onSubmit` handler. It collects the current form values, generates the PDFs, and triggers a download. Only fields that were visible to the user (respecting step and field `when` rules) are written to the PDFs.
 
 ```ts
 const handleSubmit = createFormSubmitHandler(myFormConfig, form);

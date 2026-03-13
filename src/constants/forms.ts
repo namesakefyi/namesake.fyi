@@ -1,24 +1,9 @@
-import type { FormMachine } from "@/forms/createFormMachine";
+import type { FormMachine } from "@/forms/formConfig";
+import type { PdfEntry } from "@/forms/formVisibility";
 import type { Step } from "@/forms/types";
 import { courtOrderMaConfig } from "@/pages/forms/court-order-ma/config";
 import { socialSecurityConfig } from "@/pages/forms/social-security/config";
 import type { FieldName, FormData } from "./fields";
-import type { PDFId } from "./pdf";
-
-/**
- * Type representing all valid form slugs.
- * Update this union whenever a new form is added to FORM_CONFIGS.
- */
-
-/**
- * Configuration for a PDF within a form.
- */
-export interface FormPdfConfig {
-  /** The PDF identifier */
-  pdfId: PDFId;
-  /** Optional predicate to determine if this PDF should be included based on form data */
-  include?: (data: Partial<FormData>) => boolean;
-}
 
 /**
  * Function that generates instructions based on form data.
@@ -31,14 +16,14 @@ export type FormInstructionsFn = (data: Partial<FormData>) => string[];
 export interface FormConfig {
   /** Form identifier matching the URL slug */
   slug: string;
-  /** Ordered steps, including optional guards for conditional inclusion. */
+  /** Ordered steps, including optional when rules for conditional inclusion. */
   steps: readonly Step[];
   /** The XState machine for this form, created from steps. */
   machine: FormMachine;
   /** Flattened array of all field names, derived from steps. */
   fields: readonly FieldName[];
-  /** PDFs included in this form */
-  pdfs: readonly FormPdfConfig[];
+  /** PDFs included in this form. Shorthand: pdfId = always included. Object: { pdfId, when? } = conditional. */
+  pdfs: readonly PdfEntry[];
   /** Title for the downloaded PDF package */
   downloadTitle: string;
   /** Static instructions or function that generates instructions from form data */

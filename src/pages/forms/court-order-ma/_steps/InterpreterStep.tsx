@@ -12,14 +12,10 @@ export const interpreterStep: Step = {
   title:
     "If there is a hearing for your name change, do you need an interpreter?",
   description: "In most cases, a hearing is not required.",
-  fields: ["isInterpreterNeeded", "language"],
-  isFieldVisible: (fieldName, data) => {
-    // language only visible if isInterpreterNeeded is true
-    if (fieldName === "language") {
-      return data.isInterpreterNeeded === true;
-    }
-    return true;
-  },
+  fields: [
+    "isInterpreterNeeded",
+    { name: "language", when: { field: "isInterpreterNeeded", equals: true } },
+  ],
   component: ({ stepConfig }) => {
     const languageVisible = useFieldVisible(stepConfig, "language");
     return (

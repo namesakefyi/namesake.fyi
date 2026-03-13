@@ -5,7 +5,7 @@ import { FormCompleteStep } from "@/components/react/forms/FormCompleteStep";
 import { FormNavigation } from "@/components/react/forms/FormNavigation";
 import { FormReviewStep } from "@/components/react/forms/FormReviewStep";
 import { FormTitleStep } from "@/components/react/forms/FormTitleStep/FormTitleStep";
-import type { FormMachine } from "@/forms/createFormMachine";
+import type { FormMachine } from "@/forms/formConfig";
 import type { FormPdfMetadata } from "@/forms/getFormPdfMetadata";
 import type { Step } from "@/forms/types";
 import { useFormState } from "@/forms/useFormState";

@@ -1,4 +1,5 @@
-import type { FieldName, FormData } from "@/constants/fields";
+import type { FieldName } from "@/constants/fields";
+import type { VisibilityRule } from "./formVisibility";
 
 /**
  * Configuration for a single step in a form flow.
@@ -10,6 +11,12 @@ import type { FieldName, FormData } from "@/constants/fields";
  *   fields: ["firstName", "lastName"],
  *   component: LegalNameStep,
  * };
+ *
+ * @example Conditional field
+ * fields: [
+ *   "hasUsedOtherNameOrAlias",
+ *   { name: "otherNamesOrAliases", when: { field: "hasUsedOtherNameOrAlias", equals: true } },
+ * ],
  */
 export interface Step {
   /** Unique identifier used for navigation and persistence. */
@@ -22,33 +29,16 @@ export interface Step {
   description?: string;
 
   /**
-   * All fields this step writes to. Used to populate the review table
-   * and resolve values for PDF generation.
+   * All fields this step writes to. Shorthand: "fieldName" = always visible.
+   * Object form: { name, when? } = conditional visibility.
    */
-  fields: readonly FieldName[];
+  fields: readonly (FieldName | { name: FieldName; when?: VisibilityRule })[];
 
   /**
-   * When provided, the step is only included in the flow if this returns
-   * true. Evaluated with live form data on every navigation.
-   *
-   * @example
-   * guard: (data) => data.isFilingForSomeoneElse === true,
+   * When provided, the step is only included in the flow if the rule evaluates
+   * to true. Evaluated with live form data on every navigation.
    */
-  guard?: (data: Partial<FormData>) => boolean;
-
-  /**
-   * When provided, controls whether individual fields within this step
-   * are shown in the UI, the review table, and the generated PDF.
-   * Fields not listed in `fields` are always excluded regardless.
-   * To access isFieldVisible in the step component, use the useFieldVisible hook.
-   *
-   * @example
-   * isFieldVisible: (field, data) => {
-   *   if (field === "middleName") return data.hasMiddleName === true;
-   *   return true;
-   * },
-   */
-  isFieldVisible?: (fieldName: FieldName, data: FormData) => boolean;
+  when?: VisibilityRule;
 
   /** The React component rendered when this step is active. */
   component: React.ComponentType<{ stepConfig: Step }>;

@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
-  defineFormConfig,
+  createFormConfig,
   fieldsFromSteps,
   step,
-} from "@/forms/defineFormConfig";
+} from "@/forms/formConfig";
 import { makeStep } from "./testHelpers";
 
 describe("step", () => {
@@ -38,7 +38,7 @@ describe("defineFormConfig", () => {
       step(makeStep("b", ["oldLastName" as any])),
     ];
 
-    const config = defineFormConfig({
+    const config = createFormConfig({
       slug: "test-form",
       steps,
       pdfs: [],
@@ -56,7 +56,7 @@ describe("defineFormConfig", () => {
     const steps = [step(makeStep("a"))];
     const instructionsFn = () => ["Do a thing"];
 
-    const config = defineFormConfig({
+    const config = createFormConfig({
       slug: "extra-props",
       steps,
       pdfs: [],

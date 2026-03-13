@@ -1,4 +1,4 @@
-import { defineFormConfig, step } from "@/forms/defineFormConfig";
+import { createFormConfig, step } from "@/forms/formConfig";
 import { addressStep } from "./_steps/AddressStep";
 import { birthplaceStep } from "./_steps/BirthplaceStep";
 import { contactInfoStep } from "./_steps/ContactInfoStep";
@@ -14,7 +14,7 @@ import { pronounsStep } from "./_steps/PronounsStep";
 import { reasonStep } from "./_steps/ReasonStep";
 import { returnDocumentsStep } from "./_steps/ReturnDocumentsStep";
 
-export const courtOrderMaConfig = defineFormConfig({
+export const courtOrderMaConfig = createFormConfig({
   slug: "court-order-ma",
   steps: [
     step(newNameStep),
@@ -33,11 +33,11 @@ export const courtOrderMaConfig = defineFormConfig({
     step(mothersMaidenNameStep),
   ],
   pdfs: [
-    { pdfId: "cjp27-petition-to-change-name-of-adult" },
-    { pdfId: "cjp34-cori-and-wms-release-request" },
+    "cjp27-petition-to-change-name-of-adult",
+    "cjp34-cori-and-wms-release-request",
     {
       pdfId: "affidavit-of-indigency",
-      include: (data) => data.shouldApplyForFeeWaiver === true,
+      when: { field: "shouldApplyForFeeWaiver", equals: true },
     },
   ],
   downloadTitle: "Massachusetts Court Order",

@@ -6,57 +6,45 @@ import {
   FormSubsection,
   useFieldVisible,
 } from "@/components/react/forms/FormStep";
+import { condAll } from "@/forms/formVisibility";
 import type { Step } from "@/forms/types";
+import type { VisibilityRule } from "@/forms/formVisibility";
+
+const whenNotUnhoused: VisibilityRule = {
+  field: "isCurrentlyUnhoused",
+  notEquals: true,
+};
+const whenMailing: VisibilityRule = {
+  and: [
+    whenNotUnhoused,
+    { field: "isMailingAddressDifferentFromResidence", equals: true },
+  ],
+};
+
+const residenceFields = condAll(
+  whenNotUnhoused,
+  "residenceStreetAddress",
+  "residenceCity",
+  "residenceCounty",
+  "residenceState",
+  "residenceZipCode",
+  "isMailingAddressDifferentFromResidence",
+);
+const mailingFields = condAll(
+  whenMailing,
+  "mailingStreetAddress",
+  "mailingCity",
+  "mailingCounty",
+  "mailingState",
+  "mailingZipCode",
+);
 
 export const addressStep: Step = {
   id: "address",
   title: "What is your residential address?",
   description:
     "You must file your name change in the county where you live. We'll help you find where to file.",
-  fields: [
-    "isCurrentlyUnhoused",
-    "residenceStreetAddress",
-    "residenceCity",
-    "residenceCounty",
-    "residenceState",
-    "residenceZipCode",
-    "isMailingAddressDifferentFromResidence",
-    "mailingStreetAddress",
-    "mailingCity",
-    "mailingCounty",
-    "mailingState",
-    "mailingZipCode",
-  ],
-  isFieldVisible: (fieldName, data) => {
-    // Residence fields hidden if currently unhoused
-    if (
-      fieldName === "residenceStreetAddress" ||
-      fieldName === "residenceCity" ||
-      fieldName === "residenceCounty" ||
-      fieldName === "residenceState" ||
-      fieldName === "residenceZipCode"
-    ) {
-      return data.isCurrentlyUnhoused !== true;
-    }
-    // isMailingAddressDifferentFromResidence also hidden if unhoused
-    if (fieldName === "isMailingAddressDifferentFromResidence") {
-      return data.isCurrentlyUnhoused !== true;
-    }
-    // Mailing address fields only visible if different from residence and not unhoused
-    if (
-      fieldName === "mailingStreetAddress" ||
-      fieldName === "mailingCity" ||
-      fieldName === "mailingCounty" ||
-      fieldName === "mailingState" ||
-      fieldName === "mailingZipCode"
-    ) {
-      return (
-        data.isCurrentlyUnhoused !== true &&
-        data.isMailingAddressDifferentFromResidence === true
-      );
-    }
-    return true;
-  },
+  fields: ["isCurrentlyUnhoused", ...residenceFields, ...mailingFields],
   component: ({ stepConfig }) => {
     const residenceVisible = useFieldVisible(
       stepConfig,

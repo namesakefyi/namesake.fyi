@@ -22,7 +22,7 @@ describe("getFormPdfMetadata", () => {
 
   it("returns metadata for each PDF in the form config", async () => {
     vi.mocked(forms.getFormConfig).mockReturnValue({
-      pdfs: [{ pdfId: "cjp27-petition-to-change-name-of-adult" }],
+      pdfs: ["cjp27-petition-to-change-name-of-adult"],
     } as never);
 
     vi.mocked(pdfs.getPdfDefinition).mockResolvedValue({
@@ -38,14 +38,14 @@ describe("getFormPdfMetadata", () => {
         pdfId: "cjp27-petition-to-change-name-of-adult",
         title: "Petition to Change Name of Adult",
         code: "CJP-27",
-        conditional: false,
+        when: false,
       },
     ]);
   });
 
-  it("sets conditional to false when a PDF has no include predicate", async () => {
+  it("sets when to false when a PDF has no when rule", async () => {
     vi.mocked(forms.getFormConfig).mockReturnValue({
-      pdfs: [{ pdfId: "affidavit-of-indigency" }],
+      pdfs: ["affidavit-of-indigency"],
     } as never);
 
     vi.mocked(pdfs.getPdfDefinition).mockResolvedValue({
@@ -55,15 +55,15 @@ describe("getFormPdfMetadata", () => {
 
     const [metadata] = await getFormPdfMetadata("court-order-ma");
 
-    expect(metadata.conditional).toBe(false);
+    expect(metadata.when).toBe(false);
   });
 
-  it("sets conditional to true when a PDF has an include predicate", async () => {
+  it("sets when to true when a PDF has a when rule", async () => {
     vi.mocked(forms.getFormConfig).mockReturnValue({
       pdfs: [
         {
           pdfId: "cjp25-petition-to-change-name-of-minor",
-          include: () => true,
+          when: { field: "shouldApplyForFeeWaiver", equals: true },
         },
       ],
     } as never);
@@ -76,12 +76,12 @@ describe("getFormPdfMetadata", () => {
 
     const [metadata] = await getFormPdfMetadata("court-order-ma");
 
-    expect(metadata.conditional).toBe(true);
+    expect(metadata.when).toBe(true);
   });
 
   it("omits code when the PDF definition has none", async () => {
     vi.mocked(forms.getFormConfig).mockReturnValue({
-      pdfs: [{ pdfId: "ss5-application-for-social-security-card" }],
+      pdfs: ["ss5-application-for-social-security-card"],
     } as never);
 
     vi.mocked(pdfs.getPdfDefinition).mockResolvedValue({
@@ -97,8 +97,11 @@ describe("getFormPdfMetadata", () => {
   it("returns metadata for all PDFs when a form has multiple", async () => {
     vi.mocked(forms.getFormConfig).mockReturnValue({
       pdfs: [
-        { pdfId: "cjp27-petition-to-change-name-of-adult" },
-        { pdfId: "affidavit-of-indigency", include: () => true },
+        "cjp27-petition-to-change-name-of-adult",
+        {
+          pdfId: "affidavit-of-indigency",
+          when: { field: "shouldApplyForFeeWaiver", equals: true },
+        },
       ],
     } as never);
 
@@ -118,6 +121,6 @@ describe("getFormPdfMetadata", () => {
     expect(result).toHaveLength(2);
     expect(result[0].pdfId).toBe("cjp27-petition-to-change-name-of-adult");
     expect(result[1].pdfId).toBe("affidavit-of-indigency");
-    expect(result[1].conditional).toBe(true);
+    expect(result[1].when).toBe(true);
   });
 });

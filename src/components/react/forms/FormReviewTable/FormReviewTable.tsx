@@ -1,7 +1,10 @@
 import { useFormContext } from "react-hook-form";
 import { useFormStep } from "@/components/react/forms/FormContainer";
-import { resolveVisibleFields } from "@/components/react/forms/FormContainer/resolveVisibleFields";
 import type { FormData } from "@/constants/fields";
+import {
+  getFieldNames,
+  resolveFormVisibility,
+} from "@/forms/formVisibility";
 import type { Step } from "@/forms/types";
 import { formatFieldValue, getFieldLabel } from "@/utils/formatReviewFields";
 import "./FormReviewTable.css";
@@ -27,12 +30,12 @@ export function FormReviewTable({ steps }: FormReviewTableProps) {
   const { onEditStep } = useFormStep();
   const formData = form.getValues() as FormData;
 
-  const visibleFields = resolveVisibleFields(steps, formData);
+  const { visibleFields } = resolveFormVisibility(steps, formData);
 
   const sections: ReviewSection[] = [];
 
   for (const step of steps) {
-    const stepFields = step.fields.filter(
+    const stepFields = getFieldNames(step.fields).filter(
       (fieldName) => fieldName in visibleFields,
     );
 

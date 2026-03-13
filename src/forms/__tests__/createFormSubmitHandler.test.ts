@@ -1,15 +1,15 @@
 import type { SubmitEvent } from "react";
 import type { UseFormReturn } from "react-hook-form";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { resolveVisibleFields } from "@/components/react/forms/FormContainer/resolveVisibleFields";
 import type { FormData } from "@/constants/fields";
 import type { FormConfig } from "@/constants/forms";
 import { downloadMergedPdf } from "@/pdfs/utils/downloadMergedPdf";
 import { loadPdfs } from "@/pdfs/utils/loadPdfs";
 import { createFormSubmitHandler } from "../createFormSubmitHandler";
+import { resolveFormVisibility } from "../formVisibility";
 
-vi.mock("@/components/react/forms/FormContainer/resolveVisibleFields", () => ({
-  resolveVisibleFields: vi.fn(),
+vi.mock("../formVisibility", () => ({
+  resolveFormVisibility: vi.fn(),
 }));
 vi.mock("@/pdfs/utils/downloadMergedPdf", () => ({
   downloadMergedPdf: vi.fn(),
@@ -37,7 +37,7 @@ function makeConfig(overrides: Partial<FormConfig> = {}): FormConfig {
     slug: "court-order-ma",
     steps: [{ fields: ["oldFirstName"] }],
     fields: ["oldFirstName"],
-    pdfs: [{ pdfId: "cjp27-petition-to-change-name-of-adult" }],
+    pdfs: ["cjp27-petition-to-change-name-of-adult"],
     downloadTitle: "Court Order MA",
     instructions: ["Step 1", "Step 2"],
     ...overrides,
@@ -47,7 +47,13 @@ function makeConfig(overrides: Partial<FormConfig> = {}): FormConfig {
 describe("createFormSubmitHandler", () => {
   beforeEach(() => {
     vi.mocked(loadPdfs).mockResolvedValue(mockPdfs as never);
-    vi.mocked(resolveVisibleFields).mockReturnValue(mockVisibleData);
+    vi.mocked(resolveFormVisibility).mockReturnValue({
+      visibleStepIds: [],
+      visibleFields: mockVisibleData,
+      pdfsToInclude: [
+        { pdfId: "cjp27-petition-to-change-name-of-adult", include: true },
+      ],
+    });
     vi.mocked(downloadMergedPdf).mockResolvedValue(undefined);
   });
 
@@ -64,17 +70,27 @@ describe("createFormSubmitHandler", () => {
     expect(event.preventDefault).toHaveBeenCalled();
   });
 
-  it("passes PDF configs with resolved include predicates to loadPdfs", async () => {
+  it("passes pdfsToInclude from resolver to loadPdfs", async () => {
     const config = makeConfig({
       pdfs: [
-        { pdfId: "cjp27-petition-to-change-name-of-adult" },
-        { pdfId: "affidavit-of-indigency", include: () => true },
+        "cjp27-petition-to-change-name-of-adult",
         {
-          pdfId: "cjp25-petition-to-change-name-of-minor",
-          include: () => false,
+          pdfId: "affidavit-of-indigency",
+          when: { field: "shouldApplyForFeeWaiver", equals: true },
         },
+        { pdfId: "cjp25-petition-to-change-name-of-minor", when: { or: [] } },
       ],
     } as never);
+
+    vi.mocked(resolveFormVisibility).mockReturnValue({
+      visibleStepIds: [],
+      visibleFields: mockVisibleData,
+      pdfsToInclude: [
+        { pdfId: "cjp27-petition-to-change-name-of-adult", include: true },
+        { pdfId: "affidavit-of-indigency", include: true },
+        { pdfId: "cjp25-petition-to-change-name-of-minor", include: false },
+      ],
+    });
 
     await createFormSubmitHandler(config, makeForm())(makeEvent());
 
@@ -85,25 +101,15 @@ describe("createFormSubmitHandler", () => {
     ]);
   });
 
-  it("evaluates include predicates with the current form data", async () => {
-    const include = vi.fn().mockReturnValue(true);
-    const config = makeConfig({
-      pdfs: [{ pdfId: "affidavit-of-indigency", include }],
-    } as never);
-
-    await createFormSubmitHandler(config, makeForm())(makeEvent());
-
-    expect(include).toHaveBeenCalledWith(mockFormData);
-  });
-
-  it("calls resolveVisibleFields with config steps and form data", async () => {
+  it("calls resolveFormVisibility with config steps, form data, and pdfs", async () => {
     const config = makeConfig();
 
     await createFormSubmitHandler(config, makeForm())(makeEvent());
 
-    expect(resolveVisibleFields).toHaveBeenCalledWith(
+    expect(resolveFormVisibility).toHaveBeenCalledWith(
       config.steps,
       mockFormData,
+      config.pdfs,
     );
   });
 

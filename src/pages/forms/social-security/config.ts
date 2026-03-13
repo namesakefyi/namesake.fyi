@@ -1,4 +1,4 @@
-import { defineFormConfig, step } from "@/forms/defineFormConfig";
+import { createFormConfig, step } from "@/forms/formConfig";
 import { addressStep } from "./_steps/AddressStep";
 import { birthplaceStep } from "./_steps/BirthplaceStep";
 import { citizenshipStep } from "./_steps/CitizenshipStep";
@@ -15,7 +15,7 @@ import { previousSocialSecurityCardStep } from "./_steps/PreviousSocialSecurityC
 import { raceStep } from "./_steps/RaceStep";
 import { sexStep } from "./_steps/SexStep";
 
-export const socialSecurityConfig = defineFormConfig({
+export const socialSecurityConfig = createFormConfig({
   slug: "social-security",
   steps: [
     step(newNameStep),
@@ -34,7 +34,7 @@ export const socialSecurityConfig = defineFormConfig({
     step(addressStep),
     step(filingForSomeoneElseStep),
   ],
-  pdfs: [{ pdfId: "ss5-application-for-social-security-card" }],
+  pdfs: ["ss5-application-for-social-security-card"],
   downloadTitle: "Social Security Card",
   instructions: (data) =>
     [

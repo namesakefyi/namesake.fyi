@@ -10,19 +10,14 @@ import {
 } from "vitest";
 import { createActor } from "xstate";
 import * as db from "@/db/database";
-import { createFormMachine } from "@/forms/createFormMachine";
-import { step } from "@/forms/defineFormConfig";
-import type { Step } from "@/forms/types";
+import { createFormMachine, step } from "@/forms/formConfig";
 import { useFormState } from "../useFormState";
+import { makeStep } from "./testHelpers";
 
 vi.mock("@/db/database", () => ({
   getFormProgress: vi.fn(),
   saveFormProgress: vi.fn(),
 }));
-
-function makeStep(id: string): Step {
-  return { id, title: `Step ${id}`, fields: [], component: () => null };
-}
 
 const flow = [step(makeStep("a")), step(makeStep("b"))];
 const machine = createFormMachine({ id: "test-form", steps: flow });
@@ -389,10 +384,10 @@ describe("useFormState", () => {
       expect(result.current.activeStepId).toBe("b");
     });
 
-    it("goNext skips guarded steps", async () => {
+    it("goNext skips steps whose when rule evaluates to false", async () => {
       const guardedFlow = [
         step(makeStep("a")),
-        step({ ...makeStep("b"), guard: () => false }),
+        step(makeStep("b", [], { or: [] })),
         step(makeStep("c")),
       ];
       const guardedMachine = createFormMachine({

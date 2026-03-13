@@ -123,16 +123,26 @@ describe("FormReviewTable", () => {
     expect(onEditStep).toHaveBeenCalledWith("legal-name");
   });
 
-  it("skips steps where all fields are hidden by isFieldVisible", () => {
+  it("skips steps where all fields are hidden by when rules", () => {
     const hiddenStep: Step = {
       ...nameStep,
       id: "hidden-step",
-      isFieldVisible: () => false,
+      fields: [
+        {
+          name: "oldFirstName",
+          when: { field: "hasUsedOtherNameOrAlias", equals: true },
+        },
+        {
+          name: "oldLastName",
+          when: { field: "hasUsedOtherNameOrAlias", equals: true },
+        },
+      ],
     };
 
     renderWithValues(<FormReviewTable steps={[hiddenStep, contactStep]} />, {
       oldFirstName: "Sylvia",
       phoneNumber: "(555) 867-5309",
+      hasUsedOtherNameOrAlias: false,
     });
 
     const changeButtons = screen.getAllByRole("button", { name: "Change" });
@@ -142,7 +152,10 @@ describe("FormReviewTable", () => {
   it("renders no sections when all steps have no visible fields", () => {
     const emptyStep: Step = {
       ...nameStep,
-      isFieldVisible: () => false,
+      fields: [
+        { name: "oldFirstName", when: { or: [] } },
+        { name: "oldLastName", when: { or: [] } },
+      ],
     };
 
     renderWithValues(<FormReviewTable steps={[emptyStep]} />, {
@@ -156,12 +169,19 @@ describe("FormReviewTable", () => {
   it("only includes fields that are visible within a step", () => {
     const partialStep: Step = {
       ...nameStep,
-      isFieldVisible: (fieldName) => fieldName === "oldFirstName",
+      fields: [
+        "oldFirstName",
+        {
+          name: "oldLastName",
+          when: { field: "hasUsedOtherNameOrAlias", equals: true },
+        },
+      ],
     };
 
     renderWithValues(<FormReviewTable steps={[partialStep]} />, {
       oldFirstName: "Sylvia",
       oldLastName: "Rivera",
+      hasUsedOtherNameOrAlias: false,
     });
 
     const terms = screen.getAllByRole("term");

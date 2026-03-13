@@ -1,5 +1,5 @@
 import { getFormProgress } from "@/db/database";
-import { getPhase } from "@/forms/createFormMachine";
+import { getPhase } from "@/forms/formConfig";
 
 export type FormStatus = "inProgress" | "complete";
 

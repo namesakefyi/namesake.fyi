@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createActor } from "xstate";
 import { getFormProgress, saveFormProgress } from "@/db/database";
-import { type FormMachine, getPhase } from "@/forms/createFormMachine";
+import { type FormMachine, getPhase } from "@/forms/formConfig";
+import { resolveFormVisibility } from "@/forms/formVisibility";
 import {
   findNextStepIndex,
   findPrevStepIndex,
-  getVisibleStepIds,
-} from "@/forms/stepNavigation";
+} from "@/forms/formVisibility";
 import type { FormMachineContext, FormPhase, Step } from "@/forms/types";
 
 type FormActor = ReturnType<typeof createActor<FormMachine>>;
@@ -150,8 +150,8 @@ export function useFormState(
   const activeStep = steps.find((s) => s.id === activeStepId) ?? null;
 
   const formData = getFormData();
-  const visibleStepIds = useMemo(
-    () => getVisibleStepIds(steps, formData),
+  const { visibleStepIds } = useMemo(
+    () => resolveFormVisibility(steps, formData),
     [steps, formData],
   );
 
@@ -167,7 +167,11 @@ export function useFormState(
     const currentIndex = steps.findIndex((s) => s.id === currentId);
     if (currentIndex === -1) return;
 
-    const nextIndex = findNextStepIndex(steps, currentIndex, getFormData());
+    const { visibleStepIds: visible } = resolveFormVisibility(
+      steps,
+      getFormData(),
+    );
+    const nextIndex = findNextStepIndex(steps, currentIndex, visible);
     const isLastStep = nextIndex === -1;
     if (isLastStep) {
       send({ type: "GOTO_REVIEW" });
@@ -189,7 +193,11 @@ export function useFormState(
     const currentIndex = steps.findIndex((s) => s.id === currentId);
     if (currentIndex === -1) return;
 
-    const prevIndex = findPrevStepIndex(steps, currentIndex, getFormData());
+    const { visibleStepIds: visible } = resolveFormVisibility(
+      steps,
+      getFormData(),
+    );
+    const prevIndex = findPrevStepIndex(steps, currentIndex, visible);
     const isFirstStep = prevIndex === -1;
     if (isFirstStep) {
       send({ type: "GOTO_TITLE" });
