@@ -8,7 +8,7 @@ export const newNameStep: Step = {
   description:
     "This is the name you're making official! Type it exactly as you want it to appear.",
   fields: ["newFirstName", "newMiddleName", "newLastName"],
-  component: ({ stepConfig }) => (
+  render: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>
       <NameField type="newName" />
     </FormStep>

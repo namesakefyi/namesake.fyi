@@ -45,15 +45,15 @@ function renderWithValues(
 const nameStep: Step = {
   id: "legal-name",
   title: "Legal Name",
-  component: () => null,
   fields: ["oldFirstName", "oldLastName"],
+  render: () => null,
 };
 
 const contactStep: Step = {
   id: "contact",
   title: "Contact",
-  component: () => null,
   fields: ["phoneNumber"],
+  render: () => null,
 };
 
 describe("FormReviewTable", () => {
@@ -123,16 +123,27 @@ describe("FormReviewTable", () => {
     expect(onEditStep).toHaveBeenCalledWith("legal-name");
   });
 
-  it("skips steps where all fields are hidden by isFieldVisible", () => {
+  it("skips steps where all fields are hidden by 'when' rules", () => {
     const hiddenStep: Step = {
-      ...nameStep,
       id: "hidden-step",
-      isFieldVisible: () => false,
+      title: "Hidden Step",
+      fields: [
+        {
+          id: "oldFirstName",
+          when: { field: "hasUsedOtherNameOrAlias", equals: true },
+        },
+        {
+          id: "oldLastName",
+          when: { field: "hasUsedOtherNameOrAlias", equals: true },
+        },
+      ],
+      render: () => null,
     };
 
     renderWithValues(<FormReviewTable steps={[hiddenStep, contactStep]} />, {
       oldFirstName: "Sylvia",
       phoneNumber: "(555) 867-5309",
+      hasUsedOtherNameOrAlias: false,
     });
 
     const changeButtons = screen.getAllByRole("button", { name: "Change" });
@@ -142,7 +153,10 @@ describe("FormReviewTable", () => {
   it("renders no sections when all steps have no visible fields", () => {
     const emptyStep: Step = {
       ...nameStep,
-      isFieldVisible: () => false,
+      fields: [
+        { id: "oldFirstName", when: { or: [] } },
+        { id: "oldLastName", when: { or: [] } },
+      ],
     };
 
     renderWithValues(<FormReviewTable steps={[emptyStep]} />, {
@@ -156,12 +170,19 @@ describe("FormReviewTable", () => {
   it("only includes fields that are visible within a step", () => {
     const partialStep: Step = {
       ...nameStep,
-      isFieldVisible: (fieldName) => fieldName === "oldFirstName",
+      fields: [
+        "oldFirstName",
+        {
+          id: "oldLastName",
+          when: { field: "hasUsedOtherNameOrAlias", equals: true },
+        },
+      ],
     };
 
     renderWithValues(<FormReviewTable steps={[partialStep]} />, {
       oldFirstName: "Sylvia",
       oldLastName: "Rivera",
+      hasUsedOtherNameOrAlias: false,
     });
 
     const terms = screen.getAllByRole("term");

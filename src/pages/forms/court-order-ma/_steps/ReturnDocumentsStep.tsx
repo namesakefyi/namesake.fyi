@@ -8,7 +8,7 @@ export const returnDocumentsStep: Step = {
   id: "return-documents",
   title: "Do you want your original documents returned afterwards?",
   fields: ["shouldReturnOriginalDocuments"],
-  component: ({ stepConfig }) => {
+  render: ({ stepConfig }) => {
     const form = useFormContext();
     return (
       <FormStep stepConfig={stepConfig}>

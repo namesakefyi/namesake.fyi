@@ -10,15 +10,14 @@ import type { Step } from "@/forms/types";
 export const previousNamesStep: Step = {
   id: "previous-names",
   title: "Have you used any other legal names?",
-  fields: ["hasOtherLegalNames", "previousLegalNames"],
-  isFieldVisible: (fieldName, data) => {
-    // previousLegalNames only visible if hasOtherLegalNames is true
-    if (fieldName === "previousLegalNames") {
-      return data.hasOtherLegalNames === true;
-    }
-    return true;
-  },
-  component: ({ stepConfig }) => {
+  fields: [
+    "hasOtherLegalNames",
+    {
+      id: "previousLegalNames",
+      when: { field: "hasOtherLegalNames", equals: true },
+    },
+  ],
+  render: ({ stepConfig }) => {
     const previousNamesVisible = useFieldVisible(
       stepConfig,
       "previousLegalNames",

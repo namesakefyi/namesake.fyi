@@ -6,7 +6,7 @@ export const parentTwoNameStep: Step = {
   id: "parent-two",
   title: "What is your father's (or second parent's) name?",
   fields: ["fathersFirstName", "fathersMiddleName", "fathersLastName"],
-  component: ({ stepConfig }) => (
+  render: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>
       <NameField type="fathersName" />
     </FormStep>

@@ -1,39 +1,35 @@
+import type { PortableTextProps } from "@portabletext/react";
+import { PortableText } from "@portabletext/react";
+import { RiMegaphoneLine } from "@remixicon/react";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { FormProvider, type UseFormReturn } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
+import { Banner } from "@/components/react/common/Banner";
 import { ProgressCircle } from "@/components/react/common/ProgressCircle";
 import { FormCompleteStep } from "@/components/react/forms/FormCompleteStep";
 import { FormNavigation } from "@/components/react/forms/FormNavigation";
 import { FormReviewStep } from "@/components/react/forms/FormReviewStep";
 import { FormTitleStep } from "@/components/react/forms/FormTitleStep/FormTitleStep";
-import type { FormMachine } from "@/forms/createFormMachine";
+import type { Form } from "@/constants/forms";
+import { createFormSubmitHandler } from "@/forms/createFormSubmitHandler";
 import type { FormPdfMetadata } from "@/forms/getFormPdfMetadata";
-import type { Step } from "@/forms/types";
+import { useFormData } from "@/forms/useFormData";
 import { useFormState } from "@/forms/useFormState";
 import type { Cost } from "@/utils/formatTotalCosts";
 import { FormStepContext } from "./FormStepContext";
 import "./FormContainer.css";
 
-export interface FormContainerProps {
+export interface FormContainerProps<T extends Form = Form> {
+  /** Form configuration. */
+  config: T;
+
   /** The title of the form. */
   title: string;
 
   /** An optional description to provide more context. */
   description?: string;
 
-  /** Children to display on the title step. */
-  children?: React.ReactNode;
-
-  /** Ordered steps, including optional guards for conditional inclusion. */
-  steps: readonly Step[];
-
-  /** The XState machine for this form, created by createFormMachine. */
-  machine: FormMachine;
-
-  /** The form instance from react-hook-form's useForm hook. */
-  form: UseFormReturn<any>;
-
-  /** Submit handler for the final form submission. Can be async. */
-  onSubmit: (e: React.SubmitEvent<HTMLFormElement>) => void | Promise<void>;
+  /** Optional banner content (Portable Text) to display on the title step. */
+  banner?: PortableTextProps["value"];
 
   /** The date the form was last updated. */
   updatedAt?: string;
@@ -45,19 +41,19 @@ export interface FormContainerProps {
   costs?: Cost[];
 }
 
-export function FormContainer({
+export function FormContainer<T extends Form>({
+  config,
   title,
   description,
-  children,
-  steps,
-  machine,
-  form,
-  onSubmit,
+  banner,
   updatedAt,
   pdfs,
   costs,
-}: FormContainerProps) {
-  const formSlug = machine.id;
+}: FormContainerProps<T>) {
+  const { steps, machine } = config;
+  const form = useFormData(config);
+  const onSubmit = createFormSubmitHandler(config, form);
+
   const {
     isLoading,
     phase,
@@ -159,13 +155,17 @@ export function FormContainer({
             totalSteps={totalSteps}
             onStart={onStart}
           >
-            {children}
+            {banner && (
+              <Banner icon={RiMegaphoneLine}>
+                <PortableText value={banner} />
+              </Banner>
+            )}
           </FormTitleStep>
         );
       case "filling":
       case "editing": {
         if (!activeStep) return null;
-        const StepComponent = activeStep.component;
+        const StepComponent = activeStep.render;
         return <StepComponent stepConfig={activeStep} />;
       }
       case "review":
@@ -175,7 +175,7 @@ export function FormContainer({
         return (
           <FormCompleteStep
             title={title}
-            formSlug={formSlug}
+            formSlug={config.slug}
             onRedownload={onSubmit}
           />
         );
@@ -190,11 +190,11 @@ export function FormContainer({
     updatedAt,
     title,
     description,
-    children,
+    banner,
+    config.slug,
     totalSteps,
     onStart,
     onSubmit,
-    formSlug,
   ]);
 
   const showNavigation = !["title", "complete"].includes(phase);

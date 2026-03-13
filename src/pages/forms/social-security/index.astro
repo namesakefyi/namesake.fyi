@@ -1,9 +1,10 @@
 ---
 import type { SanityDocument } from "@sanity/client";
+import { FormContainer } from "@/components/react/forms/FormContainer/FormContainer";
 import { getFormPdfMetadata } from "@/forms/getFormPdfMetadata";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { loadQuery } from "@/sanity/lib/loadQuery";
-import { SocialSecurityForm } from "./_Form";
+import { socialSecurityForm } from "./form";
 
 const { data: form } = await loadQuery<SanityDocument>({
   query: `*[_type == "form" && slug.current == $slug][0]`,
@@ -16,8 +17,9 @@ const pdfs = await getFormPdfMetadata("social-security");
 ---
 
 <BaseLayout title={form.title} description={form.description} color="white">
-  <SocialSecurityForm
+  <FormContainer
     client:load
+    config={socialSecurityForm}
     title={form.title}
     description={form.description}
     updatedAt={form._updatedAt}

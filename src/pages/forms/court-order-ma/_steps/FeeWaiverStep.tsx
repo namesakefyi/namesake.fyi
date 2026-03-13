@@ -12,7 +12,7 @@ export const feeWaiverStep: Step = {
   description:
     "If you are unable to pay the filing fee, you can file an Affidavit of Indigency—a document proving that you are unable to pay.",
   fields: ["shouldApplyForFeeWaiver"],
-  component: ({ stepConfig }) => {
+  render: ({ stepConfig }) => {
     const { costs } = useFormStep();
     const form = useFormContext();
 

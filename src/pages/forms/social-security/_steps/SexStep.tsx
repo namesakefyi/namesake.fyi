@@ -9,7 +9,7 @@ export const sexStep: Step = {
   description:
     "The Social Security Administration accepts only two options: male or female.",
   fields: ["sexAssignedAtBirth"],
-  component: ({ stepConfig }) => (
+  render: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>
       <RadioGroupField
         name="sexAssignedAtBirth"

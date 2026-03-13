@@ -35,11 +35,10 @@ function TestWrapper({ children }: { children: ReactNode }) {
 describe("FormStep", () => {
   const formStep: Step = {
     id: "what-is-your-legal-name",
-    component: () => <div>Test content</div>,
+    render: () => <div>Test content</div>,
     title: "What is your legal name?",
     description: "Type your name exactly as it appears on your ID.",
     fields: [],
-    isFieldVisible: () => true,
   };
 
   it("renders title correctly", () => {
@@ -161,52 +160,74 @@ describe("FormStep", () => {
 });
 
 describe("useFieldVisible", () => {
-  function wrapper({ children }: { children: ReactNode }) {
-    const form = useForm({ defaultValues: { middleName: "Lee" } });
-    return <FormProvider {...form}>{children}</FormProvider>;
+  function makeWrapper(
+    defaultValues: Record<string, unknown> = { middleName: "Lee" },
+  ) {
+    return function Wrapper({ children }: { children: ReactNode }) {
+      const form = useForm({ defaultValues });
+      return <FormProvider {...form}>{children}</FormProvider>;
+    };
   }
 
   const stepConfig: Step = {
     id: "name",
     title: "Name",
     fields: ["middleName" as any],
-    component: () => null,
+    render: () => null,
   };
 
-  it("returns true when isFieldVisible is not defined", () => {
+  it("returns true when field has no when rule", () => {
     const { result } = renderHook(
       () => useFieldVisible(stepConfig, "middleName" as any),
-      { wrapper },
+      { wrapper: makeWrapper() },
     );
     expect(result.current).toBe(true);
   });
 
-  it("returns true when isFieldVisible returns true for the field", () => {
-    const config = { ...stepConfig, isFieldVisible: () => true };
+  it("returns true when when rule evaluates to true", () => {
+    const config: Step = {
+      ...stepConfig,
+      fields: [
+        {
+          id: "otherNamesOrAliases" as any,
+          when: { field: "hasUsedOtherNameOrAlias", equals: true },
+        },
+      ],
+    };
     const { result } = renderHook(
-      () => useFieldVisible(config, "middleName" as any),
-      { wrapper },
+      () => useFieldVisible(config, "otherNamesOrAliases" as any),
+      { wrapper: makeWrapper({ hasUsedOtherNameOrAlias: true }) },
     );
     expect(result.current).toBe(true);
   });
 
-  it("returns false when isFieldVisible returns false for the field", () => {
-    const config = { ...stepConfig, isFieldVisible: () => false };
+  it("returns false when when rule evaluates to false", () => {
+    const config: Step = {
+      ...stepConfig,
+      fields: [
+        {
+          id: "otherNamesOrAliases" as any,
+          when: { field: "hasUsedOtherNameOrAlias", equals: true },
+        },
+      ],
+    };
     const { result } = renderHook(
-      () => useFieldVisible(config, "middleName" as any),
-      { wrapper },
+      () => useFieldVisible(config, "otherNamesOrAliases" as any),
+      { wrapper: makeWrapper({ hasUsedOtherNameOrAlias: false }) },
     );
     expect(result.current).toBe(false);
   });
 
-  it("passes live form data to isFieldVisible", () => {
-    const isFieldVisible = vi.fn(() => true);
-    const config = { ...stepConfig, isFieldVisible };
-    renderHook(() => useFieldVisible(config, "middleName" as any), { wrapper });
-    expect(isFieldVisible).toHaveBeenCalledWith(
-      "middleName",
-      expect.objectContaining({ middleName: "Lee" }),
+  it("returns false when field is not in step", () => {
+    const config: Step = {
+      ...stepConfig,
+      fields: ["oldFirstName" as any],
+    };
+    const { result } = renderHook(
+      () => useFieldVisible(config, "oldLastName" as any),
+      { wrapper: makeWrapper({ oldFirstName: "Jane" }) },
     );
+    expect(result.current).toBe(false);
   });
 });
 

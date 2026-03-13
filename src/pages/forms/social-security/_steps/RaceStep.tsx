@@ -8,7 +8,7 @@ export const raceStep: Step = {
   title: "What is your race?",
   description: "This response is optional.",
   fields: ["race"],
-  component: ({ stepConfig }) => (
+  render: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>
       <CheckboxGroupField
         name="race"

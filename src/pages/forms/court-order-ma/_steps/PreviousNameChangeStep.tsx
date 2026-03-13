@@ -7,28 +7,24 @@ import { LongTextField } from "@/components/react/forms/LongTextField";
 import { ShortTextField } from "@/components/react/forms/ShortTextField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
 import type { Step } from "@/forms/types";
+import type { VisibilityRule } from "@/forms/visibilityRules";
+
+const whenHasPrevious: VisibilityRule = {
+  field: "hasPreviousNameChange",
+  equals: true,
+};
 
 export const previousNameChangeStep: Step = {
   id: "previous-name-change",
   title: "Have you ever changed your name before?",
   fields: [
     "hasPreviousNameChange",
-    "previousNameFrom",
-    "previousNameTo",
-    "previousNameReason",
+    {
+      ids: ["previousNameFrom", "previousNameTo", "previousNameReason"],
+      when: whenHasPrevious,
+    },
   ],
-  isFieldVisible: (fieldName, data) => {
-    // Previous name details only visible if hasPreviousNameChange is true
-    if (
-      fieldName === "previousNameFrom" ||
-      fieldName === "previousNameTo" ||
-      fieldName === "previousNameReason"
-    ) {
-      return data.hasPreviousNameChange === true;
-    }
-    return true;
-  },
-  component: ({ stepConfig }) => {
+  render: ({ stepConfig }) => {
     const previousNameVisible = useFieldVisible(stepConfig, "previousNameFrom");
     return (
       <FormStep stepConfig={stepConfig}>

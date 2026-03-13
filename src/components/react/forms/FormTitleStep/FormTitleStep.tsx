@@ -129,7 +129,7 @@ export function FormTitleStep({
             <FormInfoItemDescription>
               <ul className="form-info-pdf-list">
                 {pdfs.map((pdf) => (
-                  <li key={pdf.pdfId}>
+                  <li key={pdf.id}>
                     {pdf.title}
                     {pdf.code && ` (${pdf.code})`}
                   </li>

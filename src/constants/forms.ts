@@ -1,62 +1,49 @@
 import type { FormMachine } from "@/forms/createFormMachine";
-import type { Step } from "@/forms/types";
-import { courtOrderMaConfig } from "@/pages/forms/court-order-ma/config";
-import { socialSecurityConfig } from "@/pages/forms/social-security/config";
-import type { FieldName, FormData } from "./fields";
-import type { PDFId } from "./pdf";
+import type { PdfEntry } from "@/forms/formVisibility";
+import type { FieldsOf, Step } from "@/forms/types";
+import type { VisibilityRule } from "@/forms/visibilityRules";
+import { courtOrderMaForm } from "@/pages/forms/court-order-ma/form";
+import { socialSecurityForm } from "@/pages/forms/social-security/form";
+import type { FieldType } from "./fields";
 
-/**
- * Type representing all valid form slugs.
- * Update this union whenever a new form is added to FORM_CONFIGS.
- */
-
-/**
- * Configuration for a PDF within a form.
- */
-export interface FormPdfConfig {
-  /** The PDF identifier */
-  pdfId: PDFId;
-  /** Optional predicate to determine if this PDF should be included based on form data */
-  include?: (data: Partial<FormData>) => boolean;
-}
-
-/**
- * Function that generates instructions based on form data.
- */
-export type FormInstructionsFn = (data: Partial<FormData>) => string[];
+/** Instruction: string = always include; object with when = conditional. */
+export type Instruction = string | { text: string; when?: VisibilityRule };
 
 /**
  * Complete configuration for a form.
  */
-export interface FormConfig {
+export interface Form {
   /** Form identifier matching the URL slug */
   slug: string;
-  /** Ordered steps, including optional guards for conditional inclusion. */
+  /** Ordered steps, including optional `when` rules for conditional inclusion. */
   steps: readonly Step[];
-  /** The XState machine for this form, created from steps. */
+  /** The XState machine for this form. */
   machine: FormMachine;
-  /** Flattened array of all field names, derived from steps. */
-  fields: readonly FieldName[];
-  /** PDFs included in this form */
-  pdfs: readonly FormPdfConfig[];
+  /** PDFs included in this form. Shorthand: id = always included. Object: { id, when? } = conditional. */
+  pdfs: readonly PdfEntry[];
   /** Title for the downloaded PDF package */
   downloadTitle: string;
-  /** Static instructions or function that generates instructions from form data */
-  instructions: string[] | FormInstructionsFn;
+  /** Instructions for the cover page. String = always include; { text, when? } = conditional. */
+  instructions: readonly Instruction[];
 }
+
+/** Form data type for a specific form (only fields from its steps). */
+export type FormDataOf<F extends Form> = {
+  [K in FieldsOf<F["steps"]>]: FieldType<K>;
+};
 
 /**
  * Registry of all form configurations.
  */
-export const FORM_CONFIGS: Record<string, FormConfig> = {
-  "court-order-ma": courtOrderMaConfig,
-  "social-security": socialSecurityConfig,
+const FORM_CONFIGS: Record<string, Form> = {
+  "court-order-ma": courtOrderMaForm,
+  "social-security": socialSecurityForm,
 };
 
 /**
  * Get a form configuration by slug.
  */
-export function getFormConfig(slug: string): FormConfig | undefined {
+export function getFormConfig(slug: string): Form | undefined {
   return FORM_CONFIGS[slug];
 }
 

@@ -13,15 +13,14 @@ export const impoundCaseStep: Step = {
   title: "Would you like to impound your case?",
   description:
     "All court actions are public record by default. However, you can apply to impound your case to keep it private.",
-  fields: ["shouldImpoundCourtRecords", "reasonToImpoundCourtRecords"],
-  isFieldVisible: (fieldName, data) => {
-    // reasonToImpoundCourtRecords only visible if shouldImpoundCourtRecords is true
-    if (fieldName === "reasonToImpoundCourtRecords") {
-      return data.shouldImpoundCourtRecords === true;
-    }
-    return true;
-  },
-  component: ({ stepConfig }) => {
+  fields: [
+    "shouldImpoundCourtRecords",
+    {
+      id: "reasonToImpoundCourtRecords",
+      when: { field: "shouldImpoundCourtRecords", equals: true },
+    },
+  ],
+  render: ({ stepConfig }) => {
     const reasonVisible = useFieldVisible(
       stepConfig,
       "reasonToImpoundCourtRecords",

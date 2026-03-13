@@ -6,7 +6,7 @@ export const dateOfBirthStep: Step = {
   id: "date-of-birth",
   title: "What is your date of birth?",
   fields: ["dateOfBirth"],
-  component: ({ stepConfig }) => (
+  render: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>
       <MemorableDateField name="dateOfBirth" label="Date of birth" />
     </FormStep>

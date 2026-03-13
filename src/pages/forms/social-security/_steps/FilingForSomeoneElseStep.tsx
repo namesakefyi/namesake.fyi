@@ -13,24 +13,21 @@ export const filingForSomeoneElseStep: Step = {
   title: "Are you filing this form for someone else?",
   fields: [
     "isFilingForSomeoneElse",
-    "relationshipToFilingFor",
-    "relationshipToFilingForOther",
+    {
+      id: "relationshipToFilingFor",
+      when: { field: "isFilingForSomeoneElse", equals: true },
+    },
+    {
+      id: "relationshipToFilingForOther",
+      when: {
+        and: [
+          { field: "isFilingForSomeoneElse", equals: true },
+          { field: "relationshipToFilingFor", equals: "other" },
+        ],
+      },
+    },
   ],
-  isFieldVisible: (fieldName, data) => {
-    // relationshipToFilingFor only visible if filing for someone else
-    if (fieldName === "relationshipToFilingFor") {
-      return data.isFilingForSomeoneElse === true;
-    }
-    // relationshipToFilingForOther only visible if filing for someone else AND relationship is "other"
-    if (fieldName === "relationshipToFilingForOther") {
-      return (
-        data.isFilingForSomeoneElse === true &&
-        data.relationshipToFilingFor === "other"
-      );
-    }
-    return true;
-  },
-  component: ({ stepConfig }) => {
+  render: ({ stepConfig }) => {
     const relationshipVisible = useFieldVisible(
       stepConfig,
       "relationshipToFilingFor",

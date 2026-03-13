@@ -1,9 +1,10 @@
 ---
 import type { SanityDocument } from "@sanity/client";
+import { FormContainer } from "@/components/react/forms/FormContainer/FormContainer";
 import { getFormPdfMetadata } from "@/forms/getFormPdfMetadata";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { loadQuery } from "@/sanity/lib/loadQuery";
-import { MaCourtOrderForm } from "./_Form";
+import { courtOrderMaForm } from "./form";
 
 const { data: form } = await loadQuery<SanityDocument>({
   query: `*[_type == "form" && slug.current == $slug][0]{
@@ -24,8 +25,9 @@ const pdfs = await getFormPdfMetadata("court-order-ma");
 ---
 
 <BaseLayout title={form.title} description={form.description} color="white">
-  <MaCourtOrderForm
+  <FormContainer
     client:load
+    config={courtOrderMaForm}
     title={form.title}
     description={form.description}
     banner={form.banner}

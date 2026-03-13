@@ -1,10 +1,9 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { useForm } from "react-hook-form";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import * as db from "@/db/database";
+import { createForm } from "@/forms/createForm";
 import { createFormMachine } from "@/forms/createFormMachine";
-import { step } from "@/forms/defineFormConfig";
 import type { Step } from "@/forms/types";
 import { FormStep } from "../FormStep/FormStep";
 import { FormContainer } from "./FormContainer";
@@ -14,6 +13,12 @@ vi.mock("@/db/database", () => ({
   saveFormProgress: vi.fn().mockResolvedValue(undefined),
   clearFormProgress: vi.fn().mockResolvedValue(undefined),
   getAllFields: vi.fn().mockResolvedValue([]),
+  getFieldsByNames: vi.fn().mockResolvedValue([]),
+}));
+
+const mockSubmitHandler = vi.fn().mockResolvedValue(undefined);
+vi.mock("@/forms/createFormSubmitHandler", () => ({
+  createFormSubmitHandler: vi.fn(() => mockSubmitHandler),
 }));
 
 // A minimal step whose component renders plain content (no form).
@@ -21,7 +26,7 @@ const plainStep: Step = {
   id: "plain",
   title: "Plain Step",
   fields: [],
-  component: () => <div>Step content</div>,
+  render: () => <div>Step content</div>,
 };
 
 // A step whose component renders a FormStep, exposing a submittable form.
@@ -29,13 +34,13 @@ const formStepStep: Step = {
   id: "form-step",
   title: "Form Step",
   fields: [],
-  component: ({ stepConfig }) => <FormStep stepConfig={stepConfig} />,
+  render: ({ stepConfig }) => <FormStep stepConfig={stepConfig} />,
 };
 
-const plainFlow = [step(plainStep)];
+const plainFlow = [plainStep];
 const plainMachine = createFormMachine({ id: "test-plain", steps: plainFlow });
 
-const formStepFlow = [step(formStepStep)];
+const formStepFlow = [formStepStep];
 const formStepMachine = createFormMachine({
   id: "test-form-step",
   steps: formStepFlow,
@@ -44,19 +49,21 @@ const formStepMachine = createFormMachine({
 function makeContainer(
   flow: typeof plainFlow,
   machine: ReturnType<typeof createFormMachine>,
-  onSubmit: () => void | Promise<void> = vi.fn(),
 ) {
+  const form = createForm({
+    slug: machine.id,
+    steps: flow,
+    pdfs: [],
+    downloadTitle: "Test Download",
+    instructions: [],
+  });
   return function Container() {
-    const form = useForm();
     return (
       <FormContainer
+        config={form}
         title="Test Title"
         description="Test Description"
         updatedAt="2025-01-01"
-        form={form}
-        onSubmit={onSubmit}
-        steps={flow}
-        machine={machine}
       />
     );
   };
@@ -170,8 +177,8 @@ describe("FormContainer", () => {
   describe("handleFormSubmit — review case", () => {
     it("renders complete step after a successful submission", async () => {
       const user = userEvent.setup();
-      const onSubmit = vi.fn().mockResolvedValue(undefined);
-      const Container = makeContainer(plainFlow, plainMachine, onSubmit);
+      mockSubmitHandler.mockResolvedValue(undefined);
+      const Container = makeContainer(plainFlow, plainMachine);
       render(<Container />);
 
       await user.click(await screen.findByRole("button", { name: "Start" }));
@@ -180,7 +187,7 @@ describe("FormContainer", () => {
         await screen.findByRole("button", { name: /finish and download/i }),
       );
 
-      expect(onSubmit).toHaveBeenCalled();
+      expect(mockSubmitHandler).toHaveBeenCalled();
       expect(await screen.findByText("Form complete!")).toBeInTheDocument();
     });
 
@@ -190,8 +197,8 @@ describe("FormContainer", () => {
         .mockImplementation(() => {});
 
       const user = userEvent.setup();
-      const onSubmit = vi.fn().mockRejectedValue(new Error("PDF failed"));
-      const Container = makeContainer(plainFlow, plainMachine, onSubmit);
+      mockSubmitHandler.mockRejectedValueOnce(new Error("PDF failed"));
+      const Container = makeContainer(plainFlow, plainMachine);
       render(<Container />);
 
       await user.click(await screen.findByRole("button", { name: "Start" }));

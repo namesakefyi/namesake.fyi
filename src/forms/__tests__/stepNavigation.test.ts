@@ -1,120 +1,87 @@
 import { describe, expect, it } from "vitest";
-import { step } from "@/forms/defineFormConfig";
-import {
-  findNextStepIndex,
-  findPrevStepIndex,
-  getVisibleStepIds,
-} from "@/forms/stepNavigation";
+import type { VisibilityRule } from "@/forms/visibilityRules";
+import { findNextStepIndex, findPrevStepIndex } from "../stepNavigation";
 import { makeStep } from "./testHelpers";
 
-describe("findNextStepIndex", () => {
-  const unguarded = [
-    step(makeStep("a")),
-    step(makeStep("b")),
-    step(makeStep("c")),
-  ];
+const hidden = { or: [] } satisfies VisibilityRule;
+const whenFeeWaiver = {
+  field: "shouldApplyForFeeWaiver",
+  equals: true,
+} satisfies VisibilityRule;
 
-  it("returns the immediate next index when no guards", () => {
-    expect(findNextStepIndex(unguarded, 0, {})).toBe(1);
-    expect(findNextStepIndex(unguarded, 1, {})).toBe(2);
+const unguarded = [makeStep("a"), makeStep("b"), makeStep("c")];
+const allVisible = ["a", "b", "c"];
+
+describe("findNextStepIndex", () => {
+  it("returns the immediate next index when all steps visible", () => {
+    expect(findNextStepIndex(unguarded, 0, allVisible)).toBe(1);
+    expect(findNextStepIndex(unguarded, 1, allVisible)).toBe(2);
   });
 
   it("returns -1 when already at the last step", () => {
-    expect(findNextStepIndex(unguarded, 2, {})).toBe(-1);
+    expect(findNextStepIndex(unguarded, 2, allVisible)).toBe(-1);
   });
 
-  it("skips steps whose guard returns false", () => {
-    const flow = [
-      step(makeStep("a")),
-      step(makeStep("b", [], () => false)),
-      step(makeStep("c")),
-    ];
-    expect(findNextStepIndex(flow, 0, {})).toBe(2);
+  it("skips steps not in visibleStepIds", () => {
+    const flow = [makeStep("a"), makeStep("b", [], hidden), makeStep("c")];
+    const visibleStepIds = ["a", "c"];
+    expect(findNextStepIndex(flow, 0, visibleStepIds)).toBe(2);
   });
 
-  it("returns -1 when all remaining steps are guarded out", () => {
+  it("returns -1 when all remaining steps are not visible", () => {
     const flow = [
-      step(makeStep("a")),
-      step(makeStep("b", [], () => false)),
-      step(makeStep("c", [], () => false)),
+      makeStep("a"),
+      makeStep("b", [], hidden),
+      makeStep("c", [], hidden),
     ];
-    expect(findNextStepIndex(flow, 0, {})).toBe(-1);
+    const visibleStepIds = ["a"];
+    expect(findNextStepIndex(flow, 0, visibleStepIds)).toBe(-1);
   });
 
-  it("passes formData to the guard function", () => {
+  it("works with visibleStepIds from resolveFormVisibility", () => {
     const flow = [
-      step(makeStep("a")),
-      step(makeStep("b", [], (data) => data.shouldApplyForFeeWaiver === true)),
+      makeStep("a"),
+      makeStep("b", [], whenFeeWaiver),
+      makeStep("c"),
     ];
-    expect(findNextStepIndex(flow, 0, { shouldApplyForFeeWaiver: true })).toBe(
-      1,
-    );
-    expect(findNextStepIndex(flow, 0, { shouldApplyForFeeWaiver: false })).toBe(
-      -1,
-    );
+    const visibleWhenFeeWaiver = ["a", "b"];
+    const visibleWithoutFeeWaiver = ["a"];
+    expect(findNextStepIndex(flow, 0, visibleWhenFeeWaiver)).toBe(1);
+    expect(findNextStepIndex(flow, 0, visibleWithoutFeeWaiver)).toBe(-1);
   });
 });
 
 describe("findPrevStepIndex", () => {
-  const unguarded = [
-    step(makeStep("a")),
-    step(makeStep("b")),
-    step(makeStep("c")),
-  ];
-
-  it("returns the immediate previous index when no guards", () => {
-    expect(findPrevStepIndex(unguarded, 2, {})).toBe(1);
-    expect(findPrevStepIndex(unguarded, 1, {})).toBe(0);
+  it("returns the immediate previous index when all steps visible", () => {
+    expect(findPrevStepIndex(unguarded, 2, allVisible)).toBe(1);
+    expect(findPrevStepIndex(unguarded, 1, allVisible)).toBe(0);
   });
 
   it("returns -1 when already at the first step", () => {
-    expect(findPrevStepIndex(unguarded, 0, {})).toBe(-1);
+    expect(findPrevStepIndex(unguarded, 0, allVisible)).toBe(-1);
   });
 
-  it("skips steps whose guard returns false", () => {
+  it("skips steps not in visibleStepIds", () => {
+    const flow = [makeStep("a"), makeStep("b", [], hidden), makeStep("c")];
+    const visibleStepIds = ["a", "c"];
+    expect(findPrevStepIndex(flow, 2, visibleStepIds)).toBe(0);
+  });
+
+  it("returns -1 when all preceding steps are not visible", () => {
     const flow = [
-      step(makeStep("a")),
-      step(makeStep("b", [], () => false)),
-      step(makeStep("c")),
+      makeStep("a", [], hidden),
+      makeStep("b", [], hidden),
+      makeStep("c"),
     ];
-    expect(findPrevStepIndex(flow, 2, {})).toBe(0);
+    const visibleStepIds = ["c"];
+    expect(findPrevStepIndex(flow, 2, visibleStepIds)).toBe(-1);
   });
 
-  it("returns -1 when all preceding steps are guarded out", () => {
-    const flow = [
-      step(makeStep("a", [], () => false)),
-      step(makeStep("b", [], () => false)),
-      step(makeStep("c")),
-    ];
-    expect(findPrevStepIndex(flow, 2, {})).toBe(-1);
-  });
-
-  it("passes formData to the guard function", () => {
-    const flow = [
-      step(makeStep("a", [], (data) => data.shouldApplyForFeeWaiver === true)),
-      step(makeStep("b")),
-    ];
-    expect(findPrevStepIndex(flow, 1, { shouldApplyForFeeWaiver: true })).toBe(
-      0,
-    );
-    expect(findPrevStepIndex(flow, 1, { shouldApplyForFeeWaiver: false })).toBe(
-      -1,
-    );
-  });
-});
-
-describe("getVisibleStepIds", () => {
-  it("returns all step IDs when no guards", () => {
-    const flow = [step(makeStep("a")), step(makeStep("b"))];
-    expect(getVisibleStepIds(flow, {})).toEqual(["a", "b"]);
-  });
-
-  it("filters out steps whose guard returns false", () => {
-    const flow = [
-      step(makeStep("a")),
-      step(makeStep("b", [], () => false)),
-      step(makeStep("c")),
-    ];
-    expect(getVisibleStepIds(flow, {})).toEqual(["a", "c"]);
+  it("works with visibleStepIds from resolveFormVisibility", () => {
+    const flow = [makeStep("a", [], whenFeeWaiver), makeStep("b")];
+    const visibleWhenFeeWaiver = ["a", "b"];
+    const visibleWithoutFeeWaiver = ["b"];
+    expect(findPrevStepIndex(flow, 1, visibleWhenFeeWaiver)).toBe(0);
+    expect(findPrevStepIndex(flow, 1, visibleWithoutFeeWaiver)).toBe(-1);
   });
 });

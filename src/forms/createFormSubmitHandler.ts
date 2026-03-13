@@ -1,49 +1,48 @@
 import type { SubmitEvent } from "react";
 import type { UseFormReturn } from "react-hook-form";
-import { resolveVisibleFields } from "@/components/react/forms/FormContainer/resolveVisibleFields";
 import type { FormData } from "@/constants/fields";
-import type { FormConfig } from "@/constants/forms";
+import type { Form } from "@/constants/forms";
+import {
+  resolveFormVisibility,
+  resolveInstructions,
+} from "@/forms/formVisibility";
 
 /**
- * Creates a form submit handler from a form configuration.
+ * Creates a form submit handler from a form.
  * PDF lib and utilities are loaded on demand when the user clicks download.
  *
- * @param config - The form configuration
+ * @param config - The form
  * @param form - The react-hook-form instance
  * @returns A submit handler function
  */
-export function createFormSubmitHandler<TFormData extends FormData>(
-  config: FormConfig,
+export function createFormSubmitHandler<TFormData extends Partial<FormData>>(
+  config: Form,
   form: UseFormReturn<TFormData>,
 ) {
   return async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = form.getValues();
-
-    const pdfConfigs = config.pdfs.map((pdf) => ({
-      pdfId: pdf.pdfId,
-      include: pdf.include ? pdf.include(formData) : true,
-    }));
+    const { visibleFields, pdfsToInclude } = resolveFormVisibility(
+      config.steps,
+      formData,
+      config.pdfs,
+    );
 
     const [{ loadPdfs }, { downloadMergedPdf }] = await Promise.all([
       import("@/pdfs/utils/loadPdfs"),
       import("@/pdfs/utils/downloadMergedPdf"),
     ]);
 
-    const pdfs = await loadPdfs(pdfConfigs);
-    const visibleData = resolveVisibleFields(config.steps, formData);
+    const pdfs = await loadPdfs(pdfsToInclude);
 
-    const instructions =
-      typeof config.instructions === "function"
-        ? config.instructions(formData)
-        : config.instructions;
+    const instructions = resolveInstructions(config.instructions, formData);
 
     await downloadMergedPdf({
       title: config.downloadTitle,
       instructions,
       pdfs,
-      userData: visibleData,
+      userData: visibleFields,
     });
   };
 }

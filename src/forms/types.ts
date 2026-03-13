@@ -1,4 +1,37 @@
-import type { FieldName, FormData } from "@/constants/fields";
+import type { FieldName } from "@/constants/fields";
+import type { VisibilityRule } from "./visibilityRules";
+
+/** A field which is visible when the `when` rule evaluates to true */
+type ConditionalField = { id: FieldName; when: VisibilityRule };
+
+/** Multiple fields which are visible when the `when` rule evaluates to true */
+type ConditionalFieldGroup = {
+  ids: readonly FieldName[];
+  when: VisibilityRule;
+};
+
+/** A field within a step */
+export type Field = FieldName | ConditionalField | ConditionalFieldGroup;
+
+/** Extracts FieldName from a Field. */
+type ExpandField<F> = F extends FieldName
+  ? F
+  : F extends { id: infer I }
+    ? I extends FieldName
+      ? I
+      : never
+    : F extends { ids: infer I }
+      ? I extends readonly (infer X)[]
+        ? X extends FieldName
+          ? X
+          : never
+        : never
+      : never;
+
+/** Field names used in a form's steps. */
+export type FieldsOf<T extends readonly Step[]> = ExpandField<
+  T[number]["fields"][number]
+>;
 
 /**
  * Configuration for a single step in a form flow.
@@ -8,7 +41,7 @@ import type { FieldName, FormData } from "@/constants/fields";
  *   id: "legal-name",
  *   title: "What is your legal name?",
  *   fields: ["firstName", "lastName"],
- *   component: LegalNameStep,
+ *   render: ({ stepConfig }) => ...,
  * };
  */
 export interface Step {
@@ -22,36 +55,20 @@ export interface Step {
   description?: string;
 
   /**
-   * All fields this step writes to. Used to populate the review table
-   * and resolve values for PDF generation.
+   * All fields this step writes to. Shorthand: "fieldName" = always visible.
+   * Object form: { id, when } = single conditional field.
+   * Object form: { ids, when } = multiple fields sharing one when rule.
    */
-  fields: readonly FieldName[];
+  fields: readonly Field[];
 
   /**
-   * When provided, the step is only included in the flow if this returns
-   * true. Evaluated with live form data on every navigation.
-   *
-   * @example
-   * guard: (data) => data.isFilingForSomeoneElse === true,
+   * When provided, the step is only included in the flow if the rule evaluates
+   * to true. Evaluated with live form data on every navigation.
    */
-  guard?: (data: Partial<FormData>) => boolean;
-
-  /**
-   * When provided, controls whether individual fields within this step
-   * are shown in the UI, the review table, and the generated PDF.
-   * Fields not listed in `fields` are always excluded regardless.
-   * To access isFieldVisible in the step component, use the useFieldVisible hook.
-   *
-   * @example
-   * isFieldVisible: (field, data) => {
-   *   if (field === "middleName") return data.hasMiddleName === true;
-   *   return true;
-   * },
-   */
-  isFieldVisible?: (fieldName: FieldName, data: FormData) => boolean;
+  when?: VisibilityRule;
 
   /** The React component rendered when this step is active. */
-  component: React.ComponentType<{ stepConfig: Step }>;
+  render: React.ComponentType<{ stepConfig: Step }>;
 }
 
 export type FormPhase =

@@ -4,25 +4,26 @@ This directory contains the state machine, React hooks, and utilities that drive
 
 ## Defining a form
 
-Use `defineFormConfig` to declare a form. Provide a slug, an ordered list of steps, the PDFs to generate, and a download title.
+Use `createForm` to declare a form. Provide a slug, an ordered list of steps, the PDFs to generate, and a download title.
 
 ```ts
 // src/pages/forms/my-form/config.ts
-import { defineFormConfig, step } from "@/forms/defineFormConfig";
+import { createForm } from "@/forms/createForm";
 import { nameStep } from "./_steps/NameStep";
 import { addressStep } from "./_steps/AddressStep";
 
-export const myFormConfig = defineFormConfig({
+export const myForm = createForm({
   slug: "my-form",
-  steps: [step(nameStep), step(addressStep)],
-  pdfs: [{ pdfId: "my-form-pdf" }],
+  steps: [nameStep, addressStep],
+  pdfs: ["my-form-pdf"],
   downloadTitle: "My Form",
+  instructions: [],
 });
 ```
 
 ### Defining a step
 
-Each step is a `Step` object with an id, title, the fields it collects, and a React component:
+Each step is a `Step` object with an id, title, the fields it collects, and a render function:
 
 ```ts
 // src/pages/forms/my-form/_steps/NameStep.tsx
@@ -34,7 +35,7 @@ export const nameStep: Step = {
   id: "name",
   title: "What is your name?",
   fields: ["newFirstName", "newLastName"],
-  component: ({ stepConfig }) => (
+  render: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>
       <ShortTextField name="newFirstName" label="First name" />
       <ShortTextField name="newLastName" label="Last name" />
@@ -45,52 +46,53 @@ export const nameStep: Step = {
 
 The `fields` array tells the form which database fields belong to this step. It controls what gets saved, restored, and shown on the review page.
 
-### Conditional steps
+### Conditional logic (`when` rules)
 
-Add a `guard` to skip a step entirely when a condition isn't met. The step is excluded from the forward and backward flow when its guard returns false.
+Steps, fields, and PDFs can be conditionally shown using `when` rules. Rules are evaluated against current form data. If no rule is provided, the item is always visible.
+
+**Rule syntax:**
+
+| Rule | Example | Meaning |
+|------|---------|---------|
+| `{ field, equals }` | `{ field: "hasUsedOtherName", equals: true }` | Field value equals |
+| `{ field, notEquals }` | `{ field: "isUnhoused", notEquals: true }` | Field value does not equal |
+| `{ field, includes }` | `{ field: "pronouns", includes: "other" }` | String or array includes value |
+| `{ and: [...] }` | `{ and: [rule1, rule2] }` | All rules must pass |
+| `{ or: [...] }` | `{ or: [rule1, rule2] }` | At least one rule must pass |
+
+**Conditional steps:** Add `when` to a step to skip it when the `VisibilityRule` evaluates to false. The step is excluded from navigation, review, and PDF output.
 
 ```ts
-export const feeWaiverDocumentsStep: Step = {
-  id: "fee-waiver-documents",
-  title: "Upload your fee waiver documents",
-  fields: ["feeWaiverDocument"],
-  guard: (data) => data.shouldApplyForFeeWaiver === true,
-  component: ({ stepConfig }) => (
-    <FormStep stepConfig={stepConfig}>
-      ...
-    </FormStep>
-  ),
+export const feeWaiverStep: Step = {
+  id: "fee-waiver",
+  title: "Upload fee waiver documents",
+  fields: ["reasonToWaivePublication"],
+  when: { field: "shouldApplyForFeeWaiver", equals: true },
+  render: ({ stepConfig }) => <FormStep stepConfig={stepConfig}>...</FormStep>,
 };
 ```
 
-### Field visibility
-
-Add `isFieldVisible` when a step contains follow-up questions that only apply given a previous answer within the same step. Fields that are not visible are excluded from the review table and PDF output.
-
-In the component, call `useFieldVisible(stepConfig, fieldName)` to get a reactive boolean for showing or hiding that field:
+**Conditional fields:** Use `{ id, when }` (single) or `{ ids, when }` (multiple sharing one rule) in the `fields` array. `when` is required. In the component, use `useFieldVisible(stepConfig, fieldName)` to show/hide the UI.
 
 ```ts
-export const otherNamesStep: Step = {
-  id: "other-names",
-  fields: ["hasUsedOtherNameOrAlias", "otherNamesOrAliases"],
-  isFieldVisible: (fieldName, data) => {
-    if (fieldName === "otherNamesOrAliases") {
-      return data.hasUsedOtherNameOrAlias === true;
-    }
-    return true;
-  },
-  component: ({ stepConfig }) => {
-    const otherNamesVisible = useFieldVisible(stepConfig, "otherNamesOrAliases");
-    return (
-      <FormStep stepConfig={stepConfig}>
-        <YesNoField name="hasUsedOtherNameOrAlias" ... />
-        <FormSubsection isVisible={otherNamesVisible}>
-          <LongTextField name="otherNamesOrAliases" ... />
-        </FormSubsection>
-      </FormStep>
-    );
-  },
-};
+fields: [
+  "hasUsedOtherNameOrAlias",
+  { id: "otherNamesOrAliases", when: { field: "hasUsedOtherNameOrAlias", equals: true } },
+],
+// In component:
+const otherNamesVisible = useFieldVisible(stepConfig, "otherNamesOrAliases");
+<FormSubsection isVisible={otherNamesVisible}>...</FormSubsection>
+```
+
+**Conditional PDFs:** Use `{ id, when }` in the form config's `pdfs` array to include a PDF in the final downloaded packet only when the rule passes.
+
+**Conditional instructions:** Use `{ text, when }` in the form config's `instructions` array to include an instruction on the cover page only when the rule passes. String entries are always included.
+
+```ts
+instructions: [
+  "Always show this.",
+  { text: "Only when applying for fee waiver.", when: { field: "shouldApplyForFeeWaiver", equals: true } },
+],
 ```
 
 ## Form phases
@@ -142,13 +144,8 @@ Restarting a form clears the progress (returning to the title page) but keeps al
 
 ## Submission
 
-Pass `createFormSubmitHandler` to `FormContainer` as the `onSubmit` handler. It collects the current form values, generates the PDFs, and triggers a download. Only fields that were visible to the user (respecting guards and `isFieldVisible`) are written to the PDFs.
+`FormContainer` accepts a `config` and wires up `useFormData` and `createFormSubmitHandler` internally. It collects the current form values, generates the PDFs, and triggers a download. Only fields that were visible to the user (respecting step and field `when` rules) are written to the PDFs.
 
 ```ts
-const handleSubmit = createFormSubmitHandler(myFormConfig, form);
-
-<FormContainer
-  ...
-  onSubmit={handleSubmit}
-/>
+<FormContainer config={myForm} title="..." description="..." />
 ```

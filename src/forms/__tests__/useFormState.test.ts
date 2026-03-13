@@ -11,20 +11,15 @@ import {
 import { createActor } from "xstate";
 import * as db from "@/db/database";
 import { createFormMachine } from "@/forms/createFormMachine";
-import { step } from "@/forms/defineFormConfig";
-import type { Step } from "@/forms/types";
 import { useFormState } from "../useFormState";
+import { makeStep } from "./testHelpers";
 
 vi.mock("@/db/database", () => ({
   getFormProgress: vi.fn(),
   saveFormProgress: vi.fn(),
 }));
 
-function makeStep(id: string): Step {
-  return { id, title: `Step ${id}`, fields: [], component: () => null };
-}
-
-const flow = [step(makeStep("a")), step(makeStep("b"))];
+const flow = [makeStep("a"), makeStep("b")];
 const machine = createFormMachine({ id: "test-form", steps: flow });
 
 const getFormData = () => ({});
@@ -223,7 +218,7 @@ describe("useFormState", () => {
 
   describe("persisting complete state", () => {
     it("persists the complete state so the user returns to the completion page", async () => {
-      const singleFlow = [step(makeStep("only"))];
+      const singleFlow = [makeStep("only")];
       const singleMachine = createFormMachine({
         id: "complete-test",
         steps: singleFlow,
@@ -302,7 +297,7 @@ describe("useFormState", () => {
     });
 
     it("goNext goes directly to review from a single-step flow (isLastStep = true)", async () => {
-      const singleFlow = [step(makeStep("only"))];
+      const singleFlow = [makeStep("only")];
       const singleMachine = createFormMachine({
         id: "single-step",
         steps: singleFlow,
@@ -389,11 +384,11 @@ describe("useFormState", () => {
       expect(result.current.activeStepId).toBe("b");
     });
 
-    it("goNext skips guarded steps", async () => {
+    it("goNext skips steps whose when rule evaluates to false", async () => {
       const guardedFlow = [
-        step(makeStep("a")),
-        step({ ...makeStep("b"), guard: () => false }),
-        step(makeStep("c")),
+        makeStep("a"),
+        makeStep("b", [], { or: [] }),
+        makeStep("c"),
       ];
       const guardedMachine = createFormMachine({
         id: "guarded",

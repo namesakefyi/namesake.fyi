@@ -1,16 +1,23 @@
 import type { SubmitEvent } from "react";
 import type { UseFormReturn } from "react-hook-form";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { resolveVisibleFields } from "@/components/react/forms/FormContainer/resolveVisibleFields";
 import type { FormData } from "@/constants/fields";
-import type { FormConfig } from "@/constants/forms";
+import type { Form } from "@/constants/forms";
 import { downloadMergedPdf } from "@/pdfs/utils/downloadMergedPdf";
 import { loadPdfs } from "@/pdfs/utils/loadPdfs";
 import { createFormSubmitHandler } from "../createFormSubmitHandler";
+import { resolveFormVisibility } from "../formVisibility";
 
-vi.mock("@/components/react/forms/FormContainer/resolveVisibleFields", () => ({
-  resolveVisibleFields: vi.fn(),
-}));
+vi.mock("../formVisibility", async () => {
+  const actual =
+    await vi.importActual<typeof import("../formVisibility")>(
+      "../formVisibility",
+    );
+  return {
+    ...actual,
+    resolveFormVisibility: vi.fn(),
+  };
+});
 vi.mock("@/pdfs/utils/downloadMergedPdf", () => ({
   downloadMergedPdf: vi.fn(),
 }));
@@ -32,22 +39,29 @@ function makeEvent() {
   } as unknown as SubmitEvent<HTMLFormElement>;
 }
 
-function makeConfig(overrides: Partial<FormConfig> = {}): FormConfig {
+function makeConfig(overrides: Partial<Form> = {}): Form {
   return {
     slug: "court-order-ma",
-    steps: [{ fields: ["oldFirstName"] }],
-    fields: ["oldFirstName"],
-    pdfs: [{ pdfId: "cjp27-petition-to-change-name-of-adult" }],
+    steps: [
+      { id: "a", title: "Step", fields: ["oldFirstName"], render: () => null },
+    ],
+    machine: {} as Form["machine"],
+    pdfs: ["cjp27-petition-to-change-name-of-adult"],
     downloadTitle: "Court Order MA",
     instructions: ["Step 1", "Step 2"],
     ...overrides,
-  } as unknown as FormConfig;
+  } as unknown as Form;
 }
 
 describe("createFormSubmitHandler", () => {
   beforeEach(() => {
     vi.mocked(loadPdfs).mockResolvedValue(mockPdfs as never);
-    vi.mocked(resolveVisibleFields).mockReturnValue(mockVisibleData);
+    vi.mocked(resolveFormVisibility).mockReturnValue({
+      visibleStepIds: [],
+      visibleFields: mockVisibleData,
+      sections: [],
+      pdfsToInclude: ["cjp27-petition-to-change-name-of-adult"],
+    });
     vi.mocked(downloadMergedPdf).mockResolvedValue(undefined);
   });
 
@@ -64,46 +78,15 @@ describe("createFormSubmitHandler", () => {
     expect(event.preventDefault).toHaveBeenCalled();
   });
 
-  it("passes PDF configs with resolved include predicates to loadPdfs", async () => {
-    const config = makeConfig({
-      pdfs: [
-        { pdfId: "cjp27-petition-to-change-name-of-adult" },
-        { pdfId: "affidavit-of-indigency", include: () => true },
-        {
-          pdfId: "cjp25-petition-to-change-name-of-minor",
-          include: () => false,
-        },
-      ],
-    } as never);
-
-    await createFormSubmitHandler(config, makeForm())(makeEvent());
-
-    expect(loadPdfs).toHaveBeenCalledWith([
-      { pdfId: "cjp27-petition-to-change-name-of-adult", include: true },
-      { pdfId: "affidavit-of-indigency", include: true },
-      { pdfId: "cjp25-petition-to-change-name-of-minor", include: false },
-    ]);
-  });
-
-  it("evaluates include predicates with the current form data", async () => {
-    const include = vi.fn().mockReturnValue(true);
-    const config = makeConfig({
-      pdfs: [{ pdfId: "affidavit-of-indigency", include }],
-    } as never);
-
-    await createFormSubmitHandler(config, makeForm())(makeEvent());
-
-    expect(include).toHaveBeenCalledWith(mockFormData);
-  });
-
-  it("calls resolveVisibleFields with config steps and form data", async () => {
+  it("calls resolveFormVisibility with config steps, form data, and pdfs", async () => {
     const config = makeConfig();
 
     await createFormSubmitHandler(config, makeForm())(makeEvent());
 
-    expect(resolveVisibleFields).toHaveBeenCalledWith(
+    expect(resolveFormVisibility).toHaveBeenCalledWith(
       config.steps,
       mockFormData,
+      config.pdfs,
     );
   });
 
@@ -117,15 +100,44 @@ describe("createFormSubmitHandler", () => {
     );
   });
 
-  it("calls instruction function with form data and passes result to downloadMergedPdf", async () => {
-    const instructions = vi.fn().mockReturnValue(["Dynamic step"]);
-    const config = makeConfig({ instructions });
+  it("filters conditional instructions by when rule", async () => {
+    const config = makeConfig({
+      instructions: [
+        "Always shown",
+        {
+          text: "Only when fee waiver",
+          when: { field: "shouldApplyForFeeWaiver", equals: true },
+        },
+      ],
+    });
 
     await createFormSubmitHandler(config, makeForm())(makeEvent());
 
-    expect(instructions).toHaveBeenCalledWith(mockFormData);
     expect(downloadMergedPdf).toHaveBeenCalledWith(
-      expect.objectContaining({ instructions: ["Dynamic step"] }),
+      expect.objectContaining({ instructions: ["Always shown"] }),
+    );
+  });
+
+  it("includes conditional instruction when rule passes", async () => {
+    const config = makeConfig({
+      instructions: [
+        "Always shown",
+        {
+          text: "Only when fee waiver",
+          when: { field: "shouldApplyForFeeWaiver", equals: true },
+        },
+      ],
+    });
+
+    await createFormSubmitHandler(
+      config,
+      makeForm({ ...mockFormData, shouldApplyForFeeWaiver: true }),
+    )(makeEvent());
+
+    expect(downloadMergedPdf).toHaveBeenCalledWith(
+      expect.objectContaining({
+        instructions: ["Always shown", "Only when fee waiver"],
+      }),
     );
   });
 

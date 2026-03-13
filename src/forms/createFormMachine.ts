@@ -6,7 +6,7 @@ import type {
   Step,
 } from "./types";
 
-interface CreateFormMachineOptions {
+export interface CreateFormMachineOptions {
   id: string;
   steps: readonly Step[];
 }
