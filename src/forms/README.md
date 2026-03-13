@@ -71,19 +71,19 @@ export const feeWaiverStep: Step = {
 };
 ```
 
-**Conditional fields:** Use `{ name, when }` (single) or `{ names, when }` (multiple sharing one rule) in the `fields` array. `when` is required. In the component, use `useFieldVisible(stepConfig, fieldName)` to show/hide the UI.
+**Conditional fields:** Use `{ id, when }` (single) or `{ ids, when }` (multiple sharing one rule) in the `fields` array. `when` is required. In the component, use `useFieldVisible(stepConfig, fieldName)` to show/hide the UI.
 
 ```ts
 fields: [
   "hasUsedOtherNameOrAlias",
-  { name: "otherNamesOrAliases", when: { field: "hasUsedOtherNameOrAlias", equals: true } },
+  { id: "otherNamesOrAliases", when: { field: "hasUsedOtherNameOrAlias", equals: true } },
 ],
 // In component:
 const otherNamesVisible = useFieldVisible(stepConfig, "otherNamesOrAliases");
 <FormSubsection isVisible={otherNamesVisible}>...</FormSubsection>
 ```
 
-**Conditional PDFs:** Use `{ pdfId, when }` in the form config's `pdfs` array to include a PDF in the final downloaded packet only when the rule passes.
+**Conditional PDFs:** Use `{ id, when }` in the form config's `pdfs` array to include a PDF in the final downloaded packet only when the rule passes.
 
 ## Form phases
 

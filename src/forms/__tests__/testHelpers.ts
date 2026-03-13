@@ -1,12 +1,12 @@
-import type { VisibilityRule } from "@/forms/formVisibility";
+import type { VisibilityRule } from "@/forms/visibilityRules";
 import type { Step } from "@/forms/types";
 
 export function makeStep(
   id: string,
   fields: (
     | string
-    | { name: string; when: VisibilityRule }
-    | { names: readonly string[]; when: VisibilityRule }
+    | { id: string; when: VisibilityRule }
+    | { ids: readonly string[]; when: VisibilityRule }
   )[] = [],
   when?: VisibilityRule,
 ): Step {

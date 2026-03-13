@@ -3,11 +3,8 @@ import { Heading } from "react-aria-components";
 import { useFormContext } from "react-hook-form";
 import { useFormStep } from "@/components/react/forms/FormContainer";
 import type { FieldName, FormData } from "@/constants/fields";
-import {
-  getFieldNames,
-  getFieldWhen,
-  isVisibleWhen,
-} from "@/forms/formVisibility";
+import { getFieldNames, getFieldWhen } from "@/forms/formVisibility";
+import { evaluateRule } from "@/forms/visibilityRules";
 import type { Step } from "@/forms/types";
 import { slugify } from "../../../../utils/slugify";
 import { smartquotes } from "../../../../utils/smartquotes";
@@ -29,7 +26,7 @@ export function useFieldVisible(
   const fieldNames = getFieldNames(stepConfig.fields);
   if (!fieldNames.includes(fieldName)) return false;
   const fieldWhen = getFieldWhen(stepConfig.fields, fieldName);
-  return isVisibleWhen(fieldWhen, data);
+  return evaluateRule(fieldWhen, data);
 }
 
 export interface FormStepProps {

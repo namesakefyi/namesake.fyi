@@ -12,7 +12,7 @@ export const birthplaceStep: Step = {
     "birthplaceCity",
     "birthplaceCountry",
     {
-      name: "birthplaceState",
+      id: "birthplaceState",
       when: { field: "birthplaceCountry", equals: "US" },
     },
   ],

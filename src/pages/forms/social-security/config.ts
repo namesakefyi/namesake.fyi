@@ -1,4 +1,4 @@
-import { createFormConfig } from "@/forms/formConfig";
+import { createFormConfig } from "@/forms/createFormConfig";
 import { addressStep } from "./_steps/AddressStep";
 import { birthplaceStep } from "./_steps/BirthplaceStep";
 import { citizenshipStep } from "./_steps/CitizenshipStep";

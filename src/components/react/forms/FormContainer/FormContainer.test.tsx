@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { useForm } from "react-hook-form";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import * as db from "@/db/database";
-import { createFormMachine } from "@/forms/formConfig";
+import { createFormMachine } from "@/forms/createFormMachine";
 import type { Step } from "@/forms/types";
 import { FormStep } from "../FormStep/FormStep";
 import { FormContainer } from "./FormContainer";

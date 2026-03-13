@@ -34,8 +34,8 @@ describe("loadPdfs", () => {
       .mockResolvedValueOnce(mockPdf2);
 
     const result = await loadPdfs([
-      { pdfId: "test-form-1" as any },
-      { pdfId: "test-form-2" as any },
+      "test-form-1" as any,
+      "test-form-2" as any,
     ]);
 
     expect(result).toEqual([mockPdf1, mockPdf2]);
@@ -44,7 +44,7 @@ describe("loadPdfs", () => {
     expect(getPdfDefinition).toHaveBeenCalledWith("test-form-2");
   });
 
-  it("should exclude PDFs when include is false", async () => {
+  it("should exclude PDFs when when is false", async () => {
     const mockPdf = {
       id: "test-form-1" as any,
       title: "Test Form 1",
@@ -56,9 +56,9 @@ describe("loadPdfs", () => {
     (getPdfDefinition as ReturnType<typeof vi.fn>).mockResolvedValue(mockPdf);
 
     const result = await loadPdfs([
-      { pdfId: "test-form-1" as any, include: true },
-      { pdfId: "test-form-2" as any, include: false },
-      { pdfId: "test-form-3" as any }, // defaults to true
+      "test-form-1" as any,
+      { id: "test-form-2" as any, when: false },
+      "test-form-3" as any,
     ]);
 
     expect(result).toHaveLength(2);
@@ -70,8 +70,8 @@ describe("loadPdfs", () => {
 
   it("should return empty array when all PDFs are excluded", async () => {
     const result = await loadPdfs([
-      { pdfId: "test-form-1" as any, include: false },
-      { pdfId: "test-form-2" as any, include: false },
+      { id: "test-form-1" as any, when: false },
+      { id: "test-form-2" as any, when: false },
     ]);
 
     expect(result).toEqual([]);
@@ -91,7 +91,7 @@ describe("loadPdfs", () => {
     );
 
     await expect(
-      loadPdfs([{ pdfId: "nonexistent-form" as any }]),
+      loadPdfs(["nonexistent-form" as any]),
     ).rejects.toThrow("PDF not found");
 
     expect(getPdfDefinition).toHaveBeenCalledWith("nonexistent-form");

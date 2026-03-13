@@ -14,11 +14,11 @@ export const filingForSomeoneElseStep: Step = {
   fields: [
     "isFilingForSomeoneElse",
     {
-      name: "relationshipToFilingFor",
+      id: "relationshipToFilingFor",
       when: { field: "isFilingForSomeoneElse", equals: true },
     },
     {
-      name: "relationshipToFilingForOther",
+      id: "relationshipToFilingForOther",
       when: {
         and: [
           { field: "isFilingForSomeoneElse", equals: true },

@@ -189,7 +189,7 @@ describe("useFieldVisible", () => {
       ...stepConfig,
       fields: [
         {
-          name: "otherNamesOrAliases" as any,
+          id: "otherNamesOrAliases" as any,
           when: { field: "hasUsedOtherNameOrAlias", equals: true },
         },
       ],
@@ -206,7 +206,7 @@ describe("useFieldVisible", () => {
       ...stepConfig,
       fields: [
         {
-          name: "otherNamesOrAliases" as any,
+          id: "otherNamesOrAliases" as any,
           when: { field: "hasUsedOtherNameOrAlias", equals: true },
         },
       ],

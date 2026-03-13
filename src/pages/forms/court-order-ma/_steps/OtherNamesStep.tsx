@@ -16,7 +16,7 @@ export const otherNamesStep: Step = {
   fields: [
     "hasUsedOtherNameOrAlias",
     {
-      name: "otherNamesOrAliases",
+      id: "otherNamesOrAliases",
       when: { field: "hasUsedOtherNameOrAlias", equals: true },
     },
   ],

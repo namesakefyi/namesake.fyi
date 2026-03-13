@@ -1,4 +1,4 @@
-import type { FormMachine } from "@/forms/formConfig";
+import type { FormMachine } from "@/forms/createFormMachine";
 import type { PdfEntry } from "@/forms/formVisibility";
 import type { Step } from "@/forms/types";
 import { courtOrderMaConfig } from "@/pages/forms/court-order-ma/config";
@@ -22,7 +22,7 @@ export interface FormConfig {
   machine: FormMachine;
   /** Flattened array of all field names, derived from steps. */
   fields: readonly FieldName[];
-  /** PDFs included in this form. Shorthand: pdfId = always included. Object: { pdfId, when? } = conditional. */
+  /** PDFs included in this form. Shorthand: id = always included. Object: { id, when? } = conditional. */
   pdfs: readonly PdfEntry[];
   /** Title for the downloaded PDF package */
   downloadTitle: string;

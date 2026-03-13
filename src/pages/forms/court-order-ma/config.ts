@@ -1,4 +1,4 @@
-import { createFormConfig } from "@/forms/formConfig";
+import { createFormConfig } from "@/forms/createFormConfig";
 import { addressStep } from "./_steps/AddressStep";
 import { birthplaceStep } from "./_steps/BirthplaceStep";
 import { contactInfoStep } from "./_steps/ContactInfoStep";
@@ -36,7 +36,7 @@ export const courtOrderMaConfig = createFormConfig({
     "cjp27-petition-to-change-name-of-adult",
     "cjp34-cori-and-wms-release-request",
     {
-      pdfId: "affidavit-of-indigency",
+      id: "affidavit-of-indigency",
       when: { field: "shouldApplyForFeeWaiver", equals: true },
     },
   ],

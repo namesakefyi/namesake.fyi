@@ -6,7 +6,7 @@ import {
 import { LongTextField } from "@/components/react/forms/LongTextField";
 import { ShortTextField } from "@/components/react/forms/ShortTextField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
-import type { VisibilityRule } from "@/forms/formVisibility";
+import type { VisibilityRule } from "@/forms/visibilityRules";
 import type { Step } from "@/forms/types";
 
 const whenHasPrevious: VisibilityRule = {
@@ -20,7 +20,7 @@ export const previousNameChangeStep: Step = {
   fields: [
     "hasPreviousNameChange",
     {
-      names: ["previousNameFrom", "previousNameTo", "previousNameReason"],
+      ids: ["previousNameFrom", "previousNameTo", "previousNameReason"],
       when: whenHasPrevious,
     },
   ],

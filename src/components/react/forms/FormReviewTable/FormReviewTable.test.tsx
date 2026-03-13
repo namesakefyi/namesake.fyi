@@ -129,11 +129,11 @@ describe("FormReviewTable", () => {
       title: "Hidden Step",
       fields: [
         {
-          name: "oldFirstName",
+          id: "oldFirstName",
           when: { field: "hasUsedOtherNameOrAlias", equals: true },
         },
         {
-          name: "oldLastName",
+          id: "oldLastName",
           when: { field: "hasUsedOtherNameOrAlias", equals: true },
         },
       ],
@@ -154,8 +154,8 @@ describe("FormReviewTable", () => {
     const emptyStep: Step = {
       ...nameStep,
       fields: [
-        { name: "oldFirstName", when: { or: [] } },
-        { name: "oldLastName", when: { or: [] } },
+        { id: "oldFirstName", when: { or: [] } },
+        { id: "oldLastName", when: { or: [] } },
       ],
     };
 
@@ -173,7 +173,7 @@ describe("FormReviewTable", () => {
       fields: [
         "oldFirstName",
         {
-          name: "oldLastName",
+          id: "oldLastName",
           when: { field: "hasUsedOtherNameOrAlias", equals: true },
         },
       ],

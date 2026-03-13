@@ -6,7 +6,7 @@ import {
   FormSubsection,
   useFieldVisible,
 } from "@/components/react/forms/FormStep";
-import type { VisibilityRule } from "@/forms/formVisibility";
+import type { VisibilityRule } from "@/forms/visibilityRules";
 import type { Step } from "@/forms/types";
 
 const whenNotUnhoused: VisibilityRule = {
@@ -28,7 +28,7 @@ export const addressStep: Step = {
   fields: [
     "isCurrentlyUnhoused",
     {
-      names: [
+      ids: [
         "residenceStreetAddress",
         "residenceCity",
         "residenceCounty",
@@ -39,7 +39,7 @@ export const addressStep: Step = {
       when: whenNotUnhoused,
     },
     {
-      names: [
+      ids: [
         "mailingStreetAddress",
         "mailingCity",
         "mailingCounty",

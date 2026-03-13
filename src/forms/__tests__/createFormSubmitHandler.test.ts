@@ -51,9 +51,7 @@ describe("createFormSubmitHandler", () => {
       visibleStepIds: [],
       visibleFields: mockVisibleData,
       sections: [],
-      pdfsToInclude: [
-        { pdfId: "cjp27-petition-to-change-name-of-adult", include: true },
-      ],
+      pdfsToInclude: ["cjp27-petition-to-change-name-of-adult"],
     });
     vi.mocked(downloadMergedPdf).mockResolvedValue(undefined);
   });
@@ -76,10 +74,10 @@ describe("createFormSubmitHandler", () => {
       pdfs: [
         "cjp27-petition-to-change-name-of-adult",
         {
-          pdfId: "affidavit-of-indigency",
+          id: "affidavit-of-indigency",
           when: { field: "shouldApplyForFeeWaiver", equals: true },
         },
-        { pdfId: "cjp25-petition-to-change-name-of-minor", when: { or: [] } },
+        { id: "cjp25-petition-to-change-name-of-minor", when: { or: [] } },
       ],
     } as never);
 
@@ -88,18 +86,18 @@ describe("createFormSubmitHandler", () => {
       visibleFields: mockVisibleData,
       sections: [],
       pdfsToInclude: [
-        { pdfId: "cjp27-petition-to-change-name-of-adult", include: true },
-        { pdfId: "affidavit-of-indigency", include: true },
-        { pdfId: "cjp25-petition-to-change-name-of-minor", include: false },
+        "cjp27-petition-to-change-name-of-adult",
+        "affidavit-of-indigency",
+        { id: "cjp25-petition-to-change-name-of-minor", when: false },
       ],
     });
 
     await createFormSubmitHandler(config, makeForm())(makeEvent());
 
     expect(loadPdfs).toHaveBeenCalledWith([
-      { pdfId: "cjp27-petition-to-change-name-of-adult", include: true },
-      { pdfId: "affidavit-of-indigency", include: true },
-      { pdfId: "cjp25-petition-to-change-name-of-minor", include: false },
+      "cjp27-petition-to-change-name-of-adult",
+      "affidavit-of-indigency",
+      { id: "cjp25-petition-to-change-name-of-minor", when: false },
     ]);
   });
 

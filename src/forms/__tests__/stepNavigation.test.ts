@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { VisibilityRule } from "@/forms/formVisibility";
-import { findNextStepIndex, findPrevStepIndex } from "@/forms/formVisibility";
+import type { VisibilityRule } from "@/forms/visibilityRules";
+import { findNextStepIndex, findPrevStepIndex } from "../stepNavigation";
 import { makeStep } from "./testHelpers";
 
 const hidden = { or: [] } satisfies VisibilityRule;
@@ -39,7 +39,7 @@ describe("findNextStepIndex", () => {
   });
 
   it("works with visibleStepIds from resolveFormVisibility", () => {
-    const flow = [makeStep("a"), makeStep("b", [], whenFeeWaiver)];
+    const flow = [makeStep("a"), makeStep("b", [], whenFeeWaiver), makeStep("c")];
     const visibleWhenFeeWaiver = ["a", "b"];
     const visibleWithoutFeeWaiver = ["a"];
     expect(findNextStepIndex(flow, 0, visibleWhenFeeWaiver)).toBe(1);

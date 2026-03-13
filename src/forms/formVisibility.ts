@@ -1,87 +1,23 @@
 import type { FieldName, FormData } from "@/constants/fields";
 import type { PDFId } from "@/constants/pdf";
 import type { Field, Step } from "./types";
+import { evaluateRule } from "./visibilityRules";
+import type { VisibilityRule } from "./visibilityRules";
 
-type EqualsRule = {
-  [K in FieldName]: { field: K; equals: FormData[K] };
-}[FieldName];
+/** Expanded field entry for iteration: id + optional when */
+type ExpandedField = { id: FieldName; when?: VisibilityRule };
 
-type NotEqualsRule = {
-  [K in FieldName]: { field: K; notEquals: FormData[K] };
-}[FieldName];
-
-type FieldWithIncludes = {
-  [K in FieldName]: FormData[K] extends string | readonly string[] ? K : never;
-}[FieldName];
-
-type IncludesRule = { field: FieldWithIncludes; includes: string };
-
-export type VisibilityRule =
-  | EqualsRule
-  | NotEqualsRule
-  | IncludesRule
-  | { and: readonly VisibilityRule[] }
-  | { or: readonly VisibilityRule[] };
-
-/**
- * Evaluates a `VisibilityRule` against form data.
- */
-export function evaluateRule(
-  rule: VisibilityRule,
-  data: Partial<FormData>,
-): boolean {
-  if ("and" in rule) {
-    return rule.and.every((r) => evaluateRule(r, data));
-  }
-  if ("or" in rule) {
-    return rule.or.some((r) => evaluateRule(r, data));
-  }
-  if ("equals" in rule) {
-    const value = data[rule.field as FieldName];
-    return value === rule.equals;
-  }
-  if ("notEquals" in rule) {
-    const value = data[rule.field as FieldName];
-    return value !== rule.notEquals;
-  }
-  if ("includes" in rule) {
-    const value = data[rule.field as FieldName];
-    if (typeof value === "string") {
-      return value.includes(rule.includes);
-    }
-    if (Array.isArray(value)) {
-      return value.includes(rule.includes);
-    }
-    return false;
-  }
-  return false;
-}
-
-/**
- * Returns true if the field/step/PDF should be visible: no when rule, or rule
- * evaluates to true against the given data.
- */
-export function isVisibleWhen(
-  when: VisibilityRule | undefined,
-  data: Partial<FormData>,
-): boolean {
-  return !when || evaluateRule(when, data);
-}
-
-/** Expanded field entry for iteration: name + optional when */
-type ExpandedField = { name: FieldName; when?: VisibilityRule };
-
-/** Expands fields to a flat list of { name, when } for iteration. */
+/** Expands fields to a flat list of { id, when } for iteration. */
 function expandFields(fields: readonly Field[]): ExpandedField[] {
   const result: ExpandedField[] = [];
   for (const f of fields) {
     if (typeof f === "string") {
-      result.push({ name: f });
-    } else if ("name" in f) {
-      result.push({ name: f.name, when: f.when });
+      result.push({ id: f });
+    } else if ("id" in f) {
+      result.push({ id: f.id, when: f.when });
     } else {
-      for (const name of f.names) {
-        result.push({ name, when: f.when });
+      for (const id of f.ids) {
+        result.push({ id, when: f.when });
       }
     }
   }
@@ -90,7 +26,7 @@ function expandFields(fields: readonly Field[]): ExpandedField[] {
 
 /** Extracts all field names from a step's fields array. */
 export function getFieldNames(fields: Step["fields"]): FieldName[] {
-  return expandFields(fields).map((e) => e.name);
+  return expandFields(fields).map((e) => e.id);
 }
 
 /** Returns the `when` rule for a field name, or undefined if always visible. */
@@ -99,16 +35,19 @@ export function getFieldWhen(
   fieldName: FieldName,
 ): VisibilityRule | undefined {
   const expanded = expandFields(fields);
-  const entry = expanded.find((e) => e.name === fieldName);
+  const entry = expanded.find((e) => e.id === fieldName);
   return entry?.when;
 }
 
-/** PDF entry: shorthand (pdfId alone) or object with optional `when` rule */
-export type PdfEntry = PDFId | { pdfId: PDFId; when?: VisibilityRule };
+/** PDF entry: shorthand (id alone) or object with optional `when` rule */
+export type PdfEntry = PDFId | { id: PDFId; when?: VisibilityRule };
 
-/** Extracts pdfId from a pdf entry. */
+/** Resolved PDF entry: id alone = include; object with when: false = exclude */
+export type ResolvedPdfEntry = PDFId | { id: PDFId; when: false };
+
+/** Extracts id from a pdf entry. */
 export function getPdfId(entry: PdfEntry): PDFId {
-  return typeof entry === "string" ? entry : entry.pdfId;
+  return typeof entry === "string" ? entry : entry.id;
 }
 
 /** Returns the `when` rule for a pdf entry, or undefined if always included. */
@@ -133,8 +72,8 @@ export interface FormVisibility {
   visibleFields: Partial<FormData>;
   /** Sections for review table: step ID and visible field names, in step order */
   sections: readonly VisibilitySection[];
-  /** PDF configs with resolved include flags for loadPdfs */
-  pdfsToInclude: Array<{ pdfId: PDFId; include: boolean }>;
+  /** PDF configs for loadPdfs: id alone = include; { id, when: false } = exclude */
+  pdfsToInclude: readonly ResolvedPdfEntry[];
 }
 
 /**
@@ -159,26 +98,26 @@ export function resolveFormVisibility(
   const sections: VisibilitySection[] = [];
 
   for (const step of steps) {
-    if (!isVisibleWhen(step.when, formData)) continue;
+    if (!evaluateRule(step.when, formData)) continue;
 
     visibleStepIds.push(step.id);
 
     const visibleFieldNames: FieldName[] = [];
     const expanded = expandFields(step.fields);
-    for (const { name: fieldName, when: fieldWhen } of expanded) {
-      if (isVisibleWhen(fieldWhen, formData)) {
-        (visibleFields as Record<string, unknown>)[fieldName] =
-          formData[fieldName];
-        visibleFieldNames.push(fieldName);
+    for (const { id: fieldId, when: fieldWhen } of expanded) {
+      if (evaluateRule(fieldWhen, formData)) {
+        (visibleFields as Record<string, unknown>)[fieldId] = formData[fieldId];
+        visibleFieldNames.push(fieldId);
       }
     }
     sections.push({ stepId: step.id, fields: visibleFieldNames });
   }
 
-  const pdfsToInclude = pdfs.map((entry) => ({
-    pdfId: getPdfId(entry),
-    include: isVisibleWhen(getPdfWhen(entry), formData),
-  }));
+  const pdfsToInclude = pdfs.map((entry) => {
+    const id = getPdfId(entry);
+    const include = evaluateRule(getPdfWhen(entry), formData);
+    return include ? id : { id, when: false as const };
+  });
 
   return {
     visibleStepIds,
@@ -186,36 +125,4 @@ export function resolveFormVisibility(
     sections,
     pdfsToInclude,
   };
-}
-
-/**
- * Finds the next step index (forward) that is in visibleStepIds, starting after `fromIndex`.
- * Returns -1 if no eligible step exists (meaning we should advance to review).
- */
-export function findNextStepIndex(
-  steps: readonly Step[],
-  fromIndex: number,
-  visibleStepIds: readonly string[],
-): number {
-  const visibleSet = new Set(visibleStepIds);
-  for (let i = fromIndex + 1; i < steps.length; i++) {
-    if (visibleSet.has(steps[i].id)) return i;
-  }
-  return -1;
-}
-
-/**
- * Finds the previous step index (backward) that is in visibleStepIds, starting before `fromIndex`.
- * Returns -1 if no eligible step exists (meaning we should go back to title).
- */
-export function findPrevStepIndex(
-  steps: readonly Step[],
-  fromIndex: number,
-  visibleStepIds: readonly string[],
-): number {
-  const visibleSet = new Set(visibleStepIds);
-  for (let i = fromIndex - 1; i >= 0; i--) {
-    if (visibleSet.has(steps[i].id)) return i;
-  }
-  return -1;
 }

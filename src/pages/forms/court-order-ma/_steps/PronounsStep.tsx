@@ -13,11 +13,11 @@ export const pronounsStep: Step = {
   fields: [
     "isOkayToSharePronouns",
     {
-      name: "pronouns",
+      id: "pronouns",
       when: { field: "isOkayToSharePronouns", equals: true },
     },
     {
-      name: "otherPronouns",
+      id: "otherPronouns",
       when: { field: "pronouns", includes: "other" },
     },
   ],

@@ -16,7 +16,7 @@ export const waivePublicationStep: Step = {
   fields: [
     "shouldWaivePublicationRequirement",
     {
-      name: "reasonToWaivePublication",
+      id: "reasonToWaivePublication",
       when: { field: "shouldWaivePublicationRequirement", equals: true },
     },
   ],

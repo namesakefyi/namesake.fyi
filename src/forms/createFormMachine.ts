@@ -1,6 +1,4 @@
 import { assign, setup } from "xstate";
-import type { FormConfig } from "@/constants/forms";
-import { getFieldNames } from "./formVisibility";
 import type {
   FormMachineContext,
   FormMachineEvent,
@@ -8,40 +6,7 @@ import type {
   Step,
 } from "./types";
 
-/**
- * Extracts and flattens all field names from a steps array.
- */
-export function fieldsFromSteps(steps: readonly Step[]) {
-  return steps.flatMap((s) => getFieldNames(s.fields));
-}
-
-/**
- * Creates a complete FormConfig from the unique per-form properties.
- * Derives `machine` and `fields` from `slug` and `steps`.
- *
- * @example
- * export const myFormConfig = createFormConfig({
- *   slug: "my-form",
- *   steps,
- *   pdfs: [...],
- *   downloadTitle: "My Form",
- *   instructions: [],
- * });
- */
-export function createFormConfig(
-  input: Omit<FormConfig, "machine" | "fields">,
-): FormConfig {
-  const { slug, steps, ...rest } = input;
-  return {
-    slug,
-    steps,
-    machine: createFormMachine({ id: slug, steps }),
-    fields: fieldsFromSteps(steps),
-    ...rest,
-  };
-}
-
-interface CreateFormMachineOptions {
+export interface CreateFormMachineOptions {
   id: string;
   steps: readonly Step[];
 }

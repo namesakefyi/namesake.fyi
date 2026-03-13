@@ -1,12 +1,12 @@
 import type { FieldName } from "@/constants/fields";
-import type { VisibilityRule } from "./formVisibility";
+import type { VisibilityRule } from "./visibilityRules";
 
 /** A field which is visible when the `when` rule evaluates to true */
-type ConditionalField = { name: FieldName; when: VisibilityRule };
+type ConditionalField = { id: FieldName; when: VisibilityRule };
 
 /** Multiple fields which are visible when the `when` rule evaluates to true */
 type ConditionalFieldGroup = {
-  names: readonly FieldName[];
+  ids: readonly FieldName[];
   when: VisibilityRule;
 };
 
@@ -36,8 +36,8 @@ export interface Step {
 
   /**
    * All fields this step writes to. Shorthand: "fieldName" = always visible.
-   * Object form: { name, when } = single conditional field.
-   * Object form: { names, when } = multiple fields sharing one when rule.
+   * Object form: { id, when } = single conditional field.
+   * Object form: { ids, when } = multiple fields sharing one when rule.
    */
   fields: readonly Field[];
 

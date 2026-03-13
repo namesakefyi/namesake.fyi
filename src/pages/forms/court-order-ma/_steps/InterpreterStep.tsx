@@ -14,7 +14,7 @@ export const interpreterStep: Step = {
   description: "In most cases, a hearing is not required.",
   fields: [
     "isInterpreterNeeded",
-    { name: "language", when: { field: "isInterpreterNeeded", equals: true } },
+    { id: "language", when: { field: "isInterpreterNeeded", equals: true } },
   ],
   render: ({ stepConfig }) => {
     const languageVisible = useFieldVisible(stepConfig, "language");

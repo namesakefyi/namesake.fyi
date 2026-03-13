@@ -16,7 +16,7 @@ export const impoundCaseStep: Step = {
   fields: [
     "shouldImpoundCourtRecords",
     {
-      name: "reasonToImpoundCourtRecords",
+      id: "reasonToImpoundCourtRecords",
       when: { field: "shouldImpoundCourtRecords", equals: true },
     },
   ],

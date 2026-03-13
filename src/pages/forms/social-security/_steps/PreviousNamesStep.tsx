@@ -13,7 +13,7 @@ export const previousNamesStep: Step = {
   fields: [
     "hasOtherLegalNames",
     {
-      name: "previousLegalNames",
+      id: "previousLegalNames",
       when: { field: "hasOtherLegalNames", equals: true },
     },
   ],

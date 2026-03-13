@@ -62,7 +62,7 @@ describe("getFormPdfMetadata", () => {
     vi.mocked(forms.getFormConfig).mockReturnValue({
       pdfs: [
         {
-          pdfId: "cjp25-petition-to-change-name-of-minor",
+          id: "cjp25-petition-to-change-name-of-minor",
           when: { field: "shouldApplyForFeeWaiver", equals: true },
         },
       ],
@@ -99,7 +99,7 @@ describe("getFormPdfMetadata", () => {
       pdfs: [
         "cjp27-petition-to-change-name-of-adult",
         {
-          pdfId: "affidavit-of-indigency",
+          id: "affidavit-of-indigency",
           when: { field: "shouldApplyForFeeWaiver", equals: true },
         },
       ],
