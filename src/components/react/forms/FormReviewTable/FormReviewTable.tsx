@@ -1,10 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { useFormStep } from "@/components/react/forms/FormContainer";
 import type { FormData } from "@/constants/fields";
-import {
-  getFieldNames,
-  resolveFormVisibility,
-} from "@/forms/formVisibility";
+import { getFieldNames, resolveFormVisibility } from "@/forms/formVisibility";
 import type { Step } from "@/forms/types";
 import { formatFieldValue, getFieldLabel } from "@/utils/formatReviewFields";
 import "./FormReviewTable.css";

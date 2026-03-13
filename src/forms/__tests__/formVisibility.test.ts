@@ -156,31 +156,22 @@ describe("resolveFormVisibility", () => {
     });
 
     it.each([
-      [
-        { shouldApplyForFeeWaiver: true },
-        ["a", "b"],
-      ],
-      [
-        { shouldApplyForFeeWaiver: false },
-        ["a"],
-      ],
-    ] as const)(
-      "evaluates when rule with formData (formData=%o -> %s)",
-      (formData, expected) => {
-        const flow = [
-          step(makeStep("a")),
-          step(
-            makeStep("b", [], {
-              field: "shouldApplyForFeeWaiver",
-              equals: true,
-            }),
-          ),
-        ];
-        expect(resolveFormVisibility(flow, formData).visibleStepIds).toEqual(
-          expected,
-        );
-      },
-    );
+      [{ shouldApplyForFeeWaiver: true }, ["a", "b"]],
+      [{ shouldApplyForFeeWaiver: false }, ["a"]],
+    ] as const)("evaluates when rule with formData (formData=%o -> %s)", (formData, expected) => {
+      const flow = [
+        step(makeStep("a")),
+        step(
+          makeStep("b", [], {
+            field: "shouldApplyForFeeWaiver",
+            equals: true,
+          }),
+        ),
+      ];
+      expect(resolveFormVisibility(flow, formData).visibleStepIds).toEqual(
+        expected,
+      );
+    });
 
     it("returns empty array for empty steps", () => {
       const result = resolveFormVisibility([], {});
@@ -216,22 +207,19 @@ describe("resolveFormVisibility", () => {
         { hasUsedOtherNameOrAlias: true, otherNamesOrAliases: "y" },
         { hasUsedOtherNameOrAlias: true, otherNamesOrAliases: "y" },
       ],
-    ] as const)(
-      "filters fields by when rules (formData -> visibleFields)",
-      (formData, expected) => {
-        const stepWithVisibility = makeStep("a", [
-          "hasUsedOtherNameOrAlias",
-          {
-            name: "otherNamesOrAliases",
-            when: { field: "hasUsedOtherNameOrAlias", equals: true },
-          },
-        ]);
-        const flow = [step(stepWithVisibility)];
-        expect(resolveFormVisibility(flow, formData).visibleFields).toEqual(
-          expected,
-        );
-      },
-    );
+    ] as const)("filters fields by when rules (formData -> visibleFields)", (formData, expected) => {
+      const stepWithVisibility = makeStep("a", [
+        "hasUsedOtherNameOrAlias",
+        {
+          name: "otherNamesOrAliases",
+          when: { field: "hasUsedOtherNameOrAlias", equals: true },
+        },
+      ]);
+      const flow = [step(stepWithVisibility)];
+      expect(resolveFormVisibility(flow, formData).visibleFields).toEqual(
+        expected,
+      );
+    });
 
     it("excludes all fields when step when rule fails", () => {
       const flow = [
@@ -271,20 +259,17 @@ describe("resolveFormVisibility", () => {
         { shouldApplyForFeeWaiver: false },
         [{ pdfId: "affidavit-of-indigency", include: false }],
       ],
-    ] as const)(
-      "evaluates when rule with formData (formData=%o -> pdfsToInclude)",
-      (formData, expected) => {
-        const pdfs = [
-          {
-            pdfId: "affidavit-of-indigency" as const,
-            when: { field: "shouldApplyForFeeWaiver" as const, equals: true },
-          },
-        ];
-        expect(
-          resolveFormVisibility([], formData, pdfs).pdfsToInclude,
-        ).toEqual(expected);
-      },
-    );
+    ] as const)("evaluates when rule with formData (formData=%o -> pdfsToInclude)", (formData, expected) => {
+      const pdfs = [
+        {
+          pdfId: "affidavit-of-indigency" as const,
+          when: { field: "shouldApplyForFeeWaiver" as const, equals: true },
+        },
+      ];
+      expect(resolveFormVisibility([], formData, pdfs).pdfsToInclude).toEqual(
+        expected,
+      );
+    });
 
     it("returns empty array when pdfs omitted", () => {
       const result = resolveFormVisibility([], {});

@@ -1,9 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  createFormConfig,
-  fieldsFromSteps,
-  step,
-} from "@/forms/formConfig";
+import { createFormConfig, fieldsFromSteps, step } from "@/forms/formConfig";
 import { makeStep } from "./testHelpers";
 
 describe("step", () => {

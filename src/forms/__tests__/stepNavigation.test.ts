@@ -1,10 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { step } from "@/forms/formConfig";
-import {
-  findNextStepIndex,
-  findPrevStepIndex,
-} from "@/forms/formVisibility";
 import type { VisibilityRule } from "@/forms/formVisibility";
+import { findNextStepIndex, findPrevStepIndex } from "@/forms/formVisibility";
 import { makeStep } from "./testHelpers";
 
 const hidden = { or: [] } satisfies VisibilityRule;

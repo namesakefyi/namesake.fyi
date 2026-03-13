@@ -2,10 +2,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createActor } from "xstate";
 import { getFormProgress, saveFormProgress } from "@/db/database";
 import { type FormMachine, getPhase } from "@/forms/formConfig";
-import { resolveFormVisibility } from "@/forms/formVisibility";
 import {
   findNextStepIndex,
   findPrevStepIndex,
+  resolveFormVisibility,
 } from "@/forms/formVisibility";
 import type { FormMachineContext, FormPhase, Step } from "@/forms/types";
 

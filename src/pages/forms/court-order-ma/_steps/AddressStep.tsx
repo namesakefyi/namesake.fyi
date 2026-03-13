@@ -6,9 +6,9 @@ import {
   FormSubsection,
   useFieldVisible,
 } from "@/components/react/forms/FormStep";
+import type { VisibilityRule } from "@/forms/formVisibility";
 import { condAll } from "@/forms/formVisibility";
 import type { Step } from "@/forms/types";
-import type { VisibilityRule } from "@/forms/formVisibility";
 
 const whenNotUnhoused: VisibilityRule = {
   field: "isCurrentlyUnhoused",

@@ -1,5 +1,5 @@
-import type { Step } from "@/forms/types";
 import type { VisibilityRule } from "@/forms/formVisibility";
+import type { Step } from "@/forms/types";
 
 export function makeStep(
   id: string,

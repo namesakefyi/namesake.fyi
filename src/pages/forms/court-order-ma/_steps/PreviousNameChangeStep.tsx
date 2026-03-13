@@ -6,9 +6,9 @@ import {
 import { LongTextField } from "@/components/react/forms/LongTextField";
 import { ShortTextField } from "@/components/react/forms/ShortTextField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
+import type { VisibilityRule } from "@/forms/formVisibility";
 import { condAll } from "@/forms/formVisibility";
 import type { Step } from "@/forms/types";
-import type { VisibilityRule } from "@/forms/formVisibility";
 
 const whenHasPrevious: VisibilityRule = {
   field: "hasPreviousNameChange",
