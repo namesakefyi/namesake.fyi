@@ -123,7 +123,7 @@ describe("FormReviewTable", () => {
     expect(onEditStep).toHaveBeenCalledWith("legal-name");
   });
 
-  it("skips steps where all fields are hidden by when rules", () => {
+  it("skips steps where all fields are hidden by 'when' rules", () => {
     const hiddenStep: Step = {
       ...nameStep,
       id: "hidden-step",
