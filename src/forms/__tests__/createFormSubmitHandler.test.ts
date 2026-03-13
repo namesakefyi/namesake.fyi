@@ -50,6 +50,7 @@ describe("createFormSubmitHandler", () => {
     vi.mocked(resolveFormVisibility).mockReturnValue({
       visibleStepIds: [],
       visibleFields: mockVisibleData,
+      sections: [],
       pdfsToInclude: [
         { pdfId: "cjp27-petition-to-change-name-of-adult", include: true },
       ],
@@ -85,6 +86,7 @@ describe("createFormSubmitHandler", () => {
     vi.mocked(resolveFormVisibility).mockReturnValue({
       visibleStepIds: [],
       visibleFields: mockVisibleData,
+      sections: [],
       pdfsToInclude: [
         { pdfId: "cjp27-petition-to-change-name-of-adult", include: true },
         { pdfId: "affidavit-of-indigency", include: true },

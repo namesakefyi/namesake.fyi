@@ -2,22 +2,18 @@ import type { FieldName, FormData } from "@/constants/fields";
 import type { PDFId } from "@/constants/pdf";
 import type { Step } from "./types";
 
-/** Rule: field equals value. Value type must match the field's FormData type. */
 type EqualsRule = {
   [K in FieldName]: { field: K; equals: FormData[K] };
 }[FieldName];
 
-/** Rule: field does not equal value. */
 type NotEqualsRule = {
   [K in FieldName]: { field: K; notEquals: FormData[K] };
 }[FieldName];
 
-/** Fields whose value type supports .includes() */
 type FieldWithIncludes = {
   [K in FieldName]: FormData[K] extends string | readonly string[] ? K : never;
 }[FieldName];
 
-/** Rule: field value (string or array) includes the given string. */
 type IncludesRule = { field: FieldWithIncludes; includes: string };
 
 export type VisibilityRule =
@@ -28,16 +24,11 @@ export type VisibilityRule =
   | { or: readonly VisibilityRule[] };
 
 /**
- * Evaluates a visibility rule against form data.
- * - equals: strict equality; missing/undefined field → false
- * - notEquals: strict inequality; missing/undefined field → true
- * - includes: value?.includes(str) === true; non-string/array → false
- * - and: all rules must pass
- * - or: at least one rule must pass
+ * Evaluates a `VisibilityRule` against form data.
  */
 export function evaluateRule(
   rule: VisibilityRule,
-  data: Partial<Record<FieldName, unknown>>,
+  data: Partial<FormData>,
 ): boolean {
   if ("and" in rule) {
     return rule.and.every((r) => evaluateRule(r, data));
@@ -72,12 +63,12 @@ export function evaluateRule(
  */
 export function isVisibleWhen(
   when: VisibilityRule | undefined,
-  data: Partial<Record<FieldName, unknown>>,
+  data: Partial<FormData>,
 ): boolean {
   return !when || evaluateRule(when, data);
 }
 
-/** Multiple fields sharing the same when rule. */
+/** Multiple fields sharing the same `when` rule. */
 export function condAll(
   when: VisibilityRule,
   ...names: FieldName[]
@@ -90,14 +81,14 @@ export function getFieldNames(fields: Step["fields"]): FieldName[] {
   return fields.map((f) => (typeof f === "string" ? f : f.name));
 }
 
-/** Returns the when rule for a field entry, or undefined if always visible. */
+/** Returns the `when` rule for a field entry, or undefined if always visible. */
 export function getFieldWhen(
   field: Step["fields"][number],
 ): VisibilityRule | undefined {
   return typeof field === "object" ? field.when : undefined;
 }
 
-/** PDF entry: shorthand (pdfId alone) or object with optional when */
+/** PDF entry: shorthand (pdfId alone) or object with optional `when` rule */
 export type PdfEntry = PDFId | { pdfId: PDFId; when?: VisibilityRule };
 
 /** Extracts pdfId from a pdf entry. */
@@ -105,9 +96,15 @@ export function getPdfId(entry: PdfEntry): PDFId {
   return typeof entry === "string" ? entry : entry.pdfId;
 }
 
-/** Returns the when rule for a pdf entry, or undefined if always included. */
+/** Returns the `when` rule for a pdf entry, or undefined if always included. */
 export function getPdfWhen(entry: PdfEntry): VisibilityRule | undefined {
   return typeof entry === "object" ? entry.when : undefined;
+}
+
+/** Section of visible fields for the review table, grouped by step. */
+export interface VisibilitySection {
+  stepId: string;
+  fields: readonly FieldName[];
 }
 
 /**
@@ -115,10 +112,12 @@ export function getPdfWhen(entry: PdfEntry): VisibilityRule | undefined {
  * given the current form data.
  */
 export interface FormVisibility {
-  /** Ordered IDs of steps whose when rule passes (or no rule) */
+  /** Ordered IDs of steps whose `when` rule passes (or no rule) */
   visibleStepIds: string[];
   /** Field values that were shown (for review table and PDF generation) */
   visibleFields: Partial<FormData>;
+  /** Sections for review table: step ID and visible field names, in step order */
+  sections: readonly VisibilitySection[];
   /** PDF configs with resolved include flags for loadPdfs */
   pdfsToInclude: Array<{ pdfId: PDFId; include: boolean }>;
 }
@@ -129,11 +128,11 @@ export interface FormVisibility {
  *
  * This is the single source of truth for visibility. All consumers (navigation,
  * review table, submit handler) should use this function instead of evaluating
- * when rules directly.
+ * `when` rules directly.
  *
  * @param steps - Form steps from config
  * @param formData - Current form values
- * @param pdfs - Optional PDF configs from form config (omit when PDF visibility not needed)
+ * @param pdfs - Optional PDF configs from form config
  */
 export function resolveFormVisibility(
   steps: readonly Step[],
@@ -142,12 +141,14 @@ export function resolveFormVisibility(
 ): FormVisibility {
   const visibleStepIds: string[] = [];
   const visibleFields: Partial<FormData> = {};
+  const sections: VisibilitySection[] = [];
 
   for (const step of steps) {
     if (!isVisibleWhen(step.when, formData)) continue;
 
     visibleStepIds.push(step.id);
 
+    const visibleFieldNames: FieldName[] = [];
     const fieldNames = getFieldNames(step.fields);
     for (let i = 0; i < fieldNames.length; i++) {
       const fieldName = fieldNames[i] as FieldName;
@@ -156,8 +157,10 @@ export function resolveFormVisibility(
       if (isVisibleWhen(fieldWhen, formData)) {
         (visibleFields as Record<string, unknown>)[fieldName] =
           formData[fieldName];
+        visibleFieldNames.push(fieldName);
       }
     }
+    sections.push({ stepId: step.id, fields: visibleFieldNames });
   }
 
   const pdfsToInclude = pdfs.map((entry) => ({
@@ -168,6 +171,7 @@ export function resolveFormVisibility(
   return {
     visibleStepIds,
     visibleFields,
+    sections,
     pdfsToInclude,
   };
 }

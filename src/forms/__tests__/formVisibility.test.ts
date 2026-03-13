@@ -143,6 +143,10 @@ describe("resolveFormVisibility", () => {
       const flow = [step(makeStep("a")), step(makeStep("b"))];
       const result = resolveFormVisibility(flow, {});
       expect(result.visibleStepIds).toEqual(["a", "b"]);
+      expect(result.sections).toEqual([
+        { stepId: "a", fields: [] },
+        { stepId: "b", fields: [] },
+      ]);
     });
 
     it("filters out steps whose when rule evaluates to false", () => {
@@ -153,6 +157,10 @@ describe("resolveFormVisibility", () => {
       ];
       const result = resolveFormVisibility(flow, {});
       expect(result.visibleStepIds).toEqual(["a", "c"]);
+      expect(result.sections).toEqual([
+        { stepId: "a", fields: [] },
+        { stepId: "c", fields: [] },
+      ]);
     });
 
     it.each([
@@ -176,6 +184,7 @@ describe("resolveFormVisibility", () => {
     it("returns empty array for empty steps", () => {
       const result = resolveFormVisibility([], {});
       expect(result.visibleStepIds).toEqual([]);
+      expect(result.sections).toEqual([]);
     });
   });
 
@@ -196,6 +205,10 @@ describe("resolveFormVisibility", () => {
         oldLastName: "y",
         phoneNumber: "z",
       });
+      expect(result.sections).toEqual([
+        { stepId: "a", fields: ["oldFirstName", "oldLastName"] },
+        { stepId: "b", fields: ["phoneNumber"] },
+      ]);
     });
 
     it.each([
@@ -229,6 +242,9 @@ describe("resolveFormVisibility", () => {
       const formData = { oldFirstName: "x", oldLastName: "y" };
       const result = resolveFormVisibility(flow, formData);
       expect(result.visibleFields).toEqual({ oldFirstName: "x" });
+      expect(result.sections).toEqual([
+        { stepId: "a", fields: ["oldFirstName"] },
+      ]);
     });
 
     it("returns empty object for empty steps", () => {
@@ -307,6 +323,10 @@ describe("resolveFormVisibility", () => {
         newFirstName: "Jane",
         reasonToWaivePublication: "doc.pdf",
       });
+      expect(result.sections).toEqual([
+        { stepId: "intro", fields: ["newFirstName"] },
+        { stepId: "fee-waiver", fields: ["reasonToWaivePublication"] },
+      ]);
       expect(result.pdfsToInclude).toEqual([
         { pdfId: "cjp27-petition-to-change-name-of-adult", include: true },
         { pdfId: "affidavit-of-indigency", include: true },

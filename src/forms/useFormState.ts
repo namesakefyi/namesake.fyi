@@ -158,7 +158,6 @@ export function useFormState(
   const currentStepIndex = activeStepId
     ? visibleStepIds.indexOf(activeStepId) + 1
     : 0;
-
   const totalSteps = visibleStepIds.length;
 
   const goNext = useCallback(() => {
