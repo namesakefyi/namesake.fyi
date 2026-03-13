@@ -27,7 +27,7 @@ describe("fieldsFromSteps", () => {
   });
 });
 
-describe("defineFormConfig", () => {
+describe("createFormConfig", () => {
   it("derives machine and fields from slug and steps", () => {
     const steps = [
       step(makeStep("a", ["oldFirstName" as any])),
