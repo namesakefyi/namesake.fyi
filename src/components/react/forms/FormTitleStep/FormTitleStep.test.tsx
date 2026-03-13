@@ -84,8 +84,8 @@ describe("FormTitleStep", () => {
       <FormTitleStep
         {...formTitleStep}
         pdfs={[
-          { pdfId: "pdf-1" as any, title: "Petition for Name Change" },
-          { pdfId: "pdf-2" as any, title: "Civil Cover Sheet" },
+          { id: "pdf-1" as any, title: "Petition for Name Change" },
+          { id: "pdf-2" as any, title: "Civil Cover Sheet" },
         ]}
       />,
       { wrapper: TestWrapper },
@@ -99,7 +99,7 @@ describe("FormTitleStep", () => {
     render(
       <FormTitleStep
         {...formTitleStep}
-        pdfs={[{ pdfId: "pdf-1" as any, title: "Petition", code: "CJD 400" }]}
+        pdfs={[{ id: "pdf-1" as any, title: "Petition", code: "CJD 400" }]}
       />,
       { wrapper: TestWrapper },
     );

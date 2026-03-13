@@ -35,7 +35,7 @@ describe("getFormPdfMetadata", () => {
 
     expect(result).toEqual([
       {
-        pdfId: "cjp27-petition-to-change-name-of-adult",
+        id: "cjp27-petition-to-change-name-of-adult",
         title: "Petition to Change Name of Adult",
         code: "CJP-27",
         when: false,
@@ -119,8 +119,8 @@ describe("getFormPdfMetadata", () => {
     const result = await getFormPdfMetadata("court-order-ma");
 
     expect(result).toHaveLength(2);
-    expect(result[0].pdfId).toBe("cjp27-petition-to-change-name-of-adult");
-    expect(result[1].pdfId).toBe("affidavit-of-indigency");
+    expect(result[0].id).toBe("cjp27-petition-to-change-name-of-adult");
+    expect(result[1].id).toBe("affidavit-of-indigency");
     expect(result[1].when).toBe(true);
   });
 });

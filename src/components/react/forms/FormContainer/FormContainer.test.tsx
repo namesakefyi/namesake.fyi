@@ -1,8 +1,8 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
-import type { Form } from "@/constants/forms";
 import * as db from "@/db/database";
+import { createForm } from "@/forms/createForm";
 import { createFormMachine } from "@/forms/createFormMachine";
 import type { Step } from "@/forms/types";
 import { FormStep } from "../FormStep/FormStep";
@@ -46,29 +46,21 @@ const formStepMachine = createFormMachine({
   steps: formStepFlow,
 });
 
-function makeConfig(
-  flow: Step[],
-  machine: ReturnType<typeof createFormMachine>,
-): Form {
-  return {
-    slug: machine.id,
-    steps: flow,
-    machine,
-    pdfs: [],
-    downloadTitle: "Test Download",
-    instructions: [],
-  };
-}
-
 function makeContainer(
   flow: typeof plainFlow,
   machine: ReturnType<typeof createFormMachine>,
 ) {
-  const config = makeConfig(flow, machine);
+  const form = createForm({
+    slug: machine.id,
+    steps: flow,
+    pdfs: [],
+    downloadTitle: "Test Download",
+    instructions: [],
+  });
   return function Container() {
     return (
       <FormContainer
-        config={config}
+        config={form}
         title="Test Title"
         description="Test Description"
         updatedAt="2025-01-01"

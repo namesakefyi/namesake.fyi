@@ -8,7 +8,7 @@ import { getPdfId, getPdfWhen } from "./formVisibility";
  */
 export interface FormPdfMetadata {
   /** The unique PDF identifier */
-  pdfId: PDFId;
+  id: PDFId;
   /** The display title of the PDF */
   title: string;
   /** The form code, if one exists (e.g., "CJP-27") */
@@ -31,10 +31,10 @@ export async function getFormPdfMetadata(
 
   return await Promise.all(
     config.pdfs.map(async (entry) => {
-      const pdfId = getPdfId(entry);
-      const definition = await getPdfDefinition(pdfId);
+      const id = getPdfId(entry);
+      const definition = await getPdfDefinition(id);
       return {
-        pdfId,
+        id,
         title: definition.title,
         code: definition.code,
         when: !!getPdfWhen(entry),

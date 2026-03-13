@@ -14,7 +14,7 @@ import { pronounsStep } from "./_steps/PronounsStep";
 import { reasonStep } from "./_steps/ReasonStep";
 import { returnDocumentsStep } from "./_steps/ReturnDocumentsStep";
 
-export const courtOrderMaConfig = createForm({
+export const courtOrderMaForm = createForm({
   slug: "court-order-ma",
   steps: [
     newNameStep,
@@ -41,13 +41,18 @@ export const courtOrderMaConfig = createForm({
     },
   ],
   downloadTitle: "Massachusetts Court Order",
-  instructions: (data) => [
+  instructions: [
     "Do not sign the Petition to Change Name (CJP 27) until in the presence of a notary.",
     "Review all documents carefully.",
     "File with the Probate and Family Court in your county.",
-    data.shouldApplyForFeeWaiver === true
-      ? "Complete the Affidavit of Indigency on your own."
-      : "To pay for filing, bring a credit or debit card, a check made payable to the Commonwealth of Massachusetts, or exact cash.",
+    {
+      text: "Complete the Affidavit of Indigency on your own.",
+      when: { field: "shouldApplyForFeeWaiver", equals: true },
+    },
+    {
+      text: "To pay for filing, bring a credit or debit card, a check made payable to the Commonwealth of Massachusetts, or exact cash.",
+      when: { field: "shouldApplyForFeeWaiver", equals: false },
+    },
     "Remember to bring all supporting documents to the court.",
   ],
 });

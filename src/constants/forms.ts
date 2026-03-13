@@ -1,14 +1,13 @@
 import type { FormMachine } from "@/forms/createFormMachine";
 import type { PdfEntry } from "@/forms/formVisibility";
 import type { FieldsOf, Step } from "@/forms/types";
-import { courtOrderMaConfig } from "@/pages/forms/court-order-ma/config";
-import { socialSecurityConfig } from "@/pages/forms/social-security/config";
-import type { FieldType, FormData } from "./fields";
+import type { VisibilityRule } from "@/forms/visibilityRules";
+import { courtOrderMaForm } from "@/pages/forms/court-order-ma/form";
+import { socialSecurityForm } from "@/pages/forms/social-security/form";
+import type { FieldType } from "./fields";
 
-/**
- * Function that generates instructions based on form data.
- */
-export type FormInstructionsFn = (data: Partial<FormData>) => string[];
+/** Instruction: string = always include; object with when = conditional. */
+export type Instruction = string | { text: string; when?: VisibilityRule };
 
 /**
  * Complete configuration for a form.
@@ -24,8 +23,8 @@ export interface Form {
   pdfs: readonly PdfEntry[];
   /** Title for the downloaded PDF package */
   downloadTitle: string;
-  /** Static instructions or function that generates instructions from form data */
-  instructions: string[] | FormInstructionsFn;
+  /** Instructions for the cover page. String = always include; { text, when? } = conditional. */
+  instructions: readonly Instruction[];
 }
 
 /** Form data type for a specific form (only fields from its steps). */
@@ -37,8 +36,8 @@ export type FormDataOf<F extends Form> = {
  * Registry of all form configurations.
  */
 const FORM_CONFIGS: Record<string, Form> = {
-  "court-order-ma": courtOrderMaConfig,
-  "social-security": socialSecurityConfig,
+  "court-order-ma": courtOrderMaForm,
+  "social-security": socialSecurityForm,
 };
 
 /**

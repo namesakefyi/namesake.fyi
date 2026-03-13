@@ -15,8 +15,9 @@ import { addressStep } from "./_steps/AddressStep";
 export const myForm = createForm({
   slug: "my-form",
   steps: [nameStep, addressStep],
-  pdfs: [{ pdfId: "my-form-pdf" }],
+  pdfs: ["my-form-pdf"],
   downloadTitle: "My Form",
+  instructions: [],
 });
 ```
 
@@ -84,6 +85,15 @@ const otherNamesVisible = useFieldVisible(stepConfig, "otherNamesOrAliases");
 ```
 
 **Conditional PDFs:** Use `{ id, when }` in the form config's `pdfs` array to include a PDF in the final downloaded packet only when the rule passes.
+
+**Conditional instructions:** Use `{ text, when }` in the form config's `instructions` array to include an instruction on the cover page only when the rule passes. String entries are always included.
+
+```ts
+instructions: [
+  "Always show this.",
+  { text: "Only when applying for fee waiver.", when: { field: "shouldApplyForFeeWaiver", equals: true } },
+],
+```
 
 ## Form phases
 

@@ -3,7 +3,7 @@ import { createFormMachine } from "./createFormMachine";
 
 /**
  * Creates a complete Form from the unique per-form properties.
- * Derives `machine` from `slug` and `steps`. Use `getFormFields(config.steps)` for fields.
+ * Derives `machine` from `slug` and `steps`.
  *
  * @example
  * export const myForm = createForm({

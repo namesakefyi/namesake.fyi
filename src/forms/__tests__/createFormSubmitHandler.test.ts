@@ -93,15 +93,44 @@ describe("createFormSubmitHandler", () => {
     );
   });
 
-  it("calls instruction function with form data and passes result to downloadMergedPdf", async () => {
-    const instructions = vi.fn().mockReturnValue(["Dynamic step"]);
-    const config = makeConfig({ instructions });
+  it("filters conditional instructions by when rule", async () => {
+    const config = makeConfig({
+      instructions: [
+        "Always shown",
+        {
+          text: "Only when fee waiver",
+          when: { field: "shouldApplyForFeeWaiver", equals: true },
+        },
+      ],
+    });
 
     await createFormSubmitHandler(config, makeForm())(makeEvent());
 
-    expect(instructions).toHaveBeenCalledWith(mockFormData);
     expect(downloadMergedPdf).toHaveBeenCalledWith(
-      expect.objectContaining({ instructions: ["Dynamic step"] }),
+      expect.objectContaining({ instructions: ["Always shown"] }),
+    );
+  });
+
+  it("includes conditional instruction when rule passes", async () => {
+    const config = makeConfig({
+      instructions: [
+        "Always shown",
+        {
+          text: "Only when fee waiver",
+          when: { field: "shouldApplyForFeeWaiver", equals: true },
+        },
+      ],
+    });
+
+    await createFormSubmitHandler(
+      config,
+      makeForm({ ...mockFormData, shouldApplyForFeeWaiver: true }),
+    )(makeEvent());
+
+    expect(downloadMergedPdf).toHaveBeenCalledWith(
+      expect.objectContaining({
+        instructions: ["Always shown", "Only when fee waiver"],
+      }),
     );
   });
 

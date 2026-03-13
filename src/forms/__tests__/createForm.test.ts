@@ -9,7 +9,7 @@ describe("createForm", () => {
       makeStep("b", ["oldLastName" as any]),
     ];
 
-    const config = createForm({
+    const form = createForm({
       slug: "test-form",
       steps,
       pdfs: [],
@@ -17,23 +17,23 @@ describe("createForm", () => {
       instructions: [],
     });
 
-    expect(config.slug).toBe("test-form");
-    expect(config.steps).toBe(steps);
-    expect(config.machine).toBeDefined();
+    expect(form.slug).toBe("test-form");
+    expect(form.steps).toBe(steps);
+    expect(form.machine).toBeDefined();
   });
 
   it("passes through extra properties", () => {
     const steps = [makeStep("a")];
-    const instructionsFn = () => ["Do a thing"];
+    const instructions = ["Do a thing"];
 
-    const config = createForm({
+    const form = createForm({
       slug: "extra-props",
       steps,
       pdfs: [],
       downloadTitle: "Extra",
-      instructions: instructionsFn,
+      instructions,
     });
 
-    expect(config.instructions).toBe(instructionsFn);
+    expect(form.instructions).toEqual(instructions);
   });
 });
