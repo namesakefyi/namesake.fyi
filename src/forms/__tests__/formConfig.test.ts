@@ -65,11 +65,7 @@ describe("createFormConfig", () => {
 
 describe("createFormMachine", () => {
   describe("linear flow", () => {
-    const flow = [
-      makeStep("a"),
-      makeStep("b"),
-      makeStep("c"),
-    ];
+    const flow = [makeStep("a"), makeStep("b"), makeStep("c")];
     const machine = createFormMachine({ id: "test-linear", steps: flow });
 
     it("starts in title state", () => {

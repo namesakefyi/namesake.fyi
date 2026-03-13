@@ -9,11 +9,7 @@ const whenFeeWaiver = {
   equals: true,
 } satisfies VisibilityRule;
 
-const unguarded = [
-  makeStep("a"),
-  makeStep("b"),
-  makeStep("c"),
-];
+const unguarded = [makeStep("a"), makeStep("b"), makeStep("c")];
 const allVisible = ["a", "b", "c"];
 
 describe("findNextStepIndex", () => {
@@ -27,11 +23,7 @@ describe("findNextStepIndex", () => {
   });
 
   it("skips steps not in visibleStepIds", () => {
-    const flow = [
-      makeStep("a"),
-      makeStep("b", [], hidden),
-      makeStep("c"),
-    ];
+    const flow = [makeStep("a"), makeStep("b", [], hidden), makeStep("c")];
     const visibleStepIds = ["a", "c"];
     expect(findNextStepIndex(flow, 0, visibleStepIds)).toBe(2);
   });
@@ -66,11 +58,7 @@ describe("findPrevStepIndex", () => {
   });
 
   it("skips steps not in visibleStepIds", () => {
-    const flow = [
-      makeStep("a"),
-      makeStep("b", [], hidden),
-      makeStep("c"),
-    ];
+    const flow = [makeStep("a"), makeStep("b", [], hidden), makeStep("c")];
     const visibleStepIds = ["a", "c"];
     expect(findPrevStepIndex(flow, 2, visibleStepIds)).toBe(0);
   });

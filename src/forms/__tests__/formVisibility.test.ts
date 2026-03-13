@@ -296,10 +296,7 @@ describe("resolveFormVisibility", () => {
         field: "shouldApplyForFeeWaiver",
         equals: true,
       });
-      const flow = [
-        makeStep("intro", ["newFirstName"]),
-        guardedStep,
-      ];
+      const flow = [makeStep("intro", ["newFirstName"]), guardedStep];
       const pdfs = [
         "cjp27-petition-to-change-name-of-adult",
         {
