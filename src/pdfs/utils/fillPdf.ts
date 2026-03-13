@@ -1,3 +1,9 @@
+import {
+  PDFCheckBox,
+  PDFDropdown,
+  PDFRadioGroup,
+  PDFTextField,
+} from "@cantoo/pdf-lib";
 import type { FormData } from "@/constants/fields";
 import type { PDFDefinition } from "@/constants/pdf";
 import { fetchPdf } from "./fetchPdf";
@@ -34,12 +40,18 @@ export async function fillPdf({
     const fields = pdf.resolver(userData);
     for (const [fieldName, value] of Object.entries(fields)) {
       if (value === undefined) continue;
-      if (typeof value === "boolean") {
-        const checkbox = form.getCheckBox(fieldName);
-        value ? checkbox.check() : checkbox.uncheck();
-      } else if (typeof value === "string") {
-        const field = form.getTextField(fieldName);
-        field.setText(value);
+
+      const field = form.getField(fieldName);
+
+      if (field instanceof PDFCheckBox) {
+        const boolValue = typeof value === "boolean" ? value : value === "true";
+        boolValue ? field.check() : field.uncheck();
+      } else if (field instanceof PDFTextField) {
+        field.setText(String(value));
+      } else if (field instanceof PDFRadioGroup) {
+        field.select(String(value));
+      } else if (field instanceof PDFDropdown) {
+        field.select(String(value));
       }
     }
 

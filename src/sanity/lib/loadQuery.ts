@@ -17,7 +17,10 @@ export async function loadQuery<QueryResponse>({
   const { result } = await sanityClient.fetch<QueryResponse>(
     query,
     params ?? {},
-    { filterResponse: false },
+    {
+      filterResponse: false,
+      perspective: import.meta.env.DEV ? "previewDrafts" : "published",
+    },
   );
 
   return { data: result };

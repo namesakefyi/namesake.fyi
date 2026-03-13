@@ -1,0 +1,36 @@
+---
+import type { SanityDocument } from "@sanity/client";
+import { getFormPdfMetadata } from "@/forms/getFormPdfMetadata";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { loadQuery } from "@/sanity/lib/loadQuery";
+import { NyCourtOrderForm } from "./_Form";
+
+const { data: form } = await loadQuery<SanityDocument>({
+  query: `*[_type == "form" && slug.current == $slug][0]{
+    title,
+    description,
+    banner,
+    _updatedAt,
+    state,
+    category,
+    "costs": *[_type == "guide" && state._ref == ^.state._ref && category._ref == ^.category._ref][0].costs
+  }`,
+  params: {
+    slug: "court-order-ny",
+  },
+});
+
+const pdfs = await getFormPdfMetadata("court-order-ny");
+---
+
+<BaseLayout title={form.title} description={form.description} color="white">
+  <NyCourtOrderForm
+    client:load
+    title={form.title}
+    description={form.description}
+    banner={form.banner}
+    updatedAt={form._updatedAt}
+    pdfs={pdfs}
+    costs={form.costs}
+  />
+</BaseLayout>

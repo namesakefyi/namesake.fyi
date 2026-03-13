@@ -427,6 +427,138 @@ export const FIELD_DEFS = [
     label: "Relationship to the person you are filing for (other)",
     type: "string",
   },
+  // NY-specific fields
+  {
+    name: "shouldChangeName",
+    label: "Changing name?",
+    type: "boolean",
+  },
+  {
+    name: "shouldChangeSexDesignation",
+    label: "Changing sex designation?",
+    type: "boolean",
+  },
+  { name: "newFullName", label: "New full name", type: "string" },
+  { name: "oldFullName", label: "Current full name", type: "string" },
+  { name: "courtType", label: "Court type", type: "string" },
+  { name: "courtCounty", label: "Court county", type: "string" },
+  {
+    name: "hasConviction",
+    label: "Has criminal conviction?",
+    type: "boolean",
+  },
+  { name: "courtOfConviction", label: "Court of conviction", type: "string" },
+  { name: "crime", label: "Crime", type: "string" },
+  {
+    name: "hasBankruptcy",
+    label: "Has filed for bankruptcy?",
+    type: "boolean",
+  },
+  {
+    name: "hasJudgementsOrLiens",
+    label: "Has judgements or liens?",
+    type: "boolean",
+  },
+  {
+    name: "isPartyToAction",
+    label: "Party to any action or proceeding?",
+    type: "boolean",
+  },
+  {
+    name: "partyToActionDetails",
+    label: "Party to action details",
+    type: "string",
+  },
+  {
+    name: "isCurrentlyMarried",
+    label: "Currently married?",
+    type: "boolean",
+  },
+  {
+    name: "isPreviouslyMarried",
+    label: "Previously married?",
+    type: "boolean",
+  },
+  {
+    name: "hasChildrenUnder21",
+    label: "Has children under 21?",
+    type: "boolean",
+  },
+  {
+    name: "hasChildSupportObligation",
+    label: "Has child support obligation?",
+    type: "boolean",
+  },
+  {
+    name: "isChildSupportPaymentsCurrent",
+    label: "Child support payments current?",
+    type: "boolean",
+  },
+  {
+    name: "childSupportOwed",
+    label: "Child support amount owed",
+    type: "string",
+  },
+  {
+    name: "courtIssuingChildSupportOrder",
+    label: "Court issuing child support order",
+    type: "string",
+  },
+  {
+    name: "childSupportCollectionsUnit",
+    label: "Child support collections unit",
+    type: "string",
+  },
+  {
+    name: "hasSpousalSupportObligation",
+    label: "Has spousal support obligation?",
+    type: "boolean",
+  },
+  {
+    name: "isSpousalSupportPaymentsCurrent",
+    label: "Spousal support payments current?",
+    type: "boolean",
+  },
+  {
+    name: "spousalSupportOwed",
+    label: "Spousal support amount owed",
+    type: "string",
+  },
+  {
+    name: "courtIssuingSpousalSupportOrder",
+    label: "Court issuing spousal support order",
+    type: "string",
+  },
+  {
+    name: "newSexDesignation",
+    label: "New sex designation",
+    type: "string",
+  },
+  {
+    name: "hasPreviousSexDesignationChangePetition",
+    label: "Previous sex designation change petition?",
+    type: "boolean",
+  },
+  {
+    name: "previousSexDesignationChangePetitionReason",
+    label: "Previous sex designation change petition reason",
+    type: "string",
+  },
+  {
+    name: "sexDesignationChangeReason",
+    label: "Reason for sex designation change",
+    type: "string",
+  },
+  {
+    name: "shouldSealRecords",
+    label: "Request record sealing?",
+    type: "boolean",
+  },
+  {
+    name: "sealingRequestDetails",
+    label: "Sealing request details",
+    type: "string",
+  },
 ] as const;
 
 export type FieldName = (typeof FIELD_DEFS)[number]["name"];

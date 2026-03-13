@@ -1,3 +1,9 @@
+import {
+  PDFCheckBox,
+  PDFDropdown,
+  PDFRadioGroup,
+  PDFTextField,
+} from "@cantoo/pdf-lib";
 import { expect } from "vitest";
 import type { FormData } from "@/constants/fields";
 import type { PDFDefinition } from "@/constants/pdf";
@@ -16,10 +22,17 @@ export async function expectPdfFieldsMatch(
   for (const [fieldName, value] of Object.entries(expected)) {
     if (value === undefined) continue;
 
-    if (typeof value === "boolean") {
-      expect(form.getCheckBox(fieldName).isChecked()).toBe(value);
-    } else {
-      expect(form.getTextField(fieldName).getText()).toBe(value);
+    const field = form.getField(fieldName);
+
+    if (field instanceof PDFCheckBox) {
+      const boolValue = typeof value === "boolean" ? value : value === "true";
+      expect(field.isChecked()).toBe(boolValue);
+    } else if (field instanceof PDFTextField) {
+      expect(field.getText()).toBe(String(value));
+    } else if (field instanceof PDFRadioGroup) {
+      expect(field.getSelected()).toBe(String(value));
+    } else if (field instanceof PDFDropdown) {
+      expect(field.getSelected()).toEqual([String(value)]);
     }
   }
 }

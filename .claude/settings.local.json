@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm test:once src/pdfs)",
+      "Bash(node -e \":*)",
+      "Bash(pnpm pdf:schema src/pdfs/ny/ucsnc1-name-change-and-or-sex-designation-change-petition-for-individual-adult/ucsnc1-name-change-and-or-sex-designation-change-petition-for-individual-adult.pdf)",
+      "Bash(pnpm test:once src/pdfs/ny)",
+      "Bash(pnpm check:*)",
+      "Bash(pnpm check:fix)",
+      "Bash(pnpm test:once)",
+      "Bash(echo \"exit: $?\")",
+      "mcp__Claude_Preview__preview_start"
+    ]
+  }
+}
