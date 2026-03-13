@@ -12,7 +12,7 @@ import { resolveFormVisibility } from "@/forms/formVisibility";
  * @param form - The react-hook-form instance
  * @returns A submit handler function
  */
-export function createFormSubmitHandler<TFormData extends FormData>(
+export function createFormSubmitHandler<TFormData extends Partial<FormData>>(
   config: FormConfig,
   form: UseFormReturn<TFormData>,
 ) {

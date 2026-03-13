@@ -39,7 +39,11 @@ describe("findNextStepIndex", () => {
   });
 
   it("works with visibleStepIds from resolveFormVisibility", () => {
-    const flow = [makeStep("a"), makeStep("b", [], whenFeeWaiver), makeStep("c")];
+    const flow = [
+      makeStep("a"),
+      makeStep("b", [], whenFeeWaiver),
+      makeStep("c"),
+    ];
     const visibleWhenFeeWaiver = ["a", "b"];
     const visibleWithoutFeeWaiver = ["a"];
     expect(findNextStepIndex(flow, 0, visibleWhenFeeWaiver)).toBe(1);

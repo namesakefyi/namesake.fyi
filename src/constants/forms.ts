@@ -3,7 +3,7 @@ import type { PdfEntry } from "@/forms/formVisibility";
 import type { Step } from "@/forms/types";
 import { courtOrderMaConfig } from "@/pages/forms/court-order-ma/config";
 import { socialSecurityConfig } from "@/pages/forms/social-security/config";
-import type { FieldName, FormData } from "./fields";
+import type { FormData } from "./fields";
 
 /**
  * Function that generates instructions based on form data.
@@ -16,12 +16,10 @@ export type FormInstructionsFn = (data: Partial<FormData>) => string[];
 export interface FormConfig {
   /** Form identifier matching the URL slug */
   slug: string;
-  /** Ordered steps, including optional when rules for conditional inclusion. */
+  /** Ordered steps, including optional `when` rules for conditional inclusion. */
   steps: readonly Step[];
-  /** The XState machine for this form, created from steps. */
+  /** The XState machine for this form. */
   machine: FormMachine;
-  /** Flattened array of all field names, derived from steps. */
-  fields: readonly FieldName[];
   /** PDFs included in this form. Shorthand: id = always included. Object: { id, when? } = conditional. */
   pdfs: readonly PdfEntry[];
   /** Title for the downloaded PDF package */

@@ -3,10 +3,7 @@ import { createActor } from "xstate";
 import { getFormProgress, saveFormProgress } from "@/db/database";
 import { type FormMachine, getPhase } from "@/forms/createFormMachine";
 import { resolveFormVisibility } from "@/forms/formVisibility";
-import {
-  findNextStepIndex,
-  findPrevStepIndex,
-} from "@/forms/stepNavigation";
+import { findNextStepIndex, findPrevStepIndex } from "@/forms/stepNavigation";
 import type { FormMachineContext, FormPhase, Step } from "@/forms/types";
 
 type FormActor = ReturnType<typeof createActor<FormMachine>>;

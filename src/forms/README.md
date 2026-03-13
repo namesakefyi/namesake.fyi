@@ -134,13 +134,8 @@ Restarting a form clears the progress (returning to the title page) but keeps al
 
 ## Submission
 
-Pass `createFormSubmitHandler` to `FormContainer` as the `onSubmit` handler. It collects the current form values, generates the PDFs, and triggers a download. Only fields that were visible to the user (respecting step and field `when` rules) are written to the PDFs.
+`FormContainer` accepts a `config` and wires up `useFormData` and `createFormSubmitHandler` internally. It collects the current form values, generates the PDFs, and triggers a download. Only fields that were visible to the user (respecting step and field `when` rules) are written to the PDFs.
 
 ```ts
-const handleSubmit = createFormSubmitHandler(myFormConfig, form);
-
-<FormContainer
-  ...
-  onSubmit={handleSubmit}
-/>
+<FormContainer config={myFormConfig} title="..." description="..." />
 ```

@@ -3,7 +3,7 @@ import { createFormConfig } from "@/forms/createFormConfig";
 import { makeStep } from "./testHelpers";
 
 describe("createFormConfig", () => {
-  it("derives machine and fields from slug and steps", () => {
+  it("derives machine from slug and steps", () => {
     const steps = [
       makeStep("a", ["oldFirstName" as any]),
       makeStep("b", ["oldLastName" as any]),
@@ -19,7 +19,6 @@ describe("createFormConfig", () => {
 
     expect(config.slug).toBe("test-form");
     expect(config.steps).toBe(steps);
-    expect(config.fields).toEqual(["oldFirstName", "oldLastName"]);
     expect(config.machine).toBeDefined();
   });
 

@@ -1,39 +1,42 @@
+import type { PortableTextProps } from "@portabletext/react";
+import { PortableText } from "@portabletext/react";
+import { RiMegaphoneLine } from "@remixicon/react";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { FormProvider, type UseFormReturn } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
+import { Banner } from "@/components/react/common/Banner";
 import { ProgressCircle } from "@/components/react/common/ProgressCircle";
 import { FormCompleteStep } from "@/components/react/forms/FormCompleteStep";
 import { FormNavigation } from "@/components/react/forms/FormNavigation";
 import { FormReviewStep } from "@/components/react/forms/FormReviewStep";
 import { FormTitleStep } from "@/components/react/forms/FormTitleStep/FormTitleStep";
-import type { FormMachine } from "@/forms/createFormMachine";
+import type { FieldType } from "@/constants/fields";
+import type { FormConfig } from "@/constants/forms";
+import { createFormSubmitHandler } from "@/forms/createFormSubmitHandler";
+import { getFormFields } from "@/forms/formVisibility";
 import type { FormPdfMetadata } from "@/forms/getFormPdfMetadata";
-import type { Step } from "@/forms/types";
+import type { FieldsFromSteps } from "@/forms/types";
+import { useFormData } from "@/forms/useFormData";
 import { useFormState } from "@/forms/useFormState";
 import type { Cost } from "@/utils/formatTotalCosts";
 import { FormStepContext } from "./FormStepContext";
 import "./FormContainer.css";
 
-export interface FormContainerProps {
+type FormDataFromConfig<T extends FormConfig> = {
+  [K in FieldsFromSteps<T["steps"]>]: FieldType<K>;
+};
+
+export interface FormContainerProps<T extends FormConfig = FormConfig> {
+  /** Form configuration. */
+  config: T;
+
   /** The title of the form. */
   title: string;
 
   /** An optional description to provide more context. */
   description?: string;
 
-  /** Children to display on the title step. */
-  children?: React.ReactNode;
-
-  /** Ordered steps, including optional `when` rules for conditional inclusion. */
-  steps: readonly Step[];
-
-  /** The XState machine for this form, created by createFormMachine. */
-  machine: FormMachine;
-
-  /** The form instance from react-hook-form's useForm hook. */
-  form: UseFormReturn<any>;
-
-  /** Submit handler for the final form submission. Can be async. */
-  onSubmit: (e: React.SubmitEvent<HTMLFormElement>) => void | Promise<void>;
+  /** Optional banner content (Portable Text) to display on the title step. */
+  banner?: PortableTextProps["value"];
 
   /** The date the form was last updated. */
   updatedAt?: string;
@@ -45,18 +48,21 @@ export interface FormContainerProps {
   costs?: Cost[];
 }
 
-export function FormContainer({
+export function FormContainer<T extends FormConfig>({
+  config,
   title,
   description,
-  children,
-  steps,
-  machine,
-  form,
-  onSubmit,
+  banner,
   updatedAt,
   pdfs,
   costs,
-}: FormContainerProps) {
+}: FormContainerProps<T>) {
+  const { steps, machine } = config;
+  const form = useFormData<Partial<FormDataFromConfig<T>>>(
+    getFormFields(config.steps),
+  );
+  const onSubmit = createFormSubmitHandler(config, form);
+
   const formSlug = machine.id;
   const {
     isLoading,
@@ -159,7 +165,11 @@ export function FormContainer({
             totalSteps={totalSteps}
             onStart={onStart}
           >
-            {children}
+            {banner && (
+              <Banner icon={RiMegaphoneLine}>
+                <PortableText value={banner} />
+              </Banner>
+            )}
           </FormTitleStep>
         );
       case "filling":
@@ -190,7 +200,7 @@ export function FormContainer({
     updatedAt,
     title,
     description,
-    children,
+    banner,
     totalSteps,
     onStart,
     onSubmit,

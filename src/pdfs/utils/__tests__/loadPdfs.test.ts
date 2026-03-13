@@ -33,10 +33,7 @@ describe("loadPdfs", () => {
       .mockResolvedValueOnce(mockPdf1)
       .mockResolvedValueOnce(mockPdf2);
 
-    const result = await loadPdfs([
-      "test-form-1" as any,
-      "test-form-2" as any,
-    ]);
+    const result = await loadPdfs(["test-form-1" as any, "test-form-2" as any]);
 
     expect(result).toEqual([mockPdf1, mockPdf2]);
     expect(getPdfDefinition).toHaveBeenCalledTimes(2);
@@ -90,9 +87,9 @@ describe("loadPdfs", () => {
       new Error("PDF not found"),
     );
 
-    await expect(
-      loadPdfs(["nonexistent-form" as any]),
-    ).rejects.toThrow("PDF not found");
+    await expect(loadPdfs(["nonexistent-form" as any])).rejects.toThrow(
+      "PDF not found",
+    );
 
     expect(getPdfDefinition).toHaveBeenCalledWith("nonexistent-form");
   });

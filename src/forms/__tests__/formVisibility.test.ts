@@ -130,10 +130,7 @@ describe("resolveFormVisibility", () => {
     });
 
     it.each([
-      [
-        { shouldApplyForFeeWaiver: true },
-        ["affidavit-of-indigency"],
-      ],
+      [{ shouldApplyForFeeWaiver: true }, ["affidavit-of-indigency"]],
       [
         { shouldApplyForFeeWaiver: false },
         [{ id: "affidavit-of-indigency", when: false }],

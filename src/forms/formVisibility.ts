@@ -1,8 +1,8 @@
 import type { FieldName, FormData } from "@/constants/fields";
 import type { PDFId } from "@/constants/pdf";
 import type { Field, Step } from "./types";
-import { evaluateRule } from "./visibilityRules";
 import type { VisibilityRule } from "./visibilityRules";
+import { evaluateRule } from "./visibilityRules";
 
 /** Expanded field entry for iteration: id + optional when */
 type ExpandedField = { id: FieldName; when?: VisibilityRule };
@@ -27,6 +27,11 @@ function expandFields(fields: readonly Field[]): ExpandedField[] {
 /** Extracts all field names from a step's fields array. */
 export function getFieldNames(fields: Step["fields"]): FieldName[] {
   return expandFields(fields).map((e) => e.id);
+}
+
+/** Extracts all field names from form steps. */
+export function getFormFields(steps: readonly Step[]): FieldName[] {
+  return steps.flatMap((s) => getFieldNames(s.fields));
 }
 
 /** Returns the `when` rule for a field name, or undefined if always visible. */

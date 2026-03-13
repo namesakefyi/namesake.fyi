@@ -13,6 +13,26 @@ type ConditionalFieldGroup = {
 /** A field within a step */
 export type Field = FieldName | ConditionalField | ConditionalFieldGroup;
 
+/** Extracts FieldName from a Field. */
+type ExpandField<F> = F extends FieldName
+  ? F
+  : F extends { id: infer I }
+    ? I extends FieldName
+      ? I
+      : never
+    : F extends { ids: infer I }
+      ? I extends readonly (infer X)[]
+        ? X extends FieldName
+          ? X
+          : never
+        : never
+      : never;
+
+/** Extracts all field names from a tuple of steps. Use for form-specific FormData typing. */
+export type FieldsFromSteps<T extends readonly Step[]> = ExpandField<
+  T[number]["fields"][number]
+>;
+
 /**
  * Configuration for a single step in a form flow.
  *
