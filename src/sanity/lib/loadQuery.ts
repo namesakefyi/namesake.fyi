@@ -19,7 +19,6 @@ export async function loadQuery<QueryResponse>({
     params ?? {},
     {
       filterResponse: false,
-      perspective: import.meta.env.DEV ? "previewDrafts" : "published",
     },
   );
 
