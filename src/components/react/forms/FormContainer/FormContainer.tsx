@@ -23,10 +23,10 @@ export interface FormContainerProps {
   /** Children to display on the title step. */
   children?: React.ReactNode;
 
-  /** Ordered steps, including optional guards for conditional inclusion. */
+  /** Ordered steps, including optional when rules for conditional inclusion. */
   steps: readonly Step[];
 
-  /** The XState machine for this form, created by createFormMachine. */
+  /** The XState machine for this form, created by createFormConfig. */
   machine: FormMachine;
 
   /** The form instance from react-hook-form's useForm hook. */

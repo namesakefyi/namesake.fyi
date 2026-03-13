@@ -45,50 +45,45 @@ export const nameStep: Step = {
 
 The `fields` array tells the form which database fields belong to this step. It controls what gets saved, restored, and shown on the review page.
 
-### Conditional steps
+### Conditional logic (`when` rules)
 
-Add a `when` rule to skip a step entirely when a condition isn't met. The step is excluded from the forward and backward flow when its rule evaluates to false.
+Steps, fields, and PDFs can be conditionally shown using `when` rules. Rules are evaluated against current form data. If no rule is provided, the item is always visible.
+
+**Rule syntax:**
+
+| Rule | Example | Meaning |
+|------|---------|---------|
+| `{ field, equals }` | `{ field: "hasUsedOtherName", equals: true }` | Field value equals |
+| `{ field, notEquals }` | `{ field: "isUnhoused", notEquals: true }` | Field value does not equal |
+| `{ field, includes }` | `{ field: "pronouns", includes: "other" }` | String or array includes value |
+| `{ and: [...] }` | `{ and: [rule1, rule2] }` | All rules must pass |
+| `{ or: [...] }` | `{ or: [rule1, rule2] }` | At least one rule must pass |
+
+**Conditional steps:** Add `when` to a step to skip it when the `VisibilityRule` evaluates to false. The step is excluded from navigation, review, and PDF output.
 
 ```ts
-export const feeWaiverDocumentsStep: Step = {
-  id: "fee-waiver-documents",
-  title: "Upload your fee waiver documents",
+export const feeWaiverStep: Step = {
+  id: "fee-waiver",
+  title: "Upload fee waiver documents",
   fields: ["reasonToWaivePublication"],
   when: { field: "shouldApplyForFeeWaiver", equals: true },
-  component: ({ stepConfig }) => (
-    <FormStep stepConfig={stepConfig}>
-      ...
-    </FormStep>
-  ),
+  component: ({ stepConfig }) => <FormStep stepConfig={stepConfig}>...</FormStep>,
 };
 ```
 
-### Field visibility
-
-Use the object form of `fields` with a `when` rule for follow-up questions that only apply given a previous answer. Fields that are not visible are excluded from the review table and PDF output.
-
-In the component, call `useFieldVisible(stepConfig, fieldName)` to get a reactive boolean for showing or hiding that field:
+**Conditional fields:** Use `{ name, when }` in the `fields` array for follow-up questions. In the component, use `useFieldVisible(stepConfig, fieldName)` to show/hide the UI.
 
 ```ts
-export const otherNamesStep: Step = {
-  id: "other-names",
-  fields: [
-    "hasUsedOtherNameOrAlias",
-    { name: "otherNamesOrAliases", when: { field: "hasUsedOtherNameOrAlias", equals: true } },
-  ],
-  component: ({ stepConfig }) => {
-    const otherNamesVisible = useFieldVisible(stepConfig, "otherNamesOrAliases");
-    return (
-      <FormStep stepConfig={stepConfig}>
-        <YesNoField name="hasUsedOtherNameOrAlias" ... />
-        <FormSubsection isVisible={otherNamesVisible}>
-          <LongTextField name="otherNamesOrAliases" ... />
-        </FormSubsection>
-      </FormStep>
-    );
-  },
-};
+fields: [
+  "hasUsedOtherNameOrAlias",
+  { name: "otherNamesOrAliases", when: { field: "hasUsedOtherNameOrAlias", equals: true } },
+],
+// In component:
+const otherNamesVisible = useFieldVisible(stepConfig, "otherNamesOrAliases");
+<FormSubsection isVisible={otherNamesVisible}>...</FormSubsection>
 ```
+
+**Conditional PDFs:** Use `{ pdfId, when }` in the form config's `pdfs` array to include a PDF in the final downloaded packet only when the rule passes.
 
 ## Form phases
 
