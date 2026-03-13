@@ -45,15 +45,15 @@ function renderWithValues(
 const nameStep: Step = {
   id: "legal-name",
   title: "Legal Name",
-  component: () => null,
   fields: ["oldFirstName", "oldLastName"],
+  component: () => null,
 };
 
 const contactStep: Step = {
   id: "contact",
   title: "Contact",
-  component: () => null,
   fields: ["phoneNumber"],
+  component: () => null,
 };
 
 describe("FormReviewTable", () => {
@@ -125,8 +125,8 @@ describe("FormReviewTable", () => {
 
   it("skips steps where all fields are hidden by 'when' rules", () => {
     const hiddenStep: Step = {
-      ...nameStep,
       id: "hidden-step",
+      title: "Hidden Step",
       fields: [
         {
           name: "oldFirstName",
@@ -137,6 +137,7 @@ describe("FormReviewTable", () => {
           when: { field: "hasUsedOtherNameOrAlias", equals: true },
         },
       ],
+      component: () => null,
     };
 
     renderWithValues(<FormReviewTable steps={[hiddenStep, contactStep]} />, {

@@ -19,9 +19,6 @@ import { useId } from "react";
 /**
  * Returns whether a specific field should be visible within a step, based on
  * the step's field `when` rules and the current live form values.
- *
- * Using this hook in step components ensures that rendering and the review/PDF
- * resolution both derive from the same declarative rules on the Step config.
  */
 export function useFieldVisible(
   stepConfig: Step,

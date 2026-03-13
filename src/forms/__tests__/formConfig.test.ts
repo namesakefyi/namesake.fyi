@@ -5,22 +5,14 @@ import {
   createFormMachine,
   fieldsFromSteps,
   getPhase,
-  step,
 } from "@/forms/formConfig";
 import { makeStep } from "./testHelpers";
-
-describe("step", () => {
-  it("returns the config unchanged", () => {
-    const config = makeStep("a", ["oldFirstName" as any]);
-    expect(step(config)).toBe(config);
-  });
-});
 
 describe("fieldsFromSteps", () => {
   it("flattens all field names from all steps", () => {
     const steps = [
-      step(makeStep("a", ["oldFirstName", "oldLastName"])),
-      step(makeStep("b", ["phoneNumber"])),
+      makeStep("a", ["oldFirstName", "oldLastName"]),
+      makeStep("b", ["phoneNumber"]),
     ];
     expect(fieldsFromSteps(steps)).toEqual([
       "oldFirstName",
@@ -37,8 +29,8 @@ describe("fieldsFromSteps", () => {
 describe("createFormConfig", () => {
   it("derives machine and fields from slug and steps", () => {
     const steps = [
-      step(makeStep("a", ["oldFirstName" as any])),
-      step(makeStep("b", ["oldLastName" as any])),
+      makeStep("a", ["oldFirstName" as any]),
+      makeStep("b", ["oldLastName" as any]),
     ];
 
     const config = createFormConfig({
@@ -56,7 +48,7 @@ describe("createFormConfig", () => {
   });
 
   it("passes through extra properties", () => {
-    const steps = [step(makeStep("a"))];
+    const steps = [makeStep("a")];
     const instructionsFn = () => ["Do a thing"];
 
     const config = createFormConfig({
@@ -74,9 +66,9 @@ describe("createFormConfig", () => {
 describe("createFormMachine", () => {
   describe("linear flow", () => {
     const flow = [
-      step(makeStep("a")),
-      step(makeStep("b")),
-      step(makeStep("c")),
+      makeStep("a"),
+      makeStep("b"),
+      makeStep("c"),
     ];
     const machine = createFormMachine({ id: "test-linear", steps: flow });
 
@@ -127,7 +119,7 @@ describe("createFormMachine", () => {
   });
 
   describe("review-edit flow", () => {
-    const flow = [step(makeStep("a")), step(makeStep("b"))];
+    const flow = [makeStep("a"), makeStep("b")];
     const machine = createFormMachine({ id: "test-review", steps: flow });
 
     it("EDIT_STEP from review transitions to editing with stepId in context", () => {
@@ -166,7 +158,7 @@ describe("createFormMachine", () => {
   });
 
   describe("submission flow", () => {
-    const flow = [step(makeStep("a"))];
+    const flow = [makeStep("a")];
     const machine = createFormMachine({ id: "test-submit", steps: flow });
 
     it("SUBMIT from review transitions to submitting", () => {

@@ -1,4 +1,4 @@
-import { createFormConfig, step } from "@/forms/formConfig";
+import { createFormConfig } from "@/forms/formConfig";
 import { addressStep } from "./_steps/AddressStep";
 import { birthplaceStep } from "./_steps/BirthplaceStep";
 import { contactInfoStep } from "./_steps/ContactInfoStep";
@@ -17,20 +17,20 @@ import { returnDocumentsStep } from "./_steps/ReturnDocumentsStep";
 export const courtOrderMaConfig = createFormConfig({
   slug: "court-order-ma",
   steps: [
-    step(newNameStep),
-    step(currentNameStep),
-    step(reasonStep),
-    step(contactInfoStep),
-    step(birthplaceStep),
-    step(dateOfBirthStep),
-    step(addressStep),
-    step(previousNameChangeStep),
-    step(otherNamesStep),
-    step(interpreterStep),
-    step(pronounsStep),
-    step(returnDocumentsStep),
-    step(feeWaiverStep),
-    step(mothersMaidenNameStep),
+    newNameStep,
+    currentNameStep,
+    reasonStep,
+    contactInfoStep,
+    birthplaceStep,
+    dateOfBirthStep,
+    addressStep,
+    previousNameChangeStep,
+    otherNamesStep,
+    interpreterStep,
+    pronounsStep,
+    returnDocumentsStep,
+    feeWaiverStep,
+    mothersMaidenNameStep,
   ],
   pdfs: [
     "cjp27-petition-to-change-name-of-adult",

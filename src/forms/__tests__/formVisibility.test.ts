@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-import { step } from "@/forms/formConfig";
 import {
   evaluateRule,
   resolveFormVisibility,
@@ -140,7 +139,7 @@ describe("evaluateRule", () => {
 describe("resolveFormVisibility", () => {
   describe("steps (visibleStepIds)", () => {
     it("returns all step IDs when no step when rules", () => {
-      const flow = [step(makeStep("a")), step(makeStep("b"))];
+      const flow = [makeStep("a"), makeStep("b")];
       const result = resolveFormVisibility(flow, {});
       expect(result.visibleStepIds).toEqual(["a", "b"]);
       expect(result.sections).toEqual([
@@ -151,9 +150,9 @@ describe("resolveFormVisibility", () => {
 
     it("filters out steps whose when rule evaluates to false", () => {
       const flow = [
-        step(makeStep("a")),
-        step(makeStep("b", [], { or: [] })),
-        step(makeStep("c")),
+        makeStep("a"),
+        makeStep("b", [], { or: [] }),
+        makeStep("c"),
       ];
       const result = resolveFormVisibility(flow, {});
       expect(result.visibleStepIds).toEqual(["a", "c"]);
@@ -168,13 +167,11 @@ describe("resolveFormVisibility", () => {
       [{ shouldApplyForFeeWaiver: false }, ["a"]],
     ] as const)("evaluates when rule with formData (formData=%o -> %s)", (formData, expected) => {
       const flow = [
-        step(makeStep("a")),
-        step(
-          makeStep("b", [], {
-            field: "shouldApplyForFeeWaiver",
-            equals: true,
-          }),
-        ),
+        makeStep("a"),
+        makeStep("b", [], {
+          field: "shouldApplyForFeeWaiver",
+          equals: true,
+        }),
       ];
       expect(resolveFormVisibility(flow, formData).visibleStepIds).toEqual(
         expected,
@@ -191,8 +188,8 @@ describe("resolveFormVisibility", () => {
   describe("fields (visibleFields)", () => {
     it("includes all field values when no field when rules", () => {
       const flow = [
-        step(makeStep("a", ["oldFirstName", "oldLastName"])),
-        step(makeStep("b", ["phoneNumber"])),
+        makeStep("a", ["oldFirstName", "oldLastName"]),
+        makeStep("b", ["phoneNumber"]),
       ];
       const formData = {
         oldFirstName: "x",
@@ -228,7 +225,7 @@ describe("resolveFormVisibility", () => {
           when: { field: "hasUsedOtherNameOrAlias", equals: true },
         },
       ]);
-      const flow = [step(stepWithVisibility)];
+      const flow = [stepWithVisibility];
       expect(resolveFormVisibility(flow, formData).visibleFields).toEqual(
         expected,
       );
@@ -236,8 +233,8 @@ describe("resolveFormVisibility", () => {
 
     it("excludes all fields when step when rule fails", () => {
       const flow = [
-        step(makeStep("a", ["oldFirstName"])),
-        step(makeStep("b", ["oldLastName"], { or: [] })),
+        makeStep("a", ["oldFirstName"]),
+        makeStep("b", ["oldLastName"], { or: [] }),
       ];
       const formData = { oldFirstName: "x", oldLastName: "y" };
       const result = resolveFormVisibility(flow, formData);
@@ -300,8 +297,8 @@ describe("resolveFormVisibility", () => {
         equals: true,
       });
       const flow = [
-        step(makeStep("intro", ["newFirstName"])),
-        step(guardedStep),
+        makeStep("intro", ["newFirstName"]),
+        guardedStep,
       ];
       const pdfs = [
         "cjp27-petition-to-change-name-of-adult",

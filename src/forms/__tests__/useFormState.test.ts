@@ -10,7 +10,7 @@ import {
 } from "vitest";
 import { createActor } from "xstate";
 import * as db from "@/db/database";
-import { createFormMachine, step } from "@/forms/formConfig";
+import { createFormMachine } from "@/forms/formConfig";
 import { useFormState } from "../useFormState";
 import { makeStep } from "./testHelpers";
 
@@ -19,7 +19,7 @@ vi.mock("@/db/database", () => ({
   saveFormProgress: vi.fn(),
 }));
 
-const flow = [step(makeStep("a")), step(makeStep("b"))];
+const flow = [makeStep("a"), makeStep("b")];
 const machine = createFormMachine({ id: "test-form", steps: flow });
 
 const getFormData = () => ({});
@@ -218,7 +218,7 @@ describe("useFormState", () => {
 
   describe("persisting complete state", () => {
     it("persists the complete state so the user returns to the completion page", async () => {
-      const singleFlow = [step(makeStep("only"))];
+      const singleFlow = [makeStep("only")];
       const singleMachine = createFormMachine({
         id: "complete-test",
         steps: singleFlow,
@@ -297,7 +297,7 @@ describe("useFormState", () => {
     });
 
     it("goNext goes directly to review from a single-step flow (isLastStep = true)", async () => {
-      const singleFlow = [step(makeStep("only"))];
+      const singleFlow = [makeStep("only")];
       const singleMachine = createFormMachine({
         id: "single-step",
         steps: singleFlow,
@@ -386,9 +386,9 @@ describe("useFormState", () => {
 
     it("goNext skips steps whose when rule evaluates to false", async () => {
       const guardedFlow = [
-        step(makeStep("a")),
-        step(makeStep("b", [], { or: [] })),
-        step(makeStep("c")),
+        makeStep("a"),
+        makeStep("b", [], { or: [] }),
+        makeStep("c"),
       ];
       const guardedMachine = createFormMachine({
         id: "guarded",

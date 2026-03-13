@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { useForm } from "react-hook-form";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import * as db from "@/db/database";
-import { createFormMachine, step } from "@/forms/formConfig";
+import { createFormMachine } from "@/forms/formConfig";
 import type { Step } from "@/forms/types";
 import { FormStep } from "../FormStep/FormStep";
 import { FormContainer } from "./FormContainer";
@@ -31,10 +31,10 @@ const formStepStep: Step = {
   component: ({ stepConfig }) => <FormStep stepConfig={stepConfig} />,
 };
 
-const plainFlow = [step(plainStep)];
+const plainFlow = [plainStep];
 const plainMachine = createFormMachine({ id: "test-plain", steps: plainFlow });
 
-const formStepFlow = [step(formStepStep)];
+const formStepFlow = [formStepStep];
 const formStepMachine = createFormMachine({
   id: "test-form-step",
   steps: formStepFlow,

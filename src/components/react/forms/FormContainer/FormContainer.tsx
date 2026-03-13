@@ -26,7 +26,7 @@ export interface FormContainerProps {
   /** Ordered steps, including optional `when` rules for conditional inclusion. */
   steps: readonly Step[];
 
-  /** The XState machine for this form, created by createFormConfig. */
+  /** The XState machine for this form, created by createFormMachine. */
   machine: FormMachine;
 
   /** The form instance from react-hook-form's useForm hook. */

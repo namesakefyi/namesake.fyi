@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-import { step } from "@/forms/formConfig";
 import type { VisibilityRule } from "@/forms/formVisibility";
 import { findNextStepIndex, findPrevStepIndex } from "@/forms/formVisibility";
 import { makeStep } from "./testHelpers";
@@ -11,9 +10,9 @@ const whenFeeWaiver = {
 } satisfies VisibilityRule;
 
 const unguarded = [
-  step(makeStep("a")),
-  step(makeStep("b")),
-  step(makeStep("c")),
+  makeStep("a"),
+  makeStep("b"),
+  makeStep("c"),
 ];
 const allVisible = ["a", "b", "c"];
 
@@ -29,9 +28,9 @@ describe("findNextStepIndex", () => {
 
   it("skips steps not in visibleStepIds", () => {
     const flow = [
-      step(makeStep("a")),
-      step(makeStep("b", [], hidden)),
-      step(makeStep("c")),
+      makeStep("a"),
+      makeStep("b", [], hidden),
+      makeStep("c"),
     ];
     const visibleStepIds = ["a", "c"];
     expect(findNextStepIndex(flow, 0, visibleStepIds)).toBe(2);
@@ -39,16 +38,16 @@ describe("findNextStepIndex", () => {
 
   it("returns -1 when all remaining steps are not visible", () => {
     const flow = [
-      step(makeStep("a")),
-      step(makeStep("b", [], hidden)),
-      step(makeStep("c", [], hidden)),
+      makeStep("a"),
+      makeStep("b", [], hidden),
+      makeStep("c", [], hidden),
     ];
     const visibleStepIds = ["a"];
     expect(findNextStepIndex(flow, 0, visibleStepIds)).toBe(-1);
   });
 
   it("works with visibleStepIds from resolveFormVisibility", () => {
-    const flow = [step(makeStep("a")), step(makeStep("b", [], whenFeeWaiver))];
+    const flow = [makeStep("a"), makeStep("b", [], whenFeeWaiver)];
     const visibleWhenFeeWaiver = ["a", "b"];
     const visibleWithoutFeeWaiver = ["a"];
     expect(findNextStepIndex(flow, 0, visibleWhenFeeWaiver)).toBe(1);
@@ -68,9 +67,9 @@ describe("findPrevStepIndex", () => {
 
   it("skips steps not in visibleStepIds", () => {
     const flow = [
-      step(makeStep("a")),
-      step(makeStep("b", [], hidden)),
-      step(makeStep("c")),
+      makeStep("a"),
+      makeStep("b", [], hidden),
+      makeStep("c"),
     ];
     const visibleStepIds = ["a", "c"];
     expect(findPrevStepIndex(flow, 2, visibleStepIds)).toBe(0);
@@ -78,16 +77,16 @@ describe("findPrevStepIndex", () => {
 
   it("returns -1 when all preceding steps are not visible", () => {
     const flow = [
-      step(makeStep("a", [], hidden)),
-      step(makeStep("b", [], hidden)),
-      step(makeStep("c")),
+      makeStep("a", [], hidden),
+      makeStep("b", [], hidden),
+      makeStep("c"),
     ];
     const visibleStepIds = ["c"];
     expect(findPrevStepIndex(flow, 2, visibleStepIds)).toBe(-1);
   });
 
   it("works with visibleStepIds from resolveFormVisibility", () => {
-    const flow = [step(makeStep("a", [], whenFeeWaiver)), step(makeStep("b"))];
+    const flow = [makeStep("a", [], whenFeeWaiver), makeStep("b")];
     const visibleWhenFeeWaiver = ["a", "b"];
     const visibleWithoutFeeWaiver = ["b"];
     expect(findPrevStepIndex(flow, 1, visibleWhenFeeWaiver)).toBe(0);

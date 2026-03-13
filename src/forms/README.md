@@ -8,13 +8,13 @@ Use `createFormConfig` to declare a form. Provide a slug, an ordered list of ste
 
 ```ts
 // src/pages/forms/my-form/config.ts
-import { createFormConfig, step } from "@/forms/formConfig";
+import { createFormConfig } from "@/forms/formConfig";
 import { nameStep } from "./_steps/NameStep";
 import { addressStep } from "./_steps/AddressStep";
 
 export const myFormConfig = createFormConfig({
   slug: "my-form",
-  steps: [step(nameStep), step(addressStep)],
+  steps: [nameStep, addressStep],
   pdfs: [{ pdfId: "my-form-pdf" }],
   downloadTitle: "My Form",
 });
