@@ -27,7 +27,7 @@ export const filingForSomeoneElseStep: Step = {
       },
     },
   ],
-  component: ({ stepConfig }) => {
+  render: ({ stepConfig }) => {
     const relationshipVisible = useFieldVisible(
       stepConfig,
       "relationshipToFilingFor",

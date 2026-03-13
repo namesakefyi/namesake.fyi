@@ -20,7 +20,7 @@ export const otherNamesStep: Step = {
       when: { field: "hasUsedOtherNameOrAlias", equals: true },
     },
   ],
-  component: ({ stepConfig }) => {
+  render: ({ stepConfig }) => {
     const otherNamesVisible = useFieldVisible(
       stepConfig,
       "otherNamesOrAliases",

@@ -35,7 +35,7 @@ function TestWrapper({ children }: { children: ReactNode }) {
 describe("FormStep", () => {
   const formStep: Step = {
     id: "what-is-your-legal-name",
-    component: () => <div>Test content</div>,
+    render: () => <div>Test content</div>,
     title: "What is your legal name?",
     description: "Type your name exactly as it appears on your ID.",
     fields: [],
@@ -173,7 +173,7 @@ describe("useFieldVisible", () => {
     id: "name",
     title: "Name",
     fields: ["middleName" as any],
-    component: () => null,
+    render: () => null,
   };
 
   it("returns true when field has no when rule", () => {

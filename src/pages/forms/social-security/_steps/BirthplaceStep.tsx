@@ -16,7 +16,7 @@ export const birthplaceStep: Step = {
       when: { field: "birthplaceCountry", equals: "US" },
     },
   ],
-  component: ({ stepConfig }) => {
+  render: ({ stepConfig }) => {
     const stateVisible = useFieldVisible(stepConfig, "birthplaceState");
     return (
       <FormStep stepConfig={stepConfig}>

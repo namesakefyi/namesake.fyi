@@ -22,7 +22,7 @@ export const myFormConfig = createFormConfig({
 
 ### Defining a step
 
-Each step is a `Step` object with an id, title, the fields it collects, and a React component:
+Each step is a `Step` object with an id, title, the fields it collects, and a render function:
 
 ```ts
 // src/pages/forms/my-form/_steps/NameStep.tsx
@@ -34,7 +34,7 @@ export const nameStep: Step = {
   id: "name",
   title: "What is your name?",
   fields: ["newFirstName", "newLastName"],
-  component: ({ stepConfig }) => (
+  render: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>
       <ShortTextField name="newFirstName" label="First name" />
       <ShortTextField name="newLastName" label="Last name" />
@@ -67,11 +67,11 @@ export const feeWaiverStep: Step = {
   title: "Upload fee waiver documents",
   fields: ["reasonToWaivePublication"],
   when: { field: "shouldApplyForFeeWaiver", equals: true },
-  component: ({ stepConfig }) => <FormStep stepConfig={stepConfig}>...</FormStep>,
+  render: ({ stepConfig }) => <FormStep stepConfig={stepConfig}>...</FormStep>,
 };
 ```
 
-**Conditional fields:** Use `{ name, when }` in the `fields` array for follow-up questions. In the component, use `useFieldVisible(stepConfig, fieldName)` to show/hide the UI.
+**Conditional fields:** Use `{ name, when }` (single) or `{ names, when }` (multiple sharing one rule) in the `fields` array. `when` is required. In the component, use `useFieldVisible(stepConfig, fieldName)` to show/hide the UI.
 
 ```ts
 fields: [

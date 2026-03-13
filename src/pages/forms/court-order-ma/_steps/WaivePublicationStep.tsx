@@ -20,7 +20,7 @@ export const waivePublicationStep: Step = {
       when: { field: "shouldWaivePublicationRequirement", equals: true },
     },
   ],
-  component: ({ stepConfig }) => {
+  render: ({ stepConfig }) => {
     const reasonVisible = useFieldVisible(
       stepConfig,
       "reasonToWaivePublication",

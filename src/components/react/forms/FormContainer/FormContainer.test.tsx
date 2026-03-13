@@ -20,7 +20,7 @@ const plainStep: Step = {
   id: "plain",
   title: "Plain Step",
   fields: [],
-  component: () => <div>Step content</div>,
+  render: () => <div>Step content</div>,
 };
 
 // A step whose component renders a FormStep, exposing a submittable form.
@@ -28,7 +28,7 @@ const formStepStep: Step = {
   id: "form-step",
   title: "Form Step",
   fields: [],
-  component: ({ stepConfig }) => <FormStep stepConfig={stepConfig} />,
+  render: ({ stepConfig }) => <FormStep stepConfig={stepConfig} />,
 };
 
 const plainFlow = [plainStep];

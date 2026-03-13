@@ -8,7 +8,7 @@ export const oldNameStep: Step = {
   description:
     "This is the name that appears on your original birth certificate.",
   fields: ["oldFirstName", "oldMiddleName", "oldLastName"],
-  component: ({ stepConfig }) => (
+  render: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>
       <NameField type="oldName" />
     </FormStep>

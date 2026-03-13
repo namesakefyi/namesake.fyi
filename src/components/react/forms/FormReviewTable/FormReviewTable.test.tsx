@@ -46,14 +46,14 @@ const nameStep: Step = {
   id: "legal-name",
   title: "Legal Name",
   fields: ["oldFirstName", "oldLastName"],
-  component: () => null,
+  render: () => null,
 };
 
 const contactStep: Step = {
   id: "contact",
   title: "Contact",
   fields: ["phoneNumber"],
-  component: () => null,
+  render: () => null,
 };
 
 describe("FormReviewTable", () => {
@@ -137,7 +137,7 @@ describe("FormReviewTable", () => {
           when: { field: "hasUsedOtherNameOrAlias", equals: true },
         },
       ],
-      component: () => null,
+      render: () => null,
     };
 
     renderWithValues(<FormReviewTable steps={[hiddenStep, contactStep]} />, {

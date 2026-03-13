@@ -9,7 +9,7 @@ export const mothersMaidenNameStep: Step = {
   description:
     "The court requests this information in order to look up past court records and verify your identity.",
   fields: ["mothersMaidenName"],
-  component: ({ stepConfig }) => (
+  render: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>
       <ShortTextField name="mothersMaidenName" label="Mother's maiden name" />
       <Banner variant="info">

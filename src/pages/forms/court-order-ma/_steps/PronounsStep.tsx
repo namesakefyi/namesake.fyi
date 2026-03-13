@@ -21,7 +21,7 @@ export const pronounsStep: Step = {
       when: { field: "pronouns", includes: "other" },
     },
   ],
-  component: ({ stepConfig }) => {
+  render: ({ stepConfig }) => {
     const pronounsVisible = useFieldVisible(stepConfig, "pronouns");
     return (
       <FormStep stepConfig={stepConfig}>

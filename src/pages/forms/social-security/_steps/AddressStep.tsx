@@ -12,7 +12,7 @@ export const addressStep: Step = {
     "mailingState",
     "mailingZipCode",
   ],
-  component: ({ stepConfig }) => (
+  render: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>
       <AddressField type="mailing" />
     </FormStep>

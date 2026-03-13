@@ -8,7 +8,7 @@ export const currentNameStep: Step = {
   description:
     "This is the name you're leaving behind. Type it exactly as it appears on your ID.",
   fields: ["oldFirstName", "oldMiddleName", "oldLastName"],
-  component: ({ stepConfig }) => (
+  render: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>
       <NameField type="oldName" />
     </FormStep>

@@ -7,7 +7,7 @@ export const reasonStep: Step = {
   id: "reason",
   title: "What is the reason you're changing your name?",
   fields: ["reasonForChangingName"],
-  component: ({ stepConfig }) => (
+  render: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>
       <LongTextField
         name="reasonForChangingName"

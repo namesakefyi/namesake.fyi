@@ -1,6 +1,6 @@
 import type { FieldName, FormData } from "@/constants/fields";
 import type { PDFId } from "@/constants/pdf";
-import type { Step } from "./types";
+import type { Field, Step } from "./types";
 
 type EqualsRule = {
   [K in FieldName]: { field: K; equals: FormData[K] };
@@ -68,24 +68,39 @@ export function isVisibleWhen(
   return !when || evaluateRule(when, data);
 }
 
-/** Multiple fields sharing the same `when` rule. */
-export function condAll(
-  when: VisibilityRule,
-  ...names: FieldName[]
-): { name: FieldName; when: VisibilityRule }[] {
-  return names.map((name) => ({ name, when }));
+/** Expanded field entry for iteration: name + optional when */
+type ExpandedField = { name: FieldName; when?: VisibilityRule };
+
+/** Expands fields to a flat list of { name, when } for iteration. */
+function expandFields(fields: readonly Field[]): ExpandedField[] {
+  const result: ExpandedField[] = [];
+  for (const f of fields) {
+    if (typeof f === "string") {
+      result.push({ name: f });
+    } else if ("name" in f) {
+      result.push({ name: f.name, when: f.when });
+    } else {
+      for (const name of f.names) {
+        result.push({ name, when: f.when });
+      }
+    }
+  }
+  return result;
 }
 
 /** Extracts all field names from a step's fields array. */
 export function getFieldNames(fields: Step["fields"]): FieldName[] {
-  return fields.map((f) => (typeof f === "string" ? f : f.name));
+  return expandFields(fields).map((e) => e.name);
 }
 
-/** Returns the `when` rule for a field entry, or undefined if always visible. */
+/** Returns the `when` rule for a field name, or undefined if always visible. */
 export function getFieldWhen(
-  field: Step["fields"][number],
+  fields: readonly Field[],
+  fieldName: FieldName,
 ): VisibilityRule | undefined {
-  return typeof field === "object" ? field.when : undefined;
+  const expanded = expandFields(fields);
+  const entry = expanded.find((e) => e.name === fieldName);
+  return entry?.when;
 }
 
 /** PDF entry: shorthand (pdfId alone) or object with optional `when` rule */
@@ -149,11 +164,8 @@ export function resolveFormVisibility(
     visibleStepIds.push(step.id);
 
     const visibleFieldNames: FieldName[] = [];
-    const fieldNames = getFieldNames(step.fields);
-    for (let i = 0; i < fieldNames.length; i++) {
-      const fieldName = fieldNames[i] as FieldName;
-      const fieldEntry = step.fields[i];
-      const fieldWhen = getFieldWhen(fieldEntry);
+    const expanded = expandFields(step.fields);
+    for (const { name: fieldName, when: fieldWhen } of expanded) {
       if (isVisibleWhen(fieldWhen, formData)) {
         (visibleFields as Record<string, unknown>)[fieldName] =
           formData[fieldName];

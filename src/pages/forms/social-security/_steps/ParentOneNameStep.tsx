@@ -8,7 +8,7 @@ export const parentOneNameStep: Step = {
   description:
     "Use your parent's name at their birth, before marriage. This is also known as a maiden name.",
   fields: ["mothersFirstName", "mothersMiddleName", "mothersLastName"],
-  component: ({ stepConfig }) => (
+  render: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>
       <NameField type="mothersName" />
     </FormStep>

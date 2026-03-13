@@ -9,7 +9,7 @@ export const contactInfoStep: Step = {
   description:
     "The court uses this to communicate with you about your filing status.",
   fields: ["phoneNumber", "email"],
-  component: ({ stepConfig }) => (
+  render: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>
       <PhoneField name="phoneNumber" />
       <EmailField name="email" />

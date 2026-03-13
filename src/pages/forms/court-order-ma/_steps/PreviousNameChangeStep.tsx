@@ -7,7 +7,6 @@ import { LongTextField } from "@/components/react/forms/LongTextField";
 import { ShortTextField } from "@/components/react/forms/ShortTextField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
 import type { VisibilityRule } from "@/forms/formVisibility";
-import { condAll } from "@/forms/formVisibility";
 import type { Step } from "@/forms/types";
 
 const whenHasPrevious: VisibilityRule = {
@@ -20,14 +19,12 @@ export const previousNameChangeStep: Step = {
   title: "Have you ever changed your name before?",
   fields: [
     "hasPreviousNameChange",
-    ...condAll(
-      whenHasPrevious,
-      "previousNameFrom",
-      "previousNameTo",
-      "previousNameReason",
-    ),
+    {
+      names: ["previousNameFrom", "previousNameTo", "previousNameReason"],
+      when: whenHasPrevious,
+    },
   ],
-  component: ({ stepConfig }) => {
+  render: ({ stepConfig }) => {
     const previousNameVisible = useFieldVisible(stepConfig, "previousNameFrom");
     return (
       <FormStep stepConfig={stepConfig}>

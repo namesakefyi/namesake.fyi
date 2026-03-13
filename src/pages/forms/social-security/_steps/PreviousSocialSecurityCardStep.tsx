@@ -6,13 +6,12 @@ import {
 import { NameField } from "@/components/react/forms/NameField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
 import type { VisibilityRule } from "@/forms/formVisibility";
-import { condAll } from "@/forms/formVisibility";
 import type { Step } from "@/forms/types";
 
-const whenHasPreviousCard = {
+const whenHasPreviousCard: VisibilityRule = {
   field: "hasPreviousSocialSecurityCard",
   equals: true,
-} satisfies VisibilityRule;
+};
 
 export const previousSocialSecurityCardStep: Step = {
   id: "previous-social-security-card",
@@ -21,14 +20,16 @@ export const previousSocialSecurityCardStep: Step = {
     "Or, have you ever filed for a Social Security number in the past?",
   fields: [
     "hasPreviousSocialSecurityCard",
-    ...condAll(
-      whenHasPreviousCard,
-      "previousSocialSecurityCardFirstName",
-      "previousSocialSecurityCardMiddleName",
-      "previousSocialSecurityCardLastName",
-    ),
+    {
+      names: [
+        "previousSocialSecurityCardFirstName",
+        "previousSocialSecurityCardMiddleName",
+        "previousSocialSecurityCardLastName",
+      ],
+      when: whenHasPreviousCard,
+    },
   ],
-  component: ({ stepConfig }) => {
+  render: ({ stepConfig }) => {
     const previousCardVisible = useFieldVisible(
       stepConfig,
       "previousSocialSecurityCardFirstName",

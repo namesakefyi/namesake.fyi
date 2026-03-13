@@ -3,14 +3,18 @@ import type { Step } from "@/forms/types";
 
 export function makeStep(
   id: string,
-  fields: (string | { name: string; when?: VisibilityRule })[] = [],
+  fields: (
+    | string
+    | { name: string; when: VisibilityRule }
+    | { names: readonly string[]; when: VisibilityRule }
+  )[] = [],
   when?: VisibilityRule,
 ): Step {
   return {
     id,
     title: `Step ${id}`,
     fields: fields as Step["fields"],
-    component: () => null,
+    render: () => null,
     ...(when !== undefined && { when }),
   };
 }

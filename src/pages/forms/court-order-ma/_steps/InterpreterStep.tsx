@@ -16,7 +16,7 @@ export const interpreterStep: Step = {
     "isInterpreterNeeded",
     { name: "language", when: { field: "isInterpreterNeeded", equals: true } },
   ],
-  component: ({ stepConfig }) => {
+  render: ({ stepConfig }) => {
     const languageVisible = useFieldVisible(stepConfig, "language");
     return (
       <FormStep stepConfig={stepConfig}>

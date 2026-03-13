@@ -9,7 +9,7 @@ export const ethnicityStep: Step = {
   description:
     "This response is optional and does not affect your application. The Social Security Administration requests this information for research and statistical purposes.",
   fields: ["isHispanicOrLatino"],
-  component: ({ stepConfig }) => (
+  render: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>
       <YesNoField
         name="isHispanicOrLatino"

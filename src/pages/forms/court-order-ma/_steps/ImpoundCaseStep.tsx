@@ -20,7 +20,7 @@ export const impoundCaseStep: Step = {
       when: { field: "shouldImpoundCourtRecords", equals: true },
     },
   ],
-  component: ({ stepConfig }) => {
+  render: ({ stepConfig }) => {
     const reasonVisible = useFieldVisible(
       stepConfig,
       "reasonToImpoundCourtRecords",

@@ -27,10 +27,8 @@ export function useFieldVisible(
   const form = useFormContext();
   const data = form.watch() as FormData;
   const fieldNames = getFieldNames(stepConfig.fields);
-  const idx = fieldNames.indexOf(fieldName);
-  if (idx === -1) return false;
-  const fieldEntry = stepConfig.fields[idx];
-  const fieldWhen = getFieldWhen(fieldEntry);
+  if (!fieldNames.includes(fieldName)) return false;
+  const fieldWhen = getFieldWhen(stepConfig.fields, fieldName);
   return isVisibleWhen(fieldWhen, data);
 }
 

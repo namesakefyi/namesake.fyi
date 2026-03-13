@@ -17,7 +17,7 @@ export const previousNamesStep: Step = {
       when: { field: "hasOtherLegalNames", equals: true },
     },
   ],
-  component: ({ stepConfig }) => {
+  render: ({ stepConfig }) => {
     const previousNamesVisible = useFieldVisible(
       stepConfig,
       "previousLegalNames",

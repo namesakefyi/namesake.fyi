@@ -165,7 +165,7 @@ export function FormContainer({
       case "filling":
       case "editing": {
         if (!activeStep) return null;
-        const StepComponent = activeStep.component;
+        const StepComponent = activeStep.render;
         return <StepComponent stepConfig={activeStep} />;
       }
       case "review":

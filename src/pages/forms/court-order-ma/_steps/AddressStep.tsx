@@ -7,7 +7,6 @@ import {
   useFieldVisible,
 } from "@/components/react/forms/FormStep";
 import type { VisibilityRule } from "@/forms/formVisibility";
-import { condAll } from "@/forms/formVisibility";
 import type { Step } from "@/forms/types";
 
 const whenNotUnhoused: VisibilityRule = {
@@ -21,31 +20,36 @@ const whenMailing: VisibilityRule = {
   ],
 };
 
-const residenceFields = condAll(
-  whenNotUnhoused,
-  "residenceStreetAddress",
-  "residenceCity",
-  "residenceCounty",
-  "residenceState",
-  "residenceZipCode",
-  "isMailingAddressDifferentFromResidence",
-);
-const mailingFields = condAll(
-  whenMailing,
-  "mailingStreetAddress",
-  "mailingCity",
-  "mailingCounty",
-  "mailingState",
-  "mailingZipCode",
-);
-
 export const addressStep: Step = {
   id: "address",
   title: "What is your residential address?",
   description:
     "You must file your name change in the county where you live. We'll help you find where to file.",
-  fields: ["isCurrentlyUnhoused", ...residenceFields, ...mailingFields],
-  component: ({ stepConfig }) => {
+  fields: [
+    "isCurrentlyUnhoused",
+    {
+      names: [
+        "residenceStreetAddress",
+        "residenceCity",
+        "residenceCounty",
+        "residenceState",
+        "residenceZipCode",
+        "isMailingAddressDifferentFromResidence",
+      ],
+      when: whenNotUnhoused,
+    },
+    {
+      names: [
+        "mailingStreetAddress",
+        "mailingCity",
+        "mailingCounty",
+        "mailingState",
+        "mailingZipCode",
+      ],
+      when: whenMailing,
+    },
+  ],
+  render: ({ stepConfig }) => {
     const residenceVisible = useFieldVisible(
       stepConfig,
       "residenceStreetAddress",

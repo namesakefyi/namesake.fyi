@@ -8,7 +8,7 @@ export const citizenshipStep: Step = {
   id: "citizenship",
   title: "What is your citizenship status?",
   fields: ["citizenshipStatus"],
-  component: ({ stepConfig }) => {
+  render: ({ stepConfig }) => {
     const form = useFormContext();
     const showWarning =
       form.watch("citizenshipStatus") === "other" ||
