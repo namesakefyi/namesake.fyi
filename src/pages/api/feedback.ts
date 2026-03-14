@@ -1,3 +1,4 @@
+import { env } from "cloudflare:workers";
 import type { APIRoute } from "astro";
 import { z } from "astro/zod";
 import {
@@ -6,7 +7,6 @@ import {
   type FormFeedbackSentiment,
 } from "@/constants/forms";
 import { isRateLimited } from "@/utils/rateLimitByIp";
-import { env } from 'cloudflare:workers';
 
 const ALLOWED_ORIGINS = ["https://namesake.fyi"];
 
