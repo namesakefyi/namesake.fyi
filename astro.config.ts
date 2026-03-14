@@ -6,9 +6,15 @@ import sanity from "@sanity/astro";
 import { defineConfig } from "astro/config";
 import { visualizer } from "rollup-plugin-visualizer";
 
+// Temporary fix for: https://github.com/withastro/astro/issues/15878
+const isTest = process.env.VITEST === "true";
+
 export default defineConfig({
   output: "server",
-  adapter: cloudflare({
+  // Disable Cloudflare adapter during tests: Vitest injects Node builtins into
+  // resolve.external, which conflicts with @cloudflare/vite-plugin.
+  // See: https://github.com/withastro/astro/issues/15878
+  adapter: isTest ? undefined : cloudflare({
     prerenderEnvironment: "node",
     imageService: "compile",
   }),
