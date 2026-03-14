@@ -202,7 +202,9 @@ describe("useFieldVisible", () => {
   it("passes live form data to isFieldVisible", () => {
     const isFieldVisible = vi.fn(() => true);
     const config = { ...stepConfig, isFieldVisible };
-    renderHook(() => useFieldVisible(config, "middleName" as any), { wrapper: Wrapper });
+    renderHook(() => useFieldVisible(config, "middleName" as any), {
+      wrapper: Wrapper,
+    });
     expect(isFieldVisible).toHaveBeenCalledWith(
       "middleName",
       expect.objectContaining({ middleName: "Lee" }),
