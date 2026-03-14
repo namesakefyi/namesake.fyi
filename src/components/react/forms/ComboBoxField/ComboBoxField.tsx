@@ -38,10 +38,8 @@ export function ComboBoxField({
             {...field}
             label={smartquotes(label)}
             placeholder={placeholder}
-            selectedKey={field.value}
-            onSelectionChange={(key) => {
-              field.onChange(key);
-            }}
+            value={field.value}
+            onChange={field.onChange}
             isInvalid={invalid}
             errorMessage={error?.message}
             {...props}
