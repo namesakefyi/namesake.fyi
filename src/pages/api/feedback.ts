@@ -46,16 +46,11 @@ export const POST: APIRoute = async ({ request }) => {
     null;
   const userAgent = request.headers.get("User-Agent") ?? null;
 
-  const cf = (
-    request as Request & {
-      cf?: { country?: string; region?: string; city?: string };
-    }
-  ).cf;
-  const country = cf?.country ?? null;
-  const region = cf?.region ?? null;
-  const city = cf?.city ?? null;
+  const country = request.cf?.country ?? null;
+  const region = request.cf?.region ?? null;
+  const city = request.cf?.city ?? null;
 
-  const db = env?.DB as D1Database | undefined;
+  const db = env.DB;
 
   if (!db) {
     return Response.json({ error: "Database unavailable" }, { status: 503 });
