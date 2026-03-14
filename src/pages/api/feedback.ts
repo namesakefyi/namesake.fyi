@@ -1,3 +1,4 @@
+import { env } from "cloudflare:workers";
 import type { APIRoute } from "astro";
 import { z } from "astro/zod";
 import {
@@ -20,7 +21,7 @@ const FeedbackSchema = z.object({
   comment: z.string().trim().max(1000).optional(),
 });
 
-export const POST: APIRoute = async ({ request, locals }) => {
+export const POST: APIRoute = async ({ request }) => {
   let body: unknown;
   try {
     body = await request.json();
@@ -54,7 +55,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
   const region = cf?.region ?? null;
   const city = cf?.city ?? null;
 
-  const env = locals.runtime?.env;
   const db = env?.DB as D1Database | undefined;
 
   if (!db) {
