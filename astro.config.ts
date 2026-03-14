@@ -4,7 +4,6 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import sanity from "@sanity/astro";
 import { defineConfig } from "astro/config";
-import { visualizer } from "rollup-plugin-visualizer";
 
 // Temporary fix for: https://github.com/withastro/astro/issues/15878
 const isTest = process.env.VITEST === "true";
@@ -35,14 +34,6 @@ export default defineConfig({
   ],
   prefetch: true,
   trailingSlash: "never",
-  vite: {
-    plugins: [
-      visualizer({
-        emitFile: true,
-        filename: "stats.html",
-      }),
-    ],
-  },
   devToolbar: {
     enabled: false,
   },

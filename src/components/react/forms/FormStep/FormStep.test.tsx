@@ -161,7 +161,7 @@ describe("FormStep", () => {
 });
 
 describe("useFieldVisible", () => {
-  function Wrapper({ children }: { children: ReactNode }) {
+  function TestWrapper({ children }: { children: ReactNode }) {
     const form = useForm({ defaultValues: { middleName: "Lee" } });
     return <FormProvider {...form}>{children}</FormProvider>;
   }
@@ -176,7 +176,7 @@ describe("useFieldVisible", () => {
   it("returns true when isFieldVisible is not defined", () => {
     const { result } = renderHook(
       () => useFieldVisible(stepConfig, "middleName" as any),
-      { wrapper: Wrapper },
+      { wrapper: TestWrapper },
     );
     expect(result.current).toBe(true);
   });
@@ -185,7 +185,7 @@ describe("useFieldVisible", () => {
     const config = { ...stepConfig, isFieldVisible: () => true };
     const { result } = renderHook(
       () => useFieldVisible(config, "middleName" as any),
-      { wrapper: Wrapper },
+      { wrapper: TestWrapper },
     );
     expect(result.current).toBe(true);
   });
@@ -194,7 +194,7 @@ describe("useFieldVisible", () => {
     const config = { ...stepConfig, isFieldVisible: () => false };
     const { result } = renderHook(
       () => useFieldVisible(config, "middleName" as any),
-      { wrapper: Wrapper },
+      { wrapper: TestWrapper },
     );
     expect(result.current).toBe(false);
   });
@@ -203,7 +203,7 @@ describe("useFieldVisible", () => {
     const isFieldVisible = vi.fn(() => true);
     const config = { ...stepConfig, isFieldVisible };
     renderHook(() => useFieldVisible(config, "middleName" as any), {
-      wrapper: Wrapper,
+      wrapper: TestWrapper,
     });
     expect(isFieldVisible).toHaveBeenCalledWith(
       "middleName",
