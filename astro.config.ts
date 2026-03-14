@@ -14,10 +14,12 @@ export default defineConfig({
   // Disable Cloudflare adapter during tests: Vitest injects Node builtins into
   // resolve.external, which conflicts with @cloudflare/vite-plugin.
   // See: https://github.com/withastro/astro/issues/15878
-  adapter: isTest ? undefined : cloudflare({
-    prerenderEnvironment: "node",
-    imageService: "compile",
-  }),
+  adapter: isTest
+    ? undefined
+    : cloudflare({
+        prerenderEnvironment: "node",
+        imageService: "compile",
+      }),
   site: "https://namesake.fyi",
   integrations: [
     sitemap(),
