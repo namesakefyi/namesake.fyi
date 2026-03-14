@@ -2,12 +2,12 @@
   --selected-color: var(--highlight-background);
   --selected-color-pressed: var(--highlight-background);
   --checkmark-color: var(--background-color);
-
-  display: flex;
   /* This is needed so the HiddenInput is positioned correctly */
   position: relative;
-  align-items: center;
+
+  display: flex;
   gap: var(--space-s);
+  align-items: center;
   color: var(--text-color);
   forced-color-adjust: none;
 

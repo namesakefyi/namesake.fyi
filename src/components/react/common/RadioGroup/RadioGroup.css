@@ -11,11 +11,10 @@
 }
 
 .namesake-radio {
-  display: flex;
-  /* This is needed so the HiddenInput is positioned correctly */
   position: relative;
-  align-items: center;
+  display: flex;
   gap: var(--space-s);
+  align-items: center;
   font-size: var(--step-0);
   color: var(--text-color);
   forced-color-adjust: none;

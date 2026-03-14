@@ -31,11 +31,11 @@
   .react-aria-SliderThumb {
     width: var(--space-l);
     height: var(--space-l);
-    border-radius: 50%;
+    cursor: grab;
+    forced-color-adjust: none;
     background: var(--button-background);
     border: 2px solid var(--border-color);
-    forced-color-adjust: none;
-    cursor: grab;
+    border-radius: 50%;
 
     &[data-dragging] {
       cursor: grabbing;

@@ -8,20 +8,20 @@
 }
 
 .react-aria-MenuItem {
-  margin: 2px;
-  padding: var(--space-2xs) var(--space-xs);
-  border-radius: 6px;
-  outline: none;
-  cursor: pointer;
-  color: var(--text-color);
-  font-size: var(--step--1);
   position: relative;
   display: grid;
   grid-template-areas: "label chevron";
   grid-template-columns: 1fr auto;
-  align-items: center;
   column-gap: 20px;
+  align-items: center;
+  padding: var(--space-2xs) var(--space-xs);
+  margin: 2px;
+  font-size: var(--step--1);
+  color: var(--text-color);
+  cursor: pointer;
+  outline: none;
   forced-color-adjust: none;
+  border-radius: 6px;
 
   &[data-focused],
   &[data-open] {
