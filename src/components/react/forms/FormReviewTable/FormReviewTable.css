@@ -42,15 +42,15 @@
 }
 
 .form-review-no-response {
-  text-indent: 0;
+  display: inline-flex;
+  gap: var(--space-2xs);
+  align-items: center;
+  font-weight: var(--weight-bold);
   color: var(--invalid-color);
+  text-indent: 0;
   text-decoration: wavy underline
     color-mix(in srgb, var(--invalid-color) 35%, transparent);
   text-decoration-skip-ink: none;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2xs);
-  font-weight: var(--weight-bold);
 }
 
 .form-review-change-link {

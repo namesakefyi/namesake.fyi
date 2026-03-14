@@ -1,18 +1,18 @@
 .react-aria-Tooltip {
-  box-shadow: 0 8px 20px rgba(0 0 0 / 0.1);
-  border-radius: var(--radius-xs);
-  background: var(--highlight-background);
-  color: var(--highlight-foreground);
-  forced-color-adjust: none;
-  outline: none;
-  padding: var(--space-2xs) var(--space-s);
   max-width: 150px;
+  padding: var(--space-2xs) var(--space-s);
+  font-size: var(--step--1);
+  color: var(--highlight-foreground);
+  outline: none;
+  forced-color-adjust: none;
+  background: var(--highlight-background);
+  border-radius: var(--radius-xs);
+  box-shadow: 0 8px 20px rgba(0 0 0 / 0.1);
   /* fixes FF gap */
   transform: translate3d(0, 0, 0);
   transition:
     transform 200ms,
     opacity 200ms;
-  font-size: var(--step--1);
 
   &[data-entering],
   &[data-exiting] {
