@@ -1,13 +1,13 @@
 .namesake-table {
-  border: 1px solid var(--border-color);
-  background: var(--field-background);
-  outline: none;
-  border-spacing: 0;
-  min-height: 100px;
   align-self: start;
   max-width: 100%;
+  min-height: 100px;
   word-break: break-word;
+  outline: none;
   forced-color-adjust: none;
+  border-spacing: 0;
+  background: var(--field-background);
+  border: 1px solid var(--border-color);
 
   & div {
     padding: 0;

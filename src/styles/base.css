@@ -5,20 +5,20 @@ html {
 }
 
 body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 100dvh;
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  font-style: normal;
+  font-weight: var(--weight-normal);
+  font-synthesis: none;
+  line-height: var(--line-height-body);
   color: var(--text-color);
   background-color: var(--background-color);
   background-position: center top;
-  display: flex;
-  min-height: 100dvh;
-  position: relative;
-  flex-direction: column;
-  align-items: flex-start;
-  font-size: var(--step-0);
-  line-height: var(--line-height-body);
-  font-synthesis: none;
-  font-family: var(--font-sans);
-  font-weight: var(--weight-normal);
-  font-style: normal;
 }
 
 body::before,

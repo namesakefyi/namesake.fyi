@@ -8,7 +8,10 @@ import { visualizer } from "rollup-plugin-visualizer";
 
 export default defineConfig({
   output: "server",
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    prerenderEnvironment: "node",
+    imageService: "compile",
+  }),
   site: "https://namesake.fyi",
   integrations: [
     sitemap(),
