@@ -13,20 +13,20 @@
 }
 
 .react-aria-Tag {
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-  forced-color-adjust: none;
-  border-radius: var(--radius-xs);
-  padding: var(--space-2xs) var(--space-s);
-  outline: none;
-  cursor: default;
   display: flex;
   gap: var(--space-2xs);
   align-items: center;
-  transition: border-color 200ms;
-  white-space: nowrap;
+  padding: var(--space-2xs) var(--space-s);
   overflow: hidden;
   text-overflow: ellipsis;
+  color: var(--text-color);
+  white-space: nowrap;
+  cursor: default;
+  outline: none;
+  forced-color-adjust: none;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xs);
+  transition: border-color 200ms;
 
   &[data-focus-visible] {
     outline: 3px solid var(--focus-ring-color);

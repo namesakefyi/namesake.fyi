@@ -1,23 +1,23 @@
 .react-aria-DropZone {
-  color: var(--text-color);
-  background: var(--overlay-background);
-  border: 1px solid var(--border-color);
-  forced-color-adjust: none;
-  border-radius: 4px;
-  appearance: none;
-  vertical-align: middle;
-  font-size: 1rem;
-  line-height: 1.5;
-  text-align: center;
-  margin: 0;
-  outline: none;
-  padding: 24px 12px;
-  width: 30%;
-  min-height: 96px;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 30%;
+  min-height: 96px;
+  padding: 24px 12px;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  vertical-align: middle;
+  color: var(--text-color);
+  text-align: center;
   text-wrap: balance;
+  appearance: none;
+  outline: none;
+  forced-color-adjust: none;
+  background: var(--overlay-background);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
 
   &[data-focus-visible],
   &[data-drop-target] {

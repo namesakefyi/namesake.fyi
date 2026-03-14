@@ -1,13 +1,12 @@
 .react-aria-Switch {
-  display: flex;
-  /* This is needed so the HiddenInput is positioned correctly */
   position: relative;
-  align-items: center;
+  display: flex;
   gap: var(--space-s);
+  align-items: center;
+  overflow: hidden;
   font-size: var(--step-0);
   color: var(--text-color);
   forced-color-adjust: none;
-  overflow: hidden;
 
   .indicator {
     width: calc(var(--space-xl) * 2);

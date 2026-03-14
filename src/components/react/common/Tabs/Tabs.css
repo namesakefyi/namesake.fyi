@@ -12,15 +12,15 @@
 }
 
 .react-aria-Tab {
-  font-size: var(--step--1);
+  --border-color: transparent;
+  position: relative;
   padding: var(--space-xs);
+  font-size: var(--step--1);
+  color: var(--text-color);
   cursor: default;
   outline: none;
-  position: relative;
-  color: var(--text-color);
-  transition: color 200ms;
-  --border-color: transparent;
   forced-color-adjust: none;
+  transition: color 200ms;
 
   .react-aria-SelectionIndicator {
     position: absolute;
