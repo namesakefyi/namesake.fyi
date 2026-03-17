@@ -7,7 +7,7 @@
     "prepare": "husky",
     "dev": "astro dev --open",
     "start": "astro dev",
-    "build": "pnpm pdf:schema && wrangler types && astro check && astro build",
+    "build": "wrangler types && astro check && astro build",
     "build:only": "astro build",
     "preview": "wrangler types && astro preview",
     "astro": "astro",
