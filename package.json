@@ -27,6 +27,8 @@
     "storybook:build": "storybook build",
     "idb:add-migration": "node scripts/create-idb-migration.mjs",
     "pdf:clean": "node scripts/clean-pdf.mjs",
+    "pdf:remove-fields": "node scripts/remove-pdf-fields.mjs",
+    "pdf:rename-fields": "node scripts/rename-pdf-fields.mjs",
     "pdf:schema": "node scripts/extract-pdf-schema.mjs",
     "pdf:define": "node scripts/define-pdf.mjs"
   },
