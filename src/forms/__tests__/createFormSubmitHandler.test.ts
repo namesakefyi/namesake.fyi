@@ -69,7 +69,10 @@ describe("createFormSubmitHandler", () => {
       pdfs: [
         { pdfId: "cjp27-petition-to-change-name-of-adult" },
         { pdfId: "affidavit-of-indigency", include: () => true },
-        { pdfId: "cjd400-motion-to-waive-publication", include: () => false },
+        {
+          pdfId: "cjp25-petition-to-change-name-of-minor",
+          include: () => false,
+        },
       ],
     } as never);
 
@@ -78,7 +81,7 @@ describe("createFormSubmitHandler", () => {
     expect(loadPdfs).toHaveBeenCalledWith([
       { pdfId: "cjp27-petition-to-change-name-of-adult", include: true },
       { pdfId: "affidavit-of-indigency", include: true },
-      { pdfId: "cjd400-motion-to-waive-publication", include: false },
+      { pdfId: "cjp25-petition-to-change-name-of-minor", include: false },
     ]);
   });
 

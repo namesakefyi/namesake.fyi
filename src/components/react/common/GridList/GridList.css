@@ -1,19 +1,19 @@
 .react-aria-GridList {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 2px;
+  width: 250px;
+  min-height: 100px;
   max-height: inherit;
-  overflow: auto;
+  max-height: 300px;
   padding: 4px;
+  overflow: auto;
+  outline: none;
+  forced-color-adjust: none;
+  background: var(--field-background);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-s);
-  background: var(--field-background);
-  forced-color-adjust: none;
-  outline: none;
-  width: 250px;
-  max-height: 300px;
-  min-height: 100px;
-  box-sizing: border-box;
 
   &[data-focus-visible] {
     outline: 3px solid var(--focus-ring-color);

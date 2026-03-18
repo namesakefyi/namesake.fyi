@@ -5,12 +5,12 @@
   color: var(--text-color);
 
   span[aria-hidden] {
-    margin-left: var(--space-l);
-    color: var(--text-color);
-    forced-color-adjust: none;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-left: var(--space-l);
+    color: var(--text-color);
+    forced-color-adjust: none;
   }
 
   [slot="description"] {

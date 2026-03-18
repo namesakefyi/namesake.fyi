@@ -114,10 +114,8 @@ export function AddressField({
             label="State"
             placeholder="Select state"
             autoComplete="address-level1"
-            selectedKey={field.value}
-            onSelectionChange={(key) => {
-              field.onChange(key);
-            }}
+            value={field.value}
+            onChange={field.onChange}
             isInvalid={invalid}
             errorMessage={error?.message}
             menuTrigger="focus"

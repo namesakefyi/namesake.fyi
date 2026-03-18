@@ -16,11 +16,11 @@
 
   .bar {
     grid-area: bar;
-    box-shadow: inset 0px 0px 0px 1px var(--border-color);
-    forced-color-adjust: none;
     height: 8px;
-    border-radius: var(--radius-s);
     overflow: hidden;
+    forced-color-adjust: none;
+    border-radius: var(--radius-s);
+    box-shadow: inset 0px 0px 0px 1px var(--border-color);
     will-change: transform;
   }
 

@@ -31,10 +31,8 @@ export function LanguageSelectField({
             label="Language"
             placeholder="Select a language"
             className="w-fit"
-            selectedKey={field.value}
-            onSelectionChange={(key) => {
-              field.onChange(key);
-            }}
+            value={field.value}
+            onChange={field.onChange}
             isInvalid={invalid}
             errorMessage={error?.message}
             {...props}

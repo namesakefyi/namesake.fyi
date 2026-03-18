@@ -17,20 +17,20 @@
 }
 
 .namesake-field-button {
-  background-color: var(--field-background);
-  color: var(--text-color);
-  forced-color-adjust: none;
-  border-radius: var(--radius-2xs);
-  border: none;
-  margin-left: calc(-1 * var(--space-2xl));
-  width: var(--space-xl);
-  height: var(--space-xl);
-  padding: 0;
-  font-size: var(--step--1);
   box-sizing: content-box;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: var(--space-xl);
+  height: var(--space-xl);
+  padding: 0;
+  margin-left: calc(-1 * var(--space-2xl));
+  font-size: var(--step--1);
+  color: var(--text-color);
+  forced-color-adjust: none;
+  background-color: var(--field-background);
+  border: none;
+  border-radius: var(--radius-2xs);
 
   &[data-pressed] {
     box-shadow: none;

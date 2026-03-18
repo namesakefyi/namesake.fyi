@@ -1,7 +1,7 @@
-import languageNameMap from "language-name-map/map";
 import { definePdf } from "@/pdfs/utils/definePdf";
 import { deriveCurrentAge } from "@/utils/deriveCurrentAge";
 import { formatDateMMDDYYYY } from "@/utils/formatDateMMDDYYYY";
+import { formatLanguage } from "@/utils/formatLanguage";
 import { joinPronouns } from "@/utils/joinPronouns";
 import pdf from "./cjp25-petition-to-change-name-of-minor.pdf";
 import type { PdfFieldName } from "./schema";
@@ -34,9 +34,7 @@ export default definePdf<PdfFieldName>({
     birthplaceCity: data.birthplaceCity,
     birthplaceState: data.birthplaceState,
     dateOfBirth: formatDateMMDDYYYY(data.dateOfBirth),
-    currentAge: data.dateOfBirth
-      ? deriveCurrentAge(new Date(data.dateOfBirth)).toString()
-      : undefined,
+    currentAge: deriveCurrentAge(data.dateOfBirth)?.toString(),
 
     // 4. Minor's address
     mailingStreetAddress: data.residenceStreetAddress,
@@ -95,76 +93,40 @@ export default definePdf<PdfFieldName>({
     hasCountAppointedGuardianFalse: !data.hasCourtAppointedGuardian,
     hasCourtAppointedGuardianTrue: data.hasCourtAppointedGuardian,
 
-    guardianFullName: data.hasCourtAppointedGuardian
-      ? data.guardianFullName
-      : undefined,
-    guardianStreetAddress: data.hasCourtAppointedGuardian
-      ? data.guardianStreetAddress
-      : undefined,
-    guardianCity: data.hasCourtAppointedGuardian
-      ? data.guardianCity
-      : undefined,
-    guardianState: data.hasCourtAppointedGuardian
-      ? data.guardianState
-      : undefined,
-    guardianZipCode: data.hasCourtAppointedGuardian
-      ? data.guardianZipCode
-      : undefined,
-    guardianPhone: data.hasCourtAppointedGuardian
-      ? data.guardianPhone
-      : undefined,
-    guardianEmail: data.hasCourtAppointedGuardian
-      ? data.guardianEmail
-      : undefined,
+    guardianFullName: data.guardianFullName,
+    guardianStreetAddress: data.guardianStreetAddress,
+    guardianCity: data.guardianCity,
+    guardianState: data.guardianState,
+    guardianZipCode: data.guardianZipCode,
+    guardianPhone: data.guardianPhone,
+    guardianEmail: data.guardianEmail,
 
-    coGuardianFullName: data.hasCourtAppointedGuardian
-      ? data.coGuardianFullName
-      : undefined,
-    coGuardianStreetAddress: data.hasCourtAppointedGuardian
-      ? data.coGuardianStreetAddress
-      : undefined,
-    coGuardianCity: data.hasCourtAppointedGuardian
-      ? data.coGuardianCity
-      : undefined,
-    coGuardianState: data.hasCourtAppointedGuardian
-      ? data.coGuardianState
-      : undefined,
-    coGuardianZipCode: data.hasCourtAppointedGuardian
-      ? data.coGuardianZipCode
-      : undefined,
-    coGuardianPhone: data.hasCourtAppointedGuardian
-      ? data.coGuardianPhone
-      : undefined,
-    coGuardianEmail: data.hasCourtAppointedGuardian
-      ? data.coGuardianEmail
-      : undefined,
+    coGuardianFullName: data.coGuardianFullName,
+    coGuardianStreetAddress: data.coGuardianStreetAddress,
+    coGuardianCity: data.coGuardianCity,
+    coGuardianState: data.coGuardianState,
+    coGuardianZipCode: data.coGuardianZipCode,
+    coGuardianPhone: data.coGuardianPhone,
+    coGuardianEmail: data.coGuardianEmail,
 
     // 8. Child under 12?
-    isChildUnder12: data.dateOfBirth
-      ? deriveCurrentAge(new Date(data.dateOfBirth)) < 12
-      : undefined,
+    isChildUnder12: (deriveCurrentAge(data.dateOfBirth) ?? 0) < 12,
 
     // 9. Legal parent 1 consents?
-    isParent1AssentingTrue: data.isParent1Assenting === true,
+    isParent1AssentingTrue: data.isParent1Assenting,
     isParent1AssentingFalse: !data.isParent1Assenting,
-    parent1DissentReason: !data.isParent1Assenting
-      ? data.parent1DissentReason
-      : undefined,
+    parent1DissentReason: data.parent1DissentReason,
 
     // 10. Legal parent 2 consents?
-    isParent2AssentingTrue: data.isParent2Assenting === true,
+    isParent2AssentingTrue: data.isParent2Assenting,
     isParent2AssentingFalse: !data.isParent2Assenting,
-    parent2DissentReason: !data.isParent2Assenting
-      ? data.parent2DissentReason
-      : undefined,
+    parent2DissentReason: data.parent2DissentReason,
 
     // 11. All court-appointed guardians consent?
-    isAllGuardiansAssentingTrue: data.isAllGuardiansAssenting === true,
+    isAllGuardiansAssentingTrue: data.isAllGuardiansAssenting,
     isAllGuardiansAssentingFalse: !data.isAllGuardiansAssenting,
     hasNoCountAppointedGuardian: !data.hasCourtAppointedGuardian,
-    guardianDissentReason: !data.isAllGuardiansAssenting
-      ? data.guardianDissentReason
-      : undefined,
+    guardianDissentReason: data.guardianDissentReason,
 
     // 12. New name
     newFirstName: data.newFirstName,
@@ -181,19 +143,10 @@ export default definePdf<PdfFieldName>({
     isInterpreterNeededForParent1: data.isInterpreterNeededForParent1,
     isInterpreterNeededForParent2: data.isInterpreterNeededForParent2,
     isInterpreterNeededForGuardian: data.isInterpreterNeededForGuardian,
-    languages:
-      (data.isInterpreterNeededForChild ||
-        data.isInterpreterNeededForParent1 ||
-        data.isInterpreterNeededForParent2 ||
-        data.isInterpreterNeededForGuardian) &&
-      data.language
-        ? languageNameMap[data.language].name
-        : undefined,
+    languages: formatLanguage(data.language),
 
     // 16. Okay to share pronouns?
     isOkayToSharePronouns: data.isOkayToSharePronouns,
-    pronouns: data.isOkayToSharePronouns
-      ? joinPronouns(data.pronouns, data.otherPronouns)
-      : undefined,
+    pronouns: joinPronouns(data.pronouns, data.otherPronouns),
   }),
 });

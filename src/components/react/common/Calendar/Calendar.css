@@ -33,10 +33,10 @@
   width: var(--space-2xl);
   line-height: var(--space-2xl);
   text-align: center;
-  border-radius: var(--radius-l);
   cursor: pointer;
   outline: none;
   forced-color-adjust: none;
+  border-radius: var(--radius-l);
 
   &[data-outside-month] {
     display: none;
