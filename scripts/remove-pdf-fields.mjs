@@ -24,7 +24,7 @@ async function main() {
   const argv = process.argv.slice(2);
   if (argv.length < 2) {
     console.error(
-      "Usage: pnpm pdf:remove-fields path/to/form.pdf \"field1\" \"field2\" ...",
+      'Usage: pnpm pdf:remove-fields path/to/form.pdf "field1" "field2" ...',
     );
     process.exit(1);
   }

@@ -15,7 +15,7 @@ async function main() {
   const argv = process.argv.slice(2);
   if (argv.length < 3 || argv.length % 2 === 0) {
     console.error(
-      "Usage: pnpm pdf:rename-fields path/to/form.pdf \"old1\" \"new1\" \"old2\" \"new2\" ...",
+      'Usage: pnpm pdf:rename-fields path/to/form.pdf "old1" "new1" "old2" "new2" ...',
     );
     process.exit(1);
   }
