@@ -5,8 +5,7 @@ import type { Step } from "@/forms/types";
 export const newNameStep: Step = {
   id: "new-name",
   title: "What is the minor's new name?",
-  description:
-    "This is the name being made official! Type it exactly as you want it to appear.",
+  description: "This is the name being made official!",
   fields: ["newFirstName", "newMiddleName", "newLastName"],
   component: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>

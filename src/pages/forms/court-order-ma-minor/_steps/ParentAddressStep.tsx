@@ -1,3 +1,4 @@
+import { Banner } from "@/components/react/common/Banner";
 import { AddressField } from "@/components/react/forms/AddressField";
 import { CheckboxField } from "@/components/react/forms/CheckboxField";
 import {
@@ -5,18 +6,20 @@ import {
   FormSubsection,
   useFieldVisible,
 } from "@/components/react/forms/FormStep";
+import { nameOrFallback } from "@/forms/resolveStepContent";
 import type { Step } from "@/forms/types";
 
 export const parentAddressStep: Step = {
   id: "parent-address",
-  title: "Where do the minor's parents live?",
-  description: "Enter the address for the minor's legal parents.",
+  title: (data) =>
+    `Where do ${nameOrFallback(data, "the minor")}'s parents live?`,
   fields: [
+    "parentsHaveUnknownAddresses",
+    "parentsHaveDifferentAddresses",
     "parent1StreetAddress",
     "parent1City",
     "parent1State",
     "parent1ZipCode",
-    "parentsHaveDifferentAddresses",
     "parent2StreetAddress",
     "parent2City",
     "parent2State",
@@ -31,9 +34,16 @@ export const parentAddressStep: Step = {
     ) {
       return data.parentsHaveDifferentAddresses === true;
     }
+    if (fieldName === "parentsHaveUnknownAddresses") {
+      return data.parentsHaveUnknownAddresses === true;
+    }
     return true;
   },
   component: ({ stepConfig }) => {
+    const parentsHaveUnknownAddresses = useFieldVisible(
+      stepConfig,
+      "parentsHaveUnknownAddresses",
+    );
     const secondAddressVisible = useFieldVisible(
       stepConfig,
       "parent2StreetAddress",
@@ -41,22 +51,35 @@ export const parentAddressStep: Step = {
     return (
       <FormStep stepConfig={stepConfig}>
         <CheckboxField
-          name="parentsHaveDifferentAddresses"
-          label="Parents have different addresses"
+          name="parentsHaveUnknownAddresses"
+          label="The addresses of the parents are unknown"
         />
-        {!secondAddressVisible && <AddressField type="parent1" />}
-        <FormSubsection
-          title="First parent's address"
-          isVisible={secondAddressVisible}
-        >
-          <AddressField type="parent1" />
-        </FormSubsection>
-        <FormSubsection
-          title="Second parent's address"
-          isVisible={secondAddressVisible}
-        >
-          <AddressField type="parent2" />
-        </FormSubsection>
+        {parentsHaveUnknownAddresses ? (
+          <Banner>
+            You must file a Motion for Service by Alternate Means and Affidavit
+            of Diligent Search (CJP 31) with a Military Affidavit (TC0002)
+          </Banner>
+        ) : (
+          <>
+            <CheckboxField
+              name="parentsHaveDifferentAddresses"
+              label="Parents have different addresses"
+            />
+            {!secondAddressVisible && <AddressField type="parent1" />}
+            <FormSubsection
+              title="First parent's address"
+              isVisible={secondAddressVisible}
+            >
+              <AddressField type="parent1" />
+            </FormSubsection>
+            <FormSubsection
+              title="Second parent's address"
+              isVisible={secondAddressVisible}
+            >
+              <AddressField type="parent2" />
+            </FormSubsection>
+          </>
+        )}
       </FormStep>
     );
   },

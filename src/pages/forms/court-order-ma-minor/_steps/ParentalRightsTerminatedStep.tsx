@@ -22,7 +22,7 @@ export const parentalRightsTerminatedStep: Step = {
         />
         {form.watch("hasLegalParentHadParentalRightsTerminated") === true && (
           <Banner>
-            You will need to attach proof from the prior court proceeding.
+            When filing, attach proof from the prior court proceeding.
           </Banner>
         )}
       </FormStep>

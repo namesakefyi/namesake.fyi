@@ -6,7 +6,7 @@ import type { Step } from "@/forms/types";
 
 export const returnDocumentsStep: Step = {
   id: "return-documents",
-  title: "Do you want the all original documents returned afterwards?",
+  title: "Do you want all original documents returned afterwards?",
   fields: ["shouldReturnOriginalDocuments"],
   component: ({ stepConfig }) => {
     const form = useFormContext();

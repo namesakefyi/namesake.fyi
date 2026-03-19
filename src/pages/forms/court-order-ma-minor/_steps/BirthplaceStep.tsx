@@ -3,11 +3,13 @@ import { FormStep, useFieldVisible } from "@/components/react/forms/FormStep";
 import { ShortTextField } from "@/components/react/forms/ShortTextField";
 import { COUNTRIES } from "@/constants/countries";
 import { JURISDICTIONS } from "@/constants/jurisdictions";
+import { nameOrFallback } from "@/forms/resolveStepContent";
 import type { Step } from "@/forms/types";
 
 export const birthplaceStep: Step = {
   id: "birthplace",
-  title: "Where was the minor born?",
+  title: (data) =>
+    `Where was ${nameOrFallback(data, "the minor")} born?`,
   fields: ["birthplaceCity", "birthplaceCountry", "birthplaceState"],
   isFieldVisible: (fieldName, data) => {
     if (fieldName === "birthplaceState") {

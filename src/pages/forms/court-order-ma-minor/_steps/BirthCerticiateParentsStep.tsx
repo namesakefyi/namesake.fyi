@@ -1,10 +1,12 @@
 import { FormStep } from "@/components/react/forms/FormStep";
 import { YesNoField } from "@/components/react/forms/YesNoField";
+import { nameOrFallback } from "@/forms/resolveStepContent";
 import type { Step } from "@/forms/types";
 
 export const birthCertificateParentsStep: Step = {
   id: "birth-certificate-parents",
-  title: "Are both parents listed on the minor's birth certificate?",
+  title: (data) =>
+    `Are both parents listed on ${nameOrFallback(data, "the minor")}'s birth certificate?`,
   fields: ["areBothParentsListedOnBirthCertificate"],
   component: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>

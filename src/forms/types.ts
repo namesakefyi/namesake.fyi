@@ -16,10 +16,10 @@ export interface Step {
   id: string;
 
   /** Displayed in the navigation bar and review table. */
-  title: string;
+  title: string | ((data: Partial<FormData>) => string);
 
   /** Optional subtitle shown beneath the title on the step. */
-  description?: string;
+  description?: string | ((data: Partial<FormData>) => string);
 
   /**
    * All fields this step writes to. Used to populate the review table

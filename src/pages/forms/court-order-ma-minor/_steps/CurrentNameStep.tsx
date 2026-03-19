@@ -4,7 +4,8 @@ import type { Step } from "@/forms/types";
 
 export const currentNameStep: Step = {
   id: "current-name",
-  title: "What is the minor's current legal name?",
+  title: (data) =>
+    `What is ${data.newFirstName ?? "the minor"}'s current legal name?`,
   description:
     "This is the name being left behind. Type it exactly as it appears on the minor's ID.",
   fields: ["oldFirstName", "oldMiddleName", "oldLastName"],

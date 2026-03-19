@@ -1,11 +1,13 @@
 import { Banner } from "@/components/react/common/Banner";
 import { FormStep } from "@/components/react/forms/FormStep";
 import { LongTextField } from "@/components/react/forms/LongTextField";
+import { nameOrFallback } from "@/forms/resolveStepContent";
 import type { Step } from "@/forms/types";
 
 export const reasonStep: Step = {
   id: "reason",
-  title: "What is the reason the minor is changing their name?",
+  title: (data) =>
+    `What is the reason ${nameOrFallback(data, "the minor")} is changing names?`,
   fields: ["reasonForChangingName"],
   component: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>

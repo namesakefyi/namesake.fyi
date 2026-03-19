@@ -6,11 +6,13 @@ import {
 import { LongTextField } from "@/components/react/forms/LongTextField";
 import { ShortTextField } from "@/components/react/forms/ShortTextField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
+import { nameOrFallback } from "@/forms/resolveStepContent";
 import type { Step } from "@/forms/types";
 
 export const previousNameChangeStep: Step = {
   id: "previous-name-change",
-  title: "Has the minor ever changed their name before?",
+  title: (data) =>
+    `Has ${nameOrFallback(data, "the minor")} ever changed their name before?`,
   fields: [
     "hasPreviousNameChange",
     "previousNameFrom",

@@ -15,11 +15,11 @@ export const presentedByStep: Step = {
     <FormStep stepConfig={stepConfig}>
       <CheckboxField
         name="isPresentedByLegalMotherParent1"
-        label="Legal mother (or first parent)"
+        label="Legal mother (or parent 1)"
       />
       <CheckboxField
         name="isPresentedByLegalFatherParent2"
-        label="Legal father (or second parent)"
+        label="Legal father (or parent 2)"
       />
       <CheckboxField
         name="isPresentedByCourtAppointedGuardian"

@@ -11,10 +11,12 @@ import { ShortTextField } from "@/components/react/forms/ShortTextField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
 import { JURISDICTIONS } from "@/constants/jurisdictions";
 import type { Step } from "@/forms/types";
+import { nameOrFallback } from "@/forms/resolveStepContent";
 
 export const guardianStep: Step = {
   id: "guardian",
-  title: "Is there a court-appointed guardian?",
+  title: (data) =>
+    `Does ${nameOrFallback(data, "the minor")} have a court-appointed guardian?`,
   fields: [
     "hasCourtAppointedGuardian",
     "guardianFullName",
@@ -43,6 +45,7 @@ export const guardianStep: Step = {
         <YesNoField
           name="hasCourtAppointedGuardian"
           label="Is there a court-appointed guardian?"
+          labelHidden
           yesLabel="Yes"
           noLabel="No"
         />

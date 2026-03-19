@@ -5,11 +5,13 @@ import {
 } from "@/components/react/forms/FormStep";
 import { PronounSelectField } from "@/components/react/forms/PronounSelectField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
+import { nameOrFallback } from "@/forms/resolveStepContent";
 import type { Step } from "@/forms/types";
 
 export const pronounsStep: Step = {
   id: "pronouns",
-  title: "Do you want to share the child's pronouns with the court staff?",
+  title: (data) =>
+    `Do you want to share ${nameOrFallback(data, "the minor")}'s pronouns with the court staff?`,
   fields: ["isOkayToSharePronouns", "pronouns", "otherPronouns"],
   isFieldVisible: (fieldName, data) => {
     if (fieldName === "pronouns") {

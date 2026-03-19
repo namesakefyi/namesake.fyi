@@ -208,6 +208,11 @@ export const FIELD_DEFS = [
     type: "string",
   },
   {
+    name: "parentsHaveUnknownAddresses",
+    label: "Parents' addresses are unknown",
+    type: "boolean",
+  },
+  {
     name: "parentsHaveDifferentAddresses",
     label: "Parents have different addresses",
     type: "boolean",
