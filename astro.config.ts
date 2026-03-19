@@ -1,28 +1,24 @@
-import path from "node:path";
 import cloudflare from "@astrojs/cloudflare";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import sanity from "@sanity/astro";
-import { defineConfig, passthroughImageService } from "astro/config";
-import { visualizer } from "rollup-plugin-visualizer";
+import { defineConfig } from "astro/config";
 
-// https://github.com/withastro/astro/issues/12824
-const alias = import.meta.env.PROD
-  ? {
-      "react-dom/server": "react-dom/server.edge",
-    }
-  : undefined;
+// Temporary fix for: https://github.com/withastro/astro/issues/15878
+const isTest = process.env.VITEST === "true";
 
 export default defineConfig({
   output: "server",
-  adapter: cloudflare({
-    cloudflareModules: false,
-    imageService: "compile",
-  }),
-  image: {
-    service: passthroughImageService(),
-  },
+  // Disable Cloudflare adapter during tests: Vitest injects Node builtins into
+  // resolve.external, which conflicts with @cloudflare/vite-plugin.
+  // See: https://github.com/withastro/astro/issues/15878
+  adapter: isTest
+    ? undefined
+    : cloudflare({
+        prerenderEnvironment: "node",
+        imageService: "compile",
+      }),
   site: "https://namesake.fyi",
   integrations: [
     sitemap(),
@@ -42,20 +38,6 @@ export default defineConfig({
     // Eliminate trailing slashes from Cloudflare Pages
     // https://creativehike.com/posts/removing-trailng-slashes-astro
     format: "file",
-  },
-  vite: {
-    plugins: [
-      visualizer({
-        emitFile: true,
-        filename: "stats.html",
-      }),
-    ],
-    resolve: {
-      alias: {
-        "@": path.resolve("src"),
-        ...alias,
-      },
-    },
   },
   devToolbar: {
     enabled: false,
