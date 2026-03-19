@@ -13,14 +13,13 @@ export const waivePublicationStep: Step = {
   title: "Would you like to waive the newspaper publication requirement?",
   description:
     "The legal name change process requires publication in a newspaper. However, we can help you file a motion to waive this requirement.",
-  fields: ["shouldWaivePublicationRequirement", "reasonToWaivePublication"],
-  isFieldVisible: (fieldName, data) => {
-    // reasonToWaivePublication only visible if shouldWaivePublicationRequirement is true
-    if (fieldName === "reasonToWaivePublication") {
-      return data.shouldWaivePublicationRequirement === true;
-    }
-    return true;
-  },
+  fields: [
+    "shouldWaivePublicationRequirement",
+    {
+      id: "reasonToWaivePublication",
+      when: (data) => data.shouldWaivePublicationRequirement === true,
+    },
+  ],
   component: ({ stepConfig }) => {
     const reasonVisible = useFieldVisible(
       stepConfig,

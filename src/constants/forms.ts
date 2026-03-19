@@ -1,8 +1,7 @@
-import type { FormMachine } from "@/forms/createFormMachine";
 import type { Step } from "@/forms/types";
 import { courtOrderMaConfig } from "@/pages/forms/court-order-ma/config";
 import { socialSecurityConfig } from "@/pages/forms/social-security/config";
-import type { FieldName, FormData } from "./fields";
+import type { FormData } from "./fields";
 import type { PDFId } from "./pdf";
 
 /**
@@ -33,10 +32,6 @@ export interface FormConfig {
   slug: string;
   /** Ordered steps, including optional guards for conditional inclusion. */
   steps: readonly Step[];
-  /** The XState machine for this form, created from steps. */
-  machine: FormMachine;
-  /** Flattened array of all field names, derived from steps. */
-  fields: readonly FieldName[];
   /** PDFs included in this form */
   pdfs: readonly FormPdfConfig[];
   /** Title for the downloaded PDF package */

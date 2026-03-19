@@ -1,14 +1,18 @@
-import type { Step } from "@/forms/types";
+import type { Field, Step } from "@/forms/types";
 
 export function makeStep(
   id: string,
-  fields: string[] = [],
+  fields: (
+    | string
+    | { id: string; when: (data: any) => boolean }
+    | { ids: readonly string[]; when: (data: any) => boolean }
+  )[] = [],
   guard?: (data: any) => boolean,
 ): Step {
   return {
     id,
     title: `Step ${id}`,
-    fields: fields as any,
+    fields: fields as Field[],
     component: () => null,
     ...(guard && { guard }),
   };
