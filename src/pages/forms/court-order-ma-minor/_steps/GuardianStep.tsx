@@ -10,8 +10,8 @@ import { PhoneField } from "@/components/react/forms/PhoneField";
 import { ShortTextField } from "@/components/react/forms/ShortTextField";
 import { YesNoField } from "@/components/react/forms/YesNoField";
 import { JURISDICTIONS } from "@/constants/jurisdictions";
-import type { Step } from "@/forms/types";
 import { nameOrFallback } from "@/forms/resolveStepContent";
+import type { Step } from "@/forms/types";
 
 export const guardianStep: Step = {
   id: "guardian",

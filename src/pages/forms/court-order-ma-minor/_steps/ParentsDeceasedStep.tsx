@@ -24,7 +24,8 @@ export const parentsDeceasedStep: Step = {
         />
         {form.watch("isALegalParentDeceased") === true && (
           <Banner>
-            We're sorry for your loss. When filing, the court requests that you attach a copy of the death certificate to your application.
+            We're sorry for your loss. When filing, the court requests that you
+            attach a copy of the death certificate to your application.
           </Banner>
         )}
       </FormStep>

@@ -5,8 +5,7 @@ import type { Step } from "@/forms/types";
 
 export const addressStep: Step = {
   id: "address",
-  title: (data) =>
-    `What is ${nameOrFallback(data, "the minor")}'s address?`,
+  title: (data) => `What is ${nameOrFallback(data, "the minor")}'s address?`,
   description: (data) =>
     `You must file in the county where ${nameOrFallback(data, "the minor")} lives. We'll help you find where to file.`,
   fields: [

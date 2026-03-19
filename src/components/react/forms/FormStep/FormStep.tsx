@@ -3,10 +3,7 @@ import { Heading } from "react-aria-components";
 import { useFormContext } from "react-hook-form";
 import { useFormStep } from "@/components/react/forms/FormContainer";
 import type { FieldName, FormData } from "@/constants/fields";
-import {
-  resolveDescription,
-  resolveTitle,
-} from "@/forms/resolveStepContent";
+import { resolveDescription, resolveTitle } from "@/forms/resolveStepContent";
 import type { Step } from "@/forms/types";
 import { slugify } from "../../../../utils/slugify";
 import { smartquotes } from "../../../../utils/smartquotes";

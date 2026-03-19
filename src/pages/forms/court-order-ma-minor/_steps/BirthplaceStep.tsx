@@ -8,8 +8,7 @@ import type { Step } from "@/forms/types";
 
 export const birthplaceStep: Step = {
   id: "birthplace",
-  title: (data) =>
-    `Where was ${nameOrFallback(data, "the minor")} born?`,
+  title: (data) => `Where was ${nameOrFallback(data, "the minor")} born?`,
   fields: ["birthplaceCity", "birthplaceCountry", "birthplaceState"],
   isFieldVisible: (fieldName, data) => {
     if (fieldName === "birthplaceState") {
