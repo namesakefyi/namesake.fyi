@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { FormConfig } from "@/constants/forms";
@@ -101,10 +101,11 @@ describe("FormContainer", () => {
       ).toBeInTheDocument();
     });
 
-    it("renders a loading spinner while saved progress is being fetched", () => {
+    it("renders a loading spinner while saved progress is being fetched", async () => {
       vi.mocked(db.getFormProgress).mockReturnValue(new Promise(() => {}));
 
       render(<FormContainer slug="test-plain" title="Test Title" />);
+      await act(async () => {});
 
       expect(
         screen.getByRole("progressbar", { name: "Loading form" }),
