@@ -1,3 +1,4 @@
+import { useFormContext } from "react-hook-form";
 import { Banner } from "@/components/react/common/Banner";
 import { AddressField } from "@/components/react/forms/AddressField";
 import { CheckboxField } from "@/components/react/forms/CheckboxField";
@@ -38,10 +39,9 @@ export const parentAddressStep: Step = {
     },
   ],
   component: ({ stepConfig }) => {
-    const parentsHaveUnknownAddresses = useFieldVisible(
-      stepConfig,
-      "parentsHaveUnknownAddresses",
-    );
+    const form = useFormContext();
+    const parentsHaveUnknownAddresses =
+      form.watch("parentsHaveUnknownAddresses") === true;
     const secondAddressVisible = useFieldVisible(
       stepConfig,
       "parent2StreetAddress",
@@ -54,8 +54,17 @@ export const parentAddressStep: Step = {
         />
         {parentsHaveUnknownAddresses ? (
           <Banner>
-            You must file a Motion for Service by Alternate Means and Affidavit
-            of Diligent Search (CJP 31) with a Military Affidavit (TC0002)
+            Since the address or whereabouts of legal parents are unknown, you
+            must also file a{" "}
+            <a href="https://www.mass.gov/info-details/probate-and-family-court-motion-for-service-by-alternate-means-and-affidavit-of-diligent-search-cjp-31">
+              Motion for Service by Alternate Means and Affidavit of Diligent
+              Search (CJP 31)
+            </a>{" "}
+            with a{" "}
+            <a href="https://www.mass.gov/doc/military-affidavit/download">
+              Military Affidavit (TC0002)
+            </a>
+            .
           </Banner>
         ) : (
           <>

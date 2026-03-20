@@ -28,9 +28,26 @@ export interface FormPdfConfig {
 }
 
 /**
- * Function that generates instructions based on form data.
+ * A single instruction entry. Plain string = always included.
+ * Object form: `{ text, when }` = included only when `when` returns true.
  */
-export type FormInstructionsFn = (data: Partial<FormData>) => string[];
+export type Instruction =
+  | string
+  | { text: string; when: (data: Partial<FormData>) => boolean };
+
+/**
+ * Resolves an instructions array to plain strings, filtering out conditional
+ * entries whose `when` predicate returns false for the given form data.
+ */
+export function resolveInstructions(
+  instructions: readonly Instruction[],
+  data: Partial<FormData>,
+): string[] {
+  return instructions.flatMap((item) => {
+    if (typeof item === "string") return [item];
+    return item.when(data) ? [item.text] : [];
+  });
+}
 
 /**
  * Complete configuration for a form.
@@ -44,8 +61,12 @@ export interface FormConfig {
   pdfs: readonly FormPdfConfig[];
   /** Title for the downloaded PDF package */
   downloadTitle: string;
-  /** Static instructions or function that generates instructions from form data */
-  instructions: string[] | FormInstructionsFn;
+  /**
+   * Instructions shown on the cover page of the downloaded packet.
+   * Plain string = always included.
+   * Object form: `{ text, when }` = included only when `when` returns true.
+   */
+  instructions: readonly Instruction[];
 }
 
 /**
