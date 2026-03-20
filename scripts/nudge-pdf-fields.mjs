@@ -24,9 +24,9 @@ function parseArgs(argv) {
     if (argv[i] === "--pages") {
       args.pages = argv[++i]
         .split(",")
-        .map((p) => parseInt(p.trim(), 10) - 1); // convert to 0-based
+        .map((p) => Number.parseInt(p.trim(), 10) - 1); // convert to 0-based
     } else if (argv[i] === "--by") {
-      args.by = parseFloat(argv[++i]);
+      args.by = Number.parseFloat(argv[++i]);
     } else if (!args.path) {
       args.path = argv[i];
     }
@@ -59,8 +59,7 @@ async function main() {
   }
 
   const pages = pdfDoc.getPages();
-  const targetPageIndices =
-    args.pages ?? pages.map((_, i) => i); // default: all pages
+  const targetPageIndices = args.pages ?? pages.map((_, i) => i); // default: all pages
 
   const invalidPages = targetPageIndices.filter(
     (i) => i < 0 || i >= pages.length,
@@ -73,9 +72,7 @@ async function main() {
   }
 
   // Build a Set of page refs for fast lookup
-  const targetPageRefs = new Set(
-    targetPageIndices.map((i) => pages[i].ref),
-  );
+  const targetPageRefs = new Set(targetPageIndices.map((i) => pages[i].ref));
 
   const form = pdfDoc.getForm();
   const fields = form.getFields();

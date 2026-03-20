@@ -48,7 +48,8 @@ export function FormReviewTable({ steps }: FormReviewTableProps) {
             {section.fields.map((field) => (
               <div key={field.fieldName} className="form-review-field">
                 <dt className="form-review-label">
-                  {field.label}{field.label.endsWith("?") ? " " : ": "}
+                  {field.label}
+                  {field.label.endsWith("?") ? " " : ": "}
                 </dt>
                 <dd className="form-review-value">
                   {field.value !== undefined ? (

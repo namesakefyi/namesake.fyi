@@ -34,10 +34,7 @@ export const coGuardianStep: Step = {
     },
   ],
   component: ({ stepConfig }) => {
-    const coGuardianVisible = useFieldVisible(
-      stepConfig,
-      "coGuardianFullName",
-    );
+    const coGuardianVisible = useFieldVisible(stepConfig, "coGuardianFullName");
     return (
       <FormStep stepConfig={stepConfig}>
         <YesNoField
