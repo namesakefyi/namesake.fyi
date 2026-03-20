@@ -9,7 +9,7 @@ import { FormCompleteStep } from "@/components/react/forms/FormCompleteStep";
 import { FormNavigation } from "@/components/react/forms/FormNavigation";
 import { FormReviewStep } from "@/components/react/forms/FormReviewStep";
 import { FormTitleStep } from "@/components/react/forms/FormTitleStep/FormTitleStep";
-import { getFormConfig } from "@/constants/forms";
+import { type FormSlug, getFormConfig } from "@/constants/forms";
 import { createFormSubmitHandler } from "@/forms/createFormSubmitHandler";
 import type { FormPdfMetadata } from "@/forms/getFormPdfMetadata";
 import { useFormData } from "@/forms/useFormData";
@@ -20,7 +20,7 @@ import "./FormContainer.css";
 
 export interface FormContainerProps {
   /** Form slug to look up config. Must be registered in getFormConfig. */
-  slug: string;
+  slug: FormSlug;
 
   /** The title of the form. */
   title: string;
@@ -183,7 +183,7 @@ export function FormContainer({
         return (
           <FormCompleteStep
             title={title}
-            formSlug={config.slug}
+            slug={config.slug}
             onRedownload={onSubmit}
           />
         );

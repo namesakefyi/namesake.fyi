@@ -1,7 +1,7 @@
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
-import type { FormConfig } from "@/constants/forms";
+import type { FormConfig, FormSlug } from "@/constants/forms";
 import * as db from "@/db/database";
 import type { Step } from "@/forms/types";
 import { FormStep } from "../FormStep/FormStep";
@@ -32,7 +32,7 @@ const formStepStep: Step = {
 };
 
 const plainConfig: FormConfig = {
-  slug: "test-plain",
+  slug: "court-order-ma",
   steps: [plainStep],
   pdfs: [],
   downloadTitle: "Test",
@@ -40,7 +40,7 @@ const plainConfig: FormConfig = {
 };
 
 const formStepConfig: FormConfig = {
-  slug: "test-form-step",
+  slug: "court-order-ma",
   steps: [formStepStep],
   pdfs: [],
   downloadTitle: "Test",
@@ -79,14 +79,14 @@ describe("FormContainer", () => {
     });
 
     it("renders title on title step", async () => {
-      render(<FormContainer slug="test-plain" title="Test Title" />);
+      render(<FormContainer slug="court-order-ma" title="Test Title" />);
       expect(await screen.findByText("Test Title")).toBeInTheDocument();
     });
 
     it("renders description on title step", async () => {
       render(
         <FormContainer
-          slug="test-plain"
+          slug="court-order-ma"
           title="Test Title"
           description="Test Description"
         />,
@@ -95,7 +95,7 @@ describe("FormContainer", () => {
     });
 
     it("renders start button on title step", async () => {
-      render(<FormContainer slug="test-plain" title="Test Title" />);
+      render(<FormContainer slug="court-order-ma" title="Test Title" />);
       expect(
         await screen.findByRole("button", { name: "Start" }),
       ).toBeInTheDocument();
@@ -104,7 +104,7 @@ describe("FormContainer", () => {
     it("renders a loading spinner while saved progress is being fetched", async () => {
       vi.mocked(db.getFormProgress).mockReturnValue(new Promise(() => {}));
 
-      render(<FormContainer slug="test-plain" title="Test Title" />);
+      render(<FormContainer slug="court-order-ma" title="Test Title" />);
       await act(async () => {});
 
       expect(
@@ -121,7 +121,7 @@ describe("FormContainer", () => {
 
     it("renders step content and navigation after clicking Start", async () => {
       const user = userEvent.setup();
-      render(<FormContainer slug="test-plain" title="Test Title" />);
+      render(<FormContainer slug="court-order-ma" title="Test Title" />);
 
       await user.click(await screen.findByRole("button", { name: "Start" }));
 
@@ -131,7 +131,7 @@ describe("FormContainer", () => {
 
     it("returns to title after clicking Previous step", async () => {
       const user = userEvent.setup();
-      render(<FormContainer slug="test-plain" title="Test Title" />);
+      render(<FormContainer slug="court-order-ma" title="Test Title" />);
 
       await user.click(await screen.findByRole("button", { name: "Start" }));
       await user.click(screen.getByRole("button", { name: "Previous step" }));
@@ -149,7 +149,7 @@ describe("FormContainer", () => {
 
     it("renders review step after clicking Next step", async () => {
       const user = userEvent.setup();
-      render(<FormContainer slug="test-plain" title="Test Title" />);
+      render(<FormContainer slug="court-order-ma" title="Test Title" />);
 
       await user.click(await screen.findByRole("button", { name: "Start" }));
       await user.click(screen.getByRole("button", { name: "Next step" }));
@@ -167,7 +167,12 @@ describe("FormContainer", () => {
 
     it("advances to review when a filling-phase form step is submitted", async () => {
       const user = userEvent.setup();
-      render(<FormContainer slug="test-form-step" title="Test Title" />);
+      render(
+        <FormContainer
+          slug={"test-form-step" as FormSlug}
+          title="Test Title"
+        />,
+      );
 
       await user.click(await screen.findByRole("button", { name: "Start" }));
       await user.click(screen.getByRole("button", { name: "Continue" }));
@@ -183,7 +188,7 @@ describe("FormContainer", () => {
       vi.mocked(getFormConfig).mockReturnValue(undefined);
 
       expect(() =>
-        render(<FormContainer slug="nonexistent" title="Test" />),
+        render(<FormContainer slug={"nonexistent" as FormSlug} title="Test" />),
       ).toThrow(/No form registered for slug/);
     });
   });
