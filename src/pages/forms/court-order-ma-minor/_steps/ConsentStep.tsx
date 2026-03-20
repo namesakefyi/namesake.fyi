@@ -12,12 +12,24 @@ export const consentStep: Step = {
   title: "Does everyone consent to the name change?",
   fields: [
     "isParent1Assenting",
-    { id: "parent1DissentReason", when: (data) => data.isParent1Assenting === false },
+    {
+      id: "parent1DissentReason",
+      when: (data) => data.isParent1Assenting === false,
+    },
     "isParent2Assenting",
-    { id: "parent2DissentReason", when: (data) => data.isParent2Assenting === false },
-    { id: "hasCourtAppointedGuardian", when: (data) => data.hasCourtAppointedGuardian === true },
+    {
+      id: "parent2DissentReason",
+      when: (data) => data.isParent2Assenting === false,
+    },
+    {
+      id: "hasCourtAppointedGuardian",
+      when: (data) => data.hasCourtAppointedGuardian === true,
+    },
     "isAllGuardiansAssenting",
-    { id: "guardianDissentReason", when: (data) => data.isAllGuardiansAssenting === false },
+    {
+      id: "guardianDissentReason",
+      when: (data) => data.isAllGuardiansAssenting === false,
+    },
   ],
   component: ({ stepConfig }) => {
     const parent1DissentVisible = useFieldVisible(

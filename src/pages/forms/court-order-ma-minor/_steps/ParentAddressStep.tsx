@@ -24,7 +24,12 @@ export const parentAddressStep: Step = {
     "parent1State",
     "parent1ZipCode",
     {
-      ids: ["parent2StreetAddress", "parent2City", "parent2State", "parent2ZipCode"],
+      ids: [
+        "parent2StreetAddress",
+        "parent2City",
+        "parent2State",
+        "parent2ZipCode",
+      ],
       when: (data) => data.parentsHaveDifferentAddresses === true,
     },
   ],
