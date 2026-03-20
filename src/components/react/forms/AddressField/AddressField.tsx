@@ -28,7 +28,7 @@ export function AddressField({
       city: FieldName;
       state: FieldName;
       zip: FieldName;
-      county: FieldName;
+      county?: FieldName;
     }
   > = {
     residence: {
@@ -50,19 +50,14 @@ export function AddressField({
       city: "parent1City",
       state: "parent1State",
       zip: "parent1ZipCode",
-      county: "residenceCounty", // unused for parent types
     },
     parent2: {
       street: "parent2StreetAddress",
       city: "parent2City",
       state: "parent2State",
       zip: "parent2ZipCode",
-      county: "residenceCounty", // unused for parent types
     },
   };
-
-  const hasCounty =
-    includeCounty && (type === "residence" || type === "mailing");
 
   // Input mask: enforce ZIP code format of 12345-1234
   const maskitoOptions: MaskitoOptions = {
@@ -128,7 +123,7 @@ export function AddressField({
           </ComboBox>
         )}
       />
-      {hasCounty && (
+      {includeCounty && names[type].county && (
         <Controller
           control={control}
           name={names[type].county}
