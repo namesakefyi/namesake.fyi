@@ -24,7 +24,7 @@ export interface FormPdfConfig {
   /** The PDF identifier */
   pdfId: PDFId;
   /** Optional predicate to determine if this PDF should be included based on form data */
-  include?: (data: Partial<FormData>) => boolean;
+  when?: (data: Partial<FormData>) => boolean;
 }
 
 /**

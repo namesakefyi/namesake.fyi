@@ -106,7 +106,7 @@ export function resolveFormVisibility(
 
   const pdfsToInclude = pdfs.map((pdf) => ({
     pdfId: pdf.pdfId,
-    include: pdf.include ? pdf.include(formData) : true,
+    include: pdf.when ? pdf.when(formData) : true,
   }));
 
   return { visibleStepIds, visibleFields, sections, pdfsToInclude };

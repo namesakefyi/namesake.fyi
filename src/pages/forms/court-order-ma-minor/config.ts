@@ -51,12 +51,13 @@ export const courtOrderMinorMaConfig: FormConfig = {
     { pdfId: "cjp25-petition-to-change-name-of-minor" },
     {
       pdfId: "cjp34-cori-and-wms-release-request",
-      include: (data) => (deriveCurrentAge(data.dateOfBirth) ?? 0) >= 12,
+      when: (data) => (deriveCurrentAge(data.dateOfBirth) ?? 0) >= 12,
     },
     {
       pdfId: "affidavit-of-indigency",
-      include: (data) => data.shouldApplyForFeeWaiver === true,
+      when: (data) => data.shouldApplyForFeeWaiver === true,
     },
+    // TODO: Add CJP 31 and TC0002 PDFs
   ],
   downloadTitle: "Massachusetts Court Order (Minor)",
   instructions: [

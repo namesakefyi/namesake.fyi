@@ -37,7 +37,7 @@ export const courtOrderMaConfig: FormConfig = {
     { pdfId: "cjp34-cori-and-wms-release-request" },
     {
       pdfId: "affidavit-of-indigency",
-      include: (data) => data.shouldApplyForFeeWaiver === true,
+      when: (data) => data.shouldApplyForFeeWaiver === true,
     },
   ],
   downloadTitle: "Massachusetts Court Order",
