@@ -14,15 +14,17 @@ export const parentAddressStep: Step = {
   title: (data) =>
     `Where do ${nameOrFallback(data, "the minor")}'s parents live?`,
   fields: [
+    "parentsHaveUnknownAddresses",
     {
-      id: "parentsHaveUnknownAddresses",
-      when: (data) => data.parentsHaveUnknownAddresses === true,
+      ids: [
+        "parentsHaveDifferentAddresses",
+        "parent1StreetAddress",
+        "parent1City",
+        "parent1State",
+        "parent1ZipCode",
+      ],
+      when: (data) => data.parentsHaveUnknownAddresses === false,
     },
-    "parentsHaveDifferentAddresses",
-    "parent1StreetAddress",
-    "parent1City",
-    "parent1State",
-    "parent1ZipCode",
     {
       ids: [
         "parent2StreetAddress",
@@ -30,7 +32,9 @@ export const parentAddressStep: Step = {
         "parent2State",
         "parent2ZipCode",
       ],
-      when: (data) => data.parentsHaveDifferentAddresses === true,
+      when: (data) =>
+        data.parentsHaveUnknownAddresses === false &&
+        data.parentsHaveDifferentAddresses === true,
     },
   ],
   component: ({ stepConfig }) => {

@@ -13,59 +13,69 @@ import { JURISDICTIONS } from "@/constants/jurisdictions";
 import { nameOrFallback } from "@/forms/resolveStepContent";
 import type { Step } from "@/forms/types";
 
-export const guardianStep: Step = {
-  id: "guardian",
+export const coGuardianStep: Step = {
+  id: "co-guardian",
   title: (data) =>
-    `Does ${nameOrFallback(data, "the minor")} have a court-appointed guardian?`,
+    `Does ${nameOrFallback(data, "the minor")} have a court-appointed co-guardian?`,
+  guard: (data) => data.hasCourtAppointedGuardian === true,
   fields: [
-    "hasCourtAppointedGuardian",
+    "hasCourtAppointedCoGuardian",
     {
       ids: [
-        "guardianFullName",
-        "guardianStreetAddress",
-        "guardianCity",
-        "guardianState",
-        "guardianZipCode",
-        "guardianPhone",
-        "guardianEmail",
+        "coGuardianFullName",
+        "coGuardianStreetAddress",
+        "coGuardianCity",
+        "coGuardianState",
+        "coGuardianZipCode",
+        "coGuardianPhone",
+        "coGuardianEmail",
       ],
-      when: (data) => data.hasCourtAppointedGuardian === true,
+      when: (data) => data.hasCourtAppointedCoGuardian === true,
     },
   ],
   component: ({ stepConfig }) => {
-    const guardianVisible = useFieldVisible(stepConfig, "guardianFullName");
+    const coGuardianVisible = useFieldVisible(
+      stepConfig,
+      "coGuardianFullName",
+    );
     return (
       <FormStep stepConfig={stepConfig}>
         <YesNoField
-          name="hasCourtAppointedGuardian"
-          label="Is there a court-appointed guardian?"
+          name="hasCourtAppointedCoGuardian"
+          label="Is there a court-appointed co-guardian?"
           labelHidden
           yesLabel="Yes"
           noLabel="No"
         />
         <FormSubsection
-          title="Guardian information"
-          isVisible={guardianVisible}
+          title="Co-guardian information"
+          isVisible={coGuardianVisible}
         >
-          <ShortTextField name="guardianFullName" label="Guardian full name" />
-          <ShortTextField name="guardianStreetAddress" label="Street address" />
-          <ShortTextField name="guardianCity" label="City" />
-          <GuardianStateField />
-          <ShortTextField name="guardianZipCode" label="ZIP code" />
-          <PhoneField name="guardianPhone" />
-          <EmailField name="guardianEmail" />
+          <ShortTextField
+            name="coGuardianFullName"
+            label="Co-guardian full name"
+          />
+          <ShortTextField
+            name="coGuardianStreetAddress"
+            label="Street address"
+          />
+          <ShortTextField name="coGuardianCity" label="City" />
+          <CoGuardianStateField />
+          <ShortTextField name="coGuardianZipCode" label="ZIP code" />
+          <PhoneField name="coGuardianPhone" />
+          <EmailField name="coGuardianEmail" />
         </FormSubsection>
       </FormStep>
     );
   },
 };
 
-function GuardianStateField() {
+function CoGuardianStateField() {
   const { control } = useFormContext();
   return (
     <Controller
       control={control}
-      name="guardianState"
+      name="coGuardianState"
       defaultValue=""
       render={({ field, fieldState: { invalid, error } }) => (
         <ComboBox

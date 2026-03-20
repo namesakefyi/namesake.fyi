@@ -6,6 +6,7 @@ import { consentStep } from "./_steps/ConsentStep";
 import { currentNameStep } from "./_steps/CurrentNameStep";
 import { dateOfBirthStep } from "./_steps/DateOfBirthStep";
 import { feeWaiverStep } from "./_steps/FeeWaiverStep";
+import { coGuardianStep } from "./_steps/CoGuardianStep";
 import { guardianStep } from "./_steps/GuardianStep";
 import { interpreterStep } from "./_steps/InterpreterStep";
 import { newNameStep } from "./_steps/NewNameStep";
@@ -36,6 +37,7 @@ export const courtOrderMinorMaConfig: FormConfig = {
     parentsDeceasedStep,
     parentalRightsTerminatedStep,
     guardianStep,
+    coGuardianStep,
     consentStep,
     previousNameChangeStep,
     youthServicesStep,

@@ -12,7 +12,7 @@ import type { Step } from "@/forms/types";
 export const previousNameChangeStep: Step = {
   id: "previous-name-change",
   title: (data) =>
-    `Has ${nameOrFallback(data, "the minor")} ever changed their name before?`,
+    `Has ${nameOrFallback(data, "the minor")} ever changed their legal name before?`,
   fields: [
     "hasPreviousNameChange",
     {
@@ -26,10 +26,8 @@ export const previousNameChangeStep: Step = {
       <FormStep stepConfig={stepConfig}>
         <YesNoField
           name="hasPreviousNameChange"
-          label="Has the child ever changed their name before?"
+          label="Has the child ever changed their legal name before?"
           labelHidden
-          yesLabel="Yes, the minor has changed their name"
-          noLabel="No, the minor has never changed their name"
         />
         <FormSubsection
           title="Please list the minor's past legal name."
