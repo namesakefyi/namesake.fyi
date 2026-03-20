@@ -382,7 +382,7 @@ describe("useFormState", () => {
       expect(result.current.activeStepId).toBe("b");
     });
 
-    it("goNext skips steps with failing when predicate", async () => {
+    it("goNext skips steps with failing `when` predicate", async () => {
       const guardedFlow = [
         makeStep("a"),
         { ...makeStep("b"), when: () => false },

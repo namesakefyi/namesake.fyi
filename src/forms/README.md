@@ -48,14 +48,14 @@ The `fields` array tells the form which database fields belong to this step. It 
 
 ### Conditional steps
 
-Add a `when` predicate to skip a step entirely when a condition isn't met. The step is excluded from the forward and backward flow when its `when` returns false.
+Add a `when` predicate to skip a step entirely when a condition isn't met. The step is excluded from the forward and backward flow when `when` returns false.
 
 ```ts
 export const feeWaiverDocumentsStep: Step = {
   id: "fee-waiver-documents",
+  when: (data) => data.shouldApplyForFeeWaiver === true,
   title: "Upload your fee waiver documents",
   fields: ["feeWaiverDocument"],
-  when: (data) => data.shouldApplyForFeeWaiver === true,
   component: ({ stepConfig }) => (
     <FormStep stepConfig={stepConfig}>...</FormStep>
   ),
