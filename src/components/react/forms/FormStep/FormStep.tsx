@@ -3,10 +3,11 @@ import { Heading } from "react-aria-components";
 import { useFormContext } from "react-hook-form";
 import { useFormStep } from "@/components/react/forms/FormContainer";
 import type { FieldName, FormData } from "@/constants/fields";
+import { getFieldWhen } from "@/forms/formVisibility";
 import { resolveDescription, resolveTitle } from "@/forms/resolveStepContent";
 import type { Step } from "@/forms/types";
-import { slugify } from "../../../../utils/slugify";
-import { smartquotes } from "../../../../utils/smartquotes";
+import { slugify } from "@/utils/slugify";
+import { smartquotes } from "@/utils/smartquotes";
 import { Button } from "../../common/Button";
 import "./FormStep.css";
 import clsx from "clsx";
@@ -14,10 +15,10 @@ import { useId } from "react";
 
 /**
  * Returns whether a specific field should be visible within a step, based on
- * the step's `isFieldVisible` predicate and the current live form values.
+ * the field's `when` predicate and the current live form values.
  *
- * Using this hook in step components ensures that rendering and the review/PDF
- * resolution both derive from the same single predicate on the Step config.
+ * Returns `false` if the field is not listed in the step's fields array.
+ * Returns `true` if the field has no `when` predicate (always visible).
  */
 export function useFieldVisible(
   stepConfig: Step,
@@ -25,9 +26,9 @@ export function useFieldVisible(
 ): boolean {
   const form = useFormContext();
   const data = form.watch() as FormData;
-  return stepConfig.isFieldVisible
-    ? stepConfig.isFieldVisible(fieldName, data)
-    : true;
+  const result = getFieldWhen(stepConfig.fields, fieldName);
+  if (result === undefined) return false;
+  return result === null || result(data);
 }
 
 export interface FormStepProps {

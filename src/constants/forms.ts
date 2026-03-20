@@ -1,15 +1,21 @@
-import type { FormMachine } from "@/forms/createFormMachine";
 import type { Step } from "@/forms/types";
 import { courtOrderMaConfig } from "@/pages/forms/court-order-ma/config";
 import { courtOrderMinorMaConfig } from "@/pages/forms/court-order-ma-minor/config";
 import { socialSecurityConfig } from "@/pages/forms/social-security/config";
-import type { FieldName, FormData } from "./fields";
+import type { FormData } from "./fields";
 import type { PDFId } from "./pdf";
 
 /**
- * Type representing all valid form slugs.
- * Update this union whenever a new form is added to FORM_CONFIGS.
+ * Const representing all valid form slugs.
+ * Update this array whenever a new form is added.
  */
+export const FORM_SLUGS = [
+  "court-order-ma-minor",
+  "court-order-ma",
+  "social-security",
+] as const;
+
+export type FormSlug = (typeof FORM_SLUGS)[number];
 
 /**
  * Configuration for a PDF within a form.
@@ -31,13 +37,9 @@ export type FormInstructionsFn = (data: Partial<FormData>) => string[];
  */
 export interface FormConfig {
   /** Form identifier matching the URL slug */
-  slug: string;
+  slug: FormSlug;
   /** Ordered steps, including optional guards for conditional inclusion. */
   steps: readonly Step[];
-  /** The XState machine for this form, created from steps. */
-  machine: FormMachine;
-  /** Flattened array of all field names, derived from steps. */
-  fields: readonly FieldName[];
   /** PDFs included in this form */
   pdfs: readonly FormPdfConfig[];
   /** Title for the downloaded PDF package */
@@ -49,23 +51,18 @@ export interface FormConfig {
 /**
  * Registry of all form configurations.
  */
-export const FORM_CONFIGS: Record<string, FormConfig> = {
-  "court-order-ma": courtOrderMaConfig,
+export const FORM_CONFIGS: Record<FormSlug, FormConfig> = {
   "court-order-ma-minor": courtOrderMinorMaConfig,
+  "court-order-ma": courtOrderMaConfig,
   "social-security": socialSecurityConfig,
 };
 
 /**
  * Get a form configuration by slug.
  */
-export function getFormConfig(slug: string): FormConfig | undefined {
+export function getFormConfig(slug: FormSlug): FormConfig | undefined {
   return FORM_CONFIGS[slug];
 }
-
-/**
- * Array of all form slugs.
- */
-export const FORM_SLUGS = Object.keys(FORM_CONFIGS);
 
 /**
  * Sentiment rating options for form feedback.

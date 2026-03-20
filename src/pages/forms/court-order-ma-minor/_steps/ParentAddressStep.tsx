@@ -14,31 +14,20 @@ export const parentAddressStep: Step = {
   title: (data) =>
     `Where do ${nameOrFallback(data, "the minor")}'s parents live?`,
   fields: [
-    "parentsHaveUnknownAddresses",
+    {
+      id: "parentsHaveUnknownAddresses",
+      when: (data) => data.parentsHaveUnknownAddresses === true,
+    },
     "parentsHaveDifferentAddresses",
     "parent1StreetAddress",
     "parent1City",
     "parent1State",
     "parent1ZipCode",
-    "parent2StreetAddress",
-    "parent2City",
-    "parent2State",
-    "parent2ZipCode",
+    {
+      ids: ["parent2StreetAddress", "parent2City", "parent2State", "parent2ZipCode"],
+      when: (data) => data.parentsHaveDifferentAddresses === true,
+    },
   ],
-  isFieldVisible: (fieldName, data) => {
-    if (
-      fieldName === "parent2StreetAddress" ||
-      fieldName === "parent2City" ||
-      fieldName === "parent2State" ||
-      fieldName === "parent2ZipCode"
-    ) {
-      return data.parentsHaveDifferentAddresses === true;
-    }
-    if (fieldName === "parentsHaveUnknownAddresses") {
-      return data.parentsHaveUnknownAddresses === true;
-    }
-    return true;
-  },
   component: ({ stepConfig }) => {
     const parentsHaveUnknownAddresses = useFieldVisible(
       stepConfig,

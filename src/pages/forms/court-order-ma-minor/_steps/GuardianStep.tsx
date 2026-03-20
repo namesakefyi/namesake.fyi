@@ -19,25 +19,26 @@ export const guardianStep: Step = {
     `Does ${nameOrFallback(data, "the minor")} have a court-appointed guardian?`,
   fields: [
     "hasCourtAppointedGuardian",
-    "guardianFullName",
-    "guardianStreetAddress",
-    "guardianCity",
-    "guardianState",
-    "guardianZipCode",
-    "guardianPhone",
-    "guardianEmail",
-    "coGuardianFullName",
-    "coGuardianStreetAddress",
-    "coGuardianCity",
-    "coGuardianState",
-    "coGuardianZipCode",
-    "coGuardianPhone",
-    "coGuardianEmail",
+    {
+      ids: [
+        "guardianFullName",
+        "guardianStreetAddress",
+        "guardianCity",
+        "guardianState",
+        "guardianZipCode",
+        "guardianPhone",
+        "guardianEmail",
+        "coGuardianFullName",
+        "coGuardianStreetAddress",
+        "coGuardianCity",
+        "coGuardianState",
+        "coGuardianZipCode",
+        "coGuardianPhone",
+        "coGuardianEmail",
+      ],
+      when: (data) => data.hasCourtAppointedGuardian === true,
+    },
   ],
-  isFieldVisible: (fieldName, data) => {
-    if (fieldName === "hasCourtAppointedGuardian") return true;
-    return data.hasCourtAppointedGuardian === true;
-  },
   component: ({ stepConfig }) => {
     const guardianVisible = useFieldVisible(stepConfig, "guardianFullName");
     return (
@@ -96,8 +97,8 @@ function GuardianStateField() {
           {...field}
           label="State"
           placeholder="Select state"
-          selectedKey={field.value}
-          onSelectionChange={(key) => field.onChange(key)}
+          value={field.value}
+          onChange={field.onChange}
           isInvalid={invalid}
           errorMessage={error?.message}
           menuTrigger="focus"
@@ -125,8 +126,8 @@ function CoGuardianStateField() {
           {...field}
           label="State"
           placeholder="Select state"
-          selectedKey={field.value}
-          onSelectionChange={(key) => field.onChange(key)}
+          value={field.value}
+          onChange={field.onChange}
           isInvalid={invalid}
           errorMessage={error?.message}
           menuTrigger="focus"

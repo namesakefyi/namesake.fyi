@@ -45,7 +45,6 @@ describe("FormStep", () => {
     title: "What is your legal name?",
     description: "Type your name exactly as it appears on your ID.",
     fields: [],
-    isFieldVisible: () => true,
   };
 
   it("renders title correctly", () => {
@@ -232,7 +231,7 @@ describe("useFieldVisible", () => {
     component: () => null,
   };
 
-  it("returns true when isFieldVisible is not defined", () => {
+  it("returns true when field has no when callback", () => {
     const { result } = renderHook(
       () => useFieldVisible(stepConfig, "middleName" as any),
       { wrapper: TestWrapper },
@@ -240,8 +239,11 @@ describe("useFieldVisible", () => {
     expect(result.current).toBe(true);
   });
 
-  it("returns true when isFieldVisible returns true for the field", () => {
-    const config = { ...stepConfig, isFieldVisible: () => true };
+  it("returns true when when callback returns true", () => {
+    const config: Step = {
+      ...stepConfig,
+      fields: [{ id: "middleName" as any, when: () => true }],
+    };
     const { result } = renderHook(
       () => useFieldVisible(config, "middleName" as any),
       { wrapper: TestWrapper },
@@ -249,8 +251,11 @@ describe("useFieldVisible", () => {
     expect(result.current).toBe(true);
   });
 
-  it("returns false when isFieldVisible returns false for the field", () => {
-    const config = { ...stepConfig, isFieldVisible: () => false };
+  it("returns false when when callback returns false", () => {
+    const config: Step = {
+      ...stepConfig,
+      fields: [{ id: "middleName" as any, when: () => false }],
+    };
     const { result } = renderHook(
       () => useFieldVisible(config, "middleName" as any),
       { wrapper: TestWrapper },
@@ -258,16 +263,26 @@ describe("useFieldVisible", () => {
     expect(result.current).toBe(false);
   });
 
-  it("passes live form data to isFieldVisible", () => {
-    const isFieldVisible = vi.fn(() => true);
-    const config = { ...stepConfig, isFieldVisible };
+  it("passes live form data to the when callback", () => {
+    const when = vi.fn(() => true);
+    const config: Step = {
+      ...stepConfig,
+      fields: [{ id: "middleName" as any, when }],
+    };
     renderHook(() => useFieldVisible(config, "middleName" as any), {
       wrapper: TestWrapper,
     });
-    expect(isFieldVisible).toHaveBeenCalledWith(
-      "middleName",
+    expect(when).toHaveBeenCalledWith(
       expect.objectContaining({ middleName: "Lee" }),
     );
+  });
+
+  it("returns false for a field not listed in the step fields", () => {
+    const { result } = renderHook(
+      () => useFieldVisible(stepConfig, "unknownField" as any),
+      { wrapper: TestWrapper },
+    );
+    expect(result.current).toBe(false);
   });
 });
 

@@ -15,20 +15,11 @@ export const previousNameChangeStep: Step = {
     `Has ${nameOrFallback(data, "the minor")} ever changed their name before?`,
   fields: [
     "hasPreviousNameChange",
-    "previousNameFrom",
-    "previousNameTo",
-    "previousNameReason",
+    {
+      ids: ["previousNameFrom", "previousNameTo", "previousNameReason"],
+      when: (data) => data.hasPreviousNameChange === true,
+    },
   ],
-  isFieldVisible: (fieldName, data) => {
-    if (
-      fieldName === "previousNameFrom" ||
-      fieldName === "previousNameTo" ||
-      fieldName === "previousNameReason"
-    ) {
-      return data.hasPreviousNameChange === true;
-    }
-    return true;
-  },
   component: ({ stepConfig }) => {
     const previousNameVisible = useFieldVisible(stepConfig, "previousNameFrom");
     return (

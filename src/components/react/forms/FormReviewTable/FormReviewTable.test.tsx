@@ -123,11 +123,14 @@ describe("FormReviewTable", () => {
     expect(onEditStep).toHaveBeenCalledWith("legal-name");
   });
 
-  it("skips steps where all fields are hidden by isFieldVisible", () => {
+  it("skips steps where all fields are hidden by when callbacks", () => {
     const hiddenStep: Step = {
       ...nameStep,
       id: "hidden-step",
-      isFieldVisible: () => false,
+      fields: [
+        { id: "oldFirstName", when: () => false },
+        { id: "oldLastName", when: () => false },
+      ],
     };
 
     renderWithValues(<FormReviewTable steps={[hiddenStep, contactStep]} />, {
@@ -142,7 +145,10 @@ describe("FormReviewTable", () => {
   it("renders no sections when all steps have no visible fields", () => {
     const emptyStep: Step = {
       ...nameStep,
-      isFieldVisible: () => false,
+      fields: [
+        { id: "oldFirstName", when: () => false },
+        { id: "oldLastName", when: () => false },
+      ],
     };
 
     renderWithValues(<FormReviewTable steps={[emptyStep]} />, {
@@ -156,7 +162,7 @@ describe("FormReviewTable", () => {
   it("only includes fields that are visible within a step", () => {
     const partialStep: Step = {
       ...nameStep,
-      isFieldVisible: (fieldName) => fieldName === "oldFirstName",
+      fields: ["oldFirstName", { id: "oldLastName", when: () => false }],
     };
 
     renderWithValues(<FormReviewTable steps={[partialStep]} />, {

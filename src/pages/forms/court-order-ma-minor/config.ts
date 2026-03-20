@@ -1,4 +1,4 @@
-import { defineFormConfig, step } from "@/forms/defineFormConfig";
+import type { FormConfig } from "@/constants/forms";
 import { addressStep } from "./_steps/AddressStep";
 import { birthCertificateParentsStep } from "./_steps/BirthCerticiateParentsStep";
 import { birthplaceStep } from "./_steps/BirthplaceStep";
@@ -20,29 +20,29 @@ import { reasonStep } from "./_steps/ReasonStep";
 import { returnDocumentsStep } from "./_steps/ReturnDocumentsStep";
 import { youthServicesStep } from "./_steps/YouthServicesStep";
 
-export const courtOrderMinorMaConfig = defineFormConfig({
+export const courtOrderMinorMaConfig: FormConfig = {
   slug: "court-order-ma-minor",
   steps: [
-    step(newNameStep),
-    step(currentNameStep),
-    step(reasonStep),
-    step(presentedByStep),
-    step(dateOfBirthStep),
-    step(birthplaceStep),
-    step(addressStep),
-    step(parentInfoStep),
-    step(parentAddressStep),
-    step(birthCertificateParentsStep),
-    step(parentsDeceasedStep),
-    step(parentalRightsTerminatedStep),
-    step(guardianStep),
-    step(consentStep),
-    step(previousNameChangeStep),
-    step(youthServicesStep),
-    step(returnDocumentsStep),
-    step(interpreterStep),
-    step(pronounsStep),
-    step(feeWaiverStep),
+    newNameStep,
+    currentNameStep,
+    reasonStep,
+    presentedByStep,
+    dateOfBirthStep,
+    birthplaceStep,
+    addressStep,
+    parentInfoStep,
+    parentAddressStep,
+    birthCertificateParentsStep,
+    parentsDeceasedStep,
+    parentalRightsTerminatedStep,
+    guardianStep,
+    consentStep,
+    previousNameChangeStep,
+    youthServicesStep,
+    returnDocumentsStep,
+    interpreterStep,
+    pronounsStep,
+    feeWaiverStep,
   ],
   pdfs: [
     { pdfId: "cjp25-petition-to-change-name-of-minor" },
@@ -62,4 +62,4 @@ export const courtOrderMinorMaConfig = defineFormConfig({
       : "To pay for filing, bring a credit or debit card, a check made payable to the Commonwealth of Massachusetts, or exact cash.",
     "Remember to bring all supporting documents to the court.",
   ],
-});
+};

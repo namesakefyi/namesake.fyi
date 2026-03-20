@@ -1,4 +1,4 @@
-import { defineFormConfig, step } from "@/forms/defineFormConfig";
+import type { FormConfig } from "@/constants/forms";
 import { addressStep } from "./_steps/AddressStep";
 import { birthplaceStep } from "./_steps/BirthplaceStep";
 import { contactInfoStep } from "./_steps/ContactInfoStep";
@@ -14,23 +14,23 @@ import { pronounsStep } from "./_steps/PronounsStep";
 import { reasonStep } from "./_steps/ReasonStep";
 import { returnDocumentsStep } from "./_steps/ReturnDocumentsStep";
 
-export const courtOrderMaConfig = defineFormConfig({
+export const courtOrderMaConfig: FormConfig = {
   slug: "court-order-ma",
   steps: [
-    step(newNameStep),
-    step(currentNameStep),
-    step(reasonStep),
-    step(contactInfoStep),
-    step(birthplaceStep),
-    step(dateOfBirthStep),
-    step(addressStep),
-    step(previousNameChangeStep),
-    step(otherNamesStep),
-    step(interpreterStep),
-    step(pronounsStep),
-    step(returnDocumentsStep),
-    step(feeWaiverStep),
-    step(mothersMaidenNameStep),
+    newNameStep,
+    currentNameStep,
+    reasonStep,
+    contactInfoStep,
+    birthplaceStep,
+    dateOfBirthStep,
+    addressStep,
+    previousNameChangeStep,
+    otherNamesStep,
+    interpreterStep,
+    pronounsStep,
+    returnDocumentsStep,
+    feeWaiverStep,
+    mothersMaidenNameStep,
   ],
   pdfs: [
     { pdfId: "cjp27-petition-to-change-name-of-adult" },
@@ -50,4 +50,4 @@ export const courtOrderMaConfig = defineFormConfig({
       : "To pay for filing, bring a credit or debit card, a check made payable to the Commonwealth of Massachusetts, or exact cash.",
     "Remember to bring all supporting documents to the court.",
   ],
-});
+};

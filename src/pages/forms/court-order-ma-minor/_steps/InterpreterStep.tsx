@@ -16,19 +16,15 @@ export const interpreterStep: Step = {
     "isInterpreterNeededForParent1",
     "isInterpreterNeededForParent2",
     "isInterpreterNeededForGuardian",
-    "language",
-  ],
-  isFieldVisible: (fieldName, data) => {
-    if (fieldName === "language") {
-      return (
+    {
+      id: "language",
+      when: (data) =>
         data.isInterpreterNeededForChild === true ||
         data.isInterpreterNeededForParent1 === true ||
         data.isInterpreterNeededForParent2 === true ||
-        data.isInterpreterNeededForGuardian === true
-      );
-    }
-    return true;
-  },
+        data.isInterpreterNeededForGuardian === true,
+    },
+  ],
   component: ({ stepConfig }) => {
     const languageVisible = useFieldVisible(stepConfig, "language");
     return (

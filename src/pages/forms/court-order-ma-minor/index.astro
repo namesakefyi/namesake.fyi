@@ -1,9 +1,12 @@
 ---
 import type { SanityDocument } from "@sanity/client";
+import { FormContainer } from "@/components/react/forms/FormContainer/FormContainer";
+import type { FormSlug } from "@/constants/forms";
 import { getFormPdfMetadata } from "@/forms/getFormPdfMetadata";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { loadQuery } from "@/sanity/lib/loadQuery";
-import { MaCourtOrderMinorForm } from "./_Form";
+
+const formSlug: FormSlug = "court-order-ma-minor";
 
 const { data: form } = await loadQuery<SanityDocument | null>({
   query: `*[_type == "form" && slug.current == $slug][0]{
@@ -16,11 +19,11 @@ const { data: form } = await loadQuery<SanityDocument | null>({
     "costs": *[_type == "guide" && state._ref == ^.state._ref && category._ref == ^.category._ref][0].costs
   }`,
   params: {
-    slug: "court-order-ma-minor",
+    slug: formSlug,
   },
 });
 
-const pdfs = await getFormPdfMetadata("court-order-ma-minor");
+const pdfs = await getFormPdfMetadata(formSlug);
 
 const title = form?.title ?? "Court Order: Massachusetts (Under 18)";
 const description =
@@ -29,8 +32,9 @@ const description =
 ---
 
 <BaseLayout title={title} description={description} color="white">
-  <MaCourtOrderMinorForm
+  <FormContainer
     client:load
+    slug={formSlug}
     title={title}
     description={description}
     banner={form?.banner}
