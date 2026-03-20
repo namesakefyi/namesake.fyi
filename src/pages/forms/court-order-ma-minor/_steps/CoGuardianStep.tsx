@@ -17,7 +17,7 @@ export const coGuardianStep: Step = {
   id: "co-guardian",
   title: (data) =>
     `Does ${nameOrFallback(data, "the minor")} have a court-appointed co-guardian?`,
-  guard: (data) => data.hasCourtAppointedGuardian === true,
+  when: (data) => data.hasCourtAppointedGuardian === true,
   fields: [
     "hasCourtAppointedCoGuardian",
     {

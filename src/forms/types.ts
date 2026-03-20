@@ -51,9 +51,9 @@ export interface Step {
    * true. Evaluated with live form data on every navigation.
    *
    * @example
-   * guard: (data) => data.isFilingForSomeoneElse === true,
+   * when: (data) => data.isFilingForSomeoneElse === true,
    */
-  guard?: (data: Partial<FormData>) => boolean;
+  when?: (data: Partial<FormData>) => boolean;
 
   /** The React component rendered when this step is active. */
   component: React.ComponentType<{ stepConfig: Step }>;

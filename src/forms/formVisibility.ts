@@ -68,7 +68,7 @@ export function getVisibleStepIds(
   steps: readonly Step[],
   formData: Partial<FormData>,
 ): string[] {
-  return steps.filter((s) => !s.guard || s.guard(formData)).map((s) => s.id);
+  return steps.filter((s) => !s.when || s.when(formData)).map((s) => s.id);
 }
 
 /**
@@ -89,7 +89,7 @@ export function resolveFormVisibility(
   const sections: VisibilitySection[] = [];
 
   for (const step of steps) {
-    if (step.guard && !step.guard(formData)) continue;
+    if (step.when && !step.when(formData)) continue;
 
     visibleStepIds.push(step.id);
 
