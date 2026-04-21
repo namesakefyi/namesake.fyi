@@ -6,11 +6,15 @@ import { type FormSlug, getFormConfig } from "../../constants/forms";
 import { getFormPdfMetadata } from "../../forms/getFormPdfMetadata";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { FORMS_INDEX_QUERY } from "../../sanity/queries";
+import type { FORMS_INDEX_QUERY_RESULT } from "../../sanity/sanity.types";
 import { formatTimeEstimate } from "../../utils/formatTimeEstimate";
 
 const { params } = Astro.props;
 
-const forms = await sanityClient.fetch(FORMS_INDEX_QUERY, params ?? {});
+const forms: FORMS_INDEX_QUERY_RESULT = await sanityClient.fetch(
+  FORMS_INDEX_QUERY,
+  params ?? {},
+);
 
 // Get PDF metadata and step count for each form
 const formsWithPdfs = await Promise.all(
