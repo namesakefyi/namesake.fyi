@@ -56,6 +56,14 @@ export const guideType = defineType({
       },
     }),
     defineField({
+      name: "unlisted",
+      title: "Unlisted",
+      description:
+        "Hide this guide from the guides index. The guide will still be accessible by URL.",
+      type: "boolean",
+      initialValue: false,
+    }),
+    defineField({
       name: "costs",
       title: "Costs",
       type: "array",

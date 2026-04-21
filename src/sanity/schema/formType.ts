@@ -57,6 +57,14 @@ export const formType = defineType({
       },
     }),
     defineField({
+      name: "unlisted",
+      title: "Unlisted",
+      description:
+        "Hide this form from the forms index. The form will still be accessible by URL.",
+      type: "boolean",
+      initialValue: false,
+    }),
+    defineField({
       name: "state",
       title: "State",
       type: "reference",

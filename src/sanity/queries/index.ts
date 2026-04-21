@@ -85,7 +85,7 @@ export const RSS_POSTS_QUERY = defineQuery(`
 
 // Guides
 export const GUIDES_INDEX_QUERY = defineQuery(`
-  *[_type == "guide" && defined(slug)]{
+  *[_type == "guide" && defined(slug) && !unlisted]{
     title,
     slug,
     "state": state->name,
@@ -103,7 +103,7 @@ export const GUIDE_BY_SLUG_QUERY = defineQuery(`
 
 // Forms
 export const FORMS_INDEX_QUERY = defineQuery(`
-  *[_type == "form" && defined(slug)]{
+  *[_type == "form" && defined(slug) && !unlisted]{
     title,
     slug,
     _updatedAt,
@@ -165,6 +165,7 @@ export const DIRECTORY_CONTACTS_LIST_QUERY = defineQuery(`
   *[
     _type == "contact" &&
     defined(slug) &&
+    !unlisted &&
     ($stateSlug == "" || $stateSlug in states[]->slug.current) &&
     ($service == "" || $service in services)
   ] {

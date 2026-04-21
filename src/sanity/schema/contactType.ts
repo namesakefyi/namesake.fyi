@@ -43,6 +43,13 @@ export const contactType = defineType({
       },
     }),
     defineField({
+      name: "unlisted",
+      title: "Unlisted",
+      description: "Hide this contact from the main directory list.",
+      type: "boolean",
+      initialValue: false,
+    }),
+    defineField({
       name: "url",
       title: "URL",
       type: "url",
