@@ -92,7 +92,7 @@
     "topojson-client": "^3.1.0",
     "typescript": "^5.9.3",
     "ua-parser-js": "^2.0.9",
-    "xstate": "^5.30.0"
+    "xstate": "^5.31.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.11",
