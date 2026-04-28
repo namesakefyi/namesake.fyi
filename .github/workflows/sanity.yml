@@ -3,16 +3,19 @@ name: Sanity
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
   workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sanity-deploy-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   deploy-sanity:
     name: Deploy Sanity Studio
     runs-on: ubuntu-latest
-    permissions: write-all
-    if: ${{ github.actor != 'dependabot[bot]' }}
 
     steps:
       - name: Checkout code
