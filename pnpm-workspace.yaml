@@ -1,0 +1,6 @@
+allowBuilds:
+  esbuild: true
+  "@parcel/watcher": false
+  sharp: false
+  simple-git-hooks: false
+  workerd: false
