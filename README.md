@@ -36,4 +36,4 @@ We 💖 our contributors! Namesake is built by, and for, the trans community, an
 
 ## License
 
-Namesake Copyright © 2021. This repository is licensed under the [GNU General Public License v3.0 (GPLv3)](./LICENSE.md). This means you can copy, modify, and distribute this software, but any modifications of the codebase must be distributed with the same license, GPLv3.
+Namesake Copyright © 2021. This repository is licensed under the [GNU General Public License v3.0 (GPLv3)](./LICENSE.md). This means you can copy, modify, and distribute this software, but any modifications of the codebase must be distributed openly, under the same license, GPLv3.
