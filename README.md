@@ -33,3 +33,7 @@ We 💖 our contributors! Namesake is built by, and for, the trans community, an
 😌 Keep Namesake safe for everyone by reviewing our [code of conduct](https://github.com/namesakefyi/namesake?tab=coc-ov-file).   
 📖 Read our [contribution guide](/CONTRIBUTING.md) to learn how to set up your local environment and more.  
 👋 Come [chat with us](https://namesake.fyi/chat) on Discord!
+
+## License
+
+Namesake Copyright © 2021. This repository is licensed under the [GNU General Public License v3.0 (GPLv3)](./LICENSE.md). This means you can copy, modify, and distribute this software, but any modifications of the codebase must be distributed with the same license, GPLv3.
