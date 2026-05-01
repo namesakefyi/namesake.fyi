@@ -1,0 +1,39 @@
+/* Font faces for Storybook only.
+ * Astro handles font loading for the main site via the Font API.
+ * These @font-face rules ensure Storybook renders with the correct fonts. */
+
+@font-face {
+  font-family: "Atkinson Hyperlegible Soft";
+  src: url("../src/fonts/AtkinsonHyperlegibleSoft-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible Soft";
+  src: url("../src/fonts/AtkinsonHyperlegibleSoft-Bold.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible Soft";
+  src: url("../src/fonts/AtkinsonHyperlegibleSoft-RegularItalic.woff2") format("woff2");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible Soft";
+  src: url("../src/fonts/AtkinsonHyperlegibleSoft-BoldItalic.woff2") format("woff2");
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --font-sans: "Atkinson Hyperlegible Soft", Helvetica, Arial, sans-serif;
+}

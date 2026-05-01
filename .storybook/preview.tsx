@@ -5,6 +5,8 @@ import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { themes } from "storybook/theming";
 
+import "./fonts.css";
+
 import "../src/styles/base.css";
 import "../src/styles/reset.css";
 import "../src/styles/theme.css";
