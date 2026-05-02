@@ -1,21 +1,3 @@
-/*
- * Storybook-only font declarations.
- *
- * The main app loads Atkinson Hyperlegible Soft via Astro's experimental
- * Fonts API (see `astro.config.ts`), which means the fonts are inlined
- * by Astro at build time and the rest of the site picks them up via
- * the `--font-sans` CSS variable. Storybook does not run through
- * Astro's pipeline, so the Fonts API output is unavailable to it and
- * stories rendered in the Storybook deployment fall back to the
- * generic sans-serif stack — they look noticeably different from
- * production. (See https://github.com/namesakefyi/namesake/issues/500.)
- *
- * Re-declare the four variants as plain `@font-face` rules pointing
- * at the same `.woff2` files that Astro's Fonts API ingests, and
- * re-publish `--font-sans` so `src/styles/base.css` resolves the
- * variable to the correct family in the Storybook bundle.
- */
-
 @font-face {
   font-family: "Atkinson Hyperlegible Soft";
   font-weight: 400;

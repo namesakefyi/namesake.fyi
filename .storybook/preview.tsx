@@ -5,14 +5,10 @@ import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { themes } from "storybook/theming";
 
-// Storybook does not go through Astro's experimental Fonts API, so we
-// re-declare the @font-face rules + --font-sans variable here. Imported
-// before base.css so the cascade resolves the variable correctly.
-// See: https://github.com/namesakefyi/namesake/issues/500
-import "./storybook-fonts.css";
 import "../src/styles/base.css";
 import "../src/styles/reset.css";
 import "../src/styles/theme.css";
+import "./storybook.css";
 
 const preview: Preview = {
   parameters: {
