@@ -8,6 +8,7 @@ import { themes } from "storybook/theming";
 import "../src/styles/base.css";
 import "../src/styles/reset.css";
 import "../src/styles/theme.css";
+import "./storybook.css";
 
 const preview: Preview = {
   parameters: {
