@@ -40,40 +40,38 @@ export default defineConfig({
     // https://creativehike.com/posts/removing-trailng-slashes-astro
     format: "file",
   },
-  experimental: {
-    fonts: [
-      {
-        provider: fontProviders.local(),
-        name: "Atkinson Hyperlegible Soft",
-        cssVariable: "--font-sans",
-        fallbacks: ["Helvetica", "Arial", "sans-serif"],
-        options: {
-          variants: [
-            {
-              weight: 400,
-              style: "normal",
-              src: ["./src/fonts/AtkinsonHyperlegibleSoft-Regular.woff2"],
-            },
-            {
-              weight: 400,
-              style: "italic",
-              src: ["./src/fonts/AtkinsonHyperlegibleSoft-RegularItalic.woff2"],
-            },
-            {
-              weight: 700,
-              style: "normal",
-              src: ["./src/fonts/AtkinsonHyperlegibleSoft-Bold.woff2"],
-            },
-            {
-              weight: 700,
-              style: "italic",
-              src: ["./src/fonts/AtkinsonHyperlegibleSoft-BoldItalic.woff2"],
-            },
-          ],
-        },
+  fonts: [
+    {
+      provider: fontProviders.local(),
+      name: "Atkinson Hyperlegible Soft",
+      cssVariable: "--font-sans",
+      fallbacks: ["Helvetica", "Arial", "sans-serif"],
+      options: {
+        variants: [
+          {
+            weight: 400,
+            style: "normal",
+            src: ["./src/fonts/AtkinsonHyperlegibleSoft-Regular.woff2"],
+          },
+          {
+            weight: 400,
+            style: "italic",
+            src: ["./src/fonts/AtkinsonHyperlegibleSoft-RegularItalic.woff2"],
+          },
+          {
+            weight: 700,
+            style: "normal",
+            src: ["./src/fonts/AtkinsonHyperlegibleSoft-Bold.woff2"],
+          },
+          {
+            weight: 700,
+            style: "italic",
+            src: ["./src/fonts/AtkinsonHyperlegibleSoft-BoldItalic.woff2"],
+          },
+        ],
       },
-    ],
-  },
+    },
+  ],
   devToolbar: {
     enabled: false,
   },
