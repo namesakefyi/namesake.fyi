@@ -14,57 +14,5 @@ updates:
     schedule:
       interval: "weekly"
     groups:
-      astro:
-        patterns:
-          - "astro"
-          - "@astrojs/*"
-          - "astro-*"
-        update-types: ["patch", "minor"]
-
-      cloudflare:
-        patterns:
-          - "wrangler"
-        update-types: ["patch", "minor"]
-
-      react:
-        patterns:
-          - "react*"
-          - "styled-components"
-        update-types: ["patch", "minor"]
-
-      sanity:
-        patterns:
-          - "sanity"
-          - "@sanity/*"
-          - "@portabletext/*"
-        update-types: ["patch", "minor"]
-
-      storybook:
-        patterns:
-          - "storybook"
-          - "@storybook/*"
-          - "@vueless/storybook-dark-mode"
-        update-types: ["patch", "minor"]
-
-      testing:
-        patterns:
-          - "vitest*"
-          - "@playwright/*"
-          - "@testing-library/*"
-          - "@axe-core/*"
-          - "fake-indexeddb"
-        update-types: ["patch", "minor"]
-
-      typescript:
-        patterns:
-          - "typescript"
-          - "@types/*"
-        update-types: ["patch", "minor"]
-
-      d3:
-        patterns:
-          - "d3*"
-          - "topojson*"
-          - "@types/d3*"
-          - "@types/topojson*"
+      patch-minor:
         update-types: ["patch", "minor"]
