@@ -14,6 +14,7 @@ on:
     branches: [main]
 
 permissions:
+  actions: write
   contents: read
 
 concurrency:
@@ -64,7 +65,7 @@ jobs:
           cache: "pnpm"
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Run tests
         run: pnpm test
