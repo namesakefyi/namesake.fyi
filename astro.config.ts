@@ -14,7 +14,6 @@ import { browserslistToTargets } from "lightningcss";
 export default defineConfig({
   output: "server",
   adapter: cloudflare({
-    cloudflareModules: false,
     imageService: "compile",
   }),
   image: {
@@ -28,7 +27,6 @@ export default defineConfig({
       projectId: "k4p1j15y",
       dataset: "production",
       useCdn: true,
-      studioBasePath: "/studio",
       apiVersion: "2025-09-19",
     }),
     react(),
@@ -85,8 +83,10 @@ export default defineConfig({
         targets: browserslistToTargets(browserslist("defaults")),
       },
     },
-    build: {
-      cssMinify: "lightningcss",
-    },
+    // Re-enable this after Astro supports Vite v8
+    // https://github.com/vitejs/vite/issues/21293
+    // build: {
+    //   cssMinify: "lightningcss",
+    // },
   },
 });
