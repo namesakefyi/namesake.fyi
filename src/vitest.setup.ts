@@ -3,8 +3,6 @@ import fs from "node:fs";
 import path from "node:path";
 import { afterEach, beforeEach, vi } from "vitest";
 
-vi.mock("sanity:client", () => ({ sanityClient: {} }));
-
 // jsdom does not implement the Web Animations API used by react-aria-components'
 // SelectionIndicator. Provide a minimal stub so affected components render
 // without throwing during tests.

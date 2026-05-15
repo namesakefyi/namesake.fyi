@@ -42,7 +42,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Test coverage
-        run: npx vitest --project jsdom --coverage.enabled true
+        run: pnpm test:coverage
 
       - name: Upload coverage
         uses: actions/upload-artifact@v7
@@ -78,7 +78,7 @@ jobs:
         run: pnpm install
 
       - name: Test coverage
-        run: npx vitest --project jsdom --coverage.enabled true
+        run: pnpm test:coverage
 
       - name: Upload coverage
         uses: actions/upload-artifact@v7

@@ -1,16 +1,34 @@
-import { env } from "cloudflare:workers";
-import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
-
-declare const D1_MIGRATIONS: string[];
+import { env as cfWorkersEnv } from "cloudflare:workers";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { isRateLimited } from "../../../utils/rateLimitByIp";
 import { POST } from "../feedback";
+
+/** Same object `feedback.ts` imports; widened so tests can clear optional bindings. */
+const env = cfWorkersEnv as {
+  DB: D1Database | undefined;
+  RESEND_API_KEY: string | undefined;
+};
 
 vi.mock("../../../utils/rateLimitByIp", () => ({
   isRateLimited: vi.fn().mockResolvedValue(false),
 }));
 
-const callPost = (request: Request) => POST({ request } as any);
+const makeDb = () => {
+  const run = vi.fn().mockResolvedValue({});
+  const bind = vi.fn().mockReturnValue({ run });
+  const prepare = vi.fn().mockReturnValue({ bind });
+  return {
+    db: { prepare } as unknown as D1Database,
+    bind,
+    prepare,
+  };
+};
+
+let currentBind: ReturnType<typeof vi.fn>;
+
+const callPost = (request: Request) =>
+  POST({ request } as Parameters<typeof POST>[0]);
 
 const makeRequest = (body: unknown, headers: Record<string, string> = {}) =>
   new Request("http://localhost/api/feedback", {
@@ -28,12 +46,11 @@ const validBody = {
   sentiment: "positive",
 };
 
-beforeAll(async () => {
-  await env.DB.batch(D1_MIGRATIONS.map((s) => env.DB.prepare(s)));
-});
-
-beforeEach(async () => {
-  await env.DB.exec("DELETE FROM form_feedback");
+beforeEach(() => {
+  const { db, bind } = makeDb();
+  currentBind = bind;
+  env.DB = db;
+  env.RESEND_API_KEY = undefined;
   vi.mocked(isRateLimited).mockResolvedValue(false);
 });
 
@@ -102,6 +119,15 @@ describe("POST /api/feedback", () => {
   });
 
   describe("infrastructure errors", () => {
+    it("returns 503 when the database is unavailable", async () => {
+      env.DB = undefined;
+      const response = await callPost(makeRequest(validBody));
+      expect(response.status).toBe(503);
+      expect(await response.json()).toMatchObject({
+        error: "Database unavailable",
+      });
+    });
+
     it("returns 429 when the IP is rate limited", async () => {
       vi.mocked(isRateLimited).mockResolvedValueOnce(true);
       const response = await callPost(
@@ -115,35 +141,37 @@ describe("POST /api/feedback", () => {
   });
 
   describe("successful submission", () => {
-    it("returns 200 and inserts the row", async () => {
-      const response = await callPost(
+    it("returns 200 with success on a valid request", async () => {
+      const response = await callPost(makeRequest(validBody));
+      expect(response.status).toBe(200);
+      expect(await response.json()).toEqual({ success: true });
+    });
+
+    it("inserts the correct values into the database", async () => {
+      await callPost(
         makeRequest(
           { ...validBody, comment: "Great form!" },
           { "CF-Connecting-IP": "1.2.3.4", "User-Agent": "TestBrowser/1.0" },
         ),
       );
-      expect(response.status).toBe(200);
-      expect(await response.json()).toEqual({ success: true });
 
-      const { results } = await env.DB.prepare(
-        "SELECT * FROM form_feedback",
-      ).all();
-      expect(results).toHaveLength(1);
-      expect(results[0]).toMatchObject({
-        form_slug: "court-order-ma",
-        sentiment: "positive",
-        comment: "Great form!",
-        ip: "1.2.3.4",
-        user_agent: "TestBrowser/1.0",
-      });
+      expect(currentBind).toHaveBeenCalledWith(
+        "court-order-ma",
+        "positive",
+        "Great form!",
+        "1.2.3.4",
+        "TestBrowser/1.0",
+        null,
+        null,
+        null,
+      );
     });
 
-    it("stores null when comment is omitted", async () => {
+    it("inserts null for a missing comment", async () => {
       await callPost(makeRequest(validBody));
-      const { results } = await env.DB.prepare(
-        "SELECT comment FROM form_feedback",
-      ).all();
-      expect(results[0]).toMatchObject({ comment: null });
+
+      const [, , commentArg] = currentBind.mock.calls[0];
+      expect(commentArg).toBeNull();
     });
   });
 });

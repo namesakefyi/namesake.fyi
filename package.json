@@ -98,7 +98,6 @@
   "devDependencies": {
     "@biomejs/biome": "^2.4.15",
     "@clack/prompts": "^1.4.0",
-    "@cloudflare/vitest-pool-workers": "^0.16.4",
     "@playwright/test": "^1.60.0",
     "@react-aria/test-utils": "1.0.0-beta.3",
     "@storybook/addon-links": "^10.4.0",
