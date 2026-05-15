@@ -16,6 +16,7 @@ import { FormNavigation } from "../FormNavigation";
 import { FormReviewStep } from "../FormReviewStep";
 import { FormTitleStep } from "../FormTitleStep/FormTitleStep";
 import { FormStepContext } from "./FormStepContext";
+import "./FormContainer.css";
 
 export interface FormContainerProps {
   /** Form slug to look up config. Must be registered in getFormConfig. */

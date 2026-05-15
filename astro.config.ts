@@ -88,5 +88,19 @@ export default defineConfig({
     // build: {
     //   cssMinify: "lightningcss",
     // },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (
+              id.includes("/src/constants/") &&
+              !id.includes("/src/constants/forms")
+            ) {
+              return "shared-constants";
+            }
+          },
+        },
+      },
+    },
   },
 });
