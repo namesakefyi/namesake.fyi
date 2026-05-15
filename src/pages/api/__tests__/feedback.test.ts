@@ -12,25 +12,19 @@ vi.mock("../../../utils/rateLimitByIp", () => ({
 
 const callPost = (request: Request) => POST({ request } as any);
 
-type CfGeo = { country?: string; region?: string; city?: string };
-
 const makeRequest = (
   body: unknown,
   headers: Record<string, string> = {},
-  cf?: CfGeo,
 ) =>
-  Object.assign(
-    new Request("http://localhost/api/feedback", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Origin: "https://namesake.fyi",
-        ...headers,
-      },
-      body: JSON.stringify(body),
-    }),
-    { cf },
-  );
+  new Request("http://localhost/api/feedback", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Origin: "https://namesake.fyi",
+      ...headers,
+    },
+    body: JSON.stringify(body),
+  });
 
 const validBody = {
   form_slug: "court-order-ma",
@@ -129,7 +123,6 @@ describe("POST /api/feedback", () => {
         makeRequest(
           { ...validBody, comment: "Great form!" },
           { "CF-Connecting-IP": "1.2.3.4", "User-Agent": "TestBrowser/1.0" },
-          { country: "US", region: "Massachusetts", city: "Boston" },
         ),
       );
       expect(response.status).toBe(200);
@@ -145,9 +138,6 @@ describe("POST /api/feedback", () => {
         comment: "Great form!",
         ip: "1.2.3.4",
         user_agent: "TestBrowser/1.0",
-        country: "US",
-        region: "Massachusetts",
-        city: "Boston",
       });
     });
 
