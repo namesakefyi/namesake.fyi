@@ -1,5 +1,5 @@
-import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
 import fs from "node:fs";
+import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
 import {
   configDefaults,
   coverageConfigDefaults,

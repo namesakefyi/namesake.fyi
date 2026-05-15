@@ -2,6 +2,7 @@ import { env } from "cloudflare:workers";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 declare const D1_MIGRATIONS: string[];
+
 import { isRateLimited } from "../../../utils/rateLimitByIp";
 import { POST } from "../feedback";
 
