@@ -14,7 +14,6 @@ import { browserslistToTargets } from "lightningcss";
 export default defineConfig({
   output: "server",
   adapter: cloudflare({
-    cloudflareModules: false,
     imageService: "compile",
   }),
   image: {
@@ -28,7 +27,6 @@ export default defineConfig({
       projectId: "k4p1j15y",
       dataset: "production",
       useCdn: true,
-      studioBasePath: "/studio",
       apiVersion: "2025-09-19",
     }),
     react(),
@@ -40,40 +38,38 @@ export default defineConfig({
     // https://creativehike.com/posts/removing-trailng-slashes-astro
     format: "file",
   },
-  experimental: {
-    fonts: [
-      {
-        provider: fontProviders.local(),
-        name: "Atkinson Hyperlegible Soft",
-        cssVariable: "--font-sans",
-        fallbacks: ["Helvetica", "Arial", "sans-serif"],
-        options: {
-          variants: [
-            {
-              weight: 400,
-              style: "normal",
-              src: ["./src/fonts/AtkinsonHyperlegibleSoft-Regular.woff2"],
-            },
-            {
-              weight: 400,
-              style: "italic",
-              src: ["./src/fonts/AtkinsonHyperlegibleSoft-RegularItalic.woff2"],
-            },
-            {
-              weight: 700,
-              style: "normal",
-              src: ["./src/fonts/AtkinsonHyperlegibleSoft-Bold.woff2"],
-            },
-            {
-              weight: 700,
-              style: "italic",
-              src: ["./src/fonts/AtkinsonHyperlegibleSoft-BoldItalic.woff2"],
-            },
-          ],
-        },
+  fonts: [
+    {
+      provider: fontProviders.local(),
+      name: "Atkinson Hyperlegible Soft",
+      cssVariable: "--font-sans",
+      fallbacks: ["Helvetica", "Arial", "sans-serif"],
+      options: {
+        variants: [
+          {
+            weight: 400,
+            style: "normal",
+            src: ["./src/fonts/AtkinsonHyperlegibleSoft-Regular.woff2"],
+          },
+          {
+            weight: 400,
+            style: "italic",
+            src: ["./src/fonts/AtkinsonHyperlegibleSoft-RegularItalic.woff2"],
+          },
+          {
+            weight: 700,
+            style: "normal",
+            src: ["./src/fonts/AtkinsonHyperlegibleSoft-Bold.woff2"],
+          },
+          {
+            weight: 700,
+            style: "italic",
+            src: ["./src/fonts/AtkinsonHyperlegibleSoft-BoldItalic.woff2"],
+          },
+        ],
       },
-    ],
-  },
+    },
+  ],
   devToolbar: {
     enabled: false,
   },
@@ -87,8 +83,10 @@ export default defineConfig({
         targets: browserslistToTargets(browserslist("defaults")),
       },
     },
-    build: {
-      cssMinify: "lightningcss",
-    },
+    // Re-enable this after Astro supports Vite v8
+    // https://github.com/vitejs/vite/issues/21293
+    // build: {
+    //   cssMinify: "lightningcss",
+    // },
   },
 });

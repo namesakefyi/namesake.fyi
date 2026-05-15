@@ -1,11 +1,14 @@
-/// <reference types="vitest/config" />
-import { getViteConfig } from "astro/config";
-import { configDefaults, coverageConfigDefaults } from "vitest/config";
+import {
+  configDefaults,
+  coverageConfigDefaults,
+  defineConfig,
+} from "vitest/config";
+import { shimsPlugin } from "./vitest.shims";
 
-export default getViteConfig({
-  // @ts-expect-error - Might be fixed after upgrading to Astro v6
+export default defineConfig({
   test: {
     globals: true,
+    clearMocks: true,
     include: ["src/**/*.test.{ts,tsx}"],
     exclude: [...configDefaults.exclude, "src/**/*.spec.ts"],
     setupFiles: ["./src/vitest.setup.ts"],
@@ -39,4 +42,5 @@ export default getViteConfig({
       },
     },
   },
+  plugins: [shimsPlugin()],
 });
