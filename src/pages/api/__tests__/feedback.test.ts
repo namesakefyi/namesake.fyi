@@ -12,10 +12,7 @@ vi.mock("../../../utils/rateLimitByIp", () => ({
 
 const callPost = (request: Request) => POST({ request } as any);
 
-const makeRequest = (
-  body: unknown,
-  headers: Record<string, string> = {},
-) =>
+const makeRequest = (body: unknown, headers: Record<string, string> = {}) =>
   new Request("http://localhost/api/feedback", {
     method: "POST",
     headers: {
