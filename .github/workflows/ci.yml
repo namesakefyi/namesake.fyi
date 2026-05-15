@@ -14,7 +14,7 @@ on:
     branches: [main]
 
 permissions:
-  actions: write
+  actions: write # zizmor: ignore[excessive-permissions]
   contents: read
 
 concurrency:
@@ -29,9 +29,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - name: Setup PNPM
-        uses: pnpm/action-setup@v6
+        uses: pnpm/action-setup@v6.0.5
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -54,9 +56,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - name: Setup PNPM
-        uses: pnpm/action-setup@v6
+        uses: pnpm/action-setup@v6.0.5
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -76,9 +80,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - name: Setup PNPM
-        uses: pnpm/action-setup@v6
+        uses: pnpm/action-setup@v6.0.5
 
       - name: Setup Node
         uses: actions/setup-node@v6

@@ -15,7 +15,6 @@ concurrency:
 
 permissions:
   contents: read
-  pull-requests: write
 
 jobs:
   test-coverage-branch:
@@ -25,9 +24,11 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v6
+        uses: pnpm/action-setup@v6.0.5
         with:
           run_install: false
 
@@ -59,9 +60,10 @@ jobs:
         uses: actions/checkout@v6
         with:
           ref: main
+          persist-credentials: false
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v6
+        uses: pnpm/action-setup@v6.0.5
         with:
           run_install: false
 
@@ -88,10 +90,15 @@ jobs:
     needs: [test-coverage-branch, test-coverage-main]
     name: Report Coverage
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - name: Download coverage (${{ github.head_ref }})
         uses: actions/download-artifact@v8
@@ -109,7 +116,7 @@ jobs:
 
       - name: Report coverage and comparison
         if: always() && hashFiles('coverage-main/coverage-summary.json') != ''
-        uses: davelosert/vitest-coverage-report-action@v2.11.2
+        uses: davelosert/vitest-coverage-report-action@v2.12.0
         with:
           json-summary-compare-path: coverage-main/coverage-summary.json
 
@@ -117,4 +124,4 @@ jobs:
         # if coverage from main is not available
       - name: Report coverage
         if: always() && hashFiles('coverage-main/coverage-summary.json') == ''
-        uses: davelosert/vitest-coverage-report-action@v2.11.2
+        uses: davelosert/vitest-coverage-report-action@v2.12.0
