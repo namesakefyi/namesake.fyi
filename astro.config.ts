@@ -98,6 +98,9 @@ export default defineConfig({
             ) {
               return "shared-constants";
             }
+            if (id.includes("/src/utils/")) {
+              return "shared-utils";
+            }
           },
         },
       },
