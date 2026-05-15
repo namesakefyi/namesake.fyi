@@ -125,7 +125,7 @@
     "autoprefixer": "^10.5.0",
     "baseline-browser-mapping": "^2.10.29",
     "clsx": "^2.1.1",
-    "cssnano": "^7.1.5",
+    "cssnano": "^8.0.1",
     "fake-indexeddb": "^6.2.5",
     "lightningcss": "^1.32.0",
     "lodash": "^4.18.1",
@@ -139,7 +139,7 @@
     "vitest": "4.1.6",
     "wrangler": "^4.91.0"
   },
-  "packageManager": "pnpm@11.0.0",
+  "packageManager": "pnpm@11.1.2",
   "homepage": "https://namesake.fyi",
   "bugs": {
     "url": "https://github.com/namesakefyi/namesake/issues"
