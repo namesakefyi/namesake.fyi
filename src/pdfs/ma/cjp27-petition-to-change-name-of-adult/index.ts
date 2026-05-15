@@ -37,7 +37,7 @@ export default definePdf<PdfFieldName>({
     previousNameFrom: data.previousNameFrom,
     previousNameTo: data.previousNameTo,
     previousNameReason: data.previousNameReason,
-    shouldReturnOriginalDocuments: data.shouldReturnOriginalDocuments,
+    shouldReturnOriginalDocuments: true,
     hasUsedOtherNameOrAliasTrue: data.hasUsedOtherNameOrAlias,
     hasUsedOtherNameOrAliasFalse: !data.hasUsedOtherNameOrAlias,
     otherNamesOrAliases: data.otherNamesOrAliases,

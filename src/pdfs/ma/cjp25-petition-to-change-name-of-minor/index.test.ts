@@ -69,7 +69,6 @@ describe("Petition to Change Name of Minor", () => {
     previousNameFrom: "Old Name",
     previousNameTo: "New Name",
     previousNameReason: "Marriage",
-    shouldReturnOriginalDocuments: true,
     areBothParentsListedOnBirthCertificate: false,
     isALegalParentDeceased: false,
     hasLegalParentHadParentalRightsTerminated: false,

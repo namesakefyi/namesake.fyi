@@ -32,7 +32,6 @@ describe("CJP27 Petition to Change Name of Adult", () => {
     previousNameReason: "I changed my name because I wanted to",
     hasUsedOtherNameOrAlias: true,
     otherNamesOrAliases: "Nickname, Alias",
-    shouldReturnOriginalDocuments: true,
     reasonForChangingName: "Preferred name",
     isInterpreterNeeded: true,
     language: "es",

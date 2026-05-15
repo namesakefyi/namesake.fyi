@@ -51,7 +51,8 @@ export default definePdf<PdfFieldName>({
     previousNameTo: data.previousNameTo,
     previousNameReason: data.previousNameReason,
 
-    shouldReturnOriginalDocuments: data.shouldReturnOriginalDocuments,
+    // Assume return of certified docs
+    shouldReturnOriginalDocuments: true,
 
     // 6. Legal parents
     parent1FullName: data.parent1FullName,
