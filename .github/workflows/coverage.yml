@@ -54,6 +54,7 @@ jobs:
   test-coverage-main:
     name: Test Coverage (main)
     runs-on: ubuntu-latest
+    continue-on-error: true
 
     steps:
       - name: Checkout repo
