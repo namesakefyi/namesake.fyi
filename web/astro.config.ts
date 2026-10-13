@@ -20,13 +20,19 @@ export default defineConfig({
       mdastPlugins: [satteriModifiedTime],
     }),
   },
-  integrations: [sitemap(), mdx(), react(), pagefind()],
+  integrations: [
+    sitemap({ filter: (page) => !/\/edit\/?$/.test(page) }),
+    mdx(),
+    // Fast Refresh breaks CMS previews, which use the CMS's React.
+    react({ exclude: [/\/src\/lib\/cms\//] }),
+    pagefind(),
+  ],
   prefetch: true,
-  trailingSlash: "never",
+  // Name pages `page.astro`, not `page/index.astro`, to avoid trailing
+  // slashes. The CMS is the exception, so its URLs read /edit/#/...
+  trailingSlash: "ignore",
   build: {
-    // Eliminate trailing slashes from Cloudflare Pages
-    // https://creativehike.com/posts/removing-trailng-slashes-astro
-    format: "file",
+    format: "preserve",
   },
   redirects: {
     // Use new nested routes for state guides

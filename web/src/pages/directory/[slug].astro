@@ -9,6 +9,8 @@ import RelatedDirectoryEntries, {
 import { SERVICE_LABELS, type Service } from "#constants/services";
 import BaseLayout from "#layouts/BaseLayout.astro";
 import { formatCleanUrl } from "#lib/utils/formatCleanUrl";
+import { formatLanguage } from "#lib/utils/formatLanguage";
+import "../../styles/directory.css";
 
 export async function getStaticPaths() {
   const [entries, jurisdictions] = await Promise.all([
@@ -55,7 +57,8 @@ export async function getStaticPaths() {
 
 const { entry, entryJurisdictions, relatedEntries } = Astro.props;
 const firstJurisdiction = entryJurisdictions[0];
-const { name, description, services, email, phone, url, logo } = entry.data;
+const { name, description, services, languages, email, phone, url, logo } =
+  entry.data;
 ---
 
 <BaseLayout title={name} description={description} color="pink">
@@ -84,6 +87,15 @@ const { name, description, services, email, phone, url, logo } = entry.data;
           items={services.map((svc) => ({
             name: SERVICE_LABELS[svc as Service] ?? svc,
             href: `/directory?service=${svc}`,
+          }))}
+        />
+      </dd>
+      <dt>Languages</dt>
+      <dd>
+        <InlineLinkList
+          items={languages.map((language) => ({
+            name: formatLanguage(language) ?? language,
+            href: `/directory?language=${language}`,
           }))}
         />
       </dd>
@@ -138,27 +150,3 @@ const { name, description, services, email, phone, url, logo } = entry.data;
     )
   }
 </BaseLayout>
-
-<style>
-  .entry-logo {
-    max-height: 140px;
-    margin-block-end: var(--space-m);
-  }
-
-  .entry-layout {
-    margin-block-end: var(--space-xl);
-  }
-
-  .entry-meta {
-    margin: 0;
-
-    dt {
-      font-weight: var(--weight-bold);
-    }
-
-    dd {
-      margin: 0;
-      margin-block-end: var(--space-s);
-    }
-  }
-</style>
