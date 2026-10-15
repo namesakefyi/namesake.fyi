@@ -331,7 +331,7 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1(astro@7.3.5(@types/node@26.6.3)(sass-embedded@1.105.0)(sass@1.100.0)(tsx@4.23.1)(yaml@2.9.0))
       browserslist:
-        specifier: ^4.29.2
+        specifier: ^4.29.3
         version: 4.29.3
       cf-workers-og:
         specifier: ^3.0.1
@@ -464,8 +464,8 @@ importers:
         specifier: ^10.0.8
         version: 10.0.8(storybook@10.6.0(@types/react@19.3.0)(prettier@3.9.6)(react@19.3.0))
       baseline-browser-mapping:
-        specifier: ^2.11.26
-        version: 2.11.26
+        specifier: ^2.11.28
+        version: 2.11.28
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -3216,8 +3216,8 @@ packages:
     resolution: {integrity: sha512-3XSA2cR/h/73EzlXXdU6YNycmYI7+kicTxks4eJg2g39biHR84slg2+des+p7iHYhbRg/udIS4TD53WabcOUkw==}
     engines: {node: '>= 0.4'}
 
-  baseline-browser-mapping@2.11.26:
-    resolution: {integrity: sha512-GLQdD3y6UF8iVuMJl5fHgE4jdn/ua7n+toKfLgNlg3BqQtOZjpy68T8Tup8/wGWZCDlm7KMg7tPb4MPn7oN0TQ==}
+  baseline-browser-mapping@2.11.28:
+    resolution: {integrity: sha512-br0LOmjJqr6Rt4AEkadbcNf67Zpo7EPwKsWbjnRrJIa1QYFHQBqM4C7F2WTbV8ahTEcg1Eo+Y0aWjjORInYFyA==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -8342,7 +8342,7 @@ snapshots:
 
   base64-js@0.0.8: {}
 
-  baseline-browser-mapping@2.11.26: {}
+  baseline-browser-mapping@2.11.28: {}
 
   bcp-47-match@2.0.3: {}
 
@@ -8366,7 +8366,7 @@ snapshots:
 
   browserslist@4.29.3:
     dependencies:
-      baseline-browser-mapping: 2.11.26
+      baseline-browser-mapping: 2.11.28
       caniuse-lite: 1.0.30001814
       electron-to-chromium: 1.5.443
       node-releases: 2.0.57
