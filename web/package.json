@@ -53,7 +53,7 @@
     "@maskito/core": "^5.6.0",
     "@remixicon/react": "^4.9.0",
     "@severo_bo/us-atlas-2023": "^4.0.0",
-    "@sveltia/cms": "^0.227.2",
+    "@sveltia/cms": "^0.235.1",
     "@xstate/react": "^6.1.0",
     "astro": "7.3.8",
     "astro-pagefind": "^2.0.1",
