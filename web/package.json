@@ -79,7 +79,7 @@
     "xstate": "^5.33.2"
   },
   "devDependencies": {
-    "@playwright/test": "^1.63.0",
+    "@playwright/test": "^1.64.0",
     "@react-aria/test-utils": "1.0.0-rc.1",
     "@storybook/addon-links": "^10.6.1",
     "@storybook/addon-themes": "^10.6.1",
