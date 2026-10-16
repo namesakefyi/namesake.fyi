@@ -225,14 +225,14 @@ importers:
   pdf-manager:
     dependencies:
       '@hono/node-server':
-        specifier: ^2.1.1
-        version: 2.1.3(hono@4.13.12)
+        specifier: ^2.1.4
+        version: 2.1.5(hono@4.13.13)
       '@libpdf/core':
         specifier: ^0.5.1
         version: 0.5.1
       hono:
-        specifier: ^4.13.10
-        version: 4.13.12
+        specifier: ^4.13.13
+        version: 4.13.13
       pdfjs-dist:
         specifier: ^6.3.289
         version: 6.3.289
@@ -1418,11 +1418,11 @@ packages:
   '@expressive-code/plugin-text-markers@0.44.1':
     resolution: {integrity: sha512-B3BsJoJ8CFMlcIX9f+X9tcI3C4zPDO601+YuLi9GheSTNro7ZfqSjLptMQKBHOWZvxnAtY5zvIX7iO/qtBhNBg==}
 
-  '@hono/node-server@2.1.3':
-    resolution: {integrity: sha512-TA//nWMqPhbfdfneACk6t5a9eqbS9lABEPyKn0/xZTah3H3U2XaVg85rJFl0/Fyit0I552YDHgXGVSf3GwqbUw==}
+  '@hono/node-server@2.1.5':
+    resolution: {integrity: sha512-MgP/I06GdvsilDspMk/qmRzpk8LOUStP6jFAbSRi40W09DhoyUn+Mj7eyKICPqeYKybOjVFLVIAQzvu1bfIa7Q==}
     engines: {node: '>=20'}
     peerDependencies:
-      hono: ^4
+      hono: ^4 || ^5.0.0-0
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -3958,8 +3958,8 @@ packages:
     resolution: {integrity: sha512-Ox1pJVrDCyGHMG9CFg1tmrRUMRPRsAWYc/PinY0XzJU4K7y7vjNoLKIQ7BR5UJMCxNN8EM1MNDmHWA/B3aZUuw==}
     engines: {node: '>=6'}
 
-  hono@4.13.12:
-    resolution: {integrity: sha512-6E2QDAc9Ick9Sq77ZrGS/dk2WUYni91aufTw6LJKpV7w8kW5/GxVUc650FOADOmlwg3K+f7Pun6XlV+pYmW6gw==}
+  hono@4.13.13:
+    resolution: {integrity: sha512-CQ46U0ZkAGmbT/4UxdzzGJpacP2IeKgY4a5/tOI9AABbpOMfK739wfDXmv1usCk+3RkKj1hQy4/fjhiwa2xlrA==}
     engines: {node: '>=16.9.0'}
 
   html-encoding-sniffer@6.0.0:
@@ -6697,9 +6697,9 @@ snapshots:
     dependencies:
       '@expressive-code/core': 0.44.1
 
-  '@hono/node-server@2.1.3(hono@4.13.12)':
+  '@hono/node-server@2.1.5(hono@4.13.13)':
     dependencies:
-      hono: 4.13.12
+      hono: 4.13.13
 
   '@iconify/types@2.0.0': {}
 
@@ -9159,7 +9159,7 @@ snapshots:
 
   hex-rgb@4.3.0: {}
 
-  hono@4.13.12: {}
+  hono@4.13.13: {}
 
   html-encoding-sniffer@6.0.0(@noble/hashes@2.2.0):
     dependencies:
