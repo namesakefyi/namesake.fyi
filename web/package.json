@@ -101,7 +101,7 @@
     "@types/sanitize-html": "^2.16.1",
     "@types/topojson-client": "^3.1.5",
     "@types/topojson-specification": "^1.0.5",
-    "@vitest/coverage-v8": "5.0.3",
+    "@vitest/coverage-v8": "5.0.4",
     "@vueless/storybook-dark-mode": "^10.0.8",
     "baseline-browser-mapping": "^2.11.28",
     "clsx": "^2.1.1",
@@ -111,7 +111,7 @@
     "satteri": "^0.10.5",
     "sharp": "^0.35.5",
     "storybook": "^10.6.1",
-    "vitest": "5.0.3",
+    "vitest": "5.0.4",
     "wrangler": "^4.135.0"
   },
   "homepage": "https://namesake.fyi",
